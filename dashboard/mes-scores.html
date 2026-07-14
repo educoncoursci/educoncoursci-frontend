@@ -1,0 +1,286 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mes Scores — EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="dashboard">
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar__profil">
+            <div class="sidebar__avatar" id="sidebar-avatar">?</div>
+            <div class="sidebar__nom" id="sidebar-nom">—</div>
+            <div class="sidebar__email" id="sidebar-email"></div>
+            <div id="sidebar-badge"></div>
+          </div>
+          <nav class="sidebar__nav">
+            <div class="sidebar__titre">Menu</div>
+            <a href="/dashboard/index.html" class="sidebar__lien"
+              ><span class="sidebar__icone">📊</span> Tableau de bord</a
+            >
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien actif"
+              ><span class="sidebar__icone">🏆</span> Mes scores</a
+            >
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"
+              ><span class="sidebar__icone">🏛️</span> Mes concours</a
+            >
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
+              ><span class="sidebar__icone">📥</span> Téléchargements</a
+            >
+            <a href="/dashboard/paiements.html" class="sidebar__lien"
+              ><span class="sidebar__icone">💳</span> Paiements</a
+            >
+            <a href="/dashboard/profil.html" class="sidebar__lien"
+              ><span class="sidebar__icone">👤</span> Mon profil</a
+            >
+          </nav>
+          <div class="sidebar__deconnexion">
+            <button
+              onclick="window.Auth?.deconnecter?.()"
+              class="btn btn--outline-vert btn--sm btn--full"
+            >
+              Déconnexion
+            </button>
+          </div>
+        </aside>
+
+        ```
+        <main class="dashboard__contenu">
+          <div class="dashboard__header">
+            <div>
+              <h1>🏆 Mes scores</h1>
+              <p
+                style="
+                  color: var(--gris-texte);
+                  margin: 4px 0 0;
+                  font-size: 0.9rem;
+                "
+              >
+                Historique de tes QCM et performances
+              </p>
+            </div>
+            <a href="/preparation.html" class="btn btn--primaire btn--sm"
+              >📝 Nouveau QCM</a
+            >
+          </div>
+
+          <!-- Stats globales -->
+          <div class="dash-stats" style="margin-bottom: 24px">
+            <div class="stat-card">
+              <div>
+                <div class="stat-card__label">Total QCM</div>
+                <div class="stat-card__valeur" id="total-qcm">—</div>
+              </div>
+              <div class="stat-card__icone">📝</div>
+            </div>
+            <div class="stat-card stat-card--bleu">
+              <div>
+                <div class="stat-card__label">Moyenne générale</div>
+                <div class="stat-card__valeur" id="moy-gen">—</div>
+              </div>
+              <div
+                class="stat-card__icone"
+                style="background: rgba(10, 110, 189, 0.1)"
+              >
+                📊
+              </div>
+            </div>
+            <div class="stat-card stat-card--orange">
+              <div>
+                <div class="stat-card__label">Meilleur score</div>
+                <div class="stat-card__valeur" id="best-score">—</div>
+              </div>
+              <div
+                class="stat-card__icone"
+                style="background: rgba(245, 130, 13, 0.1)"
+              >
+                🏆
+              </div>
+            </div>
+            <div class="stat-card stat-card--violet">
+              <div>
+                <div class="stat-card__label">Matières</div>
+                <div class="stat-card__valeur" id="nb-matieres">—</div>
+              </div>
+              <div
+                class="stat-card__icone"
+                style="background: rgba(123, 47, 190, 0.1)"
+              >
+                📚
+              </div>
+            </div>
+          </div>
+
+          <!-- Progression par matière -->
+          <div class="dash-section" style="margin-bottom: 20px">
+            <div class="dash-section__titre" style="margin-bottom: 16px">
+              📊 Progression par matière
+            </div>
+            <div id="progression-matieres"></div>
+          </div>
+
+          <!-- Historique complet -->
+          <div class="dash-section">
+            <div class="dash-section__header">
+              <div class="dash-section__titre">📋 Historique complet</div>
+              <span
+                id="compteur-scores"
+                style="font-size: 0.85rem; color: var(--gris-texte)"
+              ></span>
+            </div>
+            <div id="historique-scores"></div>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estConnecte()) {
+          window.location.href = "/auth/login.html";
+          return;
+        }
+        const session = window.Auth.getSession();
+
+        // Sidebar
+        document.getElementById("sidebar-avatar").textContent =
+          session.nom?.[0]?.toUpperCase() || "?";
+        document.getElementById("sidebar-nom").textContent = session.nom || "";
+        document.getElementById("sidebar-email").textContent =
+          session.email || "";
+        document.getElementById("sidebar-badge").innerHTML = session.premium
+          ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
+          : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
+
+        const scores = JSON.parse(session.scores_json || "[]");
+
+        if (scores.length === 0) {
+          document.getElementById("historique-scores").innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state__icone">📝</div>
+        <div class="empty-state__titre">Aucun score enregistré</div>
+        <p class="empty-state__texte">Complète ton premier QCM pour voir tes résultats ici.</p>
+        <a href="/preparation.html" class="btn btn--primaire">Faire un QCM →</a>
+      </div>`;
+          ["total-qcm", "moy-gen", "best-score", "nb-matieres"].forEach(
+            (id) => (document.getElementById(id).textContent = "0"),
+          );
+          return;
+        }
+
+        // Stats
+        const moy = Math.round(
+          scores.reduce((s, sc) => s + (sc.pourcentage || 0), 0) /
+            scores.length,
+        );
+        const best = Math.max(...scores.map((sc) => sc.pourcentage || 0));
+        const mats = [
+          ...new Set(scores.map((sc) => sc.matiere || sc.qcmTitre || "")),
+        ].filter(Boolean);
+        document.getElementById("total-qcm").textContent = scores.length;
+        document.getElementById("moy-gen").textContent = `${moy}%`;
+        document.getElementById("best-score").textContent = `${best}%`;
+        document.getElementById("nb-matieres").textContent = mats.length;
+        document.getElementById("compteur-scores").textContent =
+          `${scores.length} tentative${scores.length > 1 ? "s" : ""}`;
+
+        // Progression par matière
+        const statsMat = {};
+        scores.forEach((sc) => {
+          const m = sc.matiere || sc.qcmTitre || "Général";
+          if (!statsMat[m]) statsMat[m] = { total: 0, sum: 0 };
+          statsMat[m].total++;
+          statsMat[m].sum += sc.pourcentage || 0;
+        });
+        document.getElementById("progression-matieres").innerHTML =
+          Object.entries(statsMat)
+            .map(([mat, st]) => {
+              const moy = Math.round(st.sum / st.total);
+              const c =
+                moy >= 75
+                  ? "var(--vert)"
+                  : moy >= 50
+                    ? "var(--orange)"
+                    : "var(--rouge)";
+              return `
+      <div style="margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-weight:700;font-size:0.9rem;">${mat}</span>
+          <span style="font-size:0.85rem;color:${c};font-weight:700;">${moy}% <span style="color:var(--gris-texte);font-weight:400;">(${st.total} tentative${st.total > 1 ? "s" : ""})</span></span>
+        </div>
+        <div class="progression"><div class="progression__barre" style="width:${moy}%;background:${c};"></div></div>
+      </div>`;
+            })
+            .join("");
+
+        // Historique
+        document.getElementById("historique-scores").innerHTML = scores
+          .slice()
+          .reverse()
+          .map((sc, i) => {
+            const p = sc.pourcentage || 0;
+            const c =
+              p >= 75
+                ? "var(--vert)"
+                : p >= 50
+                  ? "var(--orange)"
+                  : "var(--rouge)";
+            const mention =
+              p >= 90
+                ? "Excellent 🏆"
+                : p >= 75
+                  ? "Très bien 🥇"
+                  : p >= 60
+                    ? "Bien 👍"
+                    : p >= 50
+                      ? "Passable ✅"
+                      : "À revoir 📚";
+            return `
+      <div class="score-item">
+        <div class="score-item__cercle" style="border-color:${c};">
+          <div class="score-item__pct" style="color:${c};">${p}%</div>
+          <div class="score-item__label">score</div>
+        </div>
+        <div class="score-item__info">
+          <div class="score-item__titre">${sc.qcmTitre || "QCM"}</div>
+          <div class="score-item__meta">${sc.score || 0}/${sc.total || 0} bonnes réponses · ${sc.date || ""}</div>
+          <div style="margin-top:4px;"><span class="badge badge--gris" style="font-size:0.72rem;">${mention}</span></div>
+        </div>
+        <a href="/preparation.html" style="font-size:0.82rem;color:var(--vert);font-weight:700;white-space:nowrap;">Recommencer →</a>
+      </div>`;
+          })
+          .join("");
+      });
+    </script>
+  </body>
+</html>

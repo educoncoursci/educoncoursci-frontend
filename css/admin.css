@@ -1,0 +1,415 @@
+/* ============================================================
+   admin.css — Styles panel administrateur EduConcoursCI
+   Layout, sidebar admin, tableaux, graphiques, formulaires admin
+   ============================================================ */
+
+/* ── Layout admin ────────────────────────────────────────────── */
+.admin-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: calc(100vh - var(--navbar-h));
+}
+
+/* ── Sidebar admin ───────────────────────────────────────────── */
+.admin-sidebar {
+  background: #0a1628;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 24px 0;
+  position: sticky;
+  top: var(--navbar-h);
+  height: calc(100vh - var(--navbar-h));
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.admin-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.admin-sidebar__header {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 16px;
+}
+.admin-sidebar__logo {
+  font-family: var(--font-titre);
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: var(--blanc);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.admin-sidebar__role {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.admin-sidebar__section {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 20px 6px;
+}
+
+.admin-sidebar__lien {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  transition: var(--transition);
+  border-left: 3px solid transparent;
+}
+.admin-sidebar__lien:hover {
+  color: var(--blanc);
+  background: rgba(255, 255, 255, 0.06);
+}
+.admin-sidebar__lien.actif {
+  color: var(--blanc);
+  background: rgba(26, 107, 60, 0.25);
+  border-left-color: var(--vert-clair);
+}
+.admin-sidebar__icone {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+/* Badge compteur dans la sidebar */
+.admin-sidebar__compteur {
+  margin-left: auto;
+  background: var(--rouge);
+  color: var(--blanc);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  min-width: 20px;
+  text-align: center;
+}
+
+/* ── Contenu admin ───────────────────────────────────────────── */
+.admin-contenu {
+  background: var(--gris-clair);
+  padding: 28px 32px;
+  overflow-y: auto;
+}
+
+/* ── Top bar admin ───────────────────────────────────────────── */
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.admin-topbar__titre {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+.admin-topbar__sous {
+  color: var(--gris-texte);
+  font-size: 0.88rem;
+  margin-top: 3px;
+}
+.admin-topbar__actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ── Grille stats admin ──────────────────────────────────────── */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-md);
+  margin-bottom: 28px;
+}
+
+/* ── Carte admin (section avec ombre) ────────────────────────── */
+.admin-card {
+  background: var(--blanc);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ombre-sm);
+  overflow: hidden;
+  margin-bottom: var(--gap-lg);
+}
+.admin-card__header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--gris-bordure);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-card__titre {
+  font-size: 1rem;
+  font-weight: 800;
+}
+.admin-card__corps {
+  padding: 24px;
+}
+.admin-card__pied {
+  padding: 14px 24px;
+  background: var(--gris-clair);
+  border-top: 1px solid var(--gris-bordure);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Graphique revenus ───────────────────────────────────────── */
+.graphique-barres {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 160px;
+  padding: 0 0 20px;
+  border-bottom: 2px solid var(--gris-bordure);
+}
+.graphique-barre__wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  justify-content: flex-end;
+}
+.graphique-barre {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  background: var(--gradient-vert);
+  transition: height 0.5s ease;
+  min-height: 4px;
+}
+.graphique-barre--actif {
+  background: var(--gradient-bleu);
+}
+.graphique-barre__label {
+  font-size: 0.72rem;
+  color: var(--gris-texte);
+  font-weight: 600;
+}
+.graphique-barre__valeur {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--vert);
+}
+
+/* ── Tableau admin ───────────────────────────────────────────── */
+.admin-tableau-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ombre-sm);
+}
+.admin-tableau {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--blanc);
+  font-size: 0.88rem;
+}
+.admin-tableau th {
+  background: var(--gris-clair);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gris-texte);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--gris-bordure);
+  white-space: nowrap;
+}
+.admin-tableau td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--gris-clair);
+  vertical-align: middle;
+}
+.admin-tableau tr:last-child td {
+  border: none;
+}
+.admin-tableau tr:hover td {
+  background: rgba(26, 107, 60, 0.02);
+}
+
+/* Colonnes spécifiques */
+.admin-tableau__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gradient-vert);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--blanc);
+}
+.admin-tableau__actions {
+  display: flex;
+  gap: 6px;
+}
+.admin-tableau__btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gris-bordure);
+  background: var(--blanc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+.admin-tableau__btn:hover {
+  background: var(--gris-clair);
+}
+.admin-tableau__btn--danger:hover {
+  background: var(--rouge);
+  color: var(--blanc);
+  border-color: var(--rouge);
+}
+.admin-tableau__btn--edit:hover {
+  background: var(--bleu);
+  color: var(--blanc);
+  border-color: var(--bleu);
+}
+
+/* ── Formulaire admin ────────────────────────────────────────── */
+.admin-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-lg);
+}
+.admin-form--1col {
+  grid-template-columns: 1fr;
+}
+.admin-form__plein {
+  grid-column: 1 / -1;
+}
+
+/* ── Panel de paiement (validation transactions) ─────────────── */
+.transaction-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gris-clair);
+  gap: 12px;
+}
+.transaction-item:last-child {
+  border: none;
+}
+.transaction-item__ref {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--gris-texte);
+  background: var(--gris-clair);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.transaction-item__user {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.transaction-item__meta {
+  font-size: 0.8rem;
+  color: var(--gris-texte);
+}
+.transaction-item__montant {
+  font-weight: 900;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+/* ── Upload zone PDF ─────────────────────────────────────────── */
+.upload-zone {
+  border: 2px dashed var(--gris-bordure);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  background: var(--gris-clair);
+}
+.upload-zone:hover,
+.upload-zone.drag-over {
+  border-color: var(--vert);
+  background: rgba(26, 107, 60, 0.04);
+}
+.upload-zone__icone {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+.upload-zone__titre {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.upload-zone__texte {
+  font-size: 0.85rem;
+  color: var(--gris-texte);
+}
+.upload-zone input[type="file"] {
+  display: none;
+}
+
+/* ── Statut dot ──────────────────────────────────────────────── */
+.statut-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+.statut-dot--vert {
+  background: var(--vert-clair);
+}
+.statut-dot--orange {
+  background: var(--orange);
+}
+.statut-dot--rouge {
+  background: var(--rouge);
+}
+.statut-dot--gris {
+  background: var(--gris-texte);
+}
+
+/* ── Notification form ───────────────────────────────────────── */
+.notif-cible {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.notif-cible__option {
+  border: 2px solid var(--gris-bordure);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.notif-cible__option:hover {
+  border-color: var(--vert);
+}
+.notif-cible__option.actif {
+  border-color: var(--vert);
+  background: rgba(26, 107, 60, 0.06);
+}
+.notif-cible__icone {
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+.notif-cible__label {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.notif-cible__count {
+  font-size: 0.75rem;
+  color: var(--gris-texte);
+}

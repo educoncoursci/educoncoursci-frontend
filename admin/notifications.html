@@ -1,0 +1,379 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notifications — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            ⚙️
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo">⚙️ Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📊</span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🏛️</span> Concours</a
+          >
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📄</span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🎬</span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📝</span> QCM</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">👥</span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">💳</span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien actif"
+            ><span class="admin-sidebar__icone">🔔</span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🌐</span> Voir le site</a
+          >
+        </aside>
+
+        ```
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre">🔔 Notifications</div>
+              <div class="admin-topbar__sous">
+                Envoie des e-mails à tes utilisateurs
+              </div>
+            </div>
+            <button onclick="envoyerRappels()" class="btn btn--gris btn--sm">
+              ⏰ Rappels clôture auto
+            </button>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px">
+            <!-- Formulaire envoi -->
+            <div>
+              <div class="admin-card">
+                <div class="admin-card__header">
+                  <div class="admin-card__titre">
+                    ✉️ Envoyer une notification
+                  </div>
+                </div>
+                <div class="admin-card__corps">
+                  <!-- Cible -->
+                  <div style="margin-bottom: 18px">
+                    <label class="form-label" style="margin-bottom: 10px"
+                      >Destinataires</label
+                    >
+                    <div class="notif-cible">
+                      <div
+                        class="notif-cible__option actif"
+                        id="cible-tous"
+                        onclick="setCible('tous')"
+                      >
+                        <div class="notif-cible__icone">👥</div>
+                        <div class="notif-cible__label">Tous</div>
+                        <div class="notif-cible__count" id="count-tous">—</div>
+                      </div>
+                      <div
+                        class="notif-cible__option"
+                        id="cible-premium"
+                        onclick="setCible('premium')"
+                      >
+                        <div class="notif-cible__icone">⭐</div>
+                        <div class="notif-cible__label">Premium</div>
+                        <div class="notif-cible__count" id="count-premium">
+                          —
+                        </div>
+                      </div>
+                      <div
+                        class="notif-cible__option"
+                        id="cible-gratuit"
+                        onclick="setCible('gratuit')"
+                      >
+                        <div class="notif-cible__icone">🆓</div>
+                        <div class="notif-cible__label">Gratuits</div>
+                        <div class="notif-cible__count" id="count-gratuit">
+                          —
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-groupe">
+                    <label class="form-label">Titre <span>*</span></label>
+                    <input
+                      type="text"
+                      id="notif-titre"
+                      class="form-input"
+                      placeholder="Ex: Nouveau concours disponible !"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Message <span>*</span></label>
+                    <textarea
+                      id="notif-message"
+                      class="form-textarea"
+                      rows="5"
+                      placeholder="Contenu de la notification…"
+                    ></textarea>
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-checkbox">
+                      <input type="checkbox" id="notif-urgent" />
+                      <label for="notif-urgent">🔴 Marquer comme urgente</label>
+                    </label>
+                  </div>
+
+                  <div
+                    id="notif-result"
+                    class="hidden"
+                    style="margin-bottom: 12px"
+                  ></div>
+
+                  <button
+                    onclick="envoyerNotif()"
+                    id="btn-envoyer-notif"
+                    class="btn btn--primaire btn--full"
+                  >
+                    📧 Envoyer la notification
+                  </button>
+                </div>
+              </div>
+
+              <!-- Rappels automatiques -->
+              <div class="admin-card" style="margin-top: 20px">
+                <div class="admin-card__header">
+                  <div class="admin-card__titre">⏰ Rappels automatiques</div>
+                </div>
+                <div class="admin-card__corps">
+                  <p
+                    style="
+                      font-size: 0.88rem;
+                      color: var(--gris-texte);
+                      margin-bottom: 16px;
+                    "
+                  >
+                    Envoie automatiquement des rappels aux utilisateurs pour les
+                    concours dont la clôture approche (J-7, J-3, J-1).
+                  </p>
+                  <div
+                    id="rappels-result"
+                    class="hidden"
+                    style="margin-bottom: 12px"
+                  ></div>
+                  <button
+                    onclick="envoyerRappels()"
+                    id="btn-rappels"
+                    class="btn btn--outline-vert btn--full"
+                  >
+                    ⏰ Lancer les rappels maintenant
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Historique -->
+            <div>
+              <div class="admin-card">
+                <div class="admin-card__header">
+                  <div class="admin-card__titre">📋 Historique des envois</div>
+                  <button
+                    onclick="chargerHistorique()"
+                    style="
+                      font-size: 0.82rem;
+                      color: var(--vert);
+                      background: none;
+                      border: none;
+                      cursor: pointer;
+                      font-weight: 700;
+                    "
+                  >
+                    Actualiser
+                  </button>
+                </div>
+                <div class="admin-card__corps" id="historique-notifs">
+                  <div class="chargement"><div class="spinner"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let cibleActive = "tous";
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estAdmin()) {
+          window.location.href = "/";
+          return;
+        }
+        await Promise.all([chargerStats(), chargerHistorique()]);
+      });
+
+      async function chargerStats() {
+        try {
+          const data = await window.API.Admin.stats();
+          const u = data.utilisateurs;
+          document.getElementById("count-tous").textContent = u.total;
+          document.getElementById("count-premium").textContent = u.premium;
+          document.getElementById("count-gratuit").textContent = u.gratuit;
+        } catch {}
+      }
+
+      function setCible(cible) {
+        cibleActive = cible;
+        ["tous", "premium", "gratuit"].forEach((c) => {
+          document
+            .getElementById(`cible-${c}`)
+            .classList.toggle("actif", c === cible);
+        });
+      }
+
+      async function envoyerNotif() {
+        const titre = document.getElementById("notif-titre").value.trim();
+        const message = document.getElementById("notif-message").value.trim();
+        const urgent = document.getElementById("notif-urgent").checked;
+        const res = document.getElementById("notif-result");
+        const btn = document.getElementById("btn-envoyer-notif");
+
+        if (!titre || !message) {
+          affRes(res, "Titre et message requis.", "erreur");
+          return;
+        }
+
+        btn.classList.add("btn--chargement");
+        btn.disabled = true;
+        try {
+          const data = await window.API.Admin.envoyerNotif(
+            titre,
+            message,
+            cibleActive,
+            urgent,
+          );
+          affRes(
+            res,
+            `✅ Envoyé à ${data.envoyes} utilisateur(s) · ${data.echecs} échec(s)`,
+            "succes",
+          );
+          document.getElementById("notif-titre").value = "";
+          document.getElementById("notif-message").value = "";
+          document.getElementById("notif-urgent").checked = false;
+          await chargerHistorique();
+        } catch (err) {
+          affRes(res, err.message, "erreur");
+        } finally {
+          btn.classList.remove("btn--chargement");
+          btn.disabled = false;
+        }
+      }
+
+      async function envoyerRappels() {
+        const btn = document.getElementById("btn-rappels");
+        const res = document.getElementById("rappels-result");
+        btn.classList.add("btn--chargement");
+        btn.disabled = true;
+        try {
+          const data = await window.API.Admin.envoyerRappels();
+          affRes(res, data.message || "Rappels envoyés.", "succes");
+          res.classList.remove("hidden");
+        } catch (err) {
+          affRes(res, err.message, "erreur");
+          res.classList.remove("hidden");
+        } finally {
+          btn.classList.remove("btn--chargement");
+          btn.disabled = false;
+        }
+      }
+
+      async function chargerHistorique() {
+        const div = document.getElementById("historique-notifs");
+        try {
+          const data = await window.API.Admin.historiqueNotifs();
+          const liste = data.notifications || [];
+          if (liste.length === 0) {
+            div.innerHTML = `<div style="color:var(--gris-texte);font-size:0.9rem;">Aucune notification envoyée.</div>`;
+            return;
+          }
+          div.innerHTML = liste
+            .slice(0, 15)
+            .map(
+              (n) => `
+      <div style="padding:12px 0;border-bottom:1px solid var(--gris-clair);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px;">
+          <div style="font-weight:700;font-size:0.88rem;flex:1;">${n.urgent ? '<span style="color:var(--rouge);">🔴</span> ' : ""} ${n.titre}</div>
+          <span class="badge badge--gris" style="font-size:0.7rem;flex-shrink:0;">${n.cible || "tous"}</span>
+        </div>
+        <div style="font-size:0.78rem;color:var(--gris-texte);">${n.message?.slice(0, 80)}${n.message?.length > 80 ? "…" : ""}</div>
+        <div style="font-size:0.72rem;color:var(--gris-texte);margin-top:4px;">${n.date ? new Date(n.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "—"}</div>
+      </div>`,
+            )
+            .join("");
+        } catch {
+          div.innerHTML = `<div style="color:var(--gris-texte);">Erreur de chargement.</div>`;
+        }
+      }
+
+      function affRes(el, texte, type) {
+        el.className = `alerte alerte--${type === "succes" ? "succes" : "erreur"}`;
+        el.textContent = texte;
+        el.classList.remove("hidden");
+      }
+    </script>
+  </body>
+</html>

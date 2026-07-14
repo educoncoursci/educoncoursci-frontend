@@ -1,0 +1,439 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion PDFs — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            ⚙️
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo">⚙️ Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📊</span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🏛️</span> Concours</a
+          >
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien actif"
+            ><span class="admin-sidebar__icone">📄</span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🎬</span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📝</span> QCM</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">👥</span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">💳</span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🔔</span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">⚙️</span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🌐</span> Voir le site</a
+          >
+        </aside>
+
+        ```
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre">📄 Gestion des PDFs</div>
+              <div class="admin-topbar__sous" id="compteur-pdfs">
+                Chargement…
+              </div>
+            </div>
+            <button
+              onclick="ouvrirModal('modal-add-pdf')"
+              class="btn btn--primaire"
+            >
+              + Ajouter un PDF
+            </button>
+          </div>
+
+          <!-- Filtres -->
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              margin-bottom: 20px;
+              flex-wrap: wrap;
+            "
+          >
+            <input
+              type="text"
+              id="rech-pdf"
+              placeholder="🔍 Rechercher…"
+              oninput="filtrerPDFs()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                width: 220px;
+              "
+            />
+            <select
+              id="fil-cat-pdf"
+              onchange="filtrerPDFs()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Toutes catégories</option>
+              <option>BAC</option>
+              <option>BEPC</option>
+              <option>CEPE</option>
+              <option>Fonction Publique</option>
+              <option>Concours</option>
+              <option>INFAS</option>
+              <option>Police</option>
+              <option>Travail Social</option>
+              <option>Général</option>
+            </select>
+            <select
+              id="fil-acc-pdf"
+              onchange="filtrerPDFs()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Tous les accès</option>
+              <option value="false">🆓 Gratuits</option>
+              <option value="true">⭐ Premium</option>
+            </select>
+          </div>
+
+          <!-- Tableau -->
+          <div class="admin-tableau-wrap">
+            <table class="admin-tableau">
+              <thead>
+                <tr>
+                  <th>Titre</th>
+                  <th>Catégorie</th>
+                  <th>Pages</th>
+                  <th>Taille</th>
+                  <th>Téléch.</th>
+                  <th>Accès</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-pdfs">
+                <tr>
+                  <td
+                    colspan="7"
+                    style="
+                      text-align: center;
+                      padding: 40px;
+                      color: var(--gris-texte);
+                    "
+                  >
+                    Chargement…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <!-- Modal ajout PDF -->
+
+    <div class="modal-overlay" id="modal-add-pdf">
+      <div class="modal modal--lg">
+        <div class="modal__header">
+          <div class="modal__titre" id="modal-pdf-titre">➕ Ajouter un PDF</div>
+          <button class="modal__fermer" onclick="fermerModal('modal-add-pdf')">
+            ✕
+          </button>
+        </div>
+        <div class="modal__corps">
+          <div class="admin-form">
+            <div class="form-groupe admin-form__plein">
+              <label class="form-label">Titre <span>*</span></label
+              ><input
+                type="text"
+                id="pdf-titre"
+                class="form-input"
+                placeholder="Ex: Sujets corrigés BAC 2024"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Catégorie</label>
+              <select id="pdf-cat" class="form-input">
+                <option>BAC</option>
+                <option>BEPC</option>
+                <option>CEPE</option>
+                <option>Fonction Publique</option>
+                <option>Concours</option>
+                <option>INFAS</option>
+                <option>Police</option>
+                <option>Travail Social</option>
+                <option>Général</option>
+              </select>
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Accès</label>
+              <select id="pdf-premium" class="form-input">
+                <option value="false">🆓 Gratuit</option>
+                <option value="true">⭐ Premium</option>
+              </select>
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Nombre de pages</label
+              ><input
+                type="number"
+                id="pdf-pages"
+                class="form-input"
+                placeholder="Ex: 48"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Taille (ex: 2.4 MB)</label
+              ><input
+                type="text"
+                id="pdf-taille"
+                class="form-input"
+                placeholder="2.4 MB"
+              />
+            </div>
+            <div class="form-groupe admin-form__plein">
+              <label class="form-label"
+                >URL du PDF (Google Drive ou lien direct) <span>*</span></label
+              >
+              <input
+                type="url"
+                id="pdf-url"
+                class="form-input"
+                placeholder="https://drive.google.com/file/d/..."
+              />
+              <div class="form-hint">
+                Colle un lien Google Drive (partage public) ou un lien direct
+                vers un fichier PDF.
+              </div>
+            </div>
+            <div class="form-groupe admin-form__plein">
+              <label class="form-label">Description (optionnel)</label
+              ><textarea
+                id="pdf-desc"
+                class="form-textarea"
+                placeholder="Contenu du document…"
+                rows="2"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal__pied">
+          <button onclick="fermerModal('modal-add-pdf')" class="btn btn--gris">
+            Annuler
+          </button>
+          <button
+            onclick="sauvegarderPDF()"
+            class="btn btn--primaire"
+            id="btn-save-pdf"
+          >
+            💾 Sauvegarder
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let tousPDFs = [];
+      let editPdfId = null;
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estAdmin()) {
+          window.location.href = "/";
+          return;
+        }
+        await charger();
+      });
+
+      async function charger() {
+        try {
+          const data = await window.API.PDFs.liste({ limit: 200 });
+          tousPDFs = data.pdfs || [];
+          filtrerPDFs();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      function filtrerPDFs() {
+        const rech = document.getElementById("rech-pdf").value.toLowerCase();
+        const cat = document.getElementById("fil-cat-pdf").value;
+        const acc = document.getElementById("fil-acc-pdf").value;
+        const liste = tousPDFs.filter((p) => {
+          if (rech && !p.titre.toLowerCase().includes(rech)) return false;
+          if (cat && p.categorie !== cat) return false;
+          if (acc !== "" && String(p.premium) !== acc) return false;
+          return true;
+        });
+        document.getElementById("compteur-pdfs").textContent =
+          `${liste.length} / ${tousPDFs.length} PDFs`;
+        const tbody = document.getElementById("tbody-pdfs");
+        if (liste.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = liste
+          .map(
+            (p) => `
+    <tr>
+      <td style="font-weight:700;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.titre}</td>
+      <td><span class="badge badge--gris" style="font-size:0.72rem;">${p.categorie || "—"}</span></td>
+      <td style="font-size:0.85rem;">${p.pages || "—"}</td>
+      <td style="font-size:0.82rem;color:var(--gris-texte);">${p.taille || "—"}</td>
+      <td style="font-size:0.85rem;">⬇ ${p.telechargements || 0}</td>
+      <td>${p.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐</span>' : '<span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span>'}</td>
+      <td><div class="admin-tableau__actions">
+        <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${p.id})" title="Modifier">✏️</button>
+        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${p.id},'${p.titre.replace(/'/g, "\\'")}')">🗑️</button>
+      </div></td>
+    </tr>`,
+          )
+          .join("");
+      }
+
+      function editer(id) {
+        const p = tousPDFs.find((x) => x.id === id);
+        if (!p) return;
+        editPdfId = id;
+        document.getElementById("modal-pdf-titre").textContent =
+          "✏️ Modifier le PDF";
+        document.getElementById("pdf-titre").value = p.titre || "";
+        document.getElementById("pdf-cat").value = p.categorie || "";
+        document.getElementById("pdf-premium").value = String(
+          p.premium || false,
+        );
+        document.getElementById("pdf-pages").value = p.pages || "";
+        document.getElementById("pdf-taille").value = p.taille || "";
+        document.getElementById("pdf-url").value = p.url || "";
+        document.getElementById("pdf-desc").value = p.description || "";
+        ouvrirModal("modal-add-pdf");
+      }
+
+      async function sauvegarderPDF() {
+        const payload = {
+          titre: document.getElementById("pdf-titre").value.trim(),
+          categorie: document.getElementById("pdf-cat").value,
+          premium: document.getElementById("pdf-premium").value === "true",
+          pages: parseInt(document.getElementById("pdf-pages").value) || null,
+          taille: document.getElementById("pdf-taille").value.trim(),
+          url: document.getElementById("pdf-url").value.trim(),
+          description: document.getElementById("pdf-desc").value.trim(),
+        };
+        if (!payload.titre || !payload.url) {
+          window.afficherToast("Titre et URL requis.", "warn");
+          return;
+        }
+        const btn = document.getElementById("btn-save-pdf");
+        btn.classList.add("btn--chargement");
+        btn.disabled = true;
+        try {
+          if (editPdfId) {
+            await window.API.PDFs.modifier(editPdfId, payload);
+            window.afficherToast("PDF modifié !", "succes");
+          } else {
+            const fd = new FormData();
+            Object.entries(payload).forEach(
+              ([k, v]) => v !== null && fd.append(k, v),
+            );
+            await window.API.PDFs.uploader(fd);
+            window.afficherToast("PDF ajouté !", "succes");
+          }
+          fermerModal("modal-add-pdf");
+          editPdfId = null;
+          await charger();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        } finally {
+          btn.classList.remove("btn--chargement");
+          btn.disabled = false;
+        }
+      }
+
+      async function supprimer(id, titre) {
+        if (!confirm(`Supprimer "${titre}" ?`)) return;
+        try {
+          await window.API.PDFs.supprimer(id);
+          window.afficherToast("PDF supprimé.", "succes");
+          await charger();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,666 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Préparation aux Concours — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="QCM chronométrés, examens blancs, cours et vidéos pour préparer les concours CI."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .qcm-grille {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+      .matiere-tab {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+      }
+      .diff-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+      .diff-facile {
+        background: rgba(46, 204, 113, 0.12);
+        color: #1a6b3c;
+        border: 1px solid rgba(46, 204, 113, 0.3);
+      }
+      .diff-moyen {
+        background: rgba(245, 130, 13, 0.12);
+        color: #c84b11;
+        border: 1px solid rgba(245, 130, 13, 0.3);
+      }
+      .diff-difficile {
+        background: rgba(217, 0, 13, 0.1);
+        color: #d9000d;
+        border: 1px solid rgba(217, 0, 13, 0.2);
+      }
+      .score-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .score-bar__label {
+        font-size: 0.8rem;
+        color: var(--gris-texte);
+        min-width: 110px;
+      }
+      @media (max-width: 900px) {
+        .qcm-grille {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        .qcm-grille {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <ul class="navbar__links">
+          <li><a href="/concours.html" class="navbar__link">Concours</a></li>
+          <li>
+            <a href="/preparation.html" class="navbar__link actif"
+              >Préparation</a
+            >
+          </li>
+          <li>
+            <a href="/bibliotheque.html" class="navbar__link">Bibliothèque</a>
+          </li>
+          <li><a href="/videos.html" class="navbar__link">Vidéos</a></li>
+          <li>
+            <a href="/simulateur.html" class="navbar__link">Examen blanc</a>
+          </li>
+          <li><a href="/boutique.html" class="navbar__link">Premium ⭐</a></li>
+        </ul>
+        <div class="navbar__actions" id="navbar-actions">
+          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"
+            >Connexion</a
+          >
+          <a href="/auth/register.html" class="btn btn--primaire btn--sm"
+            >Inscription</a
+          >
+        </div>
+        <button class="navbar__hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="navbar__mobile" id="menu-mobile">
+        <a href="/concours.html" class="navbar__link">🏛️ Concours</a>
+        <a href="/preparation.html" class="navbar__link">📝 Préparation</a>
+        <a href="/simulateur.html" class="navbar__link">⏱️ Examen blanc</a>
+        <a href="/boutique.html" class="navbar__link">⭐ Premium</a>
+      </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header--bleu page-header main-content">
+      <div class="container">
+        <span
+          class="section__tag"
+          style="
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            margin-bottom: 12px;
+            display: inline-block;
+          "
+          >📝 Préparation</span
+        >
+        <h1>Prépare-toi à réussir</h1>
+        <p>
+          QCM chronométrés, examens blancs, cours et vidéos — tout pour ton
+          concours CI.
+        </p>
+      </div>
+    </div>
+
+    <!-- ACCÈS RAPIDE -->
+
+    <div
+      style="
+        background: var(--blanc);
+        border-bottom: 1px solid var(--gris-bordure);
+        padding: 20px 0;
+      "
+    >
+      <div class="container">
+        <div
+          style="
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+          "
+        >
+          <a href="#section-qcm" class="btn btn--outline-vert btn--sm"
+            >📝 QCM</a
+          >
+          <a href="/simulateur.html" class="btn btn--outline-vert btn--sm"
+            >⏱️ Examen blanc</a
+          >
+          <a href="/bibliotheque.html" class="btn btn--outline-vert btn--sm"
+            >📚 Cours PDF</a
+          >
+          <a href="/videos.html" class="btn btn--outline-vert btn--sm"
+            >🎬 Vidéos</a
+          >
+          <a href="/cv-generator.html" class="btn btn--outline-vert btn--sm"
+            >🤖 CV & LM</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <main style="padding: 40px 0 60px; background: var(--gris-clair)">
+      <div class="container">
+        ```
+        <!-- MES STATS (si connecté) -->
+        <div id="section-mes-stats" class="hidden mb-4">
+          <div
+            class="detail-card"
+            style="
+              background: var(--blanc);
+              border-radius: var(--radius-lg);
+              padding: 22px;
+              box-shadow: var(--ombre-sm);
+              margin-bottom: 28px;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 18px;
+              "
+            >
+              <h3 style="margin: 0">📊 Mes statistiques</h3>
+              <a
+                href="/dashboard/mes-scores.html"
+                style="font-size: 0.85rem; color: var(--vert); font-weight: 700"
+                >Voir tout →</a
+              >
+            </div>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 14px;
+              "
+              id="mes-stats-grille"
+            >
+              <div class="stat-card">
+                <div>
+                  <div class="stat-card__label">QCM complétés</div>
+                  <div class="stat-card__valeur" id="stat-tentatives">—</div>
+                </div>
+                <div class="stat-card__icone">📝</div>
+              </div>
+              <div class="stat-card stat-card--bleu">
+                <div>
+                  <div class="stat-card__label">Score moyen</div>
+                  <div class="stat-card__valeur" id="stat-moyenne">—</div>
+                </div>
+                <div
+                  class="stat-card__icone"
+                  style="background: rgba(10, 110, 189, 0.1)"
+                >
+                  📊
+                </div>
+              </div>
+              <div class="stat-card stat-card--orange">
+                <div>
+                  <div class="stat-card__label">Meilleur score</div>
+                  <div class="stat-card__valeur" id="stat-meilleur">—</div>
+                </div>
+                <div
+                  class="stat-card__icone"
+                  style="background: rgba(245, 130, 13, 0.1)"
+                >
+                  🏆
+                </div>
+              </div>
+              <div class="stat-card stat-card--violet">
+                <div>
+                  <div class="stat-card__label">Matières</div>
+                  <div class="stat-card__valeur" id="stat-matieres">—</div>
+                </div>
+                <div
+                  class="stat-card__icone"
+                  style="background: rgba(123, 47, 190, 0.1)"
+                >
+                  📚
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QCM -->
+        <section id="section-qcm" style="margin-bottom: 48px">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 20px;
+              flex-wrap: wrap;
+              gap: 12px;
+            "
+          >
+            <div>
+              <h2 style="margin-bottom: 4px">📝 QCM de préparation</h2>
+              <p style="color: var(--gris-texte); font-size: 0.9rem; margin: 0">
+                Questions corrigées par l'IA avec explications détaillées.
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center">
+              <select
+                id="filtre-difficulte"
+                onchange="filtrerQCM()"
+                style="
+                  padding: 8px 12px;
+                  border: 1.5px solid var(--gris-bordure);
+                  border-radius: var(--radius-md);
+                  font-size: 0.85rem;
+                  outline: none;
+                  background: var(--blanc);
+                "
+              >
+                <option value="">Toutes les difficultés</option>
+                <option value="Facile">Facile</option>
+                <option value="Moyen">Moyen</option>
+                <option value="Difficile">Difficile</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Onglets matières -->
+          <div class="matiere-tab" id="onglets-matieres">
+            <button
+              class="filtre-btn actif"
+              data-matiere=""
+              onclick="changerMatiere(this, '')"
+            >
+              Toutes
+            </button>
+          </div>
+
+          <!-- Grille QCM -->
+          <div class="qcm-grille" id="liste-qcm">
+            <div
+              class="skeleton"
+              style="height: 160px; border-radius: 16px"
+            ></div>
+            <div
+              class="skeleton"
+              style="height: 160px; border-radius: 16px"
+            ></div>
+            <div
+              class="skeleton"
+              style="height: 160px; border-radius: 16px"
+            ></div>
+            <div
+              class="skeleton"
+              style="height: 160px; border-radius: 16px"
+            ></div>
+            <div
+              class="skeleton"
+              style="height: 160px; border-radius: 16px"
+            ></div>
+            <div
+              class="skeleton"
+              style="height: 160px; border-radius: 16px"
+            ></div>
+          </div>
+        </section>
+
+        <!-- EXAMEN BLANC -->
+        <section style="margin-bottom: 48px">
+          <div
+            style="
+              background: linear-gradient(
+                135deg,
+                var(--bleu-fonce),
+                var(--bleu)
+              );
+              border-radius: var(--radius-xl);
+              padding: 36px;
+              color: #fff;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              flex-wrap: wrap;
+              gap: 20px;
+            "
+          >
+            <div>
+              <h2 style="color: #fff; margin-bottom: 8px">⏱️ Examen Blanc</h2>
+              <p style="opacity: 0.85; max-width: 480px; margin: 0">
+                Simule les conditions réelles du concours : toutes les matières,
+                timer, correction automatique. Identifie tes points faibles.
+              </p>
+              <div
+                style="
+                  display: flex;
+                  gap: 12px;
+                  margin-top: 20px;
+                  flex-wrap: wrap;
+                "
+              >
+                <div
+                  style="
+                    background: rgba(255, 255, 255, 0.15);
+                    padding: 10px 16px;
+                    border-radius: 10px;
+                    font-size: 0.88rem;
+                  "
+                >
+                  ⏰ 1h00 chronométré
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 255, 255, 0.15);
+                    padding: 10px 16px;
+                    border-radius: 10px;
+                    font-size: 0.88rem;
+                  "
+                >
+                  📝 Toutes matières
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 255, 255, 0.15);
+                    padding: 10px 16px;
+                    border-radius: 10px;
+                    font-size: 0.88rem;
+                  "
+                >
+                  🤖 Correction IA
+                </div>
+              </div>
+            </div>
+            <a href="/simulateur.html" class="btn btn--outline-blanc btn--lg">
+              Démarrer l'examen →
+            </a>
+          </div>
+        </section>
+
+        <!-- RESSOURCES COMPLÉMENTAIRES -->
+        <section>
+          <h2 style="margin-bottom: 20px">📚 Ressources complémentaires</h2>
+          <div class="grille-3">
+            <a
+              href="/bibliotheque.html"
+              class="card"
+              style="
+                padding: 24px;
+                text-decoration: none;
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+              "
+            >
+              <div style="font-size: 2.5rem; flex-shrink: 0">📄</div>
+              <div>
+                <h3 style="font-size: 1rem; margin-bottom: 6px">
+                  Bibliothèque PDF
+                </h3>
+                <p
+                  style="
+                    font-size: 0.85rem;
+                    color: var(--gris-texte);
+                    margin: 0;
+                  "
+                >
+                  Cours complets, sujets corrigés, fiches de révision.
+                </p>
+              </div>
+            </a>
+            <a
+              href="/videos.html"
+              class="card"
+              style="
+                padding: 24px;
+                text-decoration: none;
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+              "
+            >
+              <div style="font-size: 2.5rem; flex-shrink: 0">🎬</div>
+              <div>
+                <h3 style="font-size: 1rem; margin-bottom: 6px">
+                  Cours en Vidéo
+                </h3>
+                <p
+                  style="
+                    font-size: 0.85rem;
+                    color: var(--gris-texte);
+                    margin: 0;
+                  "
+                >
+                  Explications visuelles par des formateurs ivoiriens.
+                </p>
+              </div>
+            </a>
+            <a
+              href="/cv-generator.html"
+              class="card"
+              style="
+                padding: 24px;
+                text-decoration: none;
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+              "
+            >
+              <div style="font-size: 2.5rem; flex-shrink: 0">🤖</div>
+              <div>
+                <h3 style="font-size: 1rem; margin-bottom: 6px">
+                  Générateur CV/LM IA
+                </h3>
+                <p
+                  style="
+                    font-size: 0.85rem;
+                    color: var(--gris-texte);
+                    margin: 0;
+                  "
+                >
+                  CV et lettre de motivation adaptés aux concours CI.
+                </p>
+              </div>
+            </a>
+          </div>
+        </section>
+        ```
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grille">
+          <div>
+            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <p class="footer__desc">Préparation complète aux concours CI.</p>
+          </div>
+          <div>
+            <div class="footer__titre-col">Préparer</div>
+            <a href="/preparation.html" class="footer__lien">QCM</a
+            ><a href="/simulateur.html" class="footer__lien">Examen blanc</a
+            ><a href="/bibliotheque.html" class="footer__lien">Bibliothèque</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Services</div>
+            <a href="/cv-generator.html" class="footer__lien">CV & LM IA</a
+            ><a href="/boutique.html" class="footer__lien">Premium</a
+            ><a href="/alertes.html" class="footer__lien">Alertes</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Compte</div>
+            <a href="/auth/login.html" class="footer__lien">Connexion</a
+            ><a href="/dashboard/index.html" class="footer__lien">Mon espace</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bas">
+        <div class="container">© 2026 EduConcoursCI</div>
+      </div>
+    </footer>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let tousQCM = [];
+      let matiereActive = "";
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        await Promise.all([chargerQCM(), chargerStats()]);
+      });
+
+      async function chargerQCM() {
+        try {
+          const data = await window.API.QCM.liste({ limit: 50 });
+          tousQCM = data.qcm || [];
+
+          // Onglets matières
+          const matieres = [
+            ...new Set(tousQCM.map((q) => q.matiere).filter(Boolean)),
+          ];
+          const onglets = document.getElementById("onglets-matieres");
+          onglets.innerHTML =
+            `<button class="filtre-btn actif" data-matiere="" onclick="changerMatiere(this,'')">Toutes</button>` +
+            matieres
+              .map(
+                (m) =>
+                  `<button class="filtre-btn" data-matiere="${m}" onclick="changerMatiere(this,'${m}')">${m}</button>`,
+              )
+              .join("");
+
+          afficherQCM();
+        } catch {
+          document.getElementById("liste-qcm").innerHTML =
+            `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gris-texte);">Impossible de charger les QCM.</div>`;
+        }
+      }
+
+      function filtrerQCM() {
+        afficherQCM();
+      }
+
+      function changerMatiere(btn, matiere) {
+        matiereActive = matiere;
+        document
+          .querySelectorAll(".matiere-tab .filtre-btn")
+          .forEach((b) => b.classList.remove("actif"));
+        btn.classList.add("actif");
+        afficherQCM();
+      }
+
+      function afficherQCM() {
+        const difficulte = document.getElementById("filtre-difficulte").value;
+        const session = window.Auth?.getSession();
+
+        let liste = tousQCM.filter((q) => {
+          if (matiereActive && q.matiere !== matiereActive) return false;
+          if (difficulte && q.difficulte !== difficulte) return false;
+          return true;
+        });
+
+        const conteneur = document.getElementById("liste-qcm");
+        if (liste.length === 0) {
+          conteneur.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gris-texte);">Aucun QCM trouvé pour ces filtres.</div>`;
+          return;
+        }
+
+        const DIFF_CLASS = {
+          Facile: "diff-facile",
+          Moyen: "diff-moyen",
+          Difficile: "diff-difficile",
+        };
+        const DIFF_EMOJI = { Facile: "🟢", Moyen: "🟡", Difficile: "🔴" };
+
+        conteneur.innerHTML = liste
+          .map((q) => {
+            const verrouille =
+              q.verrouille || (q.premium && (!session || !session.premium));
+            return `
+      <div class="card-qcm ${verrouille ? "" : ""}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div class="card-qcm__icone">📝</div>
+          ${verrouille ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--vert">🆓 Gratuit</span>'}
+        </div>
+        <div class="card-qcm__titre">${q.titre}</div>
+        <div class="card-qcm__meta">
+          <span class="diff-badge ${DIFF_CLASS[q.difficulte] || "diff-moyen"}">${DIFF_EMOJI[q.difficulte] || "🟡"} ${q.difficulte || "Moyen"}</span>
+          <span class="badge badge--gris" style="margin-left:6px;">${q.matiere}</span>
+        </div>
+        <div class="card-qcm__stats">
+          <span class="card-qcm__stat">📊 ${q.tentatives || 0} tentatives</span>
+          <span class="card-qcm__stat" style="font-weight:700;color:var(--gris-texte);">${typeof q.questions === "number" ? q.questions : q.questions?.length || "?"} questions</span>
+        </div>
+        ${
+          verrouille
+            ? `<a href="/boutique.html" class="btn btn--orange btn--sm btn--full">⭐ Débloquer Premium</a>`
+            : `<a href="/quiz.html?id=${q.id}" class="btn btn--primaire btn--sm btn--full">Commencer →</a>`
+        }
+      </div>`;
+          })
+          .join("");
+      }
+
+      async function chargerStats() {
+        const session = window.Auth?.getSession();
+        if (!session) return;
+
+        document.getElementById("section-mes-stats").classList.remove("hidden");
+        try {
+          const scores = JSON.parse(session.scores_json || "[]");
+          if (scores.length === 0) return;
+          const moy = Math.round(
+            scores.reduce((s, sc) => s + (sc.pourcentage || 0), 0) /
+              scores.length,
+          );
+          const best = Math.max(...scores.map((sc) => sc.pourcentage || 0));
+          const mats = new Set(scores.map((sc) => sc.qcmTitre)).size;
+          document.getElementById("stat-tentatives").textContent =
+            scores.length;
+          document.getElementById("stat-moyenne").textContent = `${moy}%`;
+          document.getElementById("stat-meilleur").textContent = `${best}%`;
+          document.getElementById("stat-matieres").textContent = mats;
+        } catch {}
+      }
+    </script>
+  </body>
+</html>

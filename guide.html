@@ -1,0 +1,594 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guide d'utilisation — EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .guide-nav {
+        position: sticky;
+        top: calc(var(--navbar-h)+20px);
+      }
+      .guide-nav a {
+        display: block;
+        padding: 8px 14px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--gris-texte);
+        border-radius: 8px;
+        transition: var(--transition);
+        margin-bottom: 4px;
+      }
+      .guide-nav a:hover,
+      .guide-nav a.actif {
+        background: rgba(26, 107, 60, 0.08);
+        color: var(--vert);
+      }
+      .guide-section {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        margin-bottom: 24px;
+        box-shadow: var(--ombre-sm);
+        scroll-margin-top: calc(var(--navbar-h)+20px);
+      }
+      .guide-etape {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+      .guide-num {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--vert);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+      }
+      @media (max-width: 900px) {
+        .guide-layout {
+          flex-direction: column;
+        }
+        .guide-nav {
+          position: static;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions">
+          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"
+            >Connexion</a
+          >
+          <a href="/auth/register.html" class="btn btn--primaire btn--sm"
+            >Inscription</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <div
+      class="page-header main-content"
+      style="background: linear-gradient(135deg, #1a3a6b, #0a6ebd)"
+    >
+      <div class="container">
+        <h1>📖 Guide d'utilisation</h1>
+        <p>Tout ce qu'il faut savoir pour tirer le meilleur d'EduConcoursCI.</p>
+      </div>
+    </div>
+
+    <main style="padding: 36px 0 60px; background: var(--gris-clair)">
+      <div class="container">
+        <div
+          class="guide-layout"
+          style="display: flex; gap: 28px; align-items: flex-start"
+        >
+          ```
+          <!-- Navigation latérale -->
+          <aside style="width: 220px; flex-shrink: 0" class="guide-nav">
+            <div
+              style="
+                background: var(--blanc);
+                border-radius: var(--radius-lg);
+                padding: 16px;
+                box-shadow: var(--ombre-sm);
+              "
+            >
+              <div
+                style="
+                  font-size: 0.75rem;
+                  font-weight: 800;
+                  color: var(--gris-texte);
+                  text-transform: uppercase;
+                  letter-spacing: 0.5px;
+                  margin-bottom: 10px;
+                "
+              >
+                Sommaire
+              </div>
+              <a href="#debuter">🚀 Débuter</a>
+              <a href="#concours">🏛️ Concours</a>
+              <a href="#preparation">📝 Préparation</a>
+              <a href="#bibliotheque">📚 Bibliothèque</a>
+              <a href="#premium">⭐ Premium</a>
+              <a href="#paiement">💳 Paiement</a>
+              <a href="#cv">🤖 CV & LM</a>
+              <a href="#alertes">🔔 Alertes</a>
+              <a href="#faq">❓ FAQ</a>
+            </div>
+          </aside>
+
+          <!-- Contenu -->
+          <div style="flex: 1; min-width: 0">
+            <div class="guide-section" id="debuter">
+              <h2 style="margin-bottom: 18px">🚀 Débuter sur EduConcoursCI</h2>
+              <div class="guide-etape">
+                <div class="guide-num">1</div>
+                <div>
+                  <strong>Crée un compte gratuit</strong> — Va sur
+                  <a href="/auth/register.html" style="color: var(--vert)"
+                    >/auth/register.html</a
+                  >
+                  et remplis le formulaire. C'est gratuit et immédiat.
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-num">2</div>
+                <div>
+                  <strong>Explore les concours</strong> — Consulte la liste
+                  complète des concours CI avec les filtres par catégorie,
+                  statut et niveau.
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-num">3</div>
+                <div>
+                  <strong>Fais des QCM</strong> — Entraîne-toi avec les quiz
+                  chronométrés gratuits. La correction et les conseils IA sont
+                  inclus.
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-num">4</div>
+                <div>
+                  <strong>Active les alertes</strong> — Reçois les nouvelles
+                  inscriptions directement dans ta boîte e-mail.
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-num">5</div>
+                <div>
+                  <strong>Passe Premium</strong> (optionnel) — Pour accéder aux
+                  PDFs, vidéos et QCM avancés, souscris un abonnement par Wave
+                  ou Orange Money.
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-section" id="concours">
+              <h2 style="margin-bottom: 18px">
+                🏛️ Comment utiliser la section Concours
+              </h2>
+              <p>
+                La section Concours liste tous les concours de la Fonction
+                Publique, des grandes écoles et du secteur de la sécurité de
+                Côte d'Ivoire.
+              </p>
+              <ul style="padding-left: 20px; line-height: 2">
+                <li>
+                  Utilise les <strong>filtres</strong> (statut, catégorie,
+                  niveau) pour affiner ta recherche
+                </li>
+                <li>
+                  Clique sur un concours pour voir les
+                  <strong>pièces à fournir</strong> et les
+                  <strong>centres de dépôt</strong>
+                </li>
+                <li>
+                  Sauvegarde tes concours favoris avec le bouton
+                  <strong>"♡ Sauvegarder"</strong>
+                </li>
+                <li>
+                  Partage un concours directement sur
+                  <strong>WhatsApp</strong> depuis la fiche
+                </li>
+                <li>
+                  Les concours
+                  <span class="badge badge--rouge">🔴 Ouverts</span> sont ceux
+                  pour lesquels les inscriptions sont en cours
+                </li>
+              </ul>
+            </div>
+
+            <div class="guide-section" id="preparation">
+              <h2 style="margin-bottom: 18px">📝 Préparation aux concours</h2>
+              <p style="margin-bottom: 14px">
+                La section Préparation propose des QCM chronométrés et des
+                examens blancs.
+              </p>
+              <div
+                style="
+                  background: rgba(10, 110, 189, 0.06);
+                  border-radius: 12px;
+                  padding: 16px;
+                  margin-bottom: 14px;
+                "
+              >
+                <strong style="color: var(--bleu)">QCM chronométrés</strong>
+                <ul
+                  style="
+                    padding-left: 20px;
+                    margin-top: 8px;
+                    line-height: 1.9;
+                    font-size: 0.9rem;
+                  "
+                >
+                  <li>
+                    Filtre par matière (Culture Générale, Logique, Travail
+                    Social…)
+                  </li>
+                  <li>Sélectionne la difficulté (Facile, Moyen, Difficile)</li>
+                  <li>
+                    Les réponses sont corrigées <strong>côté serveur</strong> —
+                    pas de triche possible
+                  </li>
+                  <li>
+                    Chaque question inclut une
+                    <strong>explication détaillée</strong>
+                  </li>
+                  <li>
+                    Un <strong>conseil IA personnalisé</strong> est généré selon
+                    ton score
+                  </li>
+                </ul>
+              </div>
+              <div
+                style="
+                  background: rgba(26, 107, 60, 0.06);
+                  border-radius: 12px;
+                  padding: 16px;
+                "
+              >
+                <strong style="color: var(--vert)">Examen blanc</strong>
+                <ul
+                  style="
+                    padding-left: 20px;
+                    margin-top: 8px;
+                    line-height: 1.9;
+                    font-size: 0.9rem;
+                  "
+                >
+                  <li>
+                    Configure la durée (30 min à 2h) et le nombre de questions
+                  </li>
+                  <li>Toutes les matières sont mélangées aléatoirement</li>
+                  <li>Navigation libre entre les questions pendant l'examen</li>
+                  <li>
+                    Résultats détaillés <strong>par matière</strong> avec barres
+                    de progression
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="guide-section" id="bibliotheque">
+              <h2 style="margin-bottom: 18px">📚 Bibliothèque PDF</h2>
+              <p>
+                La bibliothèque contient des cours, sujets corrigés et fiches de
+                révision.
+              </p>
+              <ul style="padding-left: 20px; line-height: 2">
+                <li>
+                  Les PDFs
+                  <span class="badge badge--gratuit">🆓 Gratuit</span> sont
+                  téléchargeables avec un compte gratuit
+                </li>
+                <li>
+                  Les PDFs
+                  <span class="badge badge--premium">⭐ Premium</span>
+                  nécessitent un abonnement
+                </li>
+                <li>
+                  Utilise les filtres par catégorie (BAC, BEPC, Fonction
+                  Publique…) pour trouver tes documents
+                </li>
+              </ul>
+            </div>
+
+            <div class="guide-section" id="premium">
+              <h2 style="margin-bottom: 18px">⭐ Abonnement Premium</h2>
+              <p style="margin-bottom: 12px">
+                Le Premium débloque tout le contenu avancé de la plateforme.
+              </p>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 12px;
+                  margin-bottom: 16px;
+                "
+              >
+                <div
+                  style="
+                    background: var(--gris-clair);
+                    border-radius: 12px;
+                    padding: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 700;
+                      margin-bottom: 8px;
+                      color: var(--vert);
+                    "
+                  >
+                    ✅ Inclus dans Premium
+                  </div>
+                  <div style="font-size: 0.85rem; line-height: 1.9">
+                    Tous les PDFs · Toutes les vidéos · QCM difficiles · Examens
+                    blancs illimités · Générateur CV & LM IA · Fiches concours
+                    complètes
+                  </div>
+                </div>
+                <div
+                  style="
+                    background: var(--gris-clair);
+                    border-radius: 12px;
+                    padding: 14px;
+                  "
+                >
+                  <div style="font-weight: 700; margin-bottom: 8px">
+                    📋 Plans disponibles
+                  </div>
+                  <div style="font-size: 0.85rem; line-height: 1.9">
+                    🗓️ 1 Mois — 2 000 FCFA<br />🗓️ 3 Mois — 5 000 FCFA<br />🗓️
+                    12 Mois — 15 000 FCFA
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-section" id="paiement">
+              <h2 style="margin-bottom: 18px">💳 Comment payer</h2>
+              <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
+              >
+                <div
+                  style="
+                    background: #eff9ff;
+                    border-radius: 12px;
+                    padding: 16px;
+                    border: 1px solid #009ee230;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 800;
+                      color: #009ee2;
+                      margin-bottom: 10px;
+                    "
+                  >
+                    🌊 Via Wave CI
+                  </div>
+                  <ol
+                    style="
+                      padding-left: 18px;
+                      font-size: 0.88rem;
+                      line-height: 2;
+                    "
+                  >
+                    <li>Ouvre l'app Wave</li>
+                    <li>Envoie le montant exact au numéro marchand</li>
+                    <li>Note l'ID de transaction (ex: WA-AB12345)</li>
+                    <li>Saisis l'ID sur la page paiement</li>
+                  </ol>
+                </div>
+                <div
+                  style="
+                    background: #fff5ef;
+                    border-radius: 12px;
+                    padding: 16px;
+                    border: 1px solid #ff660030;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 800;
+                      color: #ff6600;
+                      margin-bottom: 10px;
+                    "
+                  >
+                    🟠 Via Orange Money
+                  </div>
+                  <ol
+                    style="
+                      padding-left: 18px;
+                      font-size: 0.88rem;
+                      line-height: 2;
+                    "
+                  >
+                    <li>Compose #150*1*1*NUMERO*MONTANT#</li>
+                    <li>Confirme avec ton PIN</li>
+                    <li>Note l'ID dans le SMS reçu</li>
+                    <li>Saisis l'ID sur la page paiement</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-section" id="cv">
+              <h2 style="margin-bottom: 18px">
+                🤖 Générateur CV & Lettre de Motivation
+              </h2>
+              <p style="margin-bottom: 12px">
+                L'IA Claude génère un document professionnel adapté au marché
+                ivoirien en 30 secondes.
+              </p>
+              <div class="guide-etape">
+                <div class="guide-num">1</div>
+                <div>Connecte-toi à ton compte (requis)</div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-num">2</div>
+                <div>
+                  Remplis le formulaire (infos personnelles, expériences,
+                  formations)
+                </div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-num">3</div>
+                <div>Clique "Générer" — l'IA rédige en ~30 secondes</div>
+              </div>
+              <div class="guide-etape">
+                <div class="guide-num">4</div>
+                <div>
+                  Copie le résultat dans Word / Google Docs, ou télécharge le
+                  PDF directement
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-section" id="alertes">
+              <h2 style="margin-bottom: 18px">🔔 Alertes e-mail</h2>
+              <p>
+                En créant un compte gratuit, tu t'inscris automatiquement aux
+                alertes. Tu recevras :
+              </p>
+              <ul style="padding-left: 20px; line-height: 2; margin-top: 8px">
+                <li>📨 Un e-mail dès qu'un nouveau concours est publié</li>
+                <li>
+                  ⏰ Des rappels J-7, J-3, J-1 avant la clôture des inscriptions
+                </li>
+                <li>
+                  🏆 Les notifications importantes de l'équipe EduConcoursCI
+                </li>
+              </ul>
+            </div>
+
+            <div class="guide-section" id="faq">
+              <h2 style="margin-bottom: 18px">❓ Questions fréquentes</h2>
+              <div style="display: flex; flex-direction: column; gap: 12px">
+                ${[ ["La plateforme est-elle gratuite ?","Oui, l'inscription et
+                l'accès de base sont entièrement gratuits. Le Premium (payant)
+                débloque les contenus avancés."], ["Mes données sont-elles
+                sécurisées ?","Oui. Les mots de passe sont hashés (bcrypt) et
+                les tokens JWT expirent automatiquement. Aucune donnée bancaire
+                n'est stockée."], ["Puis-je utiliser la plateforme hors ligne
+                ?","Partiellement. Le site peut être installé comme application
+                PWA (ajoute-le à l'écran d'accueil). Les pages déjà visitées
+                restent accessibles sans connexion."], ["Comment contacter le
+                support ?","Par e-mail à support@educoncoursci.ci. Nous
+                répondons en moins de 48h."], ["Les concours sont-ils mis à jour
+                en temps réel ?","Oui, notre équipe met à jour les fiches
+                concours dès les annonces officielles."], ].map(([q,r]) => `
+                <div
+                  style="
+                    border: 1px solid var(--gris-bordure);
+                    border-radius: 12px;
+                    padding: 16px;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 700;
+                      font-size: 0.95rem;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    ❓ ${q}
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.88rem;
+                      color: var(--gris-texte);
+                      line-height: 1.7;
+                    "
+                  >
+                    ${r}
+                  </div>
+                </div>
+                `).join("")}
+              </div>
+            </div>
+          </div>
+        </div>
+        ```
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grille">
+          <div>
+            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <p class="footer__desc">Guide complet de la plateforme.</p>
+          </div>
+          <div>
+            <div class="footer__titre-col">Navigation</div>
+            <a href="/concours.html" class="footer__lien">Concours</a
+            ><a href="/preparation.html" class="footer__lien">Préparation</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Services</div>
+            <a href="/boutique.html" class="footer__lien">Premium</a
+            ><a href="/alertes.html" class="footer__lien">Alertes</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Compte</div>
+            <a href="/auth/login.html" class="footer__lien">Connexion</a
+            ><a href="/auth/register.html" class="footer__lien">Inscription</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bas">
+        <div class="container">© 2026 EduConcoursCI</div>
+      </div>
+    </footer>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      // Surligne la section active dans la nav latérale
+      const sections = document.querySelectorAll(".guide-section");
+      const navLinks = document.querySelectorAll(".guide-nav a");
+      window.addEventListener(
+        "scroll",
+        () => {
+          let actif = "";
+          sections.forEach((s) => {
+            if (window.scrollY >= s.offsetTop - 120) actif = s.id;
+          });
+          navLinks.forEach((a) =>
+            a.classList.toggle("actif", a.getAttribute("href") === "#" + actif),
+          );
+        },
+        { passive: true },
+      );
+    </script>
+  </body>
+</html>

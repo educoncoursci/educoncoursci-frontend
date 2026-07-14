@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examens Nationaux — EduConcoursCI</title>
+  <meta name="description" content="BAC, BEPC, CEPE, BTS — Prépare les examens nationaux de Côte d'Ivoire avec EduConcoursCI.">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <style>
+    .examen-card {
+      background:var(--blanc);border-radius:var(--radius-xl);padding:28px;
+      box-shadow:var(--ombre-sm);border-top:5px solid var(--vert);
+      transition:var(--transition);text-decoration:none;color:inherit;
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .examen-card:hover { transform:translateY(-6px);box-shadow:var(--ombre-lg); }
+    .examen-card--bac    { border-top-color:#1A6B3C; }
+    .examen-card--bepc   { border-top-color:#0A6EBD; }
+    .examen-card--cepe   { border-top-color:#F5820D; }
+    .examen-card--bts    { border-top-color:#7B2FBE; }
+    .examen-icone { font-size:3rem; }
+    .examen-titre { font-size:1.4rem;font-weight:900; }
+    .examen-desc  { color:var(--gris-texte);font-size:0.9rem;line-height:1.7; }
+    .matiere-tag  { display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--gris-clair);border-radius:20px;font-size:0.78rem;font-weight:600;color:var(--texte); }
+    .stat-examen  { display:flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:600; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="navbar__inner">
+    <a href="/" class="navbar__logo"><div class="navbar__logo-icon">🎓</div><span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a>
+    <ul class="navbar__links">
+      <li><a href="/concours.html"    class="navbar__link">Concours</a></li>
+      <li><a href="/examens.html"     class="navbar__link actif">Examens</a></li>
+      <li><a href="/preparation.html" class="navbar__link">Préparation</a></li>
+      <li><a href="/bibliotheque.html"class="navbar__link">Bibliothèque</a></li>
+      <li><a href="/boutique.html"    class="navbar__link">Premium ⭐</a></li>
+    </ul>
+    <div class="navbar__actions" id="navbar-actions">
+      <a href="/auth/login.html"    class="btn btn--outline-vert btn--sm">Connexion</a>
+      <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription</a>
+    </div>
+    <button class="navbar__hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+  <div class="navbar__mobile" id="menu-mobile">
+    <a href="/concours.html"    class="navbar__link">🏛️ Concours</a>
+    <a href="/examens.html"     class="navbar__link">📋 Examens</a>
+    <a href="/preparation.html" class="navbar__link">📝 Préparation</a>
+    <a href="/boutique.html"    class="navbar__link">⭐ Premium</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+
+<div class="page-header main-content" style="background:linear-gradient(135deg,#C84B11,#F5820D);">
+  <div class="container">
+    <span class="section__tag" style="background:rgba(255,255,255,0.2);color:#fff;margin-bottom:12px;display:inline-block;">📋 Examens nationaux</span>
+    <h1>Examens Nationaux CI</h1>
+    <p>Prépare le BAC, BEPC, CEPE et BTS avec des cours, sujets corrigés et QCM spécialisés.</p>
+  </div>
+</div>
+
+<main style="background:var(--gris-clair);padding:48px 0 80px;">
+  <div class="container">
+
+```
+<!-- 4 examens principaux -->
+<div class="section__en-tete" style="text-align:center;margin-bottom:36px;">
+  <h2>Choisir ton examen</h2>
+  <p style="color:var(--gris-texte);">Contenus et ressources spécialisés pour chaque examen national ivoirien.</p>
+</div>
+
+<div class="grille-2" style="gap:24px;margin-bottom:48px;">
+
+  <!-- BAC -->
+  <div class="examen-card examen-card--bac">
+    <div class="examen-icone">🎓</div>
+    <div class="examen-titre" style="color:#1A6B3C;">Baccalauréat (BAC)</div>
+    <div class="examen-desc">L'examen national de fin de lycée. Prépare toutes les séries (A, B, C, D, E) avec des sujets corrigés officiels et des QCM par matière.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span class="matiere-tag">📐 Maths</span>
+      <span class="matiere-tag">🔬 Sciences</span>
+      <span class="matiere-tag">📚 Français</span>
+      <span class="matiere-tag">🌍 Histoire-Géo</span>
+      <span class="matiere-tag">🇬🇧 Anglais</span>
+      <span class="matiere-tag">⚗️ Chimie-Physique</span>
+    </div>
+    <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
+      <div class="stat-examen"><span>📄</span> Sujets corrigés</div>
+      <div class="stat-examen"><span>📝</span> QCM par série</div>
+      <div class="stat-examen"><span>🎬</span> Cours vidéo</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="/preparation.html?matiere=BAC" class="btn btn--primaire btn--sm">📝 QCM BAC</a>
+      <a href="/bibliotheque.html?categorie=BAC" class="btn btn--outline-vert btn--sm">📄 Sujets corrigés</a>
+    </div>
+  </div>
+
+  <!-- BEPC -->
+  <div class="examen-card examen-card--bepc">
+    <div class="examen-icone">📗</div>
+    <div class="examen-titre" style="color:#0A6EBD;">BEPC</div>
+    <div class="examen-desc">Le Brevet d'Études du Premier Cycle, examen de fin de collège. Révise toutes les matières avec des sujets officiels et annales corrigées.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span class="matiere-tag">📐 Maths</span>
+      <span class="matiere-tag">📚 Français</span>
+      <span class="matiere-tag">🌍 Histoire-Géo</span>
+      <span class="matiere-tag">🔬 Sciences Nat.</span>
+      <span class="matiere-tag">⚗️ Physique-Chimie</span>
+      <span class="matiere-tag">🇬🇧 Anglais</span>
+    </div>
+    <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
+      <div class="stat-examen"><span>📄</span> Annales</div>
+      <div class="stat-examen"><span>📝</span> QCM</div>
+      <div class="stat-examen"><span>📚</span> Fiches révision</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="/preparation.html?matiere=BEPC" class="btn btn--bleu btn--sm">📝 QCM BEPC</a>
+      <a href="/bibliotheque.html?categorie=BEPC" class="btn btn--sm" style="background:rgba(10,110,189,0.1);color:var(--bleu);border:1.5px solid rgba(10,110,189,0.3);">📄 Annales</a>
+    </div>
+  </div>
+
+  <!-- CEPE -->
+  <div class="examen-card examen-card--cepe">
+    <div class="examen-icone">📘</div>
+    <div class="examen-titre" style="color:#F5820D;">CEPE</div>
+    <div class="examen-desc">Le Certificat d'Études Primaires et Élémentaires, examen de fin de primaire (CM2). Des exercices adaptés et sujets corrigés pour les élèves.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span class="matiere-tag">📐 Calcul</span>
+      <span class="matiere-tag">📚 Dictée</span>
+      <span class="matiere-tag">✍️ Rédaction</span>
+      <span class="matiere-tag">🔬 Sciences</span>
+      <span class="matiere-tag">🌍 Histoire-Géo</span>
+      <span class="matiere-tag">🏃 EPS</span>
+    </div>
+    <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
+      <div class="stat-examen"><span>📄</span> Sujets types</div>
+      <div class="stat-examen"><span>📝</span> Exercices</div>
+      <div class="stat-examen"><span>📚</span> Leçons</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="/preparation.html?matiere=CEPE" class="btn btn--sm" style="background:var(--gradient-orange);color:#fff;border:none;">📝 Exercices CEPE</a>
+      <a href="/bibliotheque.html?categorie=CEPE" class="btn btn--sm" style="background:rgba(245,130,13,0.1);color:var(--orange);border:1.5px solid rgba(245,130,13,0.3);">📄 Sujets types</a>
+    </div>
+  </div>
+
+  <!-- BTS -->
+  <div class="examen-card examen-card--bts">
+    <div class="examen-icone">🏫</div>
+    <div class="examen-titre" style="color:#7B2FBE;">BTS</div>
+    <div class="examen-desc">Le Brevet de Technicien Supérieur, diplôme de niveau Bac+2. Prépare les épreuves écrites et orales de ta filière avec des cours spécialisés.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span class="matiere-tag">💼 Commerce</span>
+      <span class="matiere-tag">💻 Informatique</span>
+      <span class="matiere-tag">🏗️ Génie Civil</span>
+      <span class="matiere-tag">⚡ Électronique</span>
+      <span class="matiere-tag">🏥 Santé</span>
+      <span class="matiere-tag">🌿 Agriculture</span>
+    </div>
+    <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
+      <div class="stat-examen"><span>📄</span> Sujets corrigés</div>
+      <div class="stat-examen"><span>📝</span> QCM</div>
+      <div class="stat-examen"><span>🎬</span> Cours vidéo</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="/preparation.html?matiere=BTS" class="btn btn--sm" style="background:var(--violet);color:#fff;border:none;">📝 QCM BTS</a>
+      <a href="/bibliotheque.html?categorie=BTS" class="btn btn--sm" style="background:rgba(123,47,190,0.1);color:var(--violet);border:1.5px solid rgba(123,47,190,0.3);">📄 Sujets BTS</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Calendrier examens -->
+<div style="background:var(--blanc);border-radius:var(--radius-xl);padding:32px;box-shadow:var(--ombre-sm);margin-bottom:40px;">
+  <h3 style="margin-bottom:20px;">📅 Calendrier des examens 2026</h3>
+  <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+      <thead>
+        <tr style="background:var(--gris-clair);">
+          <th style="padding:12px 16px;text-align:left;font-weight:700;border-bottom:2px solid var(--gris-bordure);">Examen</th>
+          <th style="padding:12px 16px;text-align:left;font-weight:700;border-bottom:2px solid var(--gris-bordure);">Session</th>
+          <th style="padding:12px 16px;text-align:left;font-weight:700;border-bottom:2px solid var(--gris-bordure);">Période</th>
+          <th style="padding:12px 16px;text-align:left;font-weight:700;border-bottom:2px solid var(--gris-bordure);">Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${[
+          ["CEPE","Session normale","Avril - Mai 2026","🟡 À venir"],
+          ["BEPC","Session normale","Mai - Juin 2026","🟡 À venir"],
+          ["BAC série A, B","Session normale","Juin 2026","🟡 À venir"],
+          ["BAC séries C, D, E","Session normale","Juin 2026","🟡 À venir"],
+          ["BTS","Session normale","Juin - Juillet 2026","🟡 À venir"],
+          ["CEPE","Session de rattrapage","Juillet 2026","🔵 Planifié"],
+          ["BEPC","Session de rattrapage","Juillet - Août 2026","🔵 Planifié"],
+          ["BAC","Session de rattrapage","Août 2026","🔵 Planifié"],
+        ].map((r,i) => `
+          <tr style="border-bottom:1px solid var(--gris-clair);${i%2===0?"background:rgba(26,107,60,0.02)":""}">
+            <td style="padding:13px 16px;font-weight:700;">${r[0]}</td>
+            <td style="padding:13px 16px;">${r[1]}</td>
+            <td style="padding:13px 16px;color:var(--gris-texte);">${r[2]}</td>
+            <td style="padding:13px 16px;">${r[3]}</td>
+          </tr>`).join("")}
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:0.8rem;color:var(--gris-texte);margin-top:12px;">⚠️ Dates indicatives — Consulte le site officiel de la DECO (Direction des Examens et Concours) pour les dates officielles.</p>
+</div>
+
+<!-- CTA Premium -->
+<div style="background:var(--gradient-hero);border-radius:var(--radius-xl);padding:36px;color:#fff;text-align:center;">
+  <div style="font-size:3rem;margin-bottom:12px;">⭐</div>
+  <h3 style="color:#fff;font-size:1.5rem;margin-bottom:10px;">Accède à tous les sujets corrigés</h3>
+  <p style="opacity:0.85;max-width:480px;margin:0 auto 24px;line-height:1.7;">Les sujets corrigés officiels, annales et cours complets sont disponibles en Premium. Paiement Wave ou Orange Money.</p>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+    <a href="/boutique.html" class="btn btn--orange btn--lg">Voir les offres Premium →</a>
+    <a href="/bibliotheque.html" class="btn btn--outline-blanc">Explorer les PDFs gratuits</a>
+  </div>
+</div>
+```
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grille">
+      <div><div class="footer__logo">🎓 EduConcoursCI</div><p class="footer__desc">Préparation aux examens et concours CI.</p></div>
+      <div><div class="footer__titre-col">Examens</div>
+        <a href="/examens.html" class="footer__lien">BAC</a>
+        <a href="/examens.html" class="footer__lien">BEPC</a>
+        <a href="/examens.html" class="footer__lien">CEPE</a>
+        <a href="/examens.html" class="footer__lien">BTS</a>
+      </div>
+      <div><div class="footer__titre-col">Ressources</div>
+        <a href="/preparation.html" class="footer__lien">QCM</a>
+        <a href="/bibliotheque.html"class="footer__lien">PDFs</a>
+        <a href="/videos.html"      class="footer__lien">Vidéos</a>
+        <a href="/simulateur.html"  class="footer__lien">Examen blanc</a>
+      </div>
+      <div><div class="footer__titre-col">Compte</div>
+        <a href="/auth/login.html"    class="footer__lien">Connexion</a>
+        <a href="/auth/register.html" class="footer__lien">Inscription gratuite</a>
+        <a href="/boutique.html"      class="footer__lien">Premium</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bas"><div class="container">© 2026 EduConcoursCI — Abidjan, Côte d'Ivoire</div></div>
+</footer>
+
+<script src="/js/api.js"></script>
+
+<script src="/js/auth.js"></script>
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

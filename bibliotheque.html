@@ -1,0 +1,591 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bibliothèque PDF — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Cours PDF, sujets corrigés, fiches de révision pour les concours CI."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .pdf-grille {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+      .pdf-layout {
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+      }
+      .pdf-aside {
+        width: 240px;
+        flex-shrink: 0;
+        position: sticky;
+        top: calc(var(--navbar-h)+16px);
+      }
+      .pdf-main {
+        flex: 1;
+        min-width: 0;
+      }
+      @media (max-width: 1100px) {
+        .pdf-grille {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 900px) {
+        .pdf-layout {
+          flex-direction: column;
+        }
+        .pdf-aside {
+          width: 100%;
+          position: static;
+        }
+        .pdf-grille {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 500px) {
+        .pdf-grille {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <ul class="navbar__links">
+          <li><a href="/concours.html" class="navbar__link">Concours</a></li>
+          <li>
+            <a href="/preparation.html" class="navbar__link">Préparation</a>
+          </li>
+          <li>
+            <a href="/bibliotheque.html" class="navbar__link actif"
+              >Bibliothèque</a
+            >
+          </li>
+          <li><a href="/videos.html" class="navbar__link">Vidéos</a></li>
+          <li><a href="/boutique.html" class="navbar__link">Premium ⭐</a></li>
+        </ul>
+        <div class="navbar__actions" id="navbar-actions">
+          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"
+            >Connexion</a
+          >
+          <a href="/auth/register.html" class="btn btn--primaire btn--sm"
+            >Inscription</a
+          >
+        </div>
+        <button class="navbar__hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div
+      class="page-header main-content"
+      style="background: linear-gradient(135deg, #c84b11, #e65c00)"
+    >
+      <div class="container">
+        <span
+          class="section__tag"
+          style="
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            margin-bottom: 12px;
+            display: inline-block;
+          "
+          >📚 Bibliothèque</span
+        >
+        <h1>Bibliothèque PDF</h1>
+        <p>
+          Cours complets, sujets corrigés officiels et fiches de révision pour
+          préparer tes concours.
+        </p>
+        <div class="mt-3">
+          <div class="barre-recherche" style="max-width: 480px">
+            <input
+              type="text"
+              id="recherche-pdf"
+              placeholder="Rechercher un cours, une matière…"
+              autocomplete="off"
+            />
+            <button onclick="filtrerPDFs()">🔍</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main style="padding: 36px 0 60px; background: var(--gris-clair)">
+      <div class="container">
+        <div class="pdf-layout">
+          ```
+          <!-- Filtres latéraux -->
+          <aside class="pdf-aside">
+            <div class="card" style="padding: 18px">
+              <div
+                style="
+                  font-weight: 800;
+                  font-size: 0.95rem;
+                  margin-bottom: 16px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                🔧 Filtres
+                <button
+                  onclick="reinitFiltresPDF()"
+                  style="
+                    font-size: 0.75rem;
+                    color: var(--vert);
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    font-weight: 700;
+                  "
+                >
+                  Reset
+                </button>
+              </div>
+
+              <div style="margin-bottom: 16px">
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    font-weight: 800;
+                    color: var(--gris-texte);
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    margin-bottom: 8px;
+                  "
+                >
+                  Catégorie
+                </div>
+                <select
+                  id="filtre-cat-pdf"
+                  onchange="filtrerPDFs()"
+                  style="
+                    width: 100%;
+                    padding: 9px 12px;
+                    border: 1.5px solid var(--gris-bordure);
+                    border-radius: 10px;
+                    font-size: 0.88rem;
+                    outline: none;
+                    background: var(--blanc);
+                  "
+                >
+                  <option value="">Toutes</option>
+                  <option>BAC</option>
+                  <option>BEPC</option>
+                  <option>CEPE</option>
+                  <option>Fonction Publique</option>
+                  <option>Concours</option>
+                  <option>INFAS</option>
+                  <option>Police</option>
+                  <option>Travail Social</option>
+                  <option>Général</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 16px">
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    font-weight: 800;
+                    color: var(--gris-texte);
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    margin-bottom: 8px;
+                  "
+                >
+                  Accès
+                </div>
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 6px 0;
+                    cursor: pointer;
+                    font-size: 0.9rem;
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="acc-pdf"
+                    value=""
+                    onchange="filtrerPDFs()"
+                    checked
+                    style="accent-color: var(--vert)"
+                  />
+                  Tous
+                </label>
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 6px 0;
+                    cursor: pointer;
+                    font-size: 0.9rem;
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="acc-pdf"
+                    value="false"
+                    onchange="filtrerPDFs()"
+                    style="accent-color: var(--vert)"
+                  />
+                  🆓 Gratuits
+                </label>
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 6px 0;
+                    cursor: pointer;
+                    font-size: 0.9rem;
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="acc-pdf"
+                    value="true"
+                    onchange="filtrerPDFs()"
+                    style="accent-color: var(--vert)"
+                  />
+                  ⭐ Premium
+                </label>
+              </div>
+
+              <div>
+                <div
+                  style="
+                    font-size: 0.75rem;
+                    font-weight: 800;
+                    color: var(--gris-texte);
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    margin-bottom: 8px;
+                  "
+                >
+                  Trier par
+                </div>
+                <select
+                  id="tri-pdf"
+                  onchange="filtrerPDFs()"
+                  style="
+                    width: 100%;
+                    padding: 9px 12px;
+                    border: 1.5px solid var(--gris-bordure);
+                    border-radius: 10px;
+                    font-size: 0.88rem;
+                    outline: none;
+                    background: var(--blanc);
+                  "
+                >
+                  <option value="recent">Plus récents</option>
+                  <option value="dl">Plus téléchargés</option>
+                  <option value="pages-asc">Pages croissantes</option>
+                  <option value="pages-desc">Pages décroissantes</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Promo Premium -->
+            <div
+              id="promo-premium-pdf"
+              class="hidden"
+              style="
+                margin-top: 14px;
+                background: linear-gradient(135deg, #fff8e8, #fef3e2);
+                border: 2px dashed var(--orange);
+                border-radius: 16px;
+                padding: 18px;
+                text-align: center;
+              "
+            >
+              <div style="font-size: 2rem; margin-bottom: 8px">⭐</div>
+              <div
+                style="
+                  font-weight: 800;
+                  color: var(--orange);
+                  margin-bottom: 6px;
+                "
+              >
+                Accéder à tous les PDFs
+              </div>
+              <p
+                style="
+                  font-size: 0.82rem;
+                  color: var(--gris-texte);
+                  margin-bottom: 14px;
+                "
+              >
+                Les PDFs Premium sont déverrouillés avec un abonnement.
+              </p>
+              <a href="/boutique.html" class="btn btn--orange btn--sm btn--full"
+                >Passer Premium</a
+              >
+            </div>
+          </aside>
+
+          <!-- Liste PDFs -->
+          <div class="pdf-main">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+              "
+            >
+              <span
+                style="
+                  font-size: 0.88rem;
+                  color: var(--gris-texte);
+                  font-weight: 600;
+                "
+                id="compteur-pdf"
+                >Chargement…</span
+              >
+            </div>
+            <div class="pdf-grille" id="grille-pdfs">
+              <div
+                class="skeleton"
+                style="height: 240px; border-radius: 16px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 240px; border-radius: 16px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 240px; border-radius: 16px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 240px; border-radius: 16px"
+              ></div>
+            </div>
+          </div>
+        </div>
+        ```
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grille">
+          <div>
+            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <p class="footer__desc">
+              Bibliothèque de ressources pour les concours CI.
+            </p>
+          </div>
+          <div>
+            <div class="footer__titre-col">Ressources</div>
+            <a href="/bibliotheque.html" class="footer__lien">Bibliothèque</a
+            ><a href="/videos.html" class="footer__lien">Vidéos</a
+            ><a href="/preparation.html" class="footer__lien">QCM</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Concours</div>
+            <a href="/concours.html" class="footer__lien">Tous les concours</a
+            ><a href="/examens.html" class="footer__lien">Examens</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Compte</div>
+            <a href="/auth/login.html" class="footer__lien">Connexion</a
+            ><a href="/boutique.html" class="footer__lien">Premium</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bas">
+        <div class="container">© 2026 EduConcoursCI</div>
+      </div>
+    </footer>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let tousPDFs = [];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        await chargerPDFs();
+        // Affiche promo premium si non abonné
+        if (!window.Auth?.estPremium()) {
+          document
+            .getElementById("promo-premium-pdf")
+            .classList.remove("hidden");
+        }
+        // Pré-filtre URL
+        const cat = new URLSearchParams(window.location.search).get(
+          "categorie",
+        );
+        if (cat) document.getElementById("filtre-cat-pdf").value = cat;
+        filtrerPDFs();
+      });
+
+      async function chargerPDFs() {
+        try {
+          const data = await window.API.PDFs.liste({ limit: 200 });
+          tousPDFs = data.pdfs || [];
+        } catch {
+          window.afficherToast("Erreur de chargement.", "erreur");
+          tousPDFs = [];
+        }
+      }
+
+      function filtrerPDFs() {
+        const recherche = document
+          .getElementById("recherche-pdf")
+          .value.toLowerCase()
+          .trim();
+        const categorie = document.getElementById("filtre-cat-pdf").value;
+        const acces =
+          document.querySelector('input[name="acc-pdf"]:checked')?.value || "";
+        const tri = document.getElementById("tri-pdf").value;
+
+        let liste = tousPDFs.filter((p) => {
+          if (
+            recherche &&
+            !p.titre.toLowerCase().includes(recherche) &&
+            !(p.matiere || "").toLowerCase().includes(recherche)
+          )
+            return false;
+          if (categorie && p.categorie !== categorie) return false;
+          if (acces && String(p.premium) !== acces) return false;
+          return true;
+        });
+
+        liste.sort((a, b) => {
+          if (tri === "dl")
+            return (b.telechargements || 0) - (a.telechargements || 0);
+          if (tri === "pages-asc") return (a.pages || 0) - (b.pages || 0);
+          if (tri === "pages-desc") return (b.pages || 0) - (a.pages || 0);
+          return b.id - a.id;
+        });
+
+        afficherPDFs(liste);
+      }
+
+      function reinitFiltresPDF() {
+        document.getElementById("recherche-pdf").value = "";
+        document.getElementById("filtre-cat-pdf").value = "";
+        document.getElementById("tri-pdf").value = "recent";
+        document.querySelector('input[name="acc-pdf"]').checked = true;
+        filtrerPDFs();
+      }
+
+      function afficherPDFs(liste) {
+        document.getElementById("compteur-pdf").textContent =
+          `${liste.length} document${liste.length !== 1 ? "s" : ""} trouvé${liste.length !== 1 ? "s" : ""}`;
+        const grille = document.getElementById("grille-pdfs");
+        const session = window.Auth?.getSession();
+
+        if (liste.length === 0) {
+          grille.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--gris-texte);">
+      <div style="font-size:3rem;margin-bottom:12px;">📭</div>
+      <div style="font-weight:700;font-size:1.1rem;margin-bottom:8px;">Aucun document trouvé</div>
+      <button onclick="reinitFiltresPDF()" class="btn btn--outline-vert btn--sm">Réinitialiser</button>
+    </div>`;
+          return;
+        }
+
+        const ICONES_CAT = {
+          BAC: "📘",
+          BEPC: "📗",
+          "Fonction Publique": "🏛️",
+          Concours: "📋",
+          INFAS: "🏥",
+          Police: "👮",
+          "Travail Social": "🤝",
+          Général: "📄",
+        };
+
+        grille.innerHTML = liste
+          .map((p) => {
+            const verrouille =
+              p.verrouille || (p.premium && (!session || !session.premium));
+            const icone = ICONES_CAT[p.categorie] || "📄";
+            return `
+      <div class="card-pdf">
+        <div class="card-pdf__icone" style="background:linear-gradient(135deg,${p.premium ? "#FEF3C7,#FDE68A" : "#DCFCE7,#BBF7D0"});">
+          ${verrouille ? "🔒" : icone}
+        </div>
+        <div class="card-pdf__corps">
+          <div class="card-pdf__titre">${p.titre}</div>
+          <div class="card-pdf__meta">
+            ${p.categorie ? `<span class="badge badge--gris" style="margin-right:4px;">${p.categorie}</span>` : ""}
+            ${p.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--gratuit">🆓 Gratuit</span>'}
+          </div>
+          <div style="display:flex;gap:14px;margin-top:8px;font-size:0.78rem;color:var(--gris-texte);">
+            ${p.pages ? `<span>📖 ${p.pages} pages</span>` : ""}
+            ${p.taille ? `<span>💾 ${p.taille}</span>` : ""}
+            <span>⬇ ${p.telechargements || 0}</span>
+          </div>
+        </div>
+        <div class="card-pdf__pied">
+          ${
+            verrouille
+              ? `<a href="/boutique.html" class="btn btn--orange btn--sm btn--full">⭐ Débloquer</a>`
+              : `<button onclick="telecharger(${p.id},'${p.titre.replace(/'/g, "\\'")}',${p.premium})" class="btn btn--primaire btn--sm btn--full">⬇ Télécharger</button>`
+          }
+        </div>
+      </div>`;
+          })
+          .join("");
+      }
+
+      function telecharger(id, titre, premium) {
+        if (premium && !window.Auth?.estPremium()) {
+          window.afficherToast(
+            "Ce document est réservé aux abonnés Premium.",
+            "warn",
+          );
+          setTimeout(() => (window.location.href = "/boutique.html"), 1500);
+          return;
+        }
+        if (!window.Auth?.estConnecte()) {
+          window.afficherToast("Connecte-toi pour télécharger.", "info");
+          setTimeout(() => (window.location.href = "/auth/login.html"), 1500);
+          return;
+        }
+        window.afficherToast(`Téléchargement de "${titre}"…`, "succes");
+        window.API.PDFs.telecharger(id);
+      }
+
+      document
+        .getElementById("recherche-pdf")
+        ?.addEventListener(
+          "input",
+          window.Utils?.debounce?.(filtrerPDFs, 300) || filtrerPDFs,
+        );
+    </script>
+  </body>
+</html>

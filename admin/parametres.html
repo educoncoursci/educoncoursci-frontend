@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramètres — Admin EduConcoursCI</title>
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <style>
+    .param-section { background:var(--blanc);border-radius:var(--radius-lg);padding:24px;margin-bottom:20px;box-shadow:var(--ombre-sm); }
+    .param-titre   { font-weight:800;font-size:1rem;margin-bottom:18px;display:flex;align-items:center;gap:10px; }
+    .env-row       { display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--gris-clair); }
+    .env-row:last-child { border:none; }
+    .env-key       { font-family:monospace;font-size:0.82rem;font-weight:700;color:var(--bleu);min-width:220px;flex-shrink:0; }
+    .env-statut    { display:inline-flex;align-items:center;gap:4px;font-size:0.78rem;font-weight:700;padding:3px 10px;border-radius:20px; }
+    .env-ok        { background:#D1FAE5;color:#065F46; }
+    .env-missing   { background:#FEE2E2;color:#991B1B; }
+    .env-optional  { background:#EFF6FF;color:#1E40AF; }
+  </style>
+</head>
+<body style="background:var(--gris-clair);">
+
+<nav class="navbar" style="background:#0A1628;border-bottom:1px solid rgba(255,255,255,0.08);">
+  <div class="navbar__inner">
+    <a href="/admin/index.html" class="navbar__logo" style="color:#fff;"><div class="navbar__logo-icon" style="background:rgba(255,255,255,0.1);">⚙️</div><span style="color:#fff;">EduConcoursCI Admin</span></a>
+    <button onclick="window.Auth?.deconnecter?.()" class="btn btn--gris btn--sm">Déconnexion</button>
+  </div>
+</nav>
+
+<div style="padding-top:var(--navbar-h);">
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar__header"><div class="admin-sidebar__logo">⚙️ Admin Panel</div></div>
+      <div class="admin-sidebar__section">Dashboard</div>
+      <a href="/admin/index.html"         class="admin-sidebar__lien"><span class="admin-sidebar__icone">📊</span> Dashboard</a>
+      <div class="admin-sidebar__section">Contenu</div>
+      <a href="/admin/concours.html"      class="admin-sidebar__lien"><span class="admin-sidebar__icone">🏛️</span> Concours</a>
+      <a href="/admin/pdfs.html"          class="admin-sidebar__lien"><span class="admin-sidebar__icone">📄</span> PDFs</a>
+      <a href="/admin/videos.html"        class="admin-sidebar__lien"><span class="admin-sidebar__icone">🎬</span> Vidéos</a>
+      <a href="/admin/qcm.html"           class="admin-sidebar__lien"><span class="admin-sidebar__icone">📝</span> QCM</a>
+      <div class="admin-sidebar__section">Utilisateurs</div>
+      <a href="/admin/abonnes.html"       class="admin-sidebar__lien"><span class="admin-sidebar__icone">👥</span> Abonnés</a>
+      <a href="/admin/paiements.html"     class="admin-sidebar__lien"><span class="admin-sidebar__icone">💳</span> Paiements</a>
+      <a href="/admin/notifications.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone">🔔</span> Notifications</a>
+      <div class="admin-sidebar__section">Système</div>
+      <a href="/admin/parametres.html"    class="admin-sidebar__lien actif"><span class="admin-sidebar__icone">⚙️</span> Paramètres</a>
+      <a href="/" class="admin-sidebar__lien"><span class="admin-sidebar__icone">🌐</span> Voir le site</a>
+    </aside>
+
+```
+<main class="admin-contenu">
+  <div class="admin-topbar">
+    <div>
+      <div class="admin-topbar__titre">⚙️ Paramètres système</div>
+      <div class="admin-topbar__sous">Configuration du backend et des variables d'environnement</div>
+    </div>
+  </div>
+
+  <!-- Santé du backend -->
+  <div class="param-section">
+    <div class="param-titre">🟢 Santé du backend</div>
+    <div id="sante-backend">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="spinner" style="width:24px;height:24px;margin:0;"></div>
+        <span style="color:var(--gris-texte);">Vérification de la connexion…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Variables d'environnement requises -->
+  <div class="param-section">
+    <div class="param-titre">🔑 Variables d'environnement Railway</div>
+    <p style="font-size:0.85rem;color:var(--gris-texte);margin-bottom:16px;">Ces variables doivent être configurées dans ton projet Railway → Settings → Variables.</p>
+    <div id="liste-env">
+      ${[
+        ["PORT","3000","Requis","Port du serveur Express"],
+        ["NODE_ENV","production","Requis","Environnement (production/development)"],
+        ["FRONTEND_URL","https://educoncoursci.netlify.app","Requis","URL du frontend Netlify"],
+        ["DATABASE_URL","postgresql://...","Requis","URL complète PostgreSQL (auto-générée par Railway)"],
+        ["JWT_SECRET","une_clé_secrète_longue","Requis","Clé de signature des tokens JWT"],
+        ["JWT_EXPIRES_IN","7d","Requis","Durée de validité des tokens"],
+        ["ANTHROPIC_API_KEY","sk-ant-...","Requis","Clé API Claude (console.anthropic.com)"],
+        ["WAVE_NUMERO","07XXXXXXXX","Requis","Numéro Wave CI marchand"],
+        ["OM_NUMERO","07XXXXXXXX","Requis","Numéro Orange Money marchand"],
+        ["EMAIL_HOST","smtp.gmail.com","Requis","Serveur SMTP pour les e-mails"],
+        ["EMAIL_PORT","587","Requis","Port SMTP (587 pour TLS)"],
+        ["EMAIL_USER","ton@gmail.com","Requis","Adresse Gmail pour l'envoi"],
+        ["EMAIL_PASS","mot_de_passe_app","Requis","Mot de passe application Gmail"],
+        ["EMAIL_FROM","EduConcoursCI <noreply@educoncoursci.ci>","Requis","Expéditeur affiché"],
+        ["ADMIN_EMAIL","ton@email.com","Requis","E-mail du compte admin par défaut"],
+        ["ADMIN_PASSWORD","MotDePasseAdmin123!","Requis","Mot de passe admin initial (change-le après connexion)"],
+        ["MAX_FILE_SIZE_MB","10","Optionnel","Taille max upload PDF en MB"],
+        ["UPLOAD_PATH","./uploads","Optionnel","Dossier de stockage des PDFs uploadés"],
+      ].map(([cle, exemple, requis, desc]) => `
+        <div class="env-row">
+          <div class="env-key">${cle}</div>
+          <div style="flex:1;">
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">${desc}</div>
+            <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : ${exemple}</div>
+          </div>
+          <span class="env-statut ${requis==="Requis"?"env-ok":"env-optional"}">${requis==="Requis"?"✓ Requis":"◎ Optionnel"}</span>
+        </div>`).join("")}
+    </div>
+  </div>
+
+  <!-- Actions de maintenance -->
+  <div class="param-section">
+    <div class="param-titre">🔧 Actions de maintenance</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+
+      <div style="background:var(--gris-clair);border-radius:12px;padding:18px;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px;">⏰</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;">Rappels clôture</div>
+        <p style="font-size:0.8rem;color:var(--gris-texte);margin-bottom:12px;">Envoie les rappels J-7, J-3, J-1 pour les concours qui ferment.</p>
+        <button onclick="lancerRappels()" id="btn-rappels" class="btn btn--outline-vert btn--sm btn--full">Lancer maintenant</button>
+      </div>
+
+      <div style="background:var(--gris-clair);border-radius:12px;padding:18px;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px;">📥</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;">Export utilisateurs</div>
+        <p style="font-size:0.8rem;color:var(--gris-texte);margin-bottom:12px;">Télécharge la liste complète des utilisateurs au format CSV.</p>
+        <button onclick="window.API.Admin.exportUsers();window.afficherToast('Export en cours…','succes')" class="btn btn--bleu btn--sm btn--full">Exporter CSV</button>
+      </div>
+
+      <div style="background:var(--gris-clair);border-radius:12px;padding:18px;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px;">🔄</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;">Vérifier le backend</div>
+        <p style="font-size:0.8rem;color:var(--gris-texte);margin-bottom:12px;">Teste la connexion entre le frontend Netlify et le backend Railway.</p>
+        <button onclick="verifierConnexion()" class="btn btn--gris btn--sm btn--full">Tester la connexion</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Infos de déploiement -->
+  <div class="param-section">
+    <div class="param-titre">🚀 Infos de déploiement</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div>
+        <div style="font-size:0.82rem;font-weight:700;color:var(--gris-texte);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Frontend (Netlify)</div>
+        <div class="env-row" style="border:none;padding:6px 0;">
+          <div class="env-key" style="min-width:120px;">URL</div>
+          <div id="netlify-url" style="font-size:0.85rem;">—</div>
+        </div>
+        <div class="env-row" style="padding:6px 0;">
+          <div class="env-key" style="min-width:120px;">Pages HTML</div>
+          <div style="font-size:0.85rem;">28 pages</div>
+        </div>
+        <div class="env-row" style="padding:6px 0;border:none;">
+          <div class="env-key" style="min-width:120px;">Type</div>
+          <div style="font-size:0.85rem;">Site statique (HTML/CSS/JS vanilla)</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:0.82rem;font-weight:700;color:var(--gris-texte);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Backend (Railway)</div>
+        <div class="env-row" style="border:none;padding:6px 0;">
+          <div class="env-key" style="min-width:120px;">URL API</div>
+          <div id="railway-url" style="font-size:0.85rem;word-break:break-all;">—</div>
+        </div>
+        <div class="env-row" style="padding:6px 0;">
+          <div class="env-key" style="min-width:120px;">Framework</div>
+          <div style="font-size:0.85rem;">Node.js + Express</div>
+        </div>
+        <div class="env-row" style="padding:6px 0;border:none;">
+          <div class="env-key" style="min-width:120px;">Base de données</div>
+          <div style="font-size:0.85rem;">PostgreSQL (Railway managed)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compte admin -->
+  <div class="param-section">
+    <div class="param-titre">👤 Compte administrateur</div>
+    <div id="admin-info" style="font-size:0.9rem;color:var(--gris-texte);">Chargement…</div>
+    <div style="margin-top:16px;">
+      <a href="/dashboard/profil.html" class="btn btn--outline-vert btn--sm">Modifier mon profil →</a>
+    </div>
+  </div>
+
+</main>
+```
+
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+
+<script src="/js/auth.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  if (!window.Auth?.estAdmin()) { window.location.href="/"; return; }
+  const session = window.Auth.getSession();
+
+  // URL dynamiques
+  document.getElementById("netlify-url").textContent = window.location.origin;
+  const apiUrl = window.API ? window.API.toString() : "—";
+  document.getElementById("railway-url").textContent = window.location.origin.replace("netlify.app","railway.app") + "/api";
+
+  // Infos admin
+  document.getElementById("admin-info").innerHTML = `
+    <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+      <div style="width:52px;height:52px;border-radius:50%;background:var(--gradient-vert);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:#fff;">${session.nom?.[0]?.toUpperCase()||"?"}</div>
+      <div>
+        <div style="font-weight:800;font-size:1rem;">${session.nom||"—"}</div>
+        <div style="color:var(--gris-texte);font-size:0.88rem;">${session.email||"—"}</div>
+        <span class="badge badge--rouge" style="margin-top:4px;">Admin</span>
+      </div>
+    </div>`;
+
+  await verifierConnexion();
+});
+
+async function verifierConnexion() {
+  const div = document.getElementById("sante-backend");
+  div.innerHTML = `<div style="display:flex;align-items:center;gap:10px;"><div class="spinner" style="width:20px;height:20px;margin:0;"></div><span style="color:var(--gris-texte);">Test en cours…</span></div>`;
+  try {
+    const debut = Date.now();
+    await window.API.Admin.stats();
+    const duree = Date.now() - debut;
+    div.innerHTML = `
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--vert-clair);animation:pulse 2s infinite;"></div>
+          <span style="font-weight:700;color:var(--vert);">Backend opérationnel</span>
+        </div>
+        <span class="badge badge--vert">✓ PostgreSQL connecté</span>
+        <span class="badge badge--gris">Latence : ${duree}ms</span>
+        <span class="badge badge--gris">Node.js + Express</span>
+      </div>`;
+  } catch(err) {
+    div.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:12px;height:12px;border-radius:50%;background:var(--rouge);"></div>
+        <span style="font-weight:700;color:var(--rouge);">Backend inaccessible</span>
+        <span style="font-size:0.85rem;color:var(--gris-texte);">${err.message}</span>
+      </div>
+      <div style="margin-top:10px;font-size:0.85rem;color:var(--gris-texte);">
+        Vérifie que Railway est bien déployé et que les variables d'environnement sont configurées.
+      </div>`;
+  }
+}
+
+async function lancerRappels() {
+  const btn=document.getElementById("btn-rappels");
+  btn.classList.add("btn--chargement"); btn.disabled=true;
+  try {
+    const data = await window.API.Admin.envoyerRappels();
+    window.afficherToast(data.message||"Rappels envoyés.","succes");
+  } catch(err) { window.afficherToast(err.message,"erreur"); }
+  finally { btn.classList.remove("btn--chargement"); btn.disabled=false; }
+}
+</script>
+
+</body>
+</html>

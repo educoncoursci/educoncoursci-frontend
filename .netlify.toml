@@ -1,0 +1,47 @@
+# ============================================================
+#  netlify.toml — Configuration déploiement Netlify
+#  EduConcoursCI Frontend
+# ============================================================
+
+[build]
+  publish = "."
+  command = "echo 'Static site — no build step'"
+
+# Redirige toutes les routes vers le fichier HTML correspondant
+[[redirects]]
+  from = "/api/*"
+  to   = "https://ton-backend.railway.app/api/:splat"
+  status = 200
+  force  = true
+
+# Pages d'erreur
+[[redirects]]
+  from   = "/404"
+  to     = "/index.html"
+  status = 404
+
+# Headers de sécurité
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "DENY"
+    X-XSS-Protection       = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "camera=(), microphone=(), geolocation=()"
+
+# Cache des assets statiques
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

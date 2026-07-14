@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vidéos de formation — EduConcoursCI</title>
+  <meta name="description" content="Cours en vidéo pour préparer les concours CI. Formateurs ivoiriens, explications claires.">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <style>
+    .videos-grille { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .modal-video   { position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;padding:20px; }
+    .modal-video.ouvert { display:flex; }
+    .modal-video__contenu { width:100%;max-width:860px;position:relative; }
+    .modal-video__iframe  { width:100%;aspect-ratio:16/9;border:none;border-radius:14px;background:#000; }
+    .modal-video__fermer  { position:absolute;top:-44px;right:0;background:rgba(255,255,255,0.15);border:none;border-radius:50%;width:38px;height:38px;color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center; }
+    @media(max-width:900px){ .videos-grille{grid-template-columns:1fr 1fr;} }
+    @media(max-width:600px){ .videos-grille{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="navbar__inner">
+    <a href="/" class="navbar__logo"><div class="navbar__logo-icon">🎓</div><span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a>
+    <ul class="navbar__links">
+      <li><a href="/concours.html"     class="navbar__link">Concours</a></li>
+      <li><a href="/preparation.html"  class="navbar__link">Préparation</a></li>
+      <li><a href="/bibliotheque.html" class="navbar__link">Bibliothèque</a></li>
+      <li><a href="/videos.html"       class="navbar__link actif">Vidéos</a></li>
+      <li><a href="/boutique.html"     class="navbar__link">Premium ⭐</a></li>
+    </ul>
+    <div class="navbar__actions" id="navbar-actions">
+      <a href="/auth/login.html"    class="btn btn--outline-vert btn--sm">Connexion</a>
+      <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription</a>
+    </div>
+    <button class="navbar__hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="page-header main-content" style="background:linear-gradient(135deg,#1A1A2E,#7B2FBE);">
+  <div class="container">
+    <span class="section__tag" style="background:rgba(255,255,255,0.2);color:#fff;margin-bottom:12px;display:inline-block;">🎬 Vidéos</span>
+    <h1>Cours en Vidéo</h1>
+    <p>Formateurs ivoiriens, explications claires et pratiques pour chaque matière.</p>
+    <div class="mt-3">
+      <div class="barre-recherche" style="max-width:480px;">
+        <input type="text" id="recherche-video" placeholder="Rechercher une vidéo, un sujet…">
+        <button onclick="filtrerVideos()">🔍</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main style="padding:36px 0 60px;background:var(--gris-clair);">
+  <div class="container">
+
+```
+<!-- Onglets catégories -->
+<div class="filtres scroll-x" id="onglets-videos" style="margin-bottom:24px;">
+  <button class="filtre-btn actif" data-cat="" onclick="changerCat(this,'')">🎬 Toutes</button>
+</div>
+
+<!-- Tri + compteur -->
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+  <span style="font-size:0.88rem;color:var(--gris-texte);font-weight:600;" id="compteur-videos">Chargement…</span>
+  <select id="tri-videos" onchange="filtrerVideos()" style="padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.85rem;outline:none;background:var(--blanc);">
+    <option value="recent">Plus récentes</option>
+    <option value="vues">Plus vues</option>
+    <option value="gratuit">Gratuites d'abord</option>
+  </select>
+</div>
+
+<!-- Grille vidéos -->
+<div class="videos-grille" id="grille-videos">
+  <div class="skeleton" style="height:240px;border-radius:16px;"></div>
+  <div class="skeleton" style="height:240px;border-radius:16px;"></div>
+  <div class="skeleton" style="height:240px;border-radius:16px;"></div>
+  <div class="skeleton" style="height:240px;border-radius:16px;"></div>
+  <div class="skeleton" style="height:240px;border-radius:16px;"></div>
+  <div class="skeleton" style="height:240px;border-radius:16px;"></div>
+</div>
+```
+
+  </div>
+</main>
+
+<!-- Modal lecteur vidéo -->
+
+<div class="modal-video" id="modal-video" onclick="fermerVideo(event)">
+  <div class="modal-video__contenu">
+    <button class="modal-video__fermer" onclick="fermerModalVideo()">✕</button>
+    <iframe class="modal-video__iframe" id="iframe-video" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    <div style="margin-top:14px;color:#fff;">
+      <div style="font-weight:800;font-size:1.1rem;" id="modal-video-titre"></div>
+      <div style="opacity:0.6;font-size:0.88rem;margin-top:4px;" id="modal-video-cat"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grille">
+      <div><div class="footer__logo">🎓 EduConcoursCI</div><p class="footer__desc">Vidéos de formation pour les concours CI.</p></div>
+      <div><div class="footer__titre-col">Ressources</div><a href="/videos.html" class="footer__lien">Vidéos</a><a href="/bibliotheque.html" class="footer__lien">Bibliothèque</a><a href="/preparation.html" class="footer__lien">QCM</a></div>
+      <div><div class="footer__titre-col">Services</div><a href="/boutique.html" class="footer__lien">Premium</a><a href="/cv-generator.html" class="footer__lien">CV & LM IA</a></div>
+      <div><div class="footer__titre-col">Compte</div><a href="/auth/login.html" class="footer__lien">Connexion</a><a href="/auth/register.html" class="footer__lien">Inscription</a></div>
+    </div>
+  </div>
+  <div class="footer__bas"><div class="container">© 2026 EduConcoursCI</div></div>
+</footer>
+
+<script src="/js/api.js"></script>
+
+<script src="/js/auth.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script>
+let toutesVideos  = [];
+let catActive     = "";
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await chargerVideos();
+});
+
+async function chargerVideos() {
+  try {
+    const data = await window.API.Videos.liste({ limit:100 });
+    toutesVideos = data.videos || [];
+
+    // Onglets catégories
+    const cats   = [...new Set(toutesVideos.map(v => v.categorie).filter(Boolean))];
+    const onglets = document.getElementById("onglets-videos");
+    onglets.innerHTML = `<button class="filtre-btn actif" data-cat="" onclick="changerCat(this,'')">🎬 Toutes</button>` +
+      cats.map(c => `<button class="filtre-btn" data-cat="${c}" onclick="changerCat(this,'${c}')">${c}</button>`).join("");
+
+    filtrerVideos();
+  } catch {
+    window.afficherToast("Erreur de chargement des vidéos.", "erreur");
+  }
+}
+
+function changerCat(btn, cat) {
+  catActive = cat;
+  document.querySelectorAll(".filtres .filtre-btn").forEach(b => b.classList.remove("actif"));
+  btn.classList.add("actif");
+  filtrerVideos();
+}
+
+function filtrerVideos() {
+  const recherche = document.getElementById("recherche-video").value.toLowerCase().trim();
+  const tri       = document.getElementById("tri-videos").value;
+
+  let liste = toutesVideos.filter(v => {
+    if (catActive && v.categorie !== catActive) return false;
+    if (recherche && !v.titre.toLowerCase().includes(recherche)) return false;
+    return true;
+  });
+
+  liste.sort((a, b) => {
+    if (tri === "vues")    return (b.vues||0) - (a.vues||0);
+    if (tri === "gratuit") return (a.premium?1:0) - (b.premium?1:0);
+    return b.id - a.id;
+  });
+
+  afficherVideos(liste);
+}
+
+function afficherVideos(liste) {
+  document.getElementById("compteur-videos").textContent = `${liste.length} vidéo${liste.length!==1?"s":""} trouvée${liste.length!==1?"s":""}`;
+  const grille  = document.getElementById("grille-videos");
+  const session = window.Auth?.getSession();
+
+  if (liste.length === 0) {
+    grille.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--gris-texte);">
+        <div style="font-size:3rem;margin-bottom:12px;">📭</div>
+        <div style="font-weight:700;font-size:1.1rem;">Aucune vidéo trouvée</div>
+      </div>`; return;
+  }
+
+  grille.innerHTML = liste.map(v => {
+    const verrouille = v.verrouille || (v.premium && (!session || !session.premium));
+    const miniature  = v.miniature || "";
+    return `
+      <div class="card-video">
+        <div class="card-video__miniature" onclick="${verrouille ? "demanderPremium()" : `lireVideo('${v.youtube_id||""}','${v.url||""}','${v.titre.replace(/'/g,"\\'")}','${v.categorie||""}')`}">
+          ${miniature
+            ? `<img src="${miniature}" alt="${v.titre}" loading="lazy">`
+            : `<div style="height:100%;background:linear-gradient(135deg,#1A1A2E,#7B2FBE);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🎬</div>`
+          }
+          <div class="card-video__play">
+            <div class="card-video__play-btn">${verrouille ? "🔒" : "▶"}</div>
+          </div>
+          ${v.duree ? `<div class="card-video__duree">${v.duree}</div>` : ""}
+        </div>
+        <div class="card-video__corps">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+            <span class="badge badge--violet">${v.categorie||"Général"}</span>
+            ${v.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--gratuit">🆓 Gratuit</span>'}
+          </div>
+          <div class="card-video__titre">${v.titre}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
+            <span style="font-size:0.78rem;color:var(--gris-texte);">👁 ${(v.vues||0).toLocaleString("fr-CI")} vues</span>
+            ${verrouille
+              ? `<a href="/boutique.html" class="btn btn--orange btn--sm">⭐ Débloquer</a>`
+              : `<button onclick="${v.youtube_id ? `lireVideo('${v.youtube_id}','${v.url||""}','${v.titre.replace(/'/g,"\\'")}','${v.categorie||""}')` : `ouvrirLien('${v.url}')`}" class="btn btn--violet btn--sm" style="background:var(--violet);color:#fff;border:none;">▶ Regarder</button>`
+            }
+          </div>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function lireVideo(ytId, url, titre, categorie) {
+  if (!ytId && !url) { window.afficherToast("Lien vidéo non disponible.", "erreur"); return; }
+
+  const src = ytId
+    ? `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`
+    : url;
+
+  document.getElementById("iframe-video").src        = src;
+  document.getElementById("modal-video-titre").textContent  = titre;
+  document.getElementById("modal-video-cat").textContent    = categorie;
+  document.getElementById("modal-video").classList.add("ouvert");
+  document.body.style.overflow = "hidden";
+}
+
+function fermerVideo(e) {
+  if (e.target === document.getElementById("modal-video")) fermerModalVideo();
+}
+
+function fermerModalVideo() {
+  document.getElementById("iframe-video").src = "";
+  document.getElementById("modal-video").classList.remove("ouvert");
+  document.body.style.overflow = "";
+}
+
+function ouvrirLien(url) {
+  if (url) window.open(url, "_blank");
+}
+
+function demanderPremium() {
+  window.afficherToast("Cette vidéo est réservée aux abonnés Premium.", "warn");
+  setTimeout(() => window.location.href = "/boutique.html", 1500);
+}
+
+// Fermeture avec Escape
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") fermerModalVideo();
+});
+
+document.getElementById("recherche-video")?.addEventListener("input",
+  window.Utils?.debounce?.(filtrerVideos, 300) || filtrerVideos
+);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,852 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paiement Premium — EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .paiement-layout {
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 28px;
+        align-items: start;
+      }
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+      .step-num {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 0.9rem;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .moyen-card {
+        border: 2px solid var(--gris-bordure);
+        border-radius: var(--radius-lg);
+        padding: 18px;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 12px;
+      }
+      .moyen-card:hover {
+        border-color: var(--vert);
+      }
+      .moyen-card.actif {
+        border-color: var(--vert);
+        background: rgba(26, 107, 60, 0.05);
+      }
+      .moyen-card.actif-wave {
+        border-color: #009ee2;
+        background: rgba(0, 158, 226, 0.06);
+      }
+      .moyen-card.actif-orange {
+        border-color: #ff6600;
+        background: rgba(255, 102, 0, 0.06);
+      }
+      .moyen-logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        flex-shrink: 0;
+      }
+      .instructions-box {
+        background: var(--gris-clair);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        margin: 18px 0;
+        border: 1px solid var(--gris-bordure);
+      }
+      .ussd-box {
+        background: #1a1a2e;
+        color: #7ee8a2;
+        font-family: monospace;
+        font-size: 1rem;
+        padding: 14px 18px;
+        border-radius: 12px;
+        margin: 12px 0;
+        text-align: center;
+        letter-spacing: 1px;
+        font-weight: 700;
+      }
+      .succes-screen {
+        text-align: center;
+        padding: 40px 20px;
+      }
+      @media (max-width: 900px) {
+        .paiement-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions">
+          <a href="/boutique.html" class="btn btn--gris btn--sm"
+            >← Retour aux plans</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <div
+      class="page-header main-content"
+      style="padding: calc(var(--navbar-h)+24px) 0 32px"
+    >
+      <div class="container">
+        <h1 style="font-size: 1.8rem; margin-bottom: 6px">
+          💳 Paiement sécurisé
+        </h1>
+        <p>Finalise ton abonnement Premium en quelques étapes simples.</p>
+      </div>
+    </div>
+
+    <main style="padding: 32px 0 60px; background: var(--gris-clair)">
+      <div class="container">
+        ```
+        <!-- ERREUR : non connecté -->
+        <div
+          id="zone-non-connecte"
+          class="hidden"
+          style="
+            max-width: 480px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 60px 20px;
+          "
+        >
+          <div style="font-size: 3.5rem; margin-bottom: 16px">🔐</div>
+          <h2 style="margin-bottom: 10px">Connexion requise</h2>
+          <p style="color: var(--gris-texte); margin-bottom: 24px">
+            Tu dois être connecté pour souscrire un abonnement Premium.
+          </p>
+          <a
+            href="/auth/login.html?retour=/paiement.html"
+            class="btn btn--primaire btn--lg"
+            >Se connecter →</a
+          >
+          <div style="margin-top: 12px">
+            <a
+              href="/auth/register.html?retour=/paiement.html"
+              style="color: var(--vert); font-weight: 700"
+              >Créer un compte gratuit</a
+            >
+          </div>
+        </div>
+
+        <!-- ZONE PAIEMENT -->
+        <div id="zone-paiement" class="hidden">
+          <div class="paiement-layout">
+            <!-- Gauche : étapes de paiement -->
+            <div>
+              <!-- ÉTAPE 1 : Choisir le plan -->
+              <div
+                style="
+                  background: var(--blanc);
+                  border-radius: var(--radius-lg);
+                  padding: 24px;
+                  box-shadow: var(--ombre-sm);
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    font-size: 1.05rem;
+                    margin-bottom: 16px;
+                  "
+                >
+                  ① Choisir ton plan
+                </div>
+                <div id="plans-choix"></div>
+              </div>
+
+              <!-- ÉTAPE 2 : Choisir le moyen de paiement -->
+              <div
+                style="
+                  background: var(--blanc);
+                  border-radius: var(--radius-lg);
+                  padding: 24px;
+                  box-shadow: var(--ombre-sm);
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    font-size: 1.05rem;
+                    margin-bottom: 16px;
+                  "
+                >
+                  ② Moyen de paiement
+                </div>
+
+                <div
+                  class="moyen-card"
+                  id="card-wave"
+                  onclick="choisirMoyen('wave')"
+                >
+                  <div class="moyen-logo" style="background: #009ee215">🌊</div>
+                  <div style="flex: 1">
+                    <div
+                      style="font-weight: 800; font-size: 1rem; color: #009ee2"
+                    >
+                      Wave CI
+                    </div>
+                    <div
+                      style="
+                        font-size: 0.82rem;
+                        color: var(--gris-texte);
+                        margin-top: 2px;
+                      "
+                    >
+                      0% de frais · Instantané · Application Wave
+                    </div>
+                    <div
+                      style="
+                        font-size: 0.78rem;
+                        color: var(--vert);
+                        font-weight: 700;
+                        margin-top: 4px;
+                      "
+                    >
+                      ✓ Recommandé
+                    </div>
+                  </div>
+                  <div
+                    id="radio-wave"
+                    style="
+                      width: 22px;
+                      height: 22px;
+                      border-radius: 50%;
+                      border: 2px solid var(--gris-bordure);
+                    "
+                  ></div>
+                </div>
+
+                <div
+                  class="moyen-card"
+                  id="card-orange"
+                  onclick="choisirMoyen('orange')"
+                >
+                  <div class="moyen-logo" style="background: #ff660015">🟠</div>
+                  <div style="flex: 1">
+                    <div
+                      style="font-weight: 800; font-size: 1rem; color: #ff6600"
+                    >
+                      Orange Money CI
+                    </div>
+                    <div
+                      style="
+                        font-size: 0.82rem;
+                        color: var(--gris-texte);
+                        margin-top: 2px;
+                      "
+                    >
+                      ~1,5% de frais · Instantané · USSD ou app
+                    </div>
+                  </div>
+                  <div
+                    id="radio-orange"
+                    style="
+                      width: 22px;
+                      height: 22px;
+                      border-radius: 50%;
+                      border: 2px solid var(--gris-bordure);
+                    "
+                  ></div>
+                </div>
+              </div>
+
+              <!-- ÉTAPE 3 : Instructions -->
+              <div
+                id="zone-instructions"
+                class="hidden"
+                style="
+                  background: var(--blanc);
+                  border-radius: var(--radius-lg);
+                  padding: 24px;
+                  box-shadow: var(--ombre-sm);
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    font-size: 1.05rem;
+                    margin-bottom: 16px;
+                  "
+                >
+                  ③ Effectuer le paiement
+                </div>
+                <div id="instructions-contenu"></div>
+              </div>
+
+              <!-- ÉTAPE 4 : Saisir l'ID de transaction -->
+              <div
+                id="zone-saisie"
+                class="hidden"
+                style="
+                  background: var(--blanc);
+                  border-radius: var(--radius-lg);
+                  padding: 24px;
+                  box-shadow: var(--ombre-sm);
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    font-size: 1.05rem;
+                    margin-bottom: 6px;
+                  "
+                >
+                  ④ Saisir ton identifiant de transaction
+                </div>
+                <p
+                  style="
+                    font-size: 0.88rem;
+                    color: var(--gris-texte);
+                    margin-bottom: 16px;
+                  "
+                >
+                  Trouve l'identifiant dans le SMS reçu après ton paiement.
+                </p>
+
+                <!-- Exemple SMS -->
+                <div class="ussd-box" id="exemple-sms">Réf: WA-AB12345678</div>
+
+                <div style="margin-bottom: 14px">
+                  <label
+                    style="
+                      font-size: 0.85rem;
+                      font-weight: 700;
+                      display: block;
+                      margin-bottom: 6px;
+                    "
+                    >Identifiant de transaction *</label
+                  >
+                  <input
+                    type="text"
+                    id="input-tx-id"
+                    placeholder="Ex: WA-AB12345678 ou 987654321"
+                    style="
+                      width: 100%;
+                      padding: 14px 16px;
+                      border: 2px solid var(--gris-bordure);
+                      border-radius: 12px;
+                      font-size: 1rem;
+                      outline: none;
+                      font-family: monospace;
+                      text-transform: uppercase;
+                      letter-spacing: 1px;
+                      transition: var(--transition);
+                    "
+                    oninput="this.value = this.value.toUpperCase()"
+                  />
+                </div>
+
+                <div id="erreur-tx" class="alerte alerte--erreur hidden"></div>
+
+                <div
+                  style="
+                    background: #fff8e8;
+                    border: 1px solid #fde68a;
+                    border-radius: 10px;
+                    padding: 12px 16px;
+                    font-size: 0.82rem;
+                    color: #92400e;
+                    margin-bottom: 16px;
+                  "
+                >
+                  ⚠️ Chaque identifiant ne peut être utilisé qu'une seule fois.
+                  Montant exact requis.
+                </div>
+
+                <button
+                  id="btn-valider-tx"
+                  onclick="validerTransaction()"
+                  class="btn btn--primaire btn--full btn--lg"
+                >
+                  ✅ Vérifier et activer Premium
+                </button>
+              </div>
+            </div>
+
+            <!-- Droite : résumé commande -->
+            <div>
+              <div
+                style="
+                  background: var(--blanc);
+                  border-radius: var(--radius-lg);
+                  padding: 24px;
+                  box-shadow: var(--ombre-sm);
+                  position: sticky;
+                  top: calc(var(--navbar-h)+16px);
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    font-size: 1rem;
+                    margin-bottom: 20px;
+                    padding-bottom: 16px;
+                    border-bottom: 1px solid var(--gris-bordure);
+                  "
+                >
+                  🛒 Récapitulatif
+                </div>
+
+                <div
+                  id="recap-plan"
+                  style="
+                    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+                    border-radius: 14px;
+                    padding: 16px;
+                    margin-bottom: 20px;
+                    text-align: center;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 0.85rem;
+                      color: var(--gris-texte);
+                      margin-bottom: 4px;
+                    "
+                  >
+                    Plan sélectionné
+                  </div>
+                  <div
+                    style="
+                      font-size: 1.5rem;
+                      font-weight: 900;
+                      color: var(--vert);
+                    "
+                    id="recap-label"
+                  >
+                    —
+                  </div>
+                  <div
+                    style="font-size: 2rem; font-weight: 900; margin: 6px 0"
+                    id="recap-montant"
+                  >
+                    — FCFA
+                  </div>
+                  <div style="font-size: 0.8rem; color: var(--gris-texte)">
+                    Activation immédiate
+                  </div>
+                </div>
+
+                <div
+                  id="recap-moyen"
+                  style="
+                    background: var(--gris-clair);
+                    border-radius: 12px;
+                    padding: 12px;
+                    margin-bottom: 20px;
+                    font-size: 0.88rem;
+                    font-weight: 600;
+                    text-align: center;
+                    color: var(--gris-texte);
+                  "
+                >
+                  Sélectionne un moyen de paiement
+                </div>
+
+                <div
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--gris-texte);
+                    line-height: 1.8;
+                  "
+                >
+                  <div>✅ Accès immédiat après validation</div>
+                  <div>✅ Pas de renouvellement automatique</div>
+                  <div>✅ Paiement mobile 100% local CI</div>
+                  <div>✅ Support par e-mail en cas de problème</div>
+                </div>
+
+                <div
+                  style="
+                    margin-top: 20px;
+                    padding-top: 16px;
+                    border-top: 1px solid var(--gris-bordure);
+                    text-align: center;
+                  "
+                >
+                  <div style="font-size: 0.78rem; color: var(--gris-texte)">
+                    Besoin d'aide ?
+                  </div>
+                  <a
+                    href="mailto:support@educoncoursci.ci"
+                    style="
+                      color: var(--vert);
+                      font-size: 0.85rem;
+                      font-weight: 700;
+                    "
+                    >support@educoncoursci.ci</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUCCÈS -->
+        <div id="zone-succes" class="hidden">
+          <div
+            style="
+              max-width: 520px;
+              margin: 0 auto;
+              background: var(--blanc);
+              border-radius: var(--radius-xl);
+              padding: 48px 32px;
+              box-shadow: var(--ombre-lg);
+              text-align: center;
+            "
+          >
+            <div
+              style="
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                background: #d1fae5;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+                font-size: 2.5rem;
+              "
+            >
+              ✅
+            </div>
+            <h2
+              style="font-size: 1.8rem; margin-bottom: 8px; color: var(--vert)"
+            >
+              Paiement validé !
+            </h2>
+            <p style="color: var(--gris-texte); margin-bottom: 6px">
+              Ton abonnement Premium est maintenant actif.
+            </p>
+            <div
+              style="
+                background: var(--gris-clair);
+                border-radius: 12px;
+                padding: 16px;
+                margin: 20px 0;
+                text-align: left;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 8px 0;
+                  border-bottom: 1px solid var(--gris-bordure);
+                "
+              >
+                <span style="color: var(--gris-texte); font-size: 0.88rem"
+                  >Plan</span
+                >
+                <span style="font-weight: 700" id="succes-plan"></span>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 8px 0;
+                  border-bottom: 1px solid var(--gris-bordure);
+                "
+              >
+                <span style="color: var(--gris-texte); font-size: 0.88rem"
+                  >Référence</span
+                >
+                <span
+                  style="
+                    font-weight: 700;
+                    font-family: monospace;
+                    font-size: 0.85rem;
+                  "
+                  id="succes-ref"
+                ></span>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 8px 0;
+                "
+              >
+                <span style="color: var(--gris-texte); font-size: 0.88rem"
+                  >Expiration</span
+                >
+                <span style="font-weight: 700" id="succes-expire"></span>
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                gap: 12px;
+                justify-content: center;
+                flex-wrap: wrap;
+              "
+            >
+              <a href="/bibliotheque.html" class="btn btn--primaire"
+                >📚 Explorer les PDFs</a
+              >
+              <a href="/dashboard/index.html" class="btn btn--gris"
+                >Mon espace →</a
+              >
+            </div>
+          </div>
+        </div>
+        ```
+      </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let planSelectionne = null;
+      let moyenSelectionne = null;
+      let plansData = [];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estConnecte()) {
+          document
+            .getElementById("zone-non-connecte")
+            .classList.remove("hidden");
+          return;
+        }
+        document.getElementById("zone-paiement").classList.remove("hidden");
+        await chargerPlans();
+      });
+
+      async function chargerPlans() {
+        try {
+          const data = await window.API.Paiement.plans();
+          plansData = data.plans || [];
+
+          // Pré-sélectionne depuis l'URL
+          const planURL = new URLSearchParams(window.location.search).get(
+            "plan",
+          );
+
+          document.getElementById("plans-choix").innerHTML = plansData
+            .map(
+              (p, i) => `
+      <div onclick="choisirPlan('${p.label}',${p.montant})"
+        id="plan-${i}"
+        style="border:2px solid var(--gris-bordure);border-radius:14px;padding:14px 18px;cursor:pointer;transition:var(--transition);display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;${planURL === p.label ? "border-color:var(--vert);background:rgba(26,107,60,0.05);" : ""}">
+        <div>
+          <div style="font-weight:800;font-size:0.95rem;">${p.label}</div>
+          <div style="font-size:0.8rem;color:var(--gris-texte);margin-top:2px;">${p.dureeJours} jours d'accès</div>
+        </div>
+        <div style="font-weight:900;font-size:1.2rem;color:var(--vert);">${p.montant.toLocaleString("fr-CI")} F</div>
+      </div>`,
+            )
+            .join("");
+
+          if (planURL) {
+            const plan = plansData.find((p) => p.label === planURL);
+            if (plan) choisirPlan(plan.label, plan.montant);
+          }
+        } catch {
+          window.afficherToast("Erreur de chargement des plans.", "erreur");
+        }
+      }
+
+      function choisirPlan(label, montant) {
+        planSelectionne = { label, montant };
+        // Mise à jour visuelle
+        document.querySelectorAll("#plans-choix > div").forEach((d) => {
+          d.style.borderColor = "var(--gris-bordure)";
+          d.style.background = "";
+        });
+        plansData.forEach((p, i) => {
+          if (p.label === label) {
+            const el = document.getElementById(`plan-${i}`);
+            if (el) {
+              el.style.borderColor = "var(--vert)";
+              el.style.background = "rgba(26,107,60,0.05)";
+            }
+          }
+        });
+        // Récap
+        document.getElementById("recap-label").textContent = `Premium ${label}`;
+        document.getElementById("recap-montant").textContent =
+          `${montant.toLocaleString("fr-CI")} FCFA`;
+        if (moyenSelectionne) afficherInstructions();
+      }
+
+      function choisirMoyen(moyen) {
+        moyenSelectionne = moyen;
+        const isWave = moyen === "wave";
+        document.getElementById("card-wave").className =
+          `moyen-card ${isWave ? "actif-wave" : ""}`;
+        document.getElementById("card-orange").className =
+          `moyen-card ${!isWave ? "actif-orange" : ""}`;
+
+        const radioW = document.getElementById("radio-wave");
+        const radioO = document.getElementById("radio-orange");
+        radioW.style.background = isWave ? "#009EE2" : "";
+        radioW.style.borderColor = isWave ? "#009EE2" : "var(--gris-bordure)";
+        radioO.style.background = !isWave ? "#FF6600" : "";
+        radioO.style.borderColor = !isWave ? "#FF6600" : "var(--gris-bordure)";
+
+        document.getElementById("recap-moyen").innerHTML = isWave
+          ? `<span style="color:#009EE2;font-weight:800;">🌊 Wave CI sélectionné · 0% frais</span>`
+          : `<span style="color:#FF6600;font-weight:800;">🟠 Orange Money sélectionné · ~1,5% frais</span>`;
+
+        if (planSelectionne) afficherInstructions();
+      }
+
+      function afficherInstructions() {
+        if (!planSelectionne || !moyenSelectionne) return;
+        const montant = planSelectionne.montant;
+        const isWave = moyenSelectionne === "wave";
+        const div = document.getElementById("zone-instructions");
+        const saisie = document.getElementById("zone-saisie");
+        div.classList.remove("hidden");
+        saisie.classList.remove("hidden");
+
+        // Exemple SMS
+        document.getElementById("exemple-sms").textContent = isWave
+          ? `Ref: WA-AB12345678`
+          : `ID: 987654321`;
+
+        const etapes = isWave
+          ? [
+              `Ouvre l'application <strong>Wave</strong> sur ton téléphone`,
+              `Sélectionne <strong>Envoyer</strong> → Entre le numéro marchand ci-dessous`,
+              `Entre le montant exact : <strong>${montant.toLocaleString("fr-CI")} FCFA</strong>`,
+              `Confirme le paiement`,
+              `Copie l'<strong>identifiant de transaction</strong> dans le SMS reçu`,
+              `Colle-le ci-dessous pour activer ton compte`,
+            ]
+          : [
+              `Compose <strong>#150*1*1*NUMERO*${montant}#</strong> sur ton téléphone Orange`,
+              `Ou ouvre l'app <strong>Orange Money</strong> → Paiement marchand`,
+              `Entre le numéro marchand ci-dessous et le montant : <strong>${montant.toLocaleString("fr-CI")} FCFA</strong>`,
+              `Confirme avec ton code PIN`,
+              `Note l'<strong>identifiant de transaction</strong> dans le SMS reçu`,
+              `Saisis-le ci-dessous pour activer ton compte`,
+            ];
+
+        document.getElementById("instructions-contenu").innerHTML = `
+    <div style="background:${isWave ? "rgba(0,158,226,0.08)" : "rgba(255,102,0,0.08)"};border:1px solid ${isWave ? "#009EE230" : "#FF660030"};border-radius:14px;padding:18px;margin-bottom:14px;text-align:center;">
+      <div style="font-size:0.82rem;color:var(--gris-texte);margin-bottom:6px;">Numéro ${isWave ? "Wave" : "Orange Money"} marchand</div>
+      <div style="font-size:1.8rem;font-weight:900;letter-spacing:2px;color:${isWave ? "#009EE2" : "#FF6600"};" id="numero-marchand">
+        ${isWave ? window.WAVE_NUMERO || "07 XX XX XX XX" : window.OM_NUMERO || "05 XX XX XX XX"}
+      </div>
+      <div style="font-size:0.8rem;color:var(--gris-texte);margin-top:4px;">Montant exact : <strong>${montant.toLocaleString("fr-CI")} FCFA</strong></div>
+    </div>
+    ${etapes
+      .map(
+        (e, i) => `
+      <div class="step-item">
+        <div class="step-num" style="background:${isWave ? "#009EE2" : "#FF6600"};">${i + 1}</div>
+        <div style="font-size:0.9rem;line-height:1.6;padding-top:4px;">${e}</div>
+      </div>`,
+      )
+      .join("")}
+  `;
+      }
+
+      async function validerTransaction() {
+        const txId = document
+          .getElementById("input-tx-id")
+          .value.trim()
+          .toUpperCase();
+        const errDiv = document.getElementById("erreur-tx");
+        const btn = document.getElementById("btn-valider-tx");
+
+        if (!planSelectionne) {
+          window.afficherToast("Choisis un plan.", "warn");
+          return;
+        }
+        if (!moyenSelectionne) {
+          window.afficherToast("Choisis un moyen de paiement.", "warn");
+          return;
+        }
+        if (txId.length < 5) {
+          errDiv.textContent = "Identifiant trop court.";
+          errDiv.classList.remove("hidden");
+          return;
+        }
+
+        errDiv.classList.add("hidden");
+        btn.classList.add("btn--chargement");
+        btn.disabled = true;
+        btn.textContent = "⏳ Vérification en cours…";
+
+        try {
+          const data = await window.API.Paiement.verifier(
+            txId,
+            moyenSelectionne,
+            planSelectionne.label,
+          );
+          afficherSucces(data, txId);
+        } catch (err) {
+          errDiv.textContent = err.message || "Erreur de vérification.";
+          errDiv.classList.remove("hidden");
+          btn.classList.remove("btn--chargement");
+          btn.disabled = false;
+          btn.textContent = "✅ Vérifier et activer Premium";
+        }
+      }
+
+      function afficherSucces(data, txId) {
+        document.getElementById("zone-paiement").classList.add("hidden");
+        document.getElementById("zone-succes").classList.remove("hidden");
+        document.getElementById("succes-plan").textContent =
+          `Premium ${data.plan}`;
+        document.getElementById("succes-ref").textContent = txId;
+        document.getElementById("succes-expire").textContent = data.expiration
+          ? new Date(data.expiration).toLocaleDateString("fr-FR", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })
+          : "—";
+        window.afficherToast("🎉 Abonnement Premium activé !", "succes", 5000);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  </body>
+</html>

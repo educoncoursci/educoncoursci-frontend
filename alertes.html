@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alertes Concours — EduConcoursCI</title>
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="navbar__inner">
+    <a href="/" class="navbar__logo"><div class="navbar__logo-icon">🎓</div><span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a>
+    <ul class="navbar__links">
+      <li><a href="/concours.html"   class="navbar__link">Concours</a></li>
+      <li><a href="/preparation.html"class="navbar__link">Préparation</a></li>
+      <li><a href="/actualites.html" class="navbar__link">Actualités</a></li>
+      <li><a href="/boutique.html"   class="navbar__link">Premium ⭐</a></li>
+    </ul>
+    <div class="navbar__actions" id="navbar-actions">
+      <a href="/auth/login.html"    class="btn btn--outline-vert btn--sm">Connexion</a>
+      <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription</a>
+    </div>
+    <button class="navbar__hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="page-header main-content" style="background:linear-gradient(135deg,#0F3D22,#1A6B3C);">
+  <div class="container">
+    <h1>🔔 Alertes Concours</h1>
+    <p>Reçois les nouvelles inscriptions directement par e-mail. Ne rate plus jamais une date limite.</p>
+  </div>
+</div>
+
+<main style="padding:48px 0 80px;background:var(--gris-clair);">
+  <div class="container">
+    <div style="max-width:680px;margin:0 auto;">
+
+```
+  <!-- Avantages -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px;">
+    <div style="background:var(--blanc);border-radius:var(--radius-lg);padding:20px;text-align:center;box-shadow:var(--ombre-sm);">
+      <div style="font-size:2rem;margin-bottom:8px;">📬</div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Nouveau concours</div>
+      <div style="font-size:0.8rem;color:var(--gris-texte);">Alert dès la publication</div>
+    </div>
+    <div style="background:var(--blanc);border-radius:var(--radius-lg);padding:20px;text-align:center;box-shadow:var(--ombre-sm);">
+      <div style="font-size:2rem;margin-bottom:8px;">⏰</div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Rappels clôture</div>
+      <div style="font-size:0.8rem;color:var(--gris-texte);">J-7, J-3, J-1</div>
+    </div>
+    <div style="background:var(--blanc);border-radius:var(--radius-lg);padding:20px;text-align:center;box-shadow:var(--ombre-sm);">
+      <div style="font-size:2rem;margin-bottom:8px;">🏆</div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Résultats</div>
+      <div style="font-size:0.8rem;color:var(--gris-texte);">Publiés sur le site</div>
+    </div>
+  </div>
+
+  <!-- Formulaire inscription alertes -->
+  <div style="background:var(--blanc);border-radius:var(--radius-xl);padding:36px;box-shadow:var(--ombre-md);">
+
+    <!-- Si connecté -->
+    <div id="zone-connecte" class="hidden">
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-size:3rem;margin-bottom:8px;">✅</div>
+        <h2 style="margin-bottom:6px;">Tu es déjà inscrit aux alertes !</h2>
+        <p style="color:var(--gris-texte);">Les alertes sont envoyées à <strong id="email-connecte"></strong></p>
+      </div>
+      <div style="background:var(--gris-clair);border-radius:var(--radius-md);padding:16px;margin-bottom:20px;">
+        <div style="font-weight:700;margin-bottom:10px;">Tu recevras des alertes pour :</div>
+        <div id="liste-alertes-actives">
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:0.9rem;">✅ Nouveaux concours</div>
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:0.9rem;">✅ Rappels de clôture</div>
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:0.9rem;">✅ Actualités importantes</div>
+        </div>
+      </div>
+      <a href="/concours.html" class="btn btn--primaire btn--full">🏛️ Voir les concours ouverts →</a>
+    </div>
+
+    <!-- Si non connecté -->
+    <div id="zone-non-connecte">
+      <div style="text-align:center;margin-bottom:28px;">
+        <div style="font-size:3rem;margin-bottom:12px;">🔔</div>
+        <h2 style="margin-bottom:8px;">Active les alertes gratuitement</h2>
+        <p style="color:var(--gris-texte);">Crée un compte gratuit pour recevoir les alertes concours par e-mail.</p>
+      </div>
+
+      <div id="msg-alerte" class="hidden" style="margin-bottom:16px;"></div>
+
+      <div class="form-groupe">
+        <label class="form-label">Ton adresse e-mail <span>*</span></label>
+        <input type="email" id="email-alerte" class="form-input" placeholder="ton@email.com">
+      </div>
+
+      <div class="form-groupe">
+        <label class="form-label">Catégories qui t'intéressent</label>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+          ${["Fonction Publique","Grandes Écoles","Sécurité","Santé","Travail Social","Éducation","Finance","Tous"].map(c =>
+            `<label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
+              <input type="checkbox" value="${c}" ${c==="Tous"?"checked":""} style="accent-color:var(--vert);">${c}
+            </label>`
+          ).join("")}
+        </div>
+      </div>
+
+      <button onclick="sInscrireAlertes()" id="btn-alertes" class="btn btn--primaire btn--full btn--lg" style="margin-top:8px;">
+        🔔 Activer mes alertes gratuitement
+      </button>
+
+      <p style="text-align:center;margin-top:16px;font-size:0.82rem;color:var(--gris-texte);">
+        Tu as déjà un compte ? <a href="/auth/login.html" style="color:var(--vert);font-weight:700;">Connecte-toi →</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+```
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grille">
+      <div><div class="footer__logo">🎓 EduConcoursCI</div><p class="footer__desc">Alertes concours CI gratuites par e-mail.</p></div>
+      <div><div class="footer__titre-col">Navigation</div><a href="/concours.html" class="footer__lien">Concours</a><a href="/actualites.html" class="footer__lien">Actualités</a></div>
+      <div><div class="footer__titre-col">Services</div><a href="/boutique.html" class="footer__lien">Premium</a><a href="/preparation.html" class="footer__lien">Préparation</a></div>
+      <div><div class="footer__titre-col">Compte</div><a href="/auth/login.html" class="footer__lien">Connexion</a><a href="/auth/register.html" class="footer__lien">Inscription</a></div>
+    </div>
+  </div>
+  <div class="footer__bas"><div class="container">© 2026 EduConcoursCI</div></div>
+</footer>
+
+<script src="/js/api.js"></script>
+
+<script src="/js/auth.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const session = window.Auth?.getSession();
+  if (session) {
+    document.getElementById("zone-non-connecte").classList.add("hidden");
+    document.getElementById("zone-connecte").classList.remove("hidden");
+    document.getElementById("email-connecte").textContent = session.email;
+  }
+});
+
+async function sInscrireAlertes() {
+  const email = document.getElementById("email-alerte").value.trim();
+  const msg   = document.getElementById("msg-alerte");
+  const btn   = document.getElementById("btn-alertes");
+
+  if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    msg.className = "alerte alerte--erreur";
+    msg.textContent = "Saisis une adresse e-mail valide.";
+    msg.classList.remove("hidden"); return;
+  }
+
+  btn.classList.add("btn--chargement"); btn.disabled = true;
+
+  // Crée le compte et active les alertes
+  try {
+    await window.API.Auth.register("Utilisateur Alertes", email, Math.random().toString(36).slice(2)+"Aa1!");
+    msg.className = "alerte alerte--succes";
+    msg.textContent = "✅ Inscription réussie ! Tu vas recevoir un e-mail de confirmation. Connecte-toi pour personnaliser tes préférences.";
+    msg.classList.remove("hidden");
+    document.getElementById("btn-alertes").textContent = "✅ Alertes activées !";
+  } catch (err) {
+    if (err.message.includes("existe déjà")) {
+      msg.className = "alerte alerte--info";
+      msg.textContent = "Cet e-mail est déjà inscrit. Connecte-toi pour gérer tes alertes.";
+    } else {
+      msg.className = "alerte alerte--erreur";
+      msg.textContent = err.message;
+    }
+    msg.classList.remove("hidden");
+    btn.classList.remove("btn--chargement"); btn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>

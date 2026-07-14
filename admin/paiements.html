@@ -1,0 +1,288 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paiements — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            ⚙️
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo">⚙️ Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📊</span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🏛️</span> Concours</a
+          >
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📄</span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🎬</span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📝</span> QCM</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">👥</span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien actif"
+            ><span class="admin-sidebar__icone">💳</span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🔔</span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">⚙️</span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🌐</span> Voir le site</a
+          >
+        </aside>
+
+        ```
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre">💳 Transactions</div>
+              <div class="admin-topbar__sous" id="sub-paiements">
+                Chargement…
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats rapides -->
+          <div
+            class="admin-stats"
+            style="margin-bottom: 24px"
+            id="stats-paiements"
+          ></div>
+
+          <!-- Filtres -->
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              margin-bottom: 20px;
+              flex-wrap: wrap;
+            "
+          >
+            <input
+              type="text"
+              id="rech-tx"
+              placeholder="🔍 Référence, utilisateur…"
+              oninput="filtrerTx()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                width: 240px;
+              "
+            />
+            <select
+              id="fil-moyen"
+              onchange="filtrerTx()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Tous moyens</option>
+              <option value="Wave">🌊 Wave CI</option>
+              <option value="Orange">🟠 Orange Money</option>
+            </select>
+            <select
+              id="fil-plan"
+              onchange="filtrerTx()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Tous plans</option>
+              <option>1 Mois</option>
+              <option>3 Mois</option>
+              <option>12 Mois</option>
+            </select>
+          </div>
+
+          <!-- Tableau -->
+          <div class="admin-tableau-wrap">
+            <table class="admin-tableau">
+              <thead>
+                <tr>
+                  <th>Référence</th>
+                  <th>Utilisateur</th>
+                  <th>Plan</th>
+                  <th>Moyen</th>
+                  <th>Montant</th>
+                  <th>Date</th>
+                  <th>Statut</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-tx">
+                <tr>
+                  <td
+                    colspan="7"
+                    style="
+                      text-align: center;
+                      padding: 40px;
+                      color: var(--gris-texte);
+                    "
+                  >
+                    Chargement…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let toutesTx = [];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estAdmin()) {
+          window.location.href = "/";
+          return;
+        }
+        await charger();
+      });
+
+      async function charger() {
+        try {
+          const data = await window.API.Paiement.toutesTransactions({
+            limit: 500,
+          });
+          toutesTx = data.transactions || [];
+
+          // Stats
+          document.getElementById("sub-paiements").textContent =
+            `${toutesTx.length} transactions · Revenus totaux : ${(data.revenus_total || 0).toLocaleString("fr-CI")} FCFA`;
+
+          const wave = toutesTx.filter((t) => t.moyen?.includes("Wave"));
+          const orange = toutesTx.filter((t) => t.moyen?.includes("Orange"));
+          const revWave = wave.reduce((s, t) => s + Number(t.montant || 0), 0);
+          const revOrange = orange.reduce(
+            (s, t) => s + Number(t.montant || 0),
+            0,
+          );
+
+          document.getElementById("stats-paiements").innerHTML = `
+      <div class="stat-card"><div><div class="stat-card__label">Revenus totaux</div><div class="stat-card__valeur">${(data.revenus_total || 0).toLocaleString("fr-CI")} F</div></div><div class="stat-card__icone">💰</div></div>
+      <div class="stat-card stat-card--bleu"><div><div class="stat-card__label">Ce mois</div><div class="stat-card__valeur">${(data.revenus_mois || 0).toLocaleString("fr-CI")} F</div></div><div class="stat-card__icone" style="background:rgba(0,158,226,0.1);">🌊</div></div>
+      <div class="stat-card stat-card--orange"><div><div class="stat-card__label">Via Wave CI</div><div class="stat-card__valeur">${revWave.toLocaleString("fr-CI")} F</div><div class="stat-card__sub">${wave.length} transactions</div></div><div class="stat-card__icone" style="background:rgba(0,158,226,0.1);">🌊</div></div>
+      <div class="stat-card stat-card--violet"><div><div class="stat-card__label">Via Orange Money</div><div class="stat-card__valeur">${revOrange.toLocaleString("fr-CI")} F</div><div class="stat-card__sub">${orange.length} transactions</div></div><div class="stat-card__icone" style="background:rgba(255,102,0,0.1);">🟠</div></div>`;
+
+          filtrerTx();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      function filtrerTx() {
+        const rech = document.getElementById("rech-tx").value.toLowerCase();
+        const moyen = document.getElementById("fil-moyen").value;
+        const plan = document.getElementById("fil-plan").value;
+        const liste = toutesTx.filter((t) => {
+          if (
+            rech &&
+            !(t.tx_id || "").toLowerCase().includes(rech) &&
+            !(t.email || "").toLowerCase().includes(rech) &&
+            !(t.user_nom || "").toLowerCase().includes(rech)
+          )
+            return false;
+          if (moyen && !(t.moyen || "").includes(moyen)) return false;
+          if (plan && t.plan !== plan) return false;
+          return true;
+        });
+        const tbody = document.getElementById("tbody-tx");
+        if (liste.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune transaction</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = liste
+          .map(
+            (t) => `
+    <tr>
+      <td style="font-family:monospace;font-size:0.8rem;color:var(--gris-texte);">${t.tx_id || "—"}</td>
+      <td>
+        <div style="font-weight:700;font-size:0.88rem;">${t.user_nom || "—"}</div>
+        <div style="font-size:0.75rem;color:var(--gris-texte);">${t.email || "—"}</div>
+      </td>
+      <td><span class="badge badge--vert" style="font-size:0.72rem;">Premium ${t.plan || "—"}</span></td>
+      <td style="font-size:0.85rem;">${t.moyen?.includes("Wave") ? "🌊" : "🟠"} ${t.moyen || "—"}</td>
+      <td style="font-weight:900;font-size:0.95rem;">${Number(t.montant || 0).toLocaleString("fr-CI")} F</td>
+      <td style="font-size:0.8rem;color:var(--gris-texte);">${t.date ? new Date(t.date).toLocaleDateString("fr-FR") : "—"}</td>
+      <td><span class="badge ${t.statut === "validé" ? "badge--vert" : "badge--rouge"}">${t.statut === "validé" ? "✓ Validé" : "✗ Échoué"}</span></td>
+    </tr>`,
+          )
+          .join("");
+      }
+    </script>
+  </body>
+</html>

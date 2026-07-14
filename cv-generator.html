@@ -1,0 +1,1108 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Générateur CV & LM — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Génère un CV professionnel et une lettre de motivation adaptés au marché ivoirien grâce à l'IA Claude."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .cv-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+      .onglet-btn {
+        padding: 12px 24px;
+        border: none;
+        background: transparent;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: var(--transition);
+        font-family: inherit;
+        color: var(--gris-texte);
+      }
+      .onglet-btn.actif {
+        color: var(--vert);
+        border-bottom-color: var(--vert);
+      }
+      .exp-item {
+        background: var(--gris-clair);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .exp-suppr {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        color: var(--rouge);
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+      .resultat-doc {
+        background: var(--blanc);
+        border: 1px solid var(--gris-bordure);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        font-family: "Georgia", serif;
+        font-size: 0.93rem;
+        line-height: 1.85;
+        color: #222;
+        white-space: pre-wrap;
+        word-break: break-word;
+        max-height: 600px;
+        overflow-y: auto;
+      }
+      .action-bar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+      @media (max-width: 900px) {
+        .cv-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <ul class="navbar__links">
+          <li>
+            <a href="/preparation.html" class="navbar__link">Préparation</a>
+          </li>
+          <li>
+            <a href="/bibliotheque.html" class="navbar__link">Bibliothèque</a>
+          </li>
+          <li>
+            <a href="/cv-generator.html" class="navbar__link actif">CV & LM</a>
+          </li>
+          <li><a href="/boutique.html" class="navbar__link">Premium ⭐</a></li>
+        </ul>
+        <div class="navbar__actions" id="navbar-actions">
+          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"
+            >Connexion</a
+          >
+          <a href="/auth/register.html" class="btn btn--primaire btn--sm"
+            >Inscription</a
+          >
+        </div>
+        <button class="navbar__hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div
+      class="page-header main-content"
+      style="background: linear-gradient(135deg, #1a3a6b, #0a6ebd)"
+    >
+      <div class="container">
+        <span
+          class="section__tag"
+          style="
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            margin-bottom: 12px;
+            display: inline-block;
+          "
+          >🤖 IA Claude</span
+        >
+        <h1>Générateur CV & Lettre de Motivation</h1>
+        <p>
+          Génère en 30 secondes un document professionnel adapté aux recruteurs
+          ivoiriens (entreprises, ONG, Fonction Publique).
+        </p>
+        <div
+          style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px"
+        >
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.15);
+              border-radius: 10px;
+              padding: 7px 16px;
+              font-size: 0.85rem;
+              font-weight: 600;
+            "
+          >
+            ✅ Gratuit pour les comptes connectés
+          </div>
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.15);
+              border-radius: 10px;
+              padding: 7px 16px;
+              font-size: 0.85rem;
+              font-weight: 600;
+            "
+          >
+            🤖 Propulsé par Claude AI
+          </div>
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.15);
+              border-radius: 10px;
+              padding: 7px 16px;
+              font-size: 0.85rem;
+              font-weight: 600;
+            "
+          >
+            📥 Export PDF
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main style="padding: 36px 0 60px; background: var(--gris-clair)">
+      <div class="container">
+        ```
+        <!-- Non connecté -->
+        <div
+          id="zone-non-connecte"
+          class="hidden"
+          style="
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 60px 20px;
+          "
+        >
+          <div style="font-size: 3.5rem; margin-bottom: 16px">🔐</div>
+          <h2 style="margin-bottom: 10px">Connexion requise</h2>
+          <p style="color: var(--gris-texte); margin-bottom: 24px">
+            Connecte-toi pour utiliser le générateur CV & LM.
+          </p>
+          <a
+            href="/auth/login.html?retour=/cv-generator.html"
+            class="btn btn--primaire btn--lg"
+            >Se connecter →</a
+          >
+          <div style="margin-top: 12px">
+            <a
+              href="/auth/register.html"
+              style="color: var(--vert); font-weight: 700"
+              >Créer un compte gratuit</a
+            >
+          </div>
+        </div>
+
+        <!-- Zone principale -->
+        <div id="zone-generateur">
+          <!-- Onglets CV / LM -->
+          <div
+            style="
+              background: var(--blanc);
+              border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+              border-bottom: 2px solid var(--gris-bordure);
+              display: flex;
+              gap: 0;
+              overflow: hidden;
+            "
+          >
+            <button
+              class="onglet-btn actif"
+              onclick="changerOnglet('cv', this)"
+            >
+              📄 Curriculum Vitae
+            </button>
+            <button class="onglet-btn" onclick="changerOnglet('lm', this)">
+              ✉️ Lettre de Motivation
+            </button>
+          </div>
+
+          <!-- ═══════════════ FORMULAIRE CV ═══════════════ -->
+          <div id="form-cv">
+            <div
+              style="
+                background: var(--blanc);
+                border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+                padding: 28px;
+                box-shadow: var(--ombre-sm);
+                margin-bottom: 24px;
+              "
+            >
+              <!-- Infos personnelles -->
+              <div
+                style="
+                  background: rgba(26, 107, 60, 0.05);
+                  border-radius: var(--radius-md);
+                  padding: 18px;
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    font-size: 0.95rem;
+                    color: var(--vert);
+                    margin-bottom: 14px;
+                  "
+                >
+                  👤 Informations personnelles
+                </div>
+                <div class="cv-layout">
+                  <div class="form-groupe">
+                    <label class="form-label">Nom complet <span>*</span></label
+                    ><input
+                      type="text"
+                      id="cv-nom"
+                      class="form-input"
+                      placeholder="KOUAMÉ Jean-Baptiste"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label"
+                      >Poste recherché <span>*</span></label
+                    ><input
+                      type="text"
+                      id="cv-poste"
+                      class="form-input"
+                      placeholder="Assistant Social Adjoint"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">E-mail</label
+                    ><input
+                      type="email"
+                      id="cv-email"
+                      class="form-input"
+                      placeholder="vous@email.com"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Téléphone</label
+                    ><input
+                      type="tel"
+                      id="cv-tel"
+                      class="form-input"
+                      placeholder="07 XX XX XX XX"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Ville</label
+                    ><input
+                      type="text"
+                      id="cv-ville"
+                      class="form-input"
+                      placeholder="Abidjan"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Pays</label
+                    ><input
+                      type="text"
+                      id="cv-pays"
+                      class="form-input"
+                      value="Côte d'Ivoire"
+                    />
+                  </div>
+                </div>
+                <div class="form-groupe">
+                  <label class="form-label">Profil professionnel</label
+                  ><textarea
+                    id="cv-profil"
+                    class="form-textarea"
+                    placeholder="Décris-toi en 2-3 phrases : ta formation, tes points forts, tes objectifs…"
+                    rows="3"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Expériences -->
+              <div
+                style="
+                  background: rgba(10, 110, 189, 0.05);
+                  border-radius: var(--radius-md);
+                  padding: 18px;
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 800;
+                      font-size: 0.95rem;
+                      color: var(--bleu);
+                    "
+                  >
+                    💼 Expériences professionnelles
+                  </div>
+                  <button onclick="ajouterExp()" class="btn btn--bleu btn--sm">
+                    + Ajouter
+                  </button>
+                </div>
+                <div id="liste-exp">
+                  <div class="exp-item" data-index="0">
+                    <button class="exp-suppr" onclick="supprimerExp(this)">
+                      ×
+                    </button>
+                    <div class="cv-layout">
+                      <div class="form-groupe">
+                        <label class="form-label">Poste occupé</label
+                        ><input
+                          type="text"
+                          class="form-input exp-poste"
+                          placeholder="Ex: Stagiaire Social"
+                        />
+                      </div>
+                      <div class="form-groupe">
+                        <label class="form-label">Entreprise/Structure</label
+                        ><input
+                          type="text"
+                          class="form-input exp-entreprise"
+                          placeholder="Ex: CSTHE Treichville"
+                        />
+                      </div>
+                      <div class="form-groupe">
+                        <label class="form-label">Début</label
+                        ><input
+                          type="text"
+                          class="form-input exp-debut"
+                          placeholder="Jan 2024"
+                        />
+                      </div>
+                      <div class="form-groupe">
+                        <label class="form-label">Fin (vide si actuel)</label
+                        ><input
+                          type="text"
+                          class="form-input exp-fin"
+                          placeholder="Déc 2024"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-groupe">
+                      <label class="form-label">Missions et réalisations</label
+                      ><textarea
+                        class="form-textarea exp-desc"
+                        placeholder="Décris tes missions, réalisations, outils utilisés…"
+                        rows="2"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Formations -->
+              <div
+                style="
+                  background: rgba(123, 47, 190, 0.05);
+                  border-radius: var(--radius-md);
+                  padding: 18px;
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 14px;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 800;
+                      font-size: 0.95rem;
+                      color: var(--violet);
+                    "
+                  >
+                    🎓 Formations
+                  </div>
+                  <button
+                    onclick="ajouterFor()"
+                    class="btn btn--sm"
+                    style="background: var(--violet); color: #fff; border: none"
+                  >
+                    + Ajouter
+                  </button>
+                </div>
+                <div id="liste-for">
+                  <div class="exp-item" data-index="0">
+                    <button class="exp-suppr" onclick="supprimerFor(this)">
+                      ×
+                    </button>
+                    <div class="cv-layout">
+                      <div class="form-groupe">
+                        <label class="form-label">Diplôme obtenu</label
+                        ><input
+                          type="text"
+                          class="form-input for-diplome"
+                          placeholder="Ex: Diplôme d'État AS"
+                        />
+                      </div>
+                      <div class="form-groupe">
+                        <label class="form-label">Établissement</label
+                        ><input
+                          type="text"
+                          class="form-input for-etab"
+                          placeholder="Ex: INSFS Abidjan"
+                        />
+                      </div>
+                      <div class="form-groupe">
+                        <label class="form-label">Année</label
+                        ><input
+                          type="text"
+                          class="form-input for-annee"
+                          placeholder="2025"
+                        />
+                      </div>
+                      <div class="form-groupe">
+                        <label class="form-label">Mention</label
+                        ><input
+                          type="text"
+                          class="form-input for-mention"
+                          placeholder="Bien, Très bien…"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Compétences & autres -->
+              <div
+                style="
+                  background: rgba(200, 75, 17, 0.05);
+                  border-radius: var(--radius-md);
+                  padding: 18px;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    font-size: 0.95rem;
+                    color: #c84b11;
+                    margin-bottom: 14px;
+                  "
+                >
+                  ⚡ Compétences & informations complémentaires
+                </div>
+                <div class="cv-layout">
+                  <div class="form-groupe">
+                    <label class="form-label">Compétences clés</label
+                    ><textarea
+                      id="cv-competences"
+                      class="form-textarea"
+                      placeholder="Ex: Médiation sociale, Pack Office, SPSS, Rédaction de rapports…"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Langues parlées</label
+                    ><textarea
+                      id="cv-langues"
+                      class="form-textarea"
+                      placeholder="Ex: Français (courant), Anglais (intermédiaire), Dioula (natif)"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="form-groupe">
+                  <label class="form-label">Loisirs / Centres d'intérêt</label
+                  ><input
+                    type="text"
+                    id="cv-loisirs"
+                    class="form-input"
+                    placeholder="Ex: Lecture, Bénévolat, Football, Informatique"
+                  />
+                </div>
+              </div>
+
+              <!-- Bouton générer -->
+              <div style="margin-top: 24px">
+                <button
+                  id="btn-generer-cv"
+                  onclick="genererCV()"
+                  class="btn btn--primaire btn--full btn--lg"
+                >
+                  🚀 Générer mon CV avec l'IA
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══════════════ FORMULAIRE LM ═══════════════ -->
+          <div id="form-lm" class="hidden">
+            <div
+              style="
+                background: var(--blanc);
+                border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+                padding: 28px;
+                box-shadow: var(--ombre-sm);
+                margin-bottom: 24px;
+              "
+            >
+              <div
+                style="
+                  background: rgba(26, 107, 60, 0.05);
+                  border-radius: var(--radius-md);
+                  padding: 18px;
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    font-size: 0.95rem;
+                    color: var(--vert);
+                    margin-bottom: 14px;
+                  "
+                >
+                  👤 Tes coordonnées
+                </div>
+                <div class="cv-layout">
+                  <div class="form-groupe">
+                    <label class="form-label">Nom complet <span>*</span></label
+                    ><input
+                      type="text"
+                      id="lm-nom"
+                      class="form-input"
+                      placeholder="KOUAMÉ Jean-Baptiste"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">E-mail</label
+                    ><input
+                      type="email"
+                      id="lm-email"
+                      class="form-input"
+                      placeholder="vous@email.com"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Téléphone</label
+                    ><input
+                      type="tel"
+                      id="lm-tel"
+                      class="form-input"
+                      placeholder="07 XX XX XX XX"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Ville</label
+                    ><input
+                      type="text"
+                      id="lm-ville"
+                      class="form-input"
+                      placeholder="Abidjan"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div
+                style="
+                  background: rgba(10, 110, 189, 0.05);
+                  border-radius: var(--radius-md);
+                  padding: 18px;
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    font-size: 0.95rem;
+                    color: var(--bleu);
+                    margin-bottom: 14px;
+                  "
+                >
+                  🏢 Informations sur le poste
+                </div>
+                <div class="cv-layout">
+                  <div class="form-groupe">
+                    <label class="form-label">Type de candidature</label>
+                    <select id="lm-type" class="form-input">
+                      <option value="candidature">Réponse à une offre</option>
+                      <option value="spontanee">Candidature spontanée</option>
+                    </select>
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Poste visé <span>*</span></label
+                    ><input
+                      type="text"
+                      id="lm-poste"
+                      class="form-input"
+                      placeholder="Ex: Assistant Social Adjoint"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Organisation <span>*</span></label
+                    ><input
+                      type="text"
+                      id="lm-org"
+                      class="form-input"
+                      placeholder="Ex: Save the Children CI"
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Destinataire</label
+                    ><input
+                      type="text"
+                      id="lm-dest"
+                      class="form-input"
+                      placeholder="Ex: Directeur des Ressources Humaines"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div
+                style="
+                  background: rgba(123, 47, 190, 0.05);
+                  border-radius: var(--radius-md);
+                  padding: 18px;
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  style="
+                    font-weight: 800;
+                    font-size: 0.95rem;
+                    color: var(--violet);
+                    margin-bottom: 14px;
+                  "
+                >
+                  💡 Tes arguments
+                </div>
+                <div class="form-groupe">
+                  <label class="form-label"
+                    >Motivation principale <span>*</span></label
+                  ><textarea
+                    id="lm-motivation"
+                    class="form-textarea"
+                    placeholder="Pourquoi ce poste, cette organisation ? Qu'est-ce qui t'attire ?"
+                    rows="2"
+                  ></textarea>
+                </div>
+                <div class="form-groupe">
+                  <label class="form-label">Expérience/formation clé</label
+                  ><textarea
+                    id="lm-experience"
+                    class="form-textarea"
+                    placeholder="Ton diplôme, ton stage ou ta formation la plus pertinente…"
+                    rows="2"
+                  ></textarea>
+                </div>
+                <div class="cv-layout">
+                  <div class="form-groupe">
+                    <label class="form-label">Atout 1</label
+                    ><input
+                      type="text"
+                      id="lm-atout1"
+                      class="form-input"
+                      placeholder="Ex: Maîtrise méthode A.V.E.C."
+                    />
+                  </div>
+                  <div class="form-groupe">
+                    <label class="form-label">Atout 2</label
+                    ><input
+                      type="text"
+                      id="lm-atout2"
+                      class="form-input"
+                      placeholder="Ex: Expérience terrain communautaire"
+                    />
+                  </div>
+                </div>
+                <div class="form-groupe">
+                  <label class="form-label">Atout 3</label
+                  ><input
+                    type="text"
+                    id="lm-atout3"
+                    class="form-input"
+                    placeholder="Ex: Connaissance du tissu social ivoirien"
+                  />
+                </div>
+              </div>
+
+              <button
+                id="btn-generer-lm"
+                onclick="genererLM()"
+                class="btn btn--bleu btn--full btn--lg"
+              >
+                🚀 Générer ma Lettre de Motivation
+              </button>
+            </div>
+          </div>
+
+          <!-- RÉSULTAT -->
+          <div id="zone-resultat" class="hidden">
+            <div
+              style="
+                background: var(--blanc);
+                border-radius: var(--radius-lg);
+                padding: 24px;
+                box-shadow: var(--ombre-sm);
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 16px;
+                  flex-wrap: wrap;
+                  gap: 10px;
+                "
+              >
+                <h3 style="color: var(--vert); margin: 0" id="resultat-titre">
+                  ✅ Document généré
+                </h3>
+                <div class="action-bar">
+                  <button
+                    onclick="copierResultat()"
+                    class="btn btn--outline-vert btn--sm"
+                    id="btn-copier"
+                  >
+                    📋 Copier
+                  </button>
+                  <button onclick="exporterPDF()" class="btn btn--bleu btn--sm">
+                    📥 Télécharger PDF
+                  </button>
+                  <button onclick="regenerer()" class="btn btn--gris btn--sm">
+                    🔄 Régénérer
+                  </button>
+                </div>
+              </div>
+
+              <!-- Aperçu document stylisé -->
+              <div
+                style="
+                  border: 3px solid var(--vert);
+                  border-radius: var(--radius-lg);
+                  overflow: hidden;
+                  margin-bottom: 16px;
+                "
+              >
+                <div
+                  style="
+                    background: var(--gradient-vert);
+                    padding: 14px 20px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                  "
+                >
+                  <div
+                    style="
+                      width: 34px;
+                      height: 34px;
+                      border-radius: 8px;
+                      background: rgba(255, 255, 255, 0.2);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-size: 1.2rem;
+                    "
+                  >
+                    🎓
+                  </div>
+                  <div>
+                    <div
+                      style="font-weight: 900; font-size: 0.95rem; color: #fff"
+                    >
+                      EduConcoursCI
+                    </div>
+                    <div
+                      style="
+                        font-size: 0.75rem;
+                        color: rgba(255, 255, 255, 0.75);
+                      "
+                    >
+                      Document généré par IA ·
+                      <span id="date-generation"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="resultat-doc" id="contenu-resultat"></div>
+              </div>
+
+              <!-- Conseils d'utilisation -->
+              <div
+                style="
+                  background: #eff6ff;
+                  border-radius: var(--radius-md);
+                  padding: 14px 16px;
+                  font-size: 0.85rem;
+                  color: #1e40af;
+                  line-height: 1.7;
+                "
+              >
+                <strong>💡 Comment utiliser ce document :</strong><br />
+                1. Clique <strong>"Copier"</strong> → colle dans Word, Google
+                Docs ou LibreOffice<br />
+                2. Ou clique <strong>"Télécharger PDF"</strong> pour un fichier
+                prêt à l'envoi<br />
+                3. Ajuste selon tes préférences avant d'envoyer
+              </div>
+            </div>
+          </div>
+        </div>
+        ```
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grille">
+          <div>
+            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <p class="footer__desc">
+              Génération CV & LM par IA pour le marché ivoirien.
+            </p>
+          </div>
+          <div>
+            <div class="footer__titre-col">Outils</div>
+            <a href="/cv-generator.html" class="footer__lien">CV & LM IA</a
+            ><a href="/preparation.html" class="footer__lien">QCM</a
+            ><a href="/bibliotheque.html" class="footer__lien">Bibliothèque</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Concours</div>
+            <a href="/concours.html" class="footer__lien">Tous les concours</a
+            ><a href="/boutique.html" class="footer__lien">Premium</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Compte</div>
+            <a href="/auth/login.html" class="footer__lien">Connexion</a
+            ><a href="/dashboard/index.html" class="footer__lien">Mon espace</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bas">
+        <div class="container">© 2026 EduConcoursCI</div>
+      </div>
+    </footer>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let typeActuel = "cv";
+      let contenuGenere = null;
+      let dataFormulaire = null;
+      let expCount = 1, forCount = 1;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!window.Auth?.estConnecte()) {
+          document.getElementById("zone-non-connecte").classList.remove("hidden");
+          document.getElementById("zone-generateur").classList.add("hidden");
+          return;
+        }
+        document.getElementById("date-generation").textContent = new Date().toLocaleDateString("fr-FR");
+
+        // Pré-remplir avec les infos du profil
+        const session = window.Auth.getSession();
+        if (session) {
+          if (session.nom)   { document.getElementById("cv-nom").value  = session.nom;  document.getElementById("lm-nom").value  = session.nom; }
+          if (session.email) { document.getElementById("cv-email").value = session.email; document.getElementById("lm-email").value = session.email; }
+        }
+      });
+
+      // ── Onglets ───────────────────────────────────────────────────
+      function changerOnglet(type, btn) {
+        typeActuel = type;
+        document.querySelectorAll(".onglet-btn").forEach(b => b.classList.remove("actif"));
+        btn.classList.add("actif");
+        document.getElementById("form-cv").classList.toggle("hidden", type !== "cv");
+        document.getElementById("form-lm").classList.toggle("hidden", type !== "lm");
+        document.getElementById("zone-resultat").classList.add("hidden");
+      }
+
+      // ── Gestion expériences ───────────────────────────────────────
+      function ajouterExp() {
+        const div = document.createElement("div");
+        div.className = "exp-item";
+        div.innerHTML = `
+          <button class="exp-suppr" onclick="supprimerExp(this)">×</button>
+          <div class="cv-layout">
+            <div class="form-groupe"><label class="form-label">Poste occupé</label><input type="text" class="form-input exp-poste" placeholder="Ex: Chargé de communication"></div>
+            <div class="form-groupe"><label class="form-label">Entreprise/Structure</label><input type="text" class="form-input exp-entreprise" placeholder="Ex: ONG Solidarité CI"></div>
+            <div class="form-groupe"><label class="form-label">Début</label><input type="text" class="form-input exp-debut" placeholder="Jan 2024"></div>
+            <div class="form-groupe"><label class="form-label">Fin (vide si actuel)</label><input type="text" class="form-input exp-fin" placeholder="Déc 2024"></div>
+          </div>
+          <div class="form-groupe"><label class="form-label">Missions et réalisations</label><textarea class="form-textarea exp-desc" placeholder="Tes missions, résultats, outils…" rows="2"></textarea></div>`;
+
+      document.getElementById(“liste-exp”).appendChild(div);
+      }
+
+      function supprimerExp(btn) {
+      const items = document.querySelectorAll(”#liste-exp .exp-item”);
+      if (items.length > 1) btn.closest(”.exp-item”).remove();
+      else window.afficherToast(“Garde au moins une expérience.”, “warn”);
+      }
+
+      function ajouterFor() {
+      const div = document.createElement(“div”);
+      div.className = “exp-item”;
+      div.innerHTML = ` <button class="exp-suppr" onclick="supprimerFor(this)">×</button> <div class="cv-layout"> <div class="form-groupe"><label class="form-label">Diplôme obtenu</label><input type="text" class="form-input for-diplome" placeholder="Ex: BTS Comptabilité"></div> <div class="form-groupe"><label class="form-label">Établissement</label><input type="text" class="form-input for-etab" placeholder="Ex: CFPA Abidjan"></div> <div class="form-groupe"><label class="form-label">Année</label><input type="text" class="form-input for-annee" placeholder="2024"></div> <div class="form-groupe"><label class="form-label">Mention</label><input type="text" class="form-input for-mention" placeholder="Très bien"></div> </div>`;
+      document.getElementById(“liste-for”).appendChild(div);
+      }
+
+      function supprimerFor(btn) {
+      const items = document.querySelectorAll(”#liste-for .exp-item”);
+      if (items.length > 1) btn.closest(”.exp-item”).remove();
+      else window.afficherToast(“Garde au moins une formation.”, “warn”);
+      }
+
+      // ── Collecte données formulaire CV ────────────────────────────
+      function collecterDataCV() {
+      const experiences = […document.querySelectorAll(”#liste-exp .exp-item”)].map(el => ({
+      poste:       el.querySelector(”.exp-poste”)?.value.trim()      || “”,
+      entreprise:  el.querySelector(”.exp-entreprise”)?.value.trim() || “”,
+      debut:       el.querySelector(”.exp-debut”)?.value.trim()      || “”,
+      fin:         el.querySelector(”.exp-fin”)?.value.trim()        || “”,
+      description: el.querySelector(”.exp-desc”)?.value.trim()       || “”,
+      }));
+
+      const formations = […document.querySelectorAll(”#liste-for .exp-item”)].map(el => ({
+      diplome:        el.querySelector(”.for-diplome”)?.value.trim() || “”,
+      etablissement:  el.querySelector(”.for-etab”)?.value.trim()   || “”,
+      annee:          el.querySelector(”.for-annee”)?.value.trim()  || “”,
+      mention:        el.querySelector(”.for-mention”)?.value.trim()|| “”,
+      }));
+
+      return {
+      nom:         document.getElementById(“cv-nom”).value.trim(),
+      email:       document.getElementById(“cv-email”).value.trim(),
+      telephone:   document.getElementById(“cv-tel”).value.trim(),
+      ville:       document.getElementById(“cv-ville”).value.trim(),
+      pays:        document.getElementById(“cv-pays”).value.trim(),
+      poste:       document.getElementById(“cv-poste”).value.trim(),
+      profil:      document.getElementById(“cv-profil”).value.trim(),
+      competences: document.getElementById(“cv-competences”).value.trim(),
+      langues:     document.getElementById(“cv-langues”).value.trim(),
+      loisirs:     document.getElementById(“cv-loisirs”).value.trim(),
+      experiences, formations,
+      };
+      }
+
+      // ── Générer CV ────────────────────────────────────────────────
+      async function genererCV() {
+      const data = collecterDataCV();
+      if (!data.nom || !data.poste) {
+      window.afficherToast(“Nom et poste recherché sont requis.”, “warn”); return;
+      }
+
+      const btn = document.getElementById(“btn-generer-cv”);
+      btn.classList.add(“btn–chargement”); btn.disabled = true;
+      btn.textContent = “⏳ L’IA rédige ton CV…”;
+
+      try {
+      const res = await window.API.CVLM.genererCV(data);
+      dataFormulaire = data;
+      contenuGenere  = res.cv;
+      afficherResultat(“📄 Ton CV Professionnel”);
+      window.afficherToast(“CV généré avec succès !”, “succes”);
+      } catch (err) {
+      window.afficherToast(err.message || “Erreur de génération.”, “erreur”);
+      } finally {
+      btn.classList.remove(“btn–chargement”); btn.disabled = false;
+      btn.textContent = “🚀 Générer mon CV avec l’IA”;
+      }
+      }
+
+      // ── Générer LM ────────────────────────────────────────────────
+      async function genererLM() {
+      const data = {
+      nom:        document.getElementById(“lm-nom”).value.trim(),
+      email:      document.getElementById(“lm-email”).value.trim(),
+      telephone:  document.getElementById(“lm-tel”).value.trim(),
+      ville:      document.getElementById(“lm-ville”).value.trim(),
+      type:       document.getElementById(“lm-type”).value,
+      poste:      document.getElementById(“lm-poste”).value.trim(),
+      organisation: document.getElementById(“lm-org”).value.trim(),
+      destinataire: document.getElementById(“lm-dest”).value.trim(),
+      motivation:   document.getElementById(“lm-motivation”).value.trim(),
+      experience:   document.getElementById(“lm-experience”).value.trim(),
+      atout1:       document.getElementById(“lm-atout1”).value.trim(),
+      atout2:       document.getElementById(“lm-atout2”).value.trim(),
+      atout3:       document.getElementById(“lm-atout3”).value.trim(),
+      };
+
+      if (!data.nom || !data.poste || !data.organisation) {
+      window.afficherToast(“Nom, poste et organisation sont requis.”, “warn”); return;
+      }
+
+      const btn = document.getElementById(“btn-generer-lm”);
+      btn.classList.add(“btn–chargement”); btn.disabled = true;
+      btn.textContent = “⏳ L’IA rédige ta lettre…”;
+
+      try {
+      const res = await window.API.CVLM.genererLM(data);
+      dataFormulaire = data;
+      contenuGenere  = res.lm;
+      afficherResultat(“✉️ Ta Lettre de Motivation”);
+      window.afficherToast(“Lettre générée avec succès !”, “succes”);
+      } catch (err) {
+      window.afficherToast(err.message || “Erreur de génération.”, “erreur”);
+      } finally {
+      btn.classList.remove(“btn–chargement”); btn.disabled = false;
+      btn.textContent = “🚀 Générer ma Lettre de Motivation”;
+      }
+      }
+
+      function afficherResultat(titre) {
+      document.getElementById(“resultat-titre”).textContent = titre;
+      document.getElementById(“contenu-resultat”).textContent = contenuGenere;
+      document.getElementById(“zone-resultat”).classList.remove(“hidden”);
+      document.getElementById(“zone-resultat”).scrollIntoView({ behavior:“smooth”, block:“start” });
+      }
+
+      async function copierResultat() {
+      await window.Utils?.copierTexte?.(contenuGenere);
+      const btn = document.getElementById(“btn-copier”);
+      btn.textContent = “✅ Copié !”;
+      setTimeout(() => btn.textContent = “📋 Copier”, 2000);
+      }
+
+      async function exporterPDF() {
+      if (!contenuGenere) return;
+      try {
+      window.afficherToast(“Génération du PDF…”, “info”);
+      await window.API.CVLM.exporterPDF(contenuGenere, typeActuel, dataFormulaire, “simple”);
+      } catch (err) {
+      window.afficherToast(err.message || “Erreur PDF.”, “erreur”);
+      }
+      }
+
+      function regenerer() {
+      document.getElementById(“zone-resultat”).classList.add(“hidden”);
+      contenuGenere = null;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,731 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concours CI — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Tous les concours de la Fonction Publique, grandes écoles et sécurité en Côte d'Ivoire. Filtres par catégorie, statut et niveau."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .concours-grille {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .concours-sidebar {
+        width: 260px;
+        flex-shrink: 0;
+      }
+      .concours-layout {
+        display: flex;
+        gap: 28px;
+        align-items: flex-start;
+      }
+      .concours-main {
+        flex: 1;
+        min-width: 0;
+      }
+      .filtre-groupe {
+        margin-bottom: 20px;
+      }
+      .filtre-groupe__titre {
+        font-size: 0.8rem;
+        font-weight: 800;
+        color: var(--gris-texte);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+      }
+      .filtre-check {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 0;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      .filtre-check input {
+        accent-color: var(--vert);
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+      .tri-select {
+        padding: 8px 14px;
+        border: 1.5px solid var(--gris-bordure);
+        border-radius: var(--radius-md);
+        font-size: 0.88rem;
+        font-family: inherit;
+        outline: none;
+        cursor: pointer;
+        background: var(--blanc);
+      }
+      .compteur-resultats {
+        font-size: 0.88rem;
+        color: var(--gris-texte);
+        font-weight: 600;
+      }
+      @media (max-width: 900px) {
+        .concours-layout {
+          flex-direction: column;
+        }
+        .concours-sidebar {
+          width: 100%;
+        }
+        .concours-grille {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        .concours-grille {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo">
+          <div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span>
+        </a>
+        <ul class="navbar__links">
+          <li>
+            <a href="/concours.html" class="navbar__link actif">Concours</a>
+          </li>
+          <li><a href="/examens.html" class="navbar__link">Examens</a></li>
+          <li>
+            <a href="/preparation.html" class="navbar__link">Préparation</a>
+          </li>
+          <li>
+            <a href="/bibliotheque.html" class="navbar__link">Bibliothèque</a>
+          </li>
+          <li><a href="/videos.html" class="navbar__link">Vidéos</a></li>
+          <li>
+            <a href="/actualites.html" class="navbar__link">Actualités</a>
+          </li>
+          <li><a href="/boutique.html" class="navbar__link">Premium ⭐</a></li>
+        </ul>
+        <div class="navbar__actions" id="navbar-actions">
+          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"
+            >Connexion</a
+          >
+          <a href="/auth/register.html" class="btn btn--primaire btn--sm"
+            >Inscription</a
+          >
+        </div>
+        <button class="navbar__hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="navbar__mobile" id="menu-mobile">
+        <a href="/concours.html" class="navbar__link">🏛️ Concours</a>
+        <a href="/preparation.html" class="navbar__link">📝 Préparation</a>
+        <a href="/bibliotheque.html" class="navbar__link">📚 Bibliothèque</a>
+        <a href="/boutique.html" class="navbar__link">⭐ Premium</a>
+      </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header main-content">
+      <div class="container">
+        <h1>🏛️ Concours de Côte d'Ivoire</h1>
+        <p>
+          Tous les concours de la Fonction Publique, grandes écoles, sécurité et
+          santé — mis à jour en temps réel.
+        </p>
+        <div class="mt-3">
+          <div class="barre-recherche" style="max-width: 500px">
+            <input
+              type="text"
+              id="input-recherche"
+              placeholder="Rechercher un concours, organisme…"
+              autocomplete="off"
+            />
+            <button onclick="lancerRecherche()">🔍 Rechercher</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main style="padding: 36px 0 60px">
+      <div class="container">
+        <div class="concours-layout">
+          ```
+          <!-- SIDEBAR FILTRES -->
+          <aside class="concours-sidebar">
+            <div
+              class="card"
+              style="
+                padding: 20px;
+                position: sticky;
+                top: calc(var(--navbar-h)+16px);
+              "
+            >
+              <div
+                style="
+                  font-weight: 800;
+                  font-size: 1rem;
+                  margin-bottom: 18px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                🔧 Filtres
+                <button
+                  onclick="reinitialiserFiltres()"
+                  style="
+                    font-size: 0.78rem;
+                    color: var(--vert);
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    font-weight: 700;
+                  "
+                >
+                  Réinitialiser
+                </button>
+              </div>
+
+              <!-- Statut -->
+              <div class="filtre-groupe">
+                <div class="filtre-groupe__titre">Statut</div>
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="statut"
+                    value=""
+                    checked
+                    onchange="appliquerFiltres()"
+                  />
+                  Tous</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="statut"
+                    value="ouvert"
+                    onchange="appliquerFiltres()"
+                  />
+                  🔴 Ouverts</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="statut"
+                    value="à venir"
+                    onchange="appliquerFiltres()"
+                  />
+                  🔵 À venir</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="statut"
+                    value="fermé"
+                    onchange="appliquerFiltres()"
+                  />
+                  ⚫ Fermés</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="statut"
+                    value="résultats"
+                    onchange="appliquerFiltres()"
+                  />
+                  🏆 Résultats</label
+                >
+              </div>
+
+              <!-- Catégorie -->
+              <div class="filtre-groupe">
+                <div class="filtre-groupe__titre">Catégorie</div>
+                <div id="filtres-categories">
+                  <label class="filtre-check"
+                    ><input
+                      type="radio"
+                      name="categorie"
+                      value=""
+                      checked
+                      onchange="appliquerFiltres()"
+                    />
+                    Toutes</label
+                  >
+                </div>
+              </div>
+
+              <!-- Niveau -->
+              <div class="filtre-groupe">
+                <div class="filtre-groupe__titre">Niveau requis</div>
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="niveau"
+                    value=""
+                    checked
+                    onchange="appliquerFiltres()"
+                  />
+                  Tous</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="niveau"
+                    value="CEPE"
+                    onchange="appliquerFiltres()"
+                  />
+                  CEPE</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="niveau"
+                    value="BEPC"
+                    onchange="appliquerFiltres()"
+                  />
+                  BEPC</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="niveau"
+                    value="BAC"
+                    onchange="appliquerFiltres()"
+                  />
+                  BAC</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="niveau"
+                    value="BAC+2"
+                    onchange="appliquerFiltres()"
+                  />
+                  BAC+2</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="niveau"
+                    value="Licence"
+                    onchange="appliquerFiltres()"
+                  />
+                  Licence</label
+                >
+              </div>
+
+              <!-- Accès -->
+              <div class="filtre-groupe">
+                <div class="filtre-groupe__titre">Accès</div>
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="premium"
+                    value=""
+                    checked
+                    onchange="appliquerFiltres()"
+                  />
+                  Tous</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="premium"
+                    value="false"
+                    onchange="appliquerFiltres()"
+                  />
+                  🆓 Gratuits</label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="premium"
+                    value="true"
+                    onchange="appliquerFiltres()"
+                  />
+                  ⭐ Premium</label
+                >
+              </div>
+
+              <!-- Alertes -->
+              <div
+                style="
+                  border-top: 1px solid var(--gris-bordure);
+                  padding-top: 16px;
+                  margin-top: 4px;
+                "
+              >
+                <a
+                  href="/alertes.html"
+                  class="btn btn--outline-vert btn--sm btn--full"
+                >
+                  🔔 Activer les alertes
+                </a>
+              </div>
+            </div>
+          </aside>
+
+          <!-- LISTE DES CONCOURS -->
+          <div class="concours-main">
+            <!-- Tri et compteur -->
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+              "
+            >
+              <span class="compteur-resultats" id="compteur">Chargement…</span>
+              <select
+                class="tri-select"
+                id="tri-select"
+                onchange="changerTri()"
+              >
+                <option value="recent">Plus récents</option>
+                <option value="cloture">Date de clôture</option>
+                <option value="frais-asc">Frais croissants</option>
+                <option value="frais-desc">Frais décroissants</option>
+              </select>
+            </div>
+
+            <!-- Grille des concours -->
+            <div class="concours-grille" id="liste-concours">
+              <div
+                class="skeleton"
+                style="height: 220px; border-radius: 16px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 220px; border-radius: 16px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 220px; border-radius: 16px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 220px; border-radius: 16px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 220px; border-radius: 16px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 220px; border-radius: 16px"
+              ></div>
+            </div>
+
+            <!-- Pagination -->
+            <div
+              id="pagination"
+              style="
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 28px;
+              "
+            ></div>
+          </div>
+        </div>
+        ```
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grille">
+          <div>
+            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <p class="footer__desc">
+              La plateforme de référence pour les concours CI.
+            </p>
+          </div>
+          <div>
+            <div class="footer__titre-col">Concours</div>
+            <a href="/concours.html?statut=ouvert" class="footer__lien"
+              >Concours ouverts</a
+            >
+            <a
+              href="/concours.html?categorie=Fonction Publique"
+              class="footer__lien"
+              >Fonction Publique</a
+            >
+            <a
+              href="/concours.html?categorie=Grandes Écoles"
+              class="footer__lien"
+              >Grandes Écoles</a
+            >
+            <a href="/concours.html?categorie=Sécurité" class="footer__lien"
+              >Sécurité</a
+            >
+          </div>
+          <div>
+            <div class="footer__titre-col">Ressources</div>
+            <a href="/preparation.html" class="footer__lien">Préparation</a>
+            <a href="/bibliotheque.html" class="footer__lien">Bibliothèque</a>
+            <a href="/videos.html" class="footer__lien">Vidéos</a>
+            <a href="/alertes.html" class="footer__lien">Alertes</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Compte</div>
+            <a href="/auth/login.html" class="footer__lien">Connexion</a>
+            <a href="/auth/register.html" class="footer__lien">Inscription</a>
+            <a href="/dashboard/index.html" class="footer__lien">Mon espace</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bas">
+        <div class="container">
+          © 2026 EduConcoursCI — Abidjan, Côte d'Ivoire
+        </div>
+      </div>
+    </footer>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      // ── État de la page ───────────────────────────────────────────
+      let tousConcours = [];
+      let concoursFiltres = [];
+      let pageActuelle = 1;
+      const PAR_PAGE = 9;
+
+      // Couleurs par statut
+      const STATUT_COULEUR = {
+        ouvert: "var(--rouge)",
+        "à venir": "var(--bleu)",
+        fermé: "var(--gris-texte)",
+        résultats: "var(--orange)",
+      };
+      const STATUT_EMOJI = {
+        ouvert: "🔴",
+        "à venir": "🔵",
+        fermé: "⚫",
+        résultats: "🏆",
+      };
+
+      // ── Chargement initial ────────────────────────────────────────
+      document.addEventListener("DOMContentLoaded", async () => {
+        await chargerConcours();
+
+        // Pré-applique les paramètres URL
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("statut")) {
+          const radio = document.querySelector(
+            `input[name="statut"][value="${params.get("statut")}"]`,
+          );
+          if (radio) {
+            radio.checked = true;
+          }
+        }
+        if (params.get("recherche")) {
+          document.getElementById("input-recherche").value =
+            params.get("recherche");
+        }
+        appliquerFiltres();
+      });
+
+      // ── Charge tous les concours ──────────────────────────────────
+      async function chargerConcours() {
+        try {
+          const data = await window.API.Concours.liste({ limit: 200 });
+          tousConcours = data.concours || [];
+
+          // Charge les catégories dans les filtres
+          const categories = [
+            ...new Set(tousConcours.map((c) => c.categorie).filter(Boolean)),
+          ];
+          const divCats = document.getElementById("filtres-categories");
+          divCats.innerHTML =
+            `<label class="filtre-check"><input type="radio" name="categorie" value="" checked onchange="appliquerFiltres()"> Toutes</label>` +
+            categories
+              .map(
+                (cat) =>
+                  `<label class="filtre-check"><input type="radio" name="categorie" value="${cat}" onchange="appliquerFiltres()"> ${cat}</label>`,
+              )
+              .join("");
+        } catch (err) {
+          window.afficherToast("Erreur de chargement des concours.", "erreur");
+          tousConcours = [];
+        }
+      }
+
+      // ── Applique les filtres et la recherche ──────────────────────
+      function appliquerFiltres() {
+        const recherche = document
+          .getElementById("input-recherche")
+          .value.toLowerCase()
+          .trim();
+        const statut =
+          document.querySelector('input[name="statut"]:checked')?.value || "";
+        const categorie =
+          document.querySelector('input[name="categorie"]:checked')?.value ||
+          "";
+        const niveau =
+          document.querySelector('input[name="niveau"]:checked')?.value || "";
+        const premium =
+          document.querySelector('input[name="premium"]:checked')?.value || "";
+        const tri = document.getElementById("tri-select").value;
+
+        concoursFiltres = tousConcours.filter((c) => {
+          if (
+            recherche &&
+            !c.titre.toLowerCase().includes(recherche) &&
+            !c.organisme.toLowerCase().includes(recherche)
+          )
+            return false;
+          if (statut && c.statut !== statut) return false;
+          if (categorie && c.categorie !== categorie) return false;
+          if (niveau && c.niveau !== niveau) return false;
+          if (premium && String(c.premium) !== premium) return false;
+          return true;
+        });
+
+        // Tri
+        concoursFiltres.sort((a, b) => {
+          if (tri === "cloture")
+            return (a.cloture || "").localeCompare(b.cloture || "");
+          if (tri === "frais-asc") return (a.frais || 0) - (b.frais || 0);
+          if (tri === "frais-desc") return (b.frais || 0) - (a.frais || 0);
+          return b.id - a.id;
+        });
+
+        pageActuelle = 1;
+        afficherPage();
+      }
+
+      function lancerRecherche() {
+        appliquerFiltres();
+      }
+      function changerTri() {
+        appliquerFiltres();
+      }
+
+      function reinitialiserFiltres() {
+        document.getElementById("input-recherche").value = "";
+        document.querySelectorAll('input[name="statut"]')[0].checked = true;
+        document.querySelectorAll('input[name="categorie"]')[0].checked = true;
+        document.querySelectorAll('input[name="niveau"]')[0].checked = true;
+        document.querySelectorAll('input[name="premium"]')[0].checked = true;
+        appliquerFiltres();
+      }
+
+      // ── Affiche la page courante ──────────────────────────────────
+      function afficherPage() {
+        const debut = (pageActuelle - 1) * PAR_PAGE;
+        const page = concoursFiltres.slice(debut, debut + PAR_PAGE);
+        const conteneur = document.getElementById("liste-concours");
+        const compteur = document.getElementById("compteur");
+
+        compteur.textContent = `${concoursFiltres.length} concours trouvé${concoursFiltres.length !== 1 ? "s" : ""}`;
+
+        if (page.length === 0) {
+          conteneur.innerHTML = `
+      <div style="grid-column:1/-1;">
+        <div class="empty-state">
+          <div class="empty-state__icone">🔍</div>
+          <div class="empty-state__titre">Aucun concours trouvé</div>
+          <p class="empty-state__texte">Essaie d'autres filtres ou mots-clés.</p>
+          <button onclick="reinitialiserFiltres()" class="btn btn--outline-vert btn--sm">Réinitialiser les filtres</button>
+        </div>
+      </div>`;
+        } else {
+          conteneur.innerHTML = page.map((c) => cardConcours(c)).join("");
+        }
+
+        afficherPagination();
+      }
+
+      // ── Génère le HTML d'une card concours ───────────────────────
+      function cardConcours(c) {
+        const couleur = c.couleur || "var(--vert)";
+        const emoji = STATUT_EMOJI[c.statut] || "📋";
+        const couleurStatut = STATUT_COULEUR[c.statut] || "var(--gris-texte)";
+
+        return `
+    <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:${couleur};text-decoration:none;">
+      <div class="card-concours__en-tete">
+        <div class="card-concours__meta">
+          <span class="badge" style="background:${couleur}18;color:${couleur};border:1px solid ${couleur}33;">${c.categorie}</span>
+          <span class="badge" style="background:${couleurStatut}18;color:${couleurStatut};border:1px solid ${couleurStatut}33;">${emoji} ${c.statut}</span>
+          ${c.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--gratuit">🆓 Gratuit</span>'}
+        </div>
+        <div class="card-concours__titre">${c.titre}</div>
+        <div class="card-concours__infos mt-1">
+          <span class="card-concours__info">🏢 ${c.organisme}</span>
+          <span class="card-concours__info">🎓 ${c.niveau || "—"}</span>
+          <span class="card-concours__info">👥 ${c.places ? c.places + " places" : "—"}</span>
+          <span class="card-concours__info">💰 ${c.frais ? c.frais.toLocaleString("fr-CI") + " FCFA" : "Gratuit"}</span>
+        </div>
+      </div>
+      <div class="card-concours__pied">
+        <span class="card-concours__cloture">⏰ ${c.cloture || "—"}</span>
+        <span style="font-size:0.82rem;color:${couleur};font-weight:700;">Voir →</span>
+      </div>
+    </a>`;
+      }
+
+      // ── Pagination ────────────────────────────────────────────────
+      function afficherPagination() {
+        const total = Math.ceil(concoursFiltres.length / PAR_PAGE);
+        const div = document.getElementById("pagination");
+        if (total <= 1) {
+          div.innerHTML = "";
+          return;
+        }
+
+        let html = "";
+        if (pageActuelle > 1)
+          html += `<button class="btn btn--gris btn--sm" onclick="changerPage(${pageActuelle - 1})">← Préc.</button>`;
+        for (let i = 1; i <= total; i++) {
+          html += `<button class="btn btn--sm ${i === pageActuelle ? "btn--primaire" : "btn--gris"}" onclick="changerPage(${i})">${i}</button>`;
+        }
+        if (pageActuelle < total)
+          html += `<button class="btn btn--gris btn--sm" onclick="changerPage(${pageActuelle + 1})">Suiv. →</button>`;
+        div.innerHTML = html;
+      }
+
+      function changerPage(n) {
+        pageActuelle = n;
+        afficherPage();
+        window.scrollTo({ top: 200, behavior: "smooth" });
+      }
+
+      // Recherche en temps réel au clavier
+      document
+        .getElementById("input-recherche")
+        ?.addEventListener(
+          "input",
+          window.Utils?.debounce?.(appliquerFiltres, 300) || appliquerFiltres,
+        );
+    </script>
+  </body>
+</html>

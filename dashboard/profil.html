@@ -1,0 +1,349 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mon Profil — EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="dashboard">
+        ```
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar__profil">
+            <div class="sidebar__avatar" id="sidebar-avatar">?</div>
+            <div class="sidebar__nom" id="sidebar-nom">—</div>
+            <div class="sidebar__email" id="sidebar-email"></div>
+            <div id="sidebar-badge"></div>
+          </div>
+          <nav class="sidebar__nav">
+            <div class="sidebar__titre">Menu</div>
+            <a href="/dashboard/index.html" class="sidebar__lien"
+              ><span class="sidebar__icone">📊</span> Tableau de bord</a
+            >
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien"
+              ><span class="sidebar__icone">🏆</span> Mes scores</a
+            >
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"
+              ><span class="sidebar__icone">🏛️</span> Mes concours</a
+            >
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
+              ><span class="sidebar__icone">📥</span> Téléchargements</a
+            >
+            <a href="/dashboard/paiements.html" class="sidebar__lien"
+              ><span class="sidebar__icone">💳</span> Paiements</a
+            >
+            <a href="/dashboard/profil.html" class="sidebar__lien actif"
+              ><span class="sidebar__icone">👤</span> Mon profil</a
+            >
+          </nav>
+          <div class="sidebar__deconnexion">
+            <button
+              onclick="window.Auth?.deconnecter?.()"
+              class="btn btn--outline-vert btn--sm btn--full"
+            >
+              Déconnexion
+            </button>
+          </div>
+        </aside>
+
+        <main class="dashboard__contenu">
+          <div class="dashboard__header">
+            <div>
+              <h1>👤 Mon profil</h1>
+              <p
+                style="
+                  color: var(--gris-texte);
+                  margin: 4px 0 0;
+                  font-size: 0.9rem;
+                "
+              >
+                Gérer tes informations personnelles et ton mot de passe
+              </p>
+            </div>
+          </div>
+
+          <!-- Avatar + infos -->
+          <div class="dash-section" style="margin-bottom: 20px">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                gap: 24px;
+                flex-wrap: wrap;
+                margin-bottom: 28px;
+              "
+            >
+              <div class="profil-avatar" id="profil-avatar">
+                ?
+                <button class="profil-avatar__edit" title="Modifier">✏️</button>
+              </div>
+              <div>
+                <div
+                  style="font-size: 1.3rem; font-weight: 900"
+                  id="profil-nom-affich"
+                >
+                  —
+                </div>
+                <div
+                  style="
+                    color: var(--gris-texte);
+                    font-size: 0.9rem;
+                    margin: 4px 0;
+                  "
+                  id="profil-email-affich"
+                ></div>
+                <div id="profil-badge-affich"></div>
+              </div>
+            </div>
+
+            <!-- Formulaire infos -->
+            <div
+              id="msg-profil"
+              class="hidden"
+              style="margin-bottom: 16px"
+            ></div>
+            <div
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
+              id="form-profil"
+            >
+              <div class="form-groupe">
+                <label class="form-label">Nom complet</label>
+                <input
+                  type="text"
+                  id="p-nom"
+                  class="form-input"
+                  placeholder="Ton nom complet"
+                />
+              </div>
+              <div class="form-groupe">
+                <label class="form-label">E-mail</label>
+                <input
+                  type="email"
+                  id="p-email"
+                  class="form-input"
+                  placeholder="ton@email.com"
+                />
+              </div>
+            </div>
+            <button onclick="sauvegarderProfil()" class="btn btn--primaire">
+              💾 Sauvegarder
+            </button>
+          </div>
+
+          <!-- Changer mot de passe -->
+          <div class="dash-section" style="margin-bottom: 20px">
+            <div class="dash-section__titre" style="margin-bottom: 18px">
+              🔐 Changer le mot de passe
+            </div>
+            <div id="msg-mdp" class="hidden" style="margin-bottom: 16px"></div>
+            <div style="max-width: 480px">
+              <div class="form-groupe">
+                <label class="form-label">Mot de passe actuel</label>
+                <input
+                  type="password"
+                  id="mdp-actuel"
+                  class="form-input"
+                  placeholder="••••••••"
+                />
+              </div>
+              <div class="form-groupe">
+                <label class="form-label">Nouveau mot de passe</label>
+                <input
+                  type="password"
+                  id="mdp-nouveau"
+                  class="form-input"
+                  placeholder="8 caractères minimum"
+                />
+              </div>
+              <div class="form-groupe">
+                <label class="form-label"
+                  >Confirmer le nouveau mot de passe</label
+                >
+                <input
+                  type="password"
+                  id="mdp-confirm"
+                  class="form-input"
+                  placeholder="Répète le nouveau mot de passe"
+                />
+              </div>
+              <button onclick="changerMotDePasse()" class="btn btn--bleu">
+                🔐 Mettre à jour
+              </button>
+            </div>
+          </div>
+
+          <!-- Zone danger -->
+          <div
+            class="dash-section"
+            style="
+              border: 2px solid rgba(217, 0, 13, 0.2);
+              background: rgba(217, 0, 13, 0.03);
+            "
+          >
+            <div
+              class="dash-section__titre"
+              style="margin-bottom: 8px; color: var(--rouge)"
+            >
+              ⚠️ Zone danger
+            </div>
+            <p
+              style="
+                font-size: 0.88rem;
+                color: var(--gris-texte);
+                margin-bottom: 16px;
+              "
+            >
+              La suppression de compte est irréversible. Toutes tes données
+              seront définitivement effacées.
+            </p>
+            <button
+              onclick="confirmerSuppression()"
+              class="btn btn--danger btn--sm"
+            >
+              Supprimer mon compte
+            </button>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!window.Auth?.estConnecte()) {
+          window.location.href = "/auth/login.html";
+          return;
+        }
+        const session = window.Auth.getSession();
+
+        // Sidebar
+        document.getElementById("sidebar-avatar").textContent =
+          session.nom?.[0]?.toUpperCase() || "?";
+        document.getElementById("sidebar-nom").textContent = session.nom || "";
+        document.getElementById("sidebar-email").textContent =
+          session.email || "";
+        document.getElementById("sidebar-badge").innerHTML = session.premium
+          ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
+          : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
+
+        // Profil
+        document.getElementById("profil-avatar").textContent =
+          (session.nom?.[0]?.toUpperCase() || "?") + "\n";
+        document.getElementById("profil-avatar").innerHTML =
+          `${session.nom?.[0]?.toUpperCase() || "?"}<button class="profil-avatar__edit" title="Modifier">✏️</button>`;
+        document.getElementById("profil-nom-affich").textContent =
+          session.nom || "";
+        document.getElementById("profil-email-affich").textContent =
+          session.email || "";
+        document.getElementById("profil-badge-affich").innerHTML =
+          session.premium
+            ? '<span class="badge badge--premium">⭐ Premium actif</span>'
+            : '<span class="badge badge--gris">🆓 Compte gratuit</span>';
+
+        // Pré-remplissage
+        document.getElementById("p-nom").value = session.nom || "";
+        document.getElementById("p-email").value = session.email || "";
+      });
+
+      async function sauvegarderProfil() {
+        const nom = document.getElementById("p-nom").value.trim();
+        const email = document.getElementById("p-email").value.trim();
+        const msg = document.getElementById("msg-profil");
+        if (!nom || !email) {
+          affMsg(msg, "Nom et e-mail requis.", "erreur");
+          return;
+        }
+        try {
+          // Mise à jour locale (la route PATCH /users/:id serait appelée ici)
+          const session = window.Auth.getSession();
+          const updated = { ...session, nom, email };
+          localStorage.setItem("ecc_user", JSON.stringify(updated));
+          document.getElementById("sidebar-nom").textContent = nom;
+          document.getElementById("profil-nom-affich").textContent = nom;
+          affMsg(msg, "Profil mis à jour avec succès !", "succes");
+        } catch (err) {
+          affMsg(msg, err.message, "erreur");
+        }
+      }
+
+      async function changerMotDePasse() {
+        const actuel = document.getElementById("mdp-actuel").value;
+        const nouveau = document.getElementById("mdp-nouveau").value;
+        const confirm = document.getElementById("mdp-confirm").value;
+        const msg = document.getElementById("msg-mdp");
+
+        if (!actuel || !nouveau) {
+          affMsg(msg, "Tous les champs sont requis.", "erreur");
+          return;
+        }
+        if (nouveau.length < 8) {
+          affMsg(msg, "8 caractères minimum.", "erreur");
+          return;
+        }
+        if (nouveau !== confirm) {
+          affMsg(msg, "Les mots de passe ne correspondent pas.", "erreur");
+          return;
+        }
+
+        try {
+          await window.API.Auth.changePassword(actuel, nouveau);
+          affMsg(msg, "Mot de passe mis à jour !", "succes");
+          ["mdp-actuel", "mdp-nouveau", "mdp-confirm"].forEach(
+            (id) => (document.getElementById(id).value = ""),
+          );
+        } catch (err) {
+          affMsg(msg, err.message, "erreur");
+        }
+      }
+
+      function confirmerSuppression() {
+        if (
+          confirm(
+            "Es-tu sûr(e) de vouloir supprimer ton compte ? Cette action est irréversible.",
+          )
+        ) {
+          window.afficherToast(
+            "Contacte le support pour supprimer ton compte.",
+            "info",
+            6000,
+          );
+        }
+      }
+
+      function affMsg(el, texte, type) {
+        el.className = `alerte alerte--${type === "succes" ? "succes" : "erreur"}`;
+        el.textContent = texte;
+        el.classList.remove("hidden");
+        setTimeout(() => el.classList.add("hidden"), 4000);
+      }
+    </script>
+  </body>
+</html>

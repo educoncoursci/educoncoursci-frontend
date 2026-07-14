@@ -1,0 +1,408 @@
+/* ============================================================
+   dashboard.css — Styles espace utilisateur EduConcoursCI
+   Layout sidebar + contenu, profil, scores, téléchargements
+   ============================================================ */
+
+/* ── Layout dashboard ────────────────────────────────────────── */
+.dashboard {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - var(--navbar-h));
+  gap: 0;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────── */
+.sidebar {
+  background: var(--blanc);
+  border-right: 1px solid var(--gris-bordure);
+  padding: 28px 0;
+  position: sticky;
+  top: var(--navbar-h);
+  height: calc(100vh - var(--navbar-h));
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar__profil {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid var(--gris-bordure);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.sidebar__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--gradient-vert);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--blanc);
+  margin: 0 auto 12px;
+  border: 3px solid rgba(26, 107, 60, 0.2);
+}
+
+.sidebar__nom {
+  font-weight: 800;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.sidebar__email {
+  font-size: 0.8rem;
+  color: var(--gris-texte);
+  margin-bottom: 10px;
+}
+
+.sidebar__badge-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gradient-orange);
+  color: var(--blanc);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+.sidebar__badge-gratuit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gris-clair);
+  color: var(--gris-texte);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--gris-bordure);
+}
+
+/* Navigation sidebar */
+.sidebar__nav {
+  padding: 0 12px;
+}
+.sidebar__titre {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--gris-texte);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 8px 10px 6px;
+  margin-top: 8px;
+}
+
+.sidebar__lien {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--texte);
+  transition: var(--transition);
+  margin-bottom: 3px;
+}
+.sidebar__lien:hover {
+  background: var(--gris-clair);
+  color: var(--vert);
+}
+.sidebar__lien.actif {
+  background: rgba(26, 107, 60, 0.1);
+  color: var(--vert);
+  font-weight: 700;
+}
+.sidebar__lien.actif .sidebar__icone {
+  color: var(--vert);
+}
+.sidebar__icone {
+  font-size: 1.1rem;
+  width: 22px;
+  text-align: center;
+}
+
+.sidebar__deconnexion {
+  padding: 16px 20px;
+  margin-top: 16px;
+  border-top: 1px solid var(--gris-bordure);
+}
+
+/* ── Contenu principal du dashboard ──────────────────────────── */
+.dashboard__contenu {
+  padding: 32px;
+  background: var(--gris-clair);
+  overflow-y: auto;
+}
+
+.dashboard__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.dashboard__header h1 {
+  font-size: 1.6rem;
+}
+.dashboard__header p {
+  color: var(--gris-texte);
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+}
+
+/* ── Stats rapides ───────────────────────────────────────────── */
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-md);
+  margin-bottom: 28px;
+}
+
+/* ── Section dashboard ───────────────────────────────────────── */
+.dash-section {
+  background: var(--blanc);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: var(--gap-lg);
+  box-shadow: var(--ombre-sm);
+}
+.dash-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.dash-section__titre {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+.dash-section__voir {
+  font-size: 0.85rem;
+  color: var(--vert);
+  font-weight: 700;
+  transition: var(--transition);
+}
+.dash-section__voir:hover {
+  text-decoration: underline;
+}
+
+/* ── Score item (liste des scores) ──────────────────────────── */
+.score-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gris-clair);
+}
+.score-item:last-child {
+  border: none;
+}
+.score-item__cercle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26, 107, 60, 0.1);
+  border: 2px solid var(--vert);
+}
+.score-item__cercle--moyen {
+  border-color: var(--orange);
+  background: rgba(245, 130, 13, 0.1);
+}
+.score-item__cercle--faible {
+  border-color: var(--rouge);
+  background: rgba(217, 0, 13, 0.08);
+}
+.score-item__pct {
+  font-size: 0.95rem;
+  font-weight: 900;
+  line-height: 1;
+}
+.score-item__label {
+  font-size: 0.6rem;
+  color: var(--gris-texte);
+}
+.score-item__info {
+  flex: 1;
+}
+.score-item__titre {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 3px;
+}
+.score-item__meta {
+  font-size: 0.8rem;
+  color: var(--gris-texte);
+}
+.score-item__score {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--vert);
+}
+
+/* ── Concours favori ─────────────────────────────────────────── */
+.favori-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gris-clair);
+}
+.favori-item:last-child {
+  border: none;
+}
+.favori-item__couleur {
+  width: 10px;
+  height: 42px;
+  border-radius: 4px;
+  background: var(--vert);
+  flex-shrink: 0;
+}
+.favori-item__info {
+  flex: 1;
+}
+.favori-item__titre {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.favori-item__meta {
+  font-size: 0.8rem;
+  color: var(--gris-texte);
+  margin-top: 2px;
+}
+
+/* ── Paiement item ───────────────────────────────────────────── */
+.paiement-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gris-clair);
+}
+.paiement-item:last-child {
+  border: none;
+}
+.paiement-item__gauche {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.paiement-item__icone {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: rgba(26, 107, 60, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+.paiement-item__plan {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.paiement-item__meta {
+  font-size: 0.8rem;
+  color: var(--gris-texte);
+}
+.paiement-item__montant {
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+/* ── Profil form ─────────────────────────────────────────────── */
+.profil-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--gradient-vert);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--blanc);
+  margin: 0 auto 16px;
+  position: relative;
+}
+.profil-avatar__edit {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--blanc);
+  border: 2px solid var(--gris-bordure);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.profil-avatar__edit:hover {
+  background: var(--vert);
+  color: var(--blanc);
+  border-color: var(--vert);
+}
+
+/* ── Premium promo (pour utilisateurs gratuits) ──────────────── */
+.premium-promo {
+  background: linear-gradient(135deg, #fff8e8, #fef3e2);
+  border: 2px dashed var(--orange);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-align: center;
+  margin-bottom: var(--gap-lg);
+}
+.premium-promo__icone {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+.premium-promo__titre {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+.premium-promo__texte {
+  color: var(--gris-texte);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Empty state ─────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--gris-texte);
+}
+.empty-state__icone {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+}
+.empty-state__titre {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--texte);
+  margin-bottom: 8px;
+}
+.empty-state__texte {
+  font-size: 0.9rem;
+  max-width: 340px;
+  margin: 0 auto 20px;
+}

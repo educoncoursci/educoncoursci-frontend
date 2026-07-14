@@ -1,0 +1,423 @@
+/* ============================================================
+   responsive.css — Media queries EduConcoursCI
+   Adaptation mobile (< 640px), tablette (< 1024px), desktop
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════════════════
+   TABLETTE — max-width: 1024px
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  /* Grilles */
+  .grille-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grille-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Footer */
+  .footer__grille {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-lg);
+  }
+
+  /* Dashboard */
+  .dashboard {
+    grid-template-columns: 220px 1fr;
+  }
+  .dash-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Admin */
+  .admin-layout {
+    grid-template-columns: 200px 1fr;
+  }
+  .admin-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .admin-form {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hero stats */
+  .hero__stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Navbar */
+  .navbar__links {
+    gap: 2px;
+  }
+  .navbar__link {
+    padding: 7px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE — max-width: 768px
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* ── Variables ajustées ────────────────────────────────────── */
+  :root {
+    --gap-lg: 16px;
+    --gap-xl: 24px;
+    --navbar-h: 60px;
+  }
+
+  /* ── Navbar mobile ─────────────────────────────────────────── */
+  .navbar__links {
+    display: none;
+  }
+  .navbar__hamburger {
+    display: flex;
+  }
+
+  .navbar__actions .btn {
+    padding: 8px 14px;
+    font-size: 0.82rem;
+  }
+  .navbar__actions .btn--lg {
+    padding: 8px 14px;
+  }
+
+  .navbar__logo {
+    font-size: 1.1rem;
+  }
+  .navbar__logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* ── Hero ──────────────────────────────────────────────────── */
+  .hero {
+    padding: calc(var(--navbar-h) + 24px) 0 40px;
+    text-align: center;
+  }
+  .hero__sous-titre {
+    max-width: 100%;
+  }
+  .hero__actions {
+    justify-content: center;
+  }
+  .hero__stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-width: 100%;
+  }
+  .hero__stat-nombre {
+    font-size: 1.4rem;
+  }
+
+  /* ── Sections ──────────────────────────────────────────────── */
+  .section,
+  .section-gris {
+    padding: 48px 0;
+  }
+  .section__en-tete {
+    margin-bottom: 28px;
+  }
+
+  /* ── Grilles ───────────────────────────────────────────────── */
+  .grille-2,
+  .grille-3,
+  .grille-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Barre recherche ───────────────────────────────────────── */
+  .barre-recherche {
+    max-width: 100%;
+  }
+
+  /* ── Filtres scroll horizontal ─────────────────────────────── */
+  .filtres {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .filtres::-webkit-scrollbar {
+    display: none;
+  }
+  .filtre-btn {
+    flex-shrink: 0;
+  }
+
+  /* ── Page header ───────────────────────────────────────────── */
+  .page-header {
+    padding: calc(var(--navbar-h) + 24px) 0 32px;
+  }
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .footer__grille {
+    grid-template-columns: 1fr;
+    gap: var(--gap-lg);
+  }
+  .footer {
+    padding: 40px 0 0;
+  }
+
+  /* ── Dashboard layout → empilé ─────────────────────────────── */
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -100%;
+    top: var(--navbar-h);
+    width: 280px;
+    height: calc(100vh - var(--navbar-h));
+    z-index: 500;
+    transition: left 0.3s ease;
+    box-shadow: var(--ombre-xl);
+  }
+  .sidebar.ouvert {
+    left: 0;
+  }
+
+  .sidebar__overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 499;
+  }
+  .sidebar.ouvert ~ .sidebar__overlay {
+    display: block;
+  }
+
+  .dashboard__contenu {
+    padding: 20px 16px;
+  }
+  .dashboard__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .dash-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* ── Admin layout → empilé ─────────────────────────────────── */
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    left: -100%;
+    top: var(--navbar-h);
+    width: 260px;
+    height: calc(100vh - var(--navbar-h));
+    z-index: 500;
+    transition: left 0.3s ease;
+    box-shadow: var(--ombre-xl);
+  }
+  .admin-sidebar.ouvert {
+    left: 0;
+  }
+
+  .admin-contenu {
+    padding: 20px 16px;
+  }
+  .admin-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .admin-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* ── Modals plein écran sur mobile ─────────────────────────── */
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .modal {
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    max-height: 90vh;
+    animation: modal-mobile-in 0.3s ease;
+  }
+  @keyframes modal-mobile-in {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  /* ── Pricing → empilé ──────────────────────────────────────── */
+  .pricing-card--vedette {
+    transform: scale(1);
+  }
+
+  /* ── Boutons ────────────────────────────────────────────────── */
+  .btn {
+    padding: 11px 20px;
+    font-size: 0.9rem;
+  }
+  .btn--lg {
+    padding: 13px 24px;
+    font-size: 0.95rem;
+  }
+
+  /* ── Toast ─────────────────────────────────────────────────── */
+  #toast-container {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+  }
+  .toast {
+    min-width: unset;
+    width: 100%;
+  }
+
+  /* ── Tableau → scroll horizontal ───────────────────────────── */
+  .admin-tableau-wrap {
+    border-radius: var(--radius-md);
+  }
+
+  /* ── Formulaire admin ──────────────────────────────────────── */
+  .admin-form {
+    grid-template-columns: 1fr;
+  }
+  .admin-form__plein {
+    grid-column: 1;
+  }
+
+  /* ── Notif cible ────────────────────────────────────────────── */
+  .notif-cible {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── QCM ────────────────────────────────────────────────────── */
+  .option-qcm {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  /* ── Hero actions → colonne ────────────────────────────────── */
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ── Stat card ──────────────────────────────────────────────── */
+  .stat-card__valeur {
+    font-size: 1.6rem;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TRÈS PETIT MOBILE — max-width: 380px
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  .dash-stats {
+    grid-template-columns: 1fr;
+  }
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+  .hero__stats {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .navbar__logo-texte {
+    display: none;
+  }
+
+  .pricing-card {
+    padding: 24px 18px;
+  }
+  .pricing-card__prix {
+    font-size: 2.2rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .section,
+  .section-gris {
+    padding: 36px 0;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GRAND ÉCRAN — min-width: 1400px
+   ══════════════════════════════════════════════════════════════ */
+@media (min-width: 1400px) {
+  :root {
+    --container: 1320px;
+  }
+  .grille-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .admin-stats {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   UTILITAIRES RESPONSIVE
+   ══════════════════════════════════════════════════════════════ */
+
+/* Visible / caché selon la taille */
+.mobile-seulement {
+  display: none;
+}
+.desktop-seulement {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .mobile-seulement {
+    display: block;
+  }
+  .desktop-seulement {
+    display: none;
+  }
+  .flex.desktop-seulement {
+    display: none;
+  }
+  .flex.mobile-seulement {
+    display: flex;
+  }
+}
+
+/* Texte centré sur mobile */
+@media (max-width: 768px) {
+  .mobile-center {
+    text-align: center;
+  }
+}
+
+/* Print */
+@media print {
+  .navbar,
+  .footer,
+  .sidebar,
+  .admin-sidebar,
+  .btn,
+  .modal-overlay,
+  #toast-container {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+  .main-content {
+    padding-top: 0;
+  }
+}

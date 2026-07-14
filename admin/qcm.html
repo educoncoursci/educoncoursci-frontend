@@ -1,0 +1,489 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion QCM — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .q-item {
+        background: var(--gris-clair);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .q-suppr {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        color: var(--rouge);
+        font-size: 1.1rem;
+        cursor: pointer;
+        font-weight: 900;
+      }
+      .opt-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 6px;
+      }
+      .opt-lettre {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: var(--gris-bordure);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            ⚙️
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo">⚙️ Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📊</span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🏛️</span> Concours</a
+          >
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📄</span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🎬</span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien actif"
+            ><span class="admin-sidebar__icone">📝</span> QCM</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">👥</span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">💳</span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🔔</span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">⚙️</span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🌐</span> Voir le site</a
+          >
+        </aside>
+
+        ```
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre">📝 Gestion des QCM</div>
+              <div class="admin-topbar__sous" id="compteur-qcm">
+                Chargement…
+              </div>
+            </div>
+            <button
+              onclick="ouvrirModal('modal-qcm')"
+              class="btn btn--primaire"
+            >
+              + Créer un QCM
+            </button>
+          </div>
+
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              margin-bottom: 20px;
+              flex-wrap: wrap;
+            "
+          >
+            <input
+              type="text"
+              id="rech-qcm"
+              placeholder="🔍 Rechercher…"
+              oninput="filtrerQCM()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                width: 220px;
+              "
+            />
+            <select
+              id="fil-diff"
+              onchange="filtrerQCM()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Toutes difficultés</option>
+              <option>Facile</option>
+              <option>Moyen</option>
+              <option>Difficile</option>
+            </select>
+            <select
+              id="fil-acc-qcm"
+              onchange="filtrerQCM()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Tous</option>
+              <option value="false">🆓</option>
+              <option value="true">⭐ Premium</option>
+            </select>
+          </div>
+
+          <div class="admin-tableau-wrap">
+            <table class="admin-tableau">
+              <thead>
+                <tr>
+                  <th>Titre</th>
+                  <th>Matière</th>
+                  <th>Difficulté</th>
+                  <th>Questions</th>
+                  <th>Tentatives</th>
+                  <th>Accès</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-qcm">
+                <tr>
+                  <td
+                    colspan="7"
+                    style="
+                      text-align: center;
+                      padding: 40px;
+                      color: var(--gris-texte);
+                    "
+                  >
+                    Chargement…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <!-- Modal créateur QCM -->
+
+    <div class="modal-overlay" id="modal-qcm">
+      <div class="modal modal--lg">
+        <div class="modal__header">
+          <div class="modal__titre">➕ Créer un QCM</div>
+          <button class="modal__fermer" onclick="fermerModal('modal-qcm')">
+            ✕
+          </button>
+        </div>
+        <div class="modal__corps">
+          <!-- Infos générales -->
+          <div
+            style="
+              background: var(--gris-clair);
+              border-radius: 12px;
+              padding: 16px;
+              margin-bottom: 20px;
+            "
+          >
+            <div
+              style="
+                font-weight: 800;
+                font-size: 0.95rem;
+                margin-bottom: 14px;
+                color: var(--vert);
+              "
+            >
+              📋 Informations générales
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px"
+            >
+              <div class="form-groupe">
+                <label class="form-label">Titre <span>*</span></label
+                ><input
+                  type="text"
+                  id="qcm-titre"
+                  class="form-input"
+                  placeholder="Ex: Culture Générale — Niveau 1"
+                />
+              </div>
+              <div class="form-groupe">
+                <label class="form-label">Matière <span>*</span></label>
+                <input
+                  type="text"
+                  id="qcm-matiere"
+                  class="form-input"
+                  list="matieres-list"
+                  placeholder="Culture Générale, Logique…"
+                />
+                <datalist id="matieres-list">
+                  <option>Culture Générale</option>
+                  <option>Logique</option>
+                  <option>Mathématiques</option>
+                  <option>Travail Social</option>
+                  <option>Français</option>
+                  <option>Histoire-Géo</option>
+                  <option>Droit Administratif</option>
+                  <option>BAC</option>
+                  <option>BEPC</option>
+                </datalist>
+              </div>
+              <div class="form-groupe">
+                <label class="form-label">Difficulté</label>
+                <select id="qcm-diff" class="form-input">
+                  <option>Facile</option>
+                  <option>Moyen</option>
+                  <option>Difficile</option>
+                </select>
+              </div>
+              <div class="form-groupe">
+                <label class="form-label">Accès</label>
+                <select id="qcm-premium" class="form-input">
+                  <option value="false">🆓 Gratuit</option>
+                  <option value="true">⭐ Premium</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          ```
+          <!-- Questions -->
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 14px;
+            "
+          >
+            <div
+              style="font-weight: 800; font-size: 0.95rem; color: var(--bleu)"
+            >
+              📝 Questions
+            </div>
+            <button onclick="ajouterQuestion()" class="btn btn--bleu btn--sm">
+              + Question
+            </button>
+          </div>
+          <div id="liste-questions"></div>
+        </div>
+        <div class="modal__pied">
+          <button onclick="fermerModal('modal-qcm')" class="btn btn--gris">
+            Annuler
+          </button>
+          <button
+            onclick="sauvegarderQCM()"
+            class="btn btn--primaire"
+            id="btn-save-qcm"
+          >
+            💾 Publier le QCM
+          </button>
+        </div>
+        ```
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      const LETTRE = ["A","B","C","D"];
+      let tousQCM=[]; let qCount=0;
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estAdmin()) { window.location.href="/"; return; }
+        await charger();
+        ajouterQuestion(); // Ajoute une question par défaut
+      });
+
+      async function charger() {
+        try {
+          const data = await window.API.QCM.liste({limit:200});
+          tousQCM = data.qcm||[];
+          filtrerQCM();
+        } catch(err) { window.afficherToast("Erreur : "+err.message,"erreur"); }
+      }
+
+      function filtrerQCM() {
+        const rech = document.getElementById("rech-qcm").value.toLowerCase();
+        const diff = document.getElementById("fil-diff").value;
+        const acc  = document.getElementById("fil-acc-qcm").value;
+        const liste = tousQCM.filter(q=>{
+          if (rech && !q.titre.toLowerCase().includes(rech) && !(q.matiere||"").toLowerCase().includes(rech)) return false;
+          if (diff && q.difficulte!==diff) return false;
+          if (acc!=="" && String(q.premium)!==acc) return false;
+          return true;
+        });
+        document.getElementById("compteur-qcm").textContent=`${liste.length} / ${tousQCM.length} QCM`;
+        const tbody=document.getElementById("tbody-qcm");
+        if (liste.length===0) { tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`; return; }
+        const DIFF_C={"Facile":"badge--vert","Moyen":"badge--orange","Difficile":"badge--rouge"};
+        tbody.innerHTML = liste.map(q=>`
+          <tr>
+            <td style="font-weight:700;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${q.titre}</td>
+            <td style="font-size:0.85rem;">${q.matiere||"—"}</td>
+            <td><span class="badge ${DIFF_C[q.difficulte]||"badge--gris"}" style="font-size:0.72rem;">${q.difficulte||"—"}</span></td>
+            <td style="font-size:0.85rem;">${typeof q.questions==="number"?q.questions:q.questions?.length||"?"} Q</td>
+            <td style="font-size:0.85rem;">📊 ${q.tentatives||0}</td>
+            <td>${q.premium?'<span class="badge badge--premium" style="font-size:0.7rem;">⭐</span>':'<span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span>'}</td>
+            <td><div class="admin-tableau__actions">
+              <button class="admin-tableau__btn" onclick="window.open('/quiz.html?id=${q.id}','_blank')" title="Prévisualiser">👁️</button>
+              <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${q.id},'${q.titre.replace(/'/g,"\\'")}')">🗑️</button>
+            </div></td>
+          </tr>`).join("");
+      }
+
+      function ajouterQuestion() {
+        const id  = qCount++;
+        const div = document.createElement("div");
+        div.className = "q-item";
+        div.id = `q-${id}`;
+        div.innerHTML = `
+          <button class="q-suppr" onclick="document.getElementById('q-${id}').remove()">× Supprimer</button>
+          <div style="font-weight:700;font-size:0.88rem;color:var(--bleu);margin-bottom:10px;">Question ${id+1}</div>
+          <div class="form-groupe">
+            <label class="form-label">Énoncé de la question <span>*</span></label>
+            <textarea class="form-textarea q-enonce" placeholder="Quelle est la capitale de la Côte d'Ivoire ?" rows="2"></textarea>
+
+      ```
+      </div>
+      <div style="margin-bottom:10px;">
+        <label class="form-label" style="margin-bottom:8px;">Options de réponse <span>*</span></label>
+        ${LETTRE.map((l,i)=>`
+          <div class="opt-row">
+            <div class="opt-lettre">${l}</div>
+            <input type="text" class="form-input q-opt" data-idx="${i}" placeholder="Option ${l}" style="flex:1;">
+            <label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;white-space:nowrap;cursor:pointer;">
+              <input type="radio" name="correct-${id}" value="${i}" style="accent-color:var(--vert);">
+              Correct
+            </label>
+          </div>`).join("")}
+      </div>
+      <div class="form-groupe">
+        <label class="form-label">Explication (optionnel)</label>
+        <input type="text" class="form-input q-explication" placeholder="Abidjan est la capitale économique…">
+      </div>`;
+      ```
+
+      document.getElementById(“liste-questions”).appendChild(div);
+      }
+
+      async function sauvegarderQCM() {
+      const titre   = document.getElementById(“qcm-titre”).value.trim();
+      const matiere = document.getElementById(“qcm-matiere”).value.trim();
+      if (!titre||!matiere) { window.afficherToast(“Titre et matière requis.”,“warn”); return; }
+
+      const qItems = document.querySelectorAll(”.q-item”);
+      if (qItems.length===0) { window.afficherToast(“Ajoute au moins une question.”,“warn”); return; }
+
+      const questions = [];
+      let erreur = false;
+      qItems.forEach((item,i)=>{
+      const enonce  = item.querySelector(”.q-enonce”)?.value.trim();
+      const opts    = […item.querySelectorAll(”.q-opt”)].map(o=>o.value.trim());
+      const correct = item.querySelector(`input[type="radio"]:checked`);
+      const expl    = item.querySelector(”.q-explication”)?.value.trim();
+      if (!enonce||opts.some(o=>!o)||!correct) {
+      window.afficherToast(`Question ${i+1} incomplète — énoncé, options et bonne réponse requis.`,“warn”);
+      erreur=true; return;
+      }
+      questions.push({ question:enonce, options:opts, correct:parseInt(correct.value), explication:expl||”” });
+      });
+      if (erreur) return;
+
+      const btn=document.getElementById(“btn-save-qcm”);
+      btn.classList.add(“btn–chargement”); btn.disabled=true;
+      try {
+      await window.API.QCM.creer({
+      titre, matiere,
+      difficulte: document.getElementById(“qcm-diff”).value,
+      premium:    document.getElementById(“qcm-premium”).value===“true”,
+      statut:     “publié”,
+      questions,
+      });
+      window.afficherToast(“QCM publié avec succès !”,“succes”);
+      fermerModal(“modal-qcm”);
+      document.getElementById(“liste-questions”).innerHTML=””;
+      qCount=0; ajouterQuestion();
+      await charger();
+      } catch(err) { window.afficherToast(err.message,“erreur”); }
+      finally { btn.classList.remove(“btn–chargement”); btn.disabled=false; }
+      }
+
+      async function supprimer(id,titre) {
+      if (!confirm(`Supprimer le QCM "${titre}" ?`)) return;
+      try { await window.API.QCM.supprimer(id); window.afficherToast(“QCM supprimé.”,“succes”); await charger(); }
+      catch(err) { window.afficherToast(err.message,“erreur”); }
+      }
+    </script>
+  </body>
+</html>

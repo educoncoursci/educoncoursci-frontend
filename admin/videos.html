@@ -1,0 +1,425 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion Vidéos — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            ⚙️
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo">⚙️ Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📊</span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🏛️</span> Concours</a
+          >
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📄</span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien actif"
+            ><span class="admin-sidebar__icone">🎬</span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📝</span> QCM</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">👥</span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">💳</span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🔔</span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">⚙️</span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🌐</span> Voir le site</a
+          >
+        </aside>
+
+        ```
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre">🎬 Gestion des Vidéos</div>
+              <div class="admin-topbar__sous" id="compteur-vids">
+                Chargement…
+              </div>
+            </div>
+            <button
+              onclick="ouvrirModal('modal-add-video')"
+              class="btn btn--primaire"
+            >
+              + Ajouter une vidéo
+            </button>
+          </div>
+
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              margin-bottom: 20px;
+              flex-wrap: wrap;
+            "
+          >
+            <input
+              type="text"
+              id="rech-vid"
+              placeholder="🔍 Rechercher…"
+              oninput="filtrerVids()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                width: 220px;
+              "
+            />
+            <select
+              id="fil-acc-vid"
+              onchange="filtrerVids()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Tous</option>
+              <option value="false">🆓 Gratuits</option>
+              <option value="true">⭐ Premium</option>
+            </select>
+          </div>
+
+          <div class="admin-tableau-wrap">
+            <table class="admin-tableau">
+              <thead>
+                <tr>
+                  <th>Miniature</th>
+                  <th>Titre</th>
+                  <th>Catégorie</th>
+                  <th>Durée</th>
+                  <th>Vues</th>
+                  <th>Accès</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-vids">
+                <tr>
+                  <td
+                    colspan="7"
+                    style="
+                      text-align: center;
+                      padding: 40px;
+                      color: var(--gris-texte);
+                    "
+                  >
+                    Chargement…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <!-- Modal -->
+
+    <div class="modal-overlay" id="modal-add-video">
+      <div class="modal">
+        <div class="modal__header">
+          <div class="modal__titre" id="modal-vid-titre">
+            ➕ Ajouter une vidéo
+          </div>
+          <button
+            class="modal__fermer"
+            onclick="fermerModal('modal-add-video')"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="modal__corps">
+          <div class="form-groupe">
+            <label class="form-label">Titre <span>*</span></label
+            ><input
+              type="text"
+              id="vid-titre"
+              class="form-input"
+              placeholder="Ex: Cours de Culture Générale"
+            />
+          </div>
+          <div class="form-groupe">
+            <label class="form-label"
+              >URL YouTube ou lien direct <span>*</span></label
+            >
+            <input
+              type="url"
+              id="vid-url"
+              class="form-input"
+              placeholder="https://www.youtube.com/watch?v=..."
+              oninput="previewYoutube()"
+            />
+            <div class="form-hint">
+              L'identifiant YouTube est extrait automatiquement pour la
+              miniature.
+            </div>
+          </div>
+          <div
+            id="vid-preview"
+            class="hidden"
+            style="
+              margin: 12px 0;
+              border-radius: 10px;
+              overflow: hidden;
+              height: 160px;
+              background: #000;
+            "
+          ></div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Catégorie</label>
+              <input
+                type="text"
+                id="vid-cat"
+                class="form-input"
+                placeholder="Culture Générale, Logique…"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Durée</label>
+              <input
+                type="text"
+                id="vid-duree"
+                class="form-input"
+                placeholder="Ex: 45:30"
+              />
+            </div>
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">Accès</label>
+            <select id="vid-premium" class="form-input">
+              <option value="false">🆓 Gratuit</option>
+              <option value="true">⭐ Premium</option>
+            </select>
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">Description</label>
+            <textarea
+              id="vid-desc"
+              class="form-textarea"
+              placeholder="Contenu de la vidéo…"
+              rows="2"
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal__pied">
+          <button
+            onclick="fermerModal('modal-add-video')"
+            class="btn btn--gris"
+          >
+            Annuler
+          </button>
+          <button
+            onclick="sauvegarderVid()"
+            class="btn btn--primaire"
+            id="btn-save-vid"
+          >
+            💾 Sauvegarder
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let toutesVids = [];
+      let editVidId = null;
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estAdmin()) {
+          window.location.href = "/";
+          return;
+        }
+        await charger();
+      });
+
+      async function charger() {
+        try {
+          const data = await window.API.Videos.liste({ limit: 200 });
+          toutesVids = data.videos || [];
+          filtrerVids();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      function filtrerVids() {
+        const rech = document.getElementById("rech-vid").value.toLowerCase();
+        const acc = document.getElementById("fil-acc-vid").value;
+        const liste = toutesVids.filter((v) => {
+          if (rech && !v.titre.toLowerCase().includes(rech)) return false;
+          if (acc !== "" && String(v.premium) !== acc) return false;
+          return true;
+        });
+        document.getElementById("compteur-vids").textContent =
+          `${liste.length} / ${toutesVids.length} vidéos`;
+        const tbody = document.getElementById("tbody-vids");
+        if (liste.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = liste
+          .map(
+            (v) => `
+    <tr>
+      <td>${v.miniature ? `<img src="${v.miniature}" style="width:80px;height:50px;object-fit:cover;border-radius:6px;" alt="">` : `<div style="width:80px;height:50px;background:#1A1A2E;border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);font-size:1.2rem;">▶</div>`}</td>
+      <td style="font-weight:700;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${v.titre}</td>
+      <td><span class="badge badge--violet" style="font-size:0.7rem;">${v.categorie || "—"}</span></td>
+      <td style="font-size:0.82rem;">${v.duree || "—"}</td>
+      <td style="font-size:0.85rem;">👁 ${(v.vues || 0).toLocaleString("fr-CI")}</td>
+      <td>${v.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐</span>' : '<span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span>'}</td>
+      <td><div class="admin-tableau__actions">
+        <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${v.id})">✏️</button>
+        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${v.id},'${v.titre.replace(/'/g, "\\'")}')">🗑️</button>
+      </div></td>
+    </tr>`,
+          )
+          .join("");
+      }
+
+      function previewYoutube() {
+        const url = document.getElementById("vid-url").value;
+        const m = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+        const div = document.getElementById("vid-preview");
+        if (m) {
+          div.innerHTML = `<img src="https://img.youtube.com/vi/${m[1]}/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover;">`;
+          div.classList.remove("hidden");
+        } else {
+          div.classList.add("hidden");
+        }
+      }
+
+      function editer(id) {
+        const v = toutesVids.find((x) => x.id === id);
+        if (!v) return;
+        editVidId = id;
+        document.getElementById("modal-vid-titre").textContent =
+          "✏️ Modifier la vidéo";
+        document.getElementById("vid-titre").value = v.titre || "";
+        document.getElementById("vid-url").value = v.url || "";
+        document.getElementById("vid-cat").value = v.categorie || "";
+        document.getElementById("vid-duree").value = v.duree || "";
+        document.getElementById("vid-premium").value = String(
+          v.premium || false,
+        );
+        document.getElementById("vid-desc").value = v.description || "";
+        previewYoutube();
+        ouvrirModal("modal-add-video");
+      }
+
+      async function sauvegarderVid() {
+        const payload = {
+          titre: document.getElementById("vid-titre").value.trim(),
+          url: document.getElementById("vid-url").value.trim(),
+          categorie: document.getElementById("vid-cat").value.trim(),
+          duree: document.getElementById("vid-duree").value.trim(),
+          premium: document.getElementById("vid-premium").value === "true",
+          description: document.getElementById("vid-desc").value.trim(),
+        };
+        if (!payload.titre || !payload.url) {
+          window.afficherToast("Titre et URL requis.", "warn");
+          return;
+        }
+        const btn = document.getElementById("btn-save-vid");
+        btn.classList.add("btn--chargement");
+        btn.disabled = true;
+        try {
+          if (editVidId) {
+            await window.API.Videos.modifier(editVidId, payload);
+            window.afficherToast("Vidéo modifiée !", "succes");
+          } else {
+            await window.API.Videos.creer(payload);
+            window.afficherToast("Vidéo ajoutée !", "succes");
+          }
+          fermerModal("modal-add-video");
+          editVidId = null;
+          await charger();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        } finally {
+          btn.classList.remove("btn--chargement");
+          btn.disabled = false;
+        }
+      }
+
+      async function supprimer(id, titre) {
+        if (!confirm(`Supprimer "${titre}" ?`)) return;
+        try {
+          await window.API.Videos.supprimer(id);
+          window.afficherToast("Vidéo supprimée.", "succes");
+          await charger();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>

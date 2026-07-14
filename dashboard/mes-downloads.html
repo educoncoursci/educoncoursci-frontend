@@ -1,0 +1,260 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mes Téléchargements — EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="dashboard">
+        ```
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar__profil">
+            <div class="sidebar__avatar" id="sidebar-avatar">?</div>
+            <div class="sidebar__nom" id="sidebar-nom">—</div>
+            <div class="sidebar__email" id="sidebar-email"></div>
+            <div id="sidebar-badge"></div>
+          </div>
+          <nav class="sidebar__nav">
+            <div class="sidebar__titre">Menu</div>
+            <a href="/dashboard/index.html" class="sidebar__lien"
+              ><span class="sidebar__icone">📊</span> Tableau de bord</a
+            >
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien"
+              ><span class="sidebar__icone">🏆</span> Mes scores</a
+            >
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"
+              ><span class="sidebar__icone">🏛️</span> Mes concours</a
+            >
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien actif"
+              ><span class="sidebar__icone">📥</span> Téléchargements</a
+            >
+            <a href="/dashboard/paiements.html" class="sidebar__lien"
+              ><span class="sidebar__icone">💳</span> Paiements</a
+            >
+            <a href="/dashboard/profil.html" class="sidebar__lien"
+              ><span class="sidebar__icone">👤</span> Mon profil</a
+            >
+          </nav>
+          <div class="sidebar__deconnexion">
+            <button
+              onclick="window.Auth?.deconnecter?.()"
+              class="btn btn--outline-vert btn--sm btn--full"
+            >
+              Déconnexion
+            </button>
+          </div>
+        </aside>
+
+        <main class="dashboard__contenu">
+          <div class="dashboard__header">
+            <div>
+              <h1>📥 Mes téléchargements</h1>
+              <p
+                style="
+                  color: var(--gris-texte);
+                  margin: 4px 0 0;
+                  font-size: 0.9rem;
+                "
+              >
+                PDFs récemment téléchargés
+              </p>
+            </div>
+            <a href="/bibliotheque.html" class="btn btn--primaire btn--sm"
+              >📚 Bibliothèque</a
+            >
+          </div>
+
+          <!-- Accès Premium requis -->
+          <div id="zone-non-premium" class="hidden premium-promo">
+            <div class="premium-promo__icone">⭐</div>
+            <div class="premium-promo__titre">Contenu Premium requis</div>
+            <p class="premium-promo__texte">
+              Les téléchargements de PDFs Premium nécessitent un abonnement. Les
+              PDFs gratuits sont toujours accessibles.
+            </p>
+            <a href="/boutique.html" class="btn btn--orange"
+              >Voir les offres →</a
+            >
+          </div>
+
+          <!-- PDFs disponibles -->
+          <div id="zone-pdfs">
+            <div class="dash-section">
+              <div class="dash-section__header">
+                <div class="dash-section__titre">
+                  📄 PDFs disponibles pour toi
+                </div>
+                <span
+                  id="compteur-dl"
+                  style="font-size: 0.85rem; color: var(--gris-texte)"
+                ></span>
+              </div>
+
+              <!-- Filtre rapide -->
+              <div class="filtres scroll-x" style="margin-bottom: 20px">
+                <button class="filtre-btn actif" onclick="filtrerDL('', this)">
+                  Tous
+                </button>
+                <button class="filtre-btn" onclick="filtrerDL('gratuit', this)">
+                  🆓 Gratuits
+                </button>
+                <button class="filtre-btn" onclick="filtrerDL('premium', this)">
+                  ⭐ Premium
+                </button>
+              </div>
+
+              <div id="liste-pdfs">
+                <div
+                  class="skeleton"
+                  style="height: 80px; border-radius: 14px; margin-bottom: 10px"
+                ></div>
+                <div
+                  class="skeleton"
+                  style="height: 80px; border-radius: 14px; margin-bottom: 10px"
+                ></div>
+                <div
+                  class="skeleton"
+                  style="height: 80px; border-radius: 14px"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let tousPDFs = [];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estConnecte()) {
+          window.location.href = "/auth/login.html";
+          return;
+        }
+        const session = window.Auth.getSession();
+        document.getElementById("sidebar-avatar").textContent =
+          session.nom?.[0]?.toUpperCase() || "?";
+        document.getElementById("sidebar-nom").textContent = session.nom || "";
+        document.getElementById("sidebar-email").textContent =
+          session.email || "";
+        document.getElementById("sidebar-badge").innerHTML = session.premium
+          ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
+          : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
+
+        if (!session.premium)
+          document
+            .getElementById("zone-non-premium")
+            .classList.remove("hidden");
+
+        await chargerPDFs();
+      });
+
+      async function chargerPDFs() {
+        try {
+          const data = await window.API.PDFs.liste({ limit: 100 });
+          tousPDFs = data.pdfs || [];
+          filtrerDL("", document.querySelector(".filtre-btn.actif"));
+        } catch {
+          document.getElementById("liste-pdfs").innerHTML =
+            `<div style="color:var(--gris-texte);padding:20px 0;">Impossible de charger les PDFs.</div>`;
+        }
+      }
+
+      function filtrerDL(type, btn) {
+        document
+          .querySelectorAll(".filtres .filtre-btn")
+          .forEach((b) => b.classList.remove("actif"));
+        btn?.classList.add("actif");
+        const session = window.Auth.getSession();
+
+        const liste = tousPDFs.filter((p) => {
+          if (type === "gratuit") return !p.premium;
+          if (type === "premium") return p.premium;
+          return true;
+        });
+
+        document.getElementById("compteur-dl").textContent =
+          `${liste.length} document${liste.length !== 1 ? "s" : ""}`;
+        const div = document.getElementById("liste-pdfs");
+
+        if (liste.length === 0) {
+          div.innerHTML = `<div class="empty-state"><div class="empty-state__icone">📭</div><div class="empty-state__titre">Aucun document trouvé</div><a href="/bibliotheque.html" class="btn btn--primaire btn--sm">Voir la bibliothèque</a></div>`;
+          return;
+        }
+
+        const ICONES = {
+          BAC: "📘",
+          BEPC: "📗",
+          "Fonction Publique": "🏛️",
+          Concours: "📋",
+          INFAS: "🏥",
+          Police: "👮",
+          "Travail Social": "🤝",
+        };
+
+        div.innerHTML = liste
+          .map((p) => {
+            const verrouille = p.premium && !session?.premium;
+            const icone = ICONES[p.categorie] || "📄";
+            return `
+      <div style="background:var(--blanc);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:10px;display:flex;align-items:center;gap:14px;box-shadow:var(--ombre-sm);border-left:4px solid ${p.premium ? "var(--orange)" : "var(--vert)"};">
+        <div style="font-size:2rem;flex-shrink:0;">${verrouille ? "🔒" : icone}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;font-size:0.92rem;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.titre}</div>
+          <div style="font-size:0.78rem;color:var(--gris-texte);display:flex;gap:10px;flex-wrap:wrap;">
+            ${p.categorie ? `<span>${p.categorie}</span>` : ""}
+            ${p.pages ? `<span>📖 ${p.pages} pages</span>` : ""}
+            ${p.taille ? `<span>💾 ${p.taille}</span>` : ""}
+            <span>⬇ ${p.telechargements || 0} téléchargements</span>
+          </div>
+        </div>
+        <div style="flex-shrink:0;">
+          ${p.premium ? `<span class="badge badge--premium" style="margin-right:8px;">⭐ Premium</span>` : `<span class="badge badge--gratuit" style="margin-right:8px;">🆓</span>`}
+          ${
+            verrouille
+              ? `<a href="/boutique.html" class="btn btn--orange btn--sm">Débloquer</a>`
+              : `<button onclick="telecharger(${p.id},'${p.titre.replace(/'/g, "\\'")}')" class="btn btn--primaire btn--sm">⬇ Télécharger</button>`
+          }
+        </div>
+      </div>`;
+          })
+          .join("");
+      }
+
+      function telecharger(id, titre) {
+        window.afficherToast(`Téléchargement de "${titre}"…`, "succes");
+        window.API.PDFs.telecharger(id);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,633 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QCM — EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      body {
+        background: var(--gris-clair);
+      }
+      .quiz-container {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 24px 16px 60px;
+      }
+      .quiz-header {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        padding: 20px 24px;
+        margin-bottom: 20px;
+        box-shadow: var(--ombre-sm);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .quiz-corps {
+        background: var(--blanc);
+        border-radius: var(--radius-xl);
+        padding: 32px;
+        box-shadow: var(--ombre-sm);
+        margin-bottom: 20px;
+      }
+      .quiz-question {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: var(--noir);
+        margin-bottom: 28px;
+        line-height: 1.5;
+      }
+      .quiz-numero {
+        font-size: 0.82rem;
+        color: var(--gris-texte);
+        font-weight: 600;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .quiz-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+      .correction-box {
+        background: var(--gris-clair);
+        border-radius: var(--radius-md);
+        padding: 16px 18px;
+        margin-top: 20px;
+        font-size: 0.9rem;
+        line-height: 1.7;
+        border-left: 4px solid var(--vert);
+      }
+      .correction-box.incorrecte {
+        border-left-color: var(--rouge);
+      }
+      .resultat-section {
+        text-align: center;
+        padding: 20px 0 10px;
+      }
+      .resultat-score {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 1;
+      }
+      .resultat-mention {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin: 8px 0 4px;
+      }
+      .detail-reponses {
+        text-align: left;
+        margin-top: 28px;
+      }
+      .detail-item {
+        padding: 14px;
+        border-radius: var(--radius-md);
+        margin-bottom: 10px;
+      }
+      .detail-item.ok {
+        background: rgba(26, 107, 60, 0.07);
+        border: 1px solid rgba(26, 107, 60, 0.2);
+      }
+      .detail-item.ko {
+        background: rgba(217, 0, 13, 0.05);
+        border: 1px solid rgba(217, 0, 13, 0.15);
+      }
+      .detail-item__question {
+        font-weight: 700;
+        font-size: 0.92rem;
+        margin-bottom: 6px;
+      }
+      .detail-item__reponse {
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body style="padding-top: var(--navbar-h)">
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions">
+          <a href="/preparation.html" class="btn btn--gris btn--sm">← Retour</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="quiz-container">
+      <!-- SKELETON -->
+
+      <div id="skeleton-quiz">
+        <div
+          class="skeleton"
+          style="height: 72px; border-radius: 16px; margin-bottom: 20px"
+        ></div>
+        <div class="skeleton" style="height: 380px; border-radius: 20px"></div>
+      </div>
+
+      <!-- QUIZ EN COURS -->
+
+      <div id="zone-quiz" class="hidden">
+        <!-- Header : titre + timer + progression -->
+        <div class="quiz-header">
+          <div>
+            <div style="font-weight: 900; font-size: 1rem" id="quiz-titre">
+              QCM
+            </div>
+            <div
+              style="font-size: 0.82rem; color: var(--gris-texte)"
+              id="quiz-matiere"
+            >
+              Matière
+            </div>
+          </div>
+          <div id="timer" class="timer">⏱ 00:00</div>
+        </div>
+
+        ```
+        <!-- Progression -->
+        <div style="margin-bottom: 16px">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              font-size: 0.82rem;
+              color: var(--gris-texte);
+              margin-bottom: 6px;
+            "
+          >
+            <span id="progression-label">Question 1 / 5</span>
+            <span id="progression-pct">0%</span>
+          </div>
+          <div class="progression">
+            <div
+              class="progression__barre"
+              id="progression-barre"
+              style="width: 0%"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Corps de la question -->
+        <div class="quiz-corps" id="corps-question">
+          <div class="quiz-numero" id="q-numero">QUESTION 1</div>
+          <div class="quiz-question" id="q-enonce">Chargement…</div>
+          <div id="q-options"></div>
+          <div id="q-correction" class="correction-box hidden"></div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="quiz-nav">
+          <button
+            id="btn-precedent"
+            class="btn btn--gris"
+            onclick="precedentQuestion()"
+            disabled
+          >
+            ← Précédent
+          </button>
+          <div style="display: flex; gap: 10px">
+            <button
+              id="btn-valider"
+              class="btn btn--primaire"
+              onclick="validerReponse()"
+            >
+              Valider ✓
+            </button>
+            <button
+              id="btn-suivant"
+              class="btn btn--bleu hidden"
+              onclick="questionSuivante()"
+            >
+              Suivant →
+            </button>
+            <button
+              id="btn-terminer"
+              class="btn btn--orange hidden"
+              onclick="terminerQCM()"
+            >
+              Terminer 🏁
+            </button>
+          </div>
+        </div>
+        ```
+      </div>
+
+      <!-- RÉSULTATS -->
+
+      <div id="zone-resultats" class="hidden">
+        <div class="quiz-corps">
+          <div class="resultat-section">
+            <div id="res-emoji" style="font-size: 4rem; margin-bottom: 16px">
+              🎉
+            </div>
+            <div class="resultat-score" id="res-pct" style="color: var(--vert)">
+              80%
+            </div>
+            <div class="resultat-mention" id="res-mention">Très bien</div>
+            <div
+              style="
+                font-size: 0.9rem;
+                color: var(--gris-texte);
+                margin-bottom: 24px;
+              "
+              id="res-score"
+            >
+              4 / 5 bonnes réponses
+            </div>
+
+            ```
+            <!-- Cercle visuel -->
+            <div
+              style="
+                display: flex;
+                justify-content: center;
+                margin-bottom: 28px;
+              "
+            >
+              <div class="score-cercle" id="res-cercle">
+                <div class="score-cercle__pct" id="res-cercle-pct">80%</div>
+                <div class="score-cercle__label">Score</div>
+              </div>
+            </div>
+
+            <!-- Conseil IA -->
+            <div
+              id="conseil-ia"
+              class="hidden"
+              style="
+                background: #eff6ff;
+                border-radius: 14px;
+                padding: 16px;
+                margin-bottom: 20px;
+                text-align: left;
+              "
+            >
+              <div
+                style="
+                  font-weight: 700;
+                  font-size: 0.9rem;
+                  color: var(--bleu);
+                  margin-bottom: 8px;
+                "
+              >
+                🤖 Conseil personnalisé IA
+              </div>
+              <div
+                id="conseil-texte"
+                style="
+                  font-size: 0.88rem;
+                  color: var(--texte);
+                  line-height: 1.7;
+                "
+              >
+                Chargement du conseil…
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div
+              style="
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-bottom: 28px;
+              "
+            >
+              <button onclick="rejouerQCM()" class="btn btn--outline-vert">
+                🔄 Recommencer
+              </button>
+              <a href="/preparation.html" class="btn btn--gris"
+                >← Retour aux QCM</a
+              >
+              <button onclick="partagerResultat()" class="btn btn--bleu">
+                📤 Partager
+              </button>
+            </div>
+          </div>
+
+          <!-- Détail des réponses -->
+          <div class="detail-reponses">
+            <h3 style="margin-bottom: 16px">📋 Détail des réponses</h3>
+            <div id="detail-reponses-liste"></div>
+          </div>
+        </div>
+        ```
+      </div>
+
+      <!-- ERREUR -->
+
+      <div id="zone-erreur" class="hidden">
+        <div
+          class="empty-state"
+          style="
+            background: var(--blanc);
+            border-radius: var(--radius-xl);
+            padding: 60px 24px;
+            box-shadow: var(--ombre-sm);
+          "
+        >
+          <div class="empty-state__icone">❌</div>
+          <div class="empty-state__titre">QCM introuvable</div>
+          <p class="empty-state__texte">
+            Ce QCM n'existe pas ou n'est pas accessible.
+          </p>
+          <a href="/preparation.html" class="btn btn--primaire"
+            >Retour aux QCM</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let qcmData = null;
+      let qcmId = null;
+      let indexActuel = 0;
+      let reponses = {};
+      let validees = {};
+      let timerInterval = null;
+      let secondes = 0;
+
+      const LETTRE = ["A", "B", "C", "D", "E"];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        qcmId = new URLSearchParams(window.location.search).get("id");
+        if (!qcmId) {
+          afficherErreur();
+          return;
+        }
+        await chargerQCM();
+      });
+
+      async function chargerQCM() {
+        try {
+          const data = await window.API.QCM.detail(qcmId);
+          qcmData = data.qcm;
+          document.title = `${qcmData.titre} — EduConcoursCI`;
+          demarrer();
+        } catch (err) {
+          if (err.message.includes("Premium")) {
+            window.afficherToast(
+              "Ce QCM est réservé aux abonnés Premium.",
+              "erreur",
+            );
+            setTimeout(() => (window.location.href = "/boutique.html"), 2000);
+          } else {
+            afficherErreur();
+          }
+        }
+      }
+
+      function demarrer() {
+        document.getElementById("skeleton-quiz").classList.add("hidden");
+        document.getElementById("zone-quiz").classList.remove("hidden");
+        document.getElementById("quiz-titre").textContent = qcmData.titre;
+        document.getElementById("quiz-matiere").textContent = qcmData.matiere;
+        demarrerTimer();
+        afficherQuestion(0);
+      }
+
+      // ── Timer ─────────────────────────────────────────────────────
+      function demarrerTimer() {
+        secondes = 0;
+        timerInterval = setInterval(() => {
+          secondes++;
+          const m = String(Math.floor(secondes / 60)).padStart(2, "0");
+          const s = String(secondes % 60).padStart(2, "0");
+          const el = document.getElementById("timer");
+          el.textContent = `⏱ ${m}:${s}`;
+          if (secondes >= 3600) el.classList.add("urgent");
+          else if (secondes >= 1800) el.classList.add("alerte");
+        }, 1000);
+      }
+
+      // ── Affiche une question ──────────────────────────────────────
+      function afficherQuestion(index) {
+        indexActuel = index;
+        const q = qcmData.questions[index];
+        const total = qcmData.questions.length;
+
+        // Mise à jour progression
+        const pct = Math.round((index / total) * 100);
+        document.getElementById("progression-label").textContent =
+          `Question ${index + 1} / ${total}`;
+        document.getElementById("progression-pct").textContent = `${pct}%`;
+        document.getElementById("progression-barre").style.width = `${pct}%`;
+
+        // Numéro et énoncé
+        document.getElementById("q-numero").textContent =
+          `QUESTION ${index + 1} / ${total}`;
+        document.getElementById("q-enonce").textContent = q.question;
+
+        // Correction masquée
+        const corrDiv = document.getElementById("q-correction");
+        corrDiv.classList.add("hidden");
+
+        // Options
+        const optsDiv = document.getElementById("q-options");
+        const dejaRepondu = validees[index] !== undefined;
+
+        optsDiv.innerHTML = q.options
+          .map((opt, i) => {
+            let classe = "option-qcm";
+            if (dejaRepondu) {
+              if (i === reponses[index])
+                classe +=
+                  reponses[index] === validees[index]
+                    ? " correcte"
+                    : " incorrecte";
+              if (i === validees[index] && reponses[index] !== validees[index])
+                classe += " correcte";
+            } else if (reponses[index] === i) {
+              classe += " selectionnee";
+            }
+            return `
+      <button class="${classe}" onclick="selectionnerReponse(${i})" ${dejaRepondu ? "disabled" : ""}>
+        <span class="option-qcm__lettre">${LETTRE[i]}</span>
+        <span>${opt}</span>
+      </button>`;
+          })
+          .join("");
+
+        // Correction si déjà répondu
+        if (dejaRepondu) {
+          const estCorrecte = reponses[index] === validees[index];
+          afficherCorrection(q, estCorrecte);
+        }
+
+        // Boutons de navigation
+        document.getElementById("btn-precedent").disabled = index === 0;
+        document
+          .getElementById("btn-valider")
+          .classList.toggle("hidden", dejaRepondu);
+        document
+          .getElementById("btn-suivant")
+          .classList.toggle("hidden", !dejaRepondu || index === total - 1);
+        document
+          .getElementById("btn-terminer")
+          .classList.toggle("hidden", !dejaRepondu || index !== total - 1);
+      }
+
+      function selectionnerReponse(i) {
+        if (validees[indexActuel] !== undefined) return;
+        reponses[indexActuel] = i;
+
+        // Mise à jour visuelle
+        document.querySelectorAll(".option-qcm").forEach((btn, j) => {
+          btn.classList.toggle("selectionnee", j === i);
+        });
+      }
+
+      function validerReponse() {
+        if (reponses[indexActuel] === undefined) {
+          window.afficherToast(
+            "Sélectionne une réponse avant de valider.",
+            "warn",
+          );
+          return;
+        }
+        // Stocke la validation côté client (on corrigera côté serveur à la fin)
+        validees[indexActuel] = reponses[indexActuel]; // Temporaire, sera écrasé par la correction serveur
+        afficherQuestion(indexActuel); // Re-affiche avec correction locale visible
+      }
+
+      function afficherCorrection(q, estCorrecte) {
+        const corrDiv = document.getElementById("q-correction");
+        corrDiv.className = `correction-box ${estCorrecte ? "" : "incorrecte"}`;
+        corrDiv.innerHTML = estCorrecte
+          ? `✅ <strong>Bonne réponse !</strong>${q.explication ? "<br><br>💡 " + q.explication : ""}`
+          : `❌ <strong>Mauvaise réponse.</strong> La bonne réponse était : <strong>${LETTRE[q.correct]} — ${q.options[q.correct]}</strong>${q.explication ? "<br><br>💡 " + q.explication : ""}`;
+        corrDiv.classList.remove("hidden");
+      }
+
+      function precedentQuestion() {
+        if (indexActuel > 0) afficherQuestion(indexActuel - 1);
+      }
+
+      function questionSuivante() {
+        if (indexActuel < qcmData.questions.length - 1)
+          afficherQuestion(indexActuel + 1);
+      }
+
+      async function terminerQCM() {
+        clearInterval(timerInterval);
+        document.getElementById("zone-quiz").classList.add("hidden");
+
+        try {
+          const data = await window.API.QCM.soumettre(qcmId, reponses);
+          afficherResultats(data);
+        } catch (err) {
+          window.afficherToast(
+            "Erreur lors de la correction. " + err.message,
+            "erreur",
+          );
+          document.getElementById("zone-quiz").classList.remove("hidden");
+        }
+      }
+
+      function afficherResultats(data) {
+        const { score, total, pourcentage, mention, corrections } = data;
+        document.getElementById("zone-resultats").classList.remove("hidden");
+
+        // Emoji selon le score
+        const emoji =
+          pourcentage >= 75 ? "🏆" : pourcentage >= 50 ? "👍" : "📚";
+        document.getElementById("res-emoji").textContent = emoji;
+        document.getElementById("res-pct").textContent = `${pourcentage}%`;
+        document.getElementById("res-mention").textContent = mention;
+        document.getElementById("res-score").textContent =
+          `${score} / ${total} bonnes réponses`;
+
+        // Cercle
+        const cercle = document.getElementById("res-cercle");
+        document.getElementById("res-cercle-pct").textContent =
+          `${pourcentage}%`;
+        if (pourcentage >= 75) cercle.style.borderColor = "var(--vert)";
+        else if (pourcentage >= 50) {
+          cercle.style.borderColor = "var(--orange)";
+          document.getElementById("res-pct").style.color = "var(--orange)";
+        } else {
+          cercle.style.borderColor = "var(--rouge)";
+          document.getElementById("res-pct").style.color = "var(--rouge)";
+        }
+
+        // Détail des réponses
+        document.getElementById("detail-reponses-liste").innerHTML = corrections
+          .map(
+            (c, i) => `
+    <div class="detail-item ${c.est_correcte ? "ok" : "ko"}">
+      <div class="detail-item__question">${c.est_correcte ? "✅" : "❌"} Q${i + 1} : ${c.question}</div>
+      <div class="detail-item__reponse">
+        ${!c.est_correcte ? `<span style="color:var(--rouge);">Ta réponse : Option ${LETTRE[c.reponse_utilisateur] ?? "-"}</span><br>` : ""}
+        <span style="color:var(--vert);font-weight:600;">Bonne réponse : Option ${LETTRE[c.bonne_reponse]}</span>
+        ${c.explication ? `<br><span style="color:var(--gris-texte);font-size:0.82rem;">💡 ${c.explication}</span>` : ""}
+      </div>
+    </div>`,
+          )
+          .join("");
+
+        // Conseil IA (si connecté)
+        if (window.Auth?.estConnecte())
+          chargerConseilIA(qcmData.matiere, score, total);
+      }
+
+      async function chargerConseilIA(matiere, score, total) {
+        const div = document.getElementById("conseil-ia");
+        div.classList.remove("hidden");
+        try {
+          const data = await window.API.CVLM.conseilRevision(
+            matiere,
+            score,
+            total,
+          );
+          document.getElementById("conseil-texte").textContent = data.conseil;
+        } catch {
+          div.classList.add("hidden");
+        }
+      }
+
+      function rejouerQCM() {
+        reponses = {};
+        validees = {};
+        indexActuel = 0;
+        secondes = 0;
+        document.getElementById("zone-resultats").classList.add("hidden");
+        demarrer();
+      }
+
+      function partagerResultat() {
+        const txt = `J'ai obtenu ${document.getElementById("res-pct").textContent} au QCM "${qcmData.titre}" sur EduConcoursCI ! 🎓`;
+        window.Utils?.copierTexte?.(
+          txt + " → " + window.location.origin + "/preparation.html",
+        );
+      }
+
+      function afficherErreur() {
+        document.getElementById("skeleton-quiz").classList.add("hidden");
+        document.getElementById("zone-erreur").classList.remove("hidden");
+      }
+    </script>
+  </body>
+</html>

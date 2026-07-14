@@ -1,0 +1,681 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boutique Premium — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Abonnement Premium EduConcoursCI. Accès illimité aux cours, vidéos, QCM. Paiement Wave CI ou Orange Money."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .plans-grille {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      .avantage-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--gris-bordure);
+      }
+      .avantage-item:last-child {
+        border: none;
+      }
+      .avantage-icone {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(26, 107, 60, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+      }
+      .faq-item {
+        border-bottom: 1px solid var(--gris-bordure);
+      }
+      .faq-question {
+        padding: 16px 0;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .faq-reponse {
+        padding: 0 0 16px;
+        font-size: 0.9rem;
+        color: var(--gris-texte);
+        line-height: 1.7;
+        display: none;
+      }
+      .faq-reponse.ouvert {
+        display: block;
+      }
+      @media (max-width: 900px) {
+        .plans-grille {
+          grid-template-columns: 1fr;
+          max-width: 440px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <ul class="navbar__links">
+          <li><a href="/concours.html" class="navbar__link">Concours</a></li>
+          <li>
+            <a href="/preparation.html" class="navbar__link">Préparation</a>
+          </li>
+          <li>
+            <a href="/bibliotheque.html" class="navbar__link">Bibliothèque</a>
+          </li>
+          <li>
+            <a href="/boutique.html" class="navbar__link actif">Premium ⭐</a>
+          </li>
+        </ul>
+        <div class="navbar__actions" id="navbar-actions">
+          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"
+            >Connexion</a
+          >
+          <a href="/auth/register.html" class="btn btn--primaire btn--sm"
+            >Inscription</a
+          >
+        </div>
+        <button class="navbar__hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- HERO BOUTIQUE -->
+
+    <section
+      style="
+        background: var(--gradient-hero);
+        padding: calc(var(--navbar-h)+50px) 0 60px;
+        text-align: center;
+        color: #fff;
+      "
+      class="main-content"
+    >
+      <div class="container">
+        <!-- Bandeau si déjà Premium -->
+        <div
+          id="bandeau-deja-premium"
+          class="hidden"
+          style="
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin-bottom: 28px;
+            font-size: 0.95rem;
+            font-weight: 600;
+          "
+        >
+          ✅ Tu es déjà abonné Premium ! Ton abonnement expire le
+          <span id="date-expiration"></span>.
+        </div>
+
+        ```
+        <!-- Raison (si redirigé) -->
+        <div
+          id="bandeau-raison"
+          class="hidden"
+          style="
+            background: rgba(245, 130, 13, 0.25);
+            border: 1px solid rgba(245, 130, 13, 0.5);
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin-bottom: 28px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fde68a;
+          "
+        >
+          ⭐ Ce contenu est réservé aux abonnés Premium. Choisis un plan pour y
+          accéder.
+        </div>
+
+        <div style="font-size: 3.5rem; margin-bottom: 16px">⭐</div>
+        <h1
+          style="
+            color: #fff;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 14px;
+          "
+        >
+          Passe à l'essentiel avec <span style="color: #fde68a">Premium</span>
+        </h1>
+        <p
+          style="
+            opacity: 0.85;
+            font-size: 1.05rem;
+            max-width: 560px;
+            margin: 0 auto 12px;
+            line-height: 1.7;
+          "
+        >
+          Accès illimité à tous les cours, sujets corrigés, vidéos et QCM
+          Premium. Paiement direct par Wave CI ou Orange Money — aucune carte
+          bancaire.
+        </p>
+        <div
+          style="
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+          "
+        >
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.12);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              border-radius: 10px;
+              padding: 8px 18px;
+              font-size: 0.88rem;
+              font-weight: 600;
+            "
+          >
+            🌊 Wave CI
+          </div>
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.12);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              border-radius: 10px;
+              padding: 8px 18px;
+              font-size: 0.88rem;
+              font-weight: 600;
+            "
+          >
+            🟠 Orange Money
+          </div>
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.12);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              border-radius: 10px;
+              padding: 8px 18px;
+              font-size: 0.88rem;
+              font-weight: 600;
+            "
+          >
+            ✅ Activation immédiate
+          </div>
+        </div>
+        ```
+      </div>
+    </section>
+
+    <!-- PLANS PREMIUM -->
+
+    <section style="background: var(--gris-clair); padding: 60px 0">
+      <div class="container">
+        <div class="section__en-tete">
+          <h2>Choisir ton plan</h2>
+          <p>
+            Tous les plans incluent un accès complet à tout le contenu Premium.
+          </p>
+        </div>
+
+        ```
+        <div class="plans-grille" id="plans-grille">
+          <!-- Skeleton -->
+          <div
+            class="skeleton"
+            style="height: 480px; border-radius: 20px"
+          ></div>
+          <div
+            class="skeleton"
+            style="height: 480px; border-radius: 20px"
+          ></div>
+          <div
+            class="skeleton"
+            style="height: 480px; border-radius: 20px"
+          ></div>
+        </div>
+
+        <p
+          style="
+            text-align: center;
+            margin-top: 28px;
+            font-size: 0.85rem;
+            color: var(--gris-texte);
+          "
+        >
+          🔒 Paiement 100% sécurisé · Pas de renouvellement automatique ·
+          Activation en moins de 2 minutes
+        </p>
+        ```
+      </div>
+    </section>
+
+    <!-- CE QUI EST INCLUS -->
+
+    <section style="background: var(--blanc); padding: 60px 0">
+      <div class="container">
+        <div class="section__en-tete">
+          <span class="section__tag">✅ Inclus dans Premium</span>
+          <h2>Tout ce que tu obtiens</h2>
+        </div>
+        <div
+          style="
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--blanc);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--gris-bordure);
+            padding: 8px 28px;
+          "
+        >
+          <div class="avantage-item">
+            <div class="avantage-icone">📄</div>
+            <div>
+              <div style="font-weight: 800; margin-bottom: 4px">
+                Tous les PDFs Premium
+              </div>
+              <p
+                style="margin: 0; font-size: 0.88rem; color: var(--gris-texte)"
+              >
+                Sujets corrigés officiels, cours complets, fiches de révision
+                pour chaque concours.
+              </p>
+            </div>
+          </div>
+          <div class="avantage-item">
+            <div class="avantage-icone">🎬</div>
+            <div>
+              <div style="font-weight: 800; margin-bottom: 4px">
+                Cours en vidéo illimités
+              </div>
+              <p
+                style="margin: 0; font-size: 0.88rem; color: var(--gris-texte)"
+              >
+                Toutes les vidéos de formation par des formateurs ivoiriens
+                expérimentés.
+              </p>
+            </div>
+          </div>
+          <div class="avantage-item">
+            <div class="avantage-icone">📝</div>
+            <div>
+              <div style="font-weight: 800; margin-bottom: 4px">
+                QCM avancés et difficiles
+              </div>
+              <p
+                style="margin: 0; font-size: 0.88rem; color: var(--gris-texte)"
+              >
+                Accès aux QCM de niveau Difficile avec corrections détaillées et
+                conseils IA.
+              </p>
+            </div>
+          </div>
+          <div class="avantage-item">
+            <div class="avantage-icone">⏱️</div>
+            <div>
+              <div style="font-weight: 800; margin-bottom: 4px">
+                Examens blancs illimités
+              </div>
+              <p
+                style="margin: 0; font-size: 0.88rem; color: var(--gris-texte)"
+              >
+                Simule les concours sans limite avec correction automatique
+                détaillée.
+              </p>
+            </div>
+          </div>
+          <div class="avantage-item">
+            <div class="avantage-icone">🤖</div>
+            <div>
+              <div style="font-weight: 800; margin-bottom: 4px">
+                Générateur CV & LM IA
+              </div>
+              <p
+                style="margin: 0; font-size: 0.88rem; color: var(--gris-texte)"
+              >
+                Génère un CV professionnel et une lettre de motivation adaptés
+                aux recruteurs ivoiriens.
+              </p>
+            </div>
+          </div>
+          <div class="avantage-item">
+            <div class="avantage-icone">🏛️</div>
+            <div>
+              <div style="font-weight: 800; margin-bottom: 4px">
+                Fiches concours détaillées
+              </div>
+              <p
+                style="margin: 0; font-size: 0.88rem; color: var(--gris-texte)"
+              >
+                Conditions d'accès, pièces requises, centres de dépôt pour tous
+                les concours Premium.
+              </p>
+            </div>
+          </div>
+          <div class="avantage-item">
+            <div class="avantage-icone">🔔</div>
+            <div>
+              <div style="font-weight: 800; margin-bottom: 4px">
+                Alertes prioritaires
+              </div>
+              <p
+                style="margin: 0; font-size: 0.88rem; color: var(--gris-texte)"
+              >
+                Reçois les nouvelles inscriptions en avant-première directement
+                par e-mail.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPARAISON GRATUIT VS PREMIUM -->
+
+    <section style="background: var(--gris-clair); padding: 60px 0">
+      <div class="container">
+        <div class="section__en-tete"><h2>Gratuit vs Premium</h2></div>
+        <div style="max-width: 700px; margin: 0 auto; overflow-x: auto">
+          <table
+            style="
+              width: 100%;
+              border-collapse: collapse;
+              background: var(--blanc);
+              border-radius: var(--radius-xl);
+              overflow: hidden;
+              box-shadow: var(--ombre-sm);
+            "
+          >
+            <thead>
+              <tr>
+                <th
+                  style="
+                    padding: 16px 20px;
+                    text-align: left;
+                    background: var(--gris-clair);
+                    font-size: 0.85rem;
+                    font-weight: 700;
+                    color: var(--gris-texte);
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                  "
+                >
+                  Fonctionnalité
+                </th>
+                <th
+                  style="
+                    padding: 16px 20px;
+                    text-align: center;
+                    background: var(--gris-clair);
+                    font-size: 0.85rem;
+                    font-weight: 700;
+                    color: var(--gris-texte);
+                  "
+                >
+                  🆓 Gratuit
+                </th>
+                <th
+                  style="
+                    padding: 16px 20px;
+                    text-align: center;
+                    background: rgba(26, 107, 60, 0.08);
+                    font-size: 0.85rem;
+                    font-weight: 800;
+                    color: var(--vert);
+                  "
+                >
+                  ⭐ Premium
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              ${[ ["Concours ouverts","✅","✅"], ["QCM de base","✅","✅"],
+              ["Alertes concours","✅","✅"], ["PDFs gratuits","✅","✅"],
+              ["PDFs Premium","❌","✅"], ["Vidéos Premium","❌","✅"], ["QCM
+              difficiles","❌","✅"], ["Examens blancs illimités","❌","✅"],
+              ["Sujets corrigés officiels","❌","✅"], ["Générateur CV & LM
+              IA","❌","✅"], ["Fiches concours complètes","❌","✅"], ["Support
+              prioritaire","❌","✅"], ].map(([feat, gratuit, premium]) => `
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  ${feat}
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  ${gratuit}
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  ${premium}
+                </td>
+              </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+        <div style="text-align: center; margin-top: 32px">
+          <a href="#plans-grille" class="btn btn--primaire btn--lg"
+            >Choisir mon plan →</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+
+    <section style="background: var(--blanc); padding: 60px 0">
+      <div class="container">
+        <div class="section__en-tete"><h2>❓ Questions fréquentes</h2></div>
+        <div style="max-width: 700px; margin: 0 auto" id="faq">
+          ${[ ["Comment fonctionne le paiement ?","Tu envoies le montant par
+          Wave ou Orange Money au numéro indiqué, puis tu saisis l'identifiant
+          de transaction reçu par SMS. Ton compte est activé immédiatement, sans
+          attente."], ["Mon abonnement se renouvelle-t-il automatiquement
+          ?","Non. Chaque abonnement est à durée fixe (1, 3 ou 12 mois). Tu dois
+          renouveler manuellement quand il expire. Pas de prélèvement
+          automatique."], ["Puis-je utiliser EduConcoursCI sur mobile ?","Oui,
+          le site est entièrement responsive. Tu peux aussi l'installer comme
+          application sur ton téléphone (PWA) en ajoutant le site à l'écran
+          d'accueil."], ["Que se passe-t-il si mon paiement n'est pas reconnu
+          ?","Vérifie que l'identifiant de transaction est correct (copie-colle
+          depuis le SMS). Si le problème persiste, contacte-nous par e-mail avec
+          une capture d'écran de ton SMS de confirmation."], ["Puis-je partager
+          mon compte avec quelqu'un ?","Non, les comptes sont personnels. Chaque
+          utilisateur doit créer son propre compte."], ["Y a-t-il une période
+          d'essai gratuite ?","Le plan gratuit te donne accès à de nombreux
+          contenus sans limitation de durée. Tu peux tester la plateforme avant
+          de passer Premium."], ].map(([q, r]) => `
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              ${q}<span>▼</span>
+            </div>
+            <div class="faq-reponse">${r}</div>
+          </div>
+          `).join("")}
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grille">
+          <div>
+            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <p class="footer__desc">
+              Accès Premium aux ressources de préparation CI.
+            </p>
+          </div>
+          <div>
+            <div class="footer__titre-col">Premium</div>
+            <a href="/boutique.html" class="footer__lien">Plans & tarifs</a
+            ><a href="/paiement.html" class="footer__lien">Payer maintenant</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Ressources</div>
+            <a href="/bibliotheque.html" class="footer__lien">PDFs</a
+            ><a href="/videos.html" class="footer__lien">Vidéos</a
+            ><a href="/preparation.html" class="footer__lien">QCM</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Compte</div>
+            <a href="/auth/login.html" class="footer__lien">Connexion</a
+            ><a href="/dashboard/index.html" class="footer__lien">Mon espace</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bas">
+        <div class="container">© 2026 EduConcoursCI</div>
+      </div>
+    </footer>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Bandeau si déjà Premium
+        const session = window.Auth?.getSession();
+        if (session?.premium) {
+          const div = document.getElementById("bandeau-deja-premium");
+          div.classList.remove("hidden");
+          if (session.premium_expire) {
+            document.getElementById("date-expiration").textContent = new Date(
+              session.premium_expire,
+            ).toLocaleDateString("fr-FR", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            });
+          }
+        }
+
+        // Bandeau raison (redirigé depuis une page Premium)
+        if (
+          new URLSearchParams(window.location.search).get("raison") ===
+          "premium-requis"
+        ) {
+          document.getElementById("bandeau-raison").classList.remove("hidden");
+        }
+
+        await chargerPlans();
+      });
+
+      async function chargerPlans() {
+        try {
+          const data = await window.API.Paiement.plans();
+          const plans = data.plans || [];
+          const grille = document.getElementById("plans-grille");
+
+          const AVANTAGES = [
+            "Tous les PDFs Premium",
+            "Toutes les vidéos",
+            "QCM illimités",
+            "Examens blancs",
+            "Sujets corrigés officiels",
+            "Générateur CV & LM IA",
+            "Alertes prioritaires",
+            "Support prioritaire",
+          ];
+
+          const VEDETTE = 1; // 3 Mois = plan central
+
+          grille.innerHTML = plans
+            .map(
+              (p, i) => `
+      <div class="pricing-card ${i === VEDETTE ? "pricing-card--vedette" : ""}">
+        ${i === VEDETTE ? '<div class="pricing-card__badge">⭐ Le plus populaire</div>' : ""}
+        <div class="pricing-card__label">${p.label}</div>
+        <div class="pricing-card__prix">${p.montant.toLocaleString("fr-CI")}</div>
+        <div class="pricing-card__devise">FCFA · ${p.label.toLowerCase()}</div>
+        ${i === 2 ? '<div style="font-size:0.78rem;color:var(--vert);font-weight:700;margin-bottom:8px;">Économise 30% par rapport au mois</div>' : ""}
+        <ul class="pricing-card__liste">
+          ${AVANTAGES.map(
+            (a) => `
+            <li class="pricing-card__item">
+              <span class="pricing-card__check">✅</span>${a}
+            </li>`,
+          ).join("")}
+        </ul>
+        <a href="/paiement.html?plan=${encodeURIComponent(p.label)}"
+           class="btn btn--full ${i === VEDETTE ? "btn--orange" : "btn--primaire"}"
+           style="${i === VEDETTE ? "background:var(--gradient-orange);border:none;" : ""}">
+           Choisir ce plan →
+        </a>
+        <div style="margin-top:10px;font-size:0.78rem;color:var(--gris-texte);text-align:center;">
+          🌊 Wave · 🟠 Orange Money · ✅ Immédiat
+        </div>
+      </div>`,
+            )
+            .join("");
+        } catch {
+          document.getElementById("plans-grille").innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gris-texte);">
+        Impossible de charger les plans. <a href="#" onclick="location.reload()" style="color:var(--vert);">Réessayer</a>
+      </div>`;
+        }
+      }
+
+      function toggleFAQ(btn) {
+        const rep = btn.nextElementSibling;
+        const fleche = btn.querySelector("span");
+        const isOuvert = rep.classList.contains("ouvert");
+        document.querySelectorAll(".faq-reponse.ouvert").forEach((r) => {
+          r.classList.remove("ouvert");
+          r.previousElementSibling.querySelector("span").textContent = "▼";
+        });
+        if (!isOuvert) {
+          rep.classList.add("ouvert");
+          fleche.textContent = "▲";
+        }
+      }
+    </script>
+  </body>
+</html>

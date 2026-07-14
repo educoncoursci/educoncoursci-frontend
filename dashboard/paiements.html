@@ -1,0 +1,221 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mes Paiements — EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="dashboard">
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar__profil">
+            <div class="sidebar__avatar" id="sidebar-avatar">?</div>
+            <div class="sidebar__nom" id="sidebar-nom">—</div>
+            <div class="sidebar__email" id="sidebar-email"></div>
+            <div id="sidebar-badge"></div>
+          </div>
+          <nav class="sidebar__nav">
+            <div class="sidebar__titre">Menu</div>
+            <a href="/dashboard/index.html" class="sidebar__lien"
+              ><span class="sidebar__icone">📊</span> Tableau de bord</a
+            >
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien"
+              ><span class="sidebar__icone">🏆</span> Mes scores</a
+            >
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"
+              ><span class="sidebar__icone">🏛️</span> Mes concours</a
+            >
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
+              ><span class="sidebar__icone">📥</span> Téléchargements</a
+            >
+            <a href="/dashboard/paiements.html" class="sidebar__lien actif"
+              ><span class="sidebar__icone">💳</span> Paiements</a
+            >
+            <a href="/dashboard/profil.html" class="sidebar__lien"
+              ><span class="sidebar__icone">👤</span> Mon profil</a
+            >
+          </nav>
+          <div class="sidebar__deconnexion">
+            <button
+              onclick="window.Auth?.deconnecter?.()"
+              class="btn btn--outline-vert btn--sm btn--full"
+            >
+              Déconnexion
+            </button>
+          </div>
+        </aside>
+
+        ```
+        <main class="dashboard__contenu">
+          <div class="dashboard__header">
+            <div>
+              <h1>💳 Mes paiements</h1>
+              <p
+                style="
+                  color: var(--gris-texte);
+                  margin: 4px 0 0;
+                  font-size: 0.9rem;
+                "
+              >
+                Historique de tes abonnements Premium
+              </p>
+            </div>
+            <a href="/boutique.html" class="btn btn--primaire btn--sm"
+              >⭐ Renouveler</a
+            >
+          </div>
+
+          <!-- Statut Premium -->
+          <div
+            id="statut-premium"
+            class="dash-section"
+            style="margin-bottom: 20px"
+          ></div>
+
+          <!-- Historique transactions -->
+          <div class="dash-section">
+            <div class="dash-section__header">
+              <div class="dash-section__titre">
+                📋 Historique des transactions
+              </div>
+            </div>
+            <div id="liste-transactions">
+              <div
+                class="skeleton"
+                style="height: 70px; border-radius: 12px; margin-bottom: 8px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 70px; border-radius: 12px"
+              ></div>
+            </div>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estConnecte()) {
+          window.location.href = "/auth/login.html";
+          return;
+        }
+        const session = window.Auth.getSession();
+
+        document.getElementById("sidebar-avatar").textContent =
+          session.nom?.[0]?.toUpperCase() || "?";
+        document.getElementById("sidebar-nom").textContent = session.nom || "";
+        document.getElementById("sidebar-email").textContent =
+          session.email || "";
+        document.getElementById("sidebar-badge").innerHTML = session.premium
+          ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
+          : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
+
+        // Statut Premium
+        const sp = document.getElementById("statut-premium");
+        if (session.premium) {
+          const expire = session.premium_expire
+            ? new Date(session.premium_expire).toLocaleDateString("fr-FR", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })
+            : "—";
+          const reste = session.premium_expire
+            ? Math.ceil(
+                (new Date(session.premium_expire) - new Date()) /
+                  (1000 * 60 * 60 * 24),
+              )
+            : null;
+          sp.innerHTML = `
+      <div style="background:linear-gradient(135deg,rgba(26,107,60,0.08),rgba(10,110,189,0.08));border:1px solid rgba(26,107,60,0.2);border-radius:16px;padding:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span class="badge badge--premium">⭐ Premium actif</span>
+            <span style="font-weight:800;font-size:0.95rem;">${session.premium_plan || "Premium"}</span>
+          </div>
+          <div style="font-size:0.88rem;color:var(--gris-texte);">Expire le <strong>${expire}</strong>${reste !== null ? " · " + reste + " jour" + (reste > 1 ? "s" : "") + " restant" + (reste > 1 ? "s" : "") : ""}</div>
+        </div>
+        <a href="/boutique.html" class="btn btn--orange btn--sm">Renouveler ⭐</a>
+      </div>`;
+        } else {
+          sp.innerHTML = `
+      <div style="background:rgba(245,130,13,0.06);border:1.5px dashed var(--orange);border-radius:16px;padding:20px;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px;">⭐</div>
+        <div style="font-weight:800;font-size:1rem;color:var(--orange);margin-bottom:6px;">Aucun abonnement Premium actif</div>
+        <p style="color:var(--gris-texte);font-size:0.88rem;margin-bottom:16px;">Passe en Premium pour accéder à tous les contenus.</p>
+        <a href="/boutique.html" class="btn btn--orange btn--sm">Voir les offres →</a>
+      </div>`;
+        }
+
+        // Transactions
+        try {
+          const data = await window.API.Paiement.historique();
+          const list = data.transactions || [];
+          const div = document.getElementById("liste-transactions");
+          if (list.length === 0) {
+            div.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state__icone">💳</div>
+          <div class="empty-state__titre">Aucune transaction</div>
+          <p class="empty-state__texte">Tes paiements apparaîtront ici après ton premier abonnement.</p>
+          <a href="/boutique.html" class="btn btn--primaire btn--sm">Voir les plans</a>
+        </div>`;
+            return;
+          }
+          div.innerHTML = list
+            .map(
+              (t) => `
+      <div class="paiement-item">
+        <div class="paiement-item__gauche">
+          <div class="paiement-item__icone">${t.moyen?.includes("Wave") ? "🌊" : "🟠"}</div>
+          <div>
+            <div class="paiement-item__plan">Premium ${t.plan}</div>
+            <div class="paiement-item__meta">${t.moyen} · ${t.date ? new Date(t.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : "—"}</div>
+            <div style="font-size:0.75rem;color:var(--gris-texte);font-family:monospace;margin-top:2px;">Réf: ${t.tx_id || "—"}</div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div class="paiement-item__montant">${(t.montant || 0).toLocaleString("fr-CI")} FCFA</div>
+          <span class="badge ${t.statut === "validé" ? "badge--vert" : "badge--rouge"}">${t.statut === "validé" ? "✓ Validé" : "✗ Échoué"}</span>
+        </div>
+      </div>`,
+            )
+            .join("");
+        } catch {
+          document.getElementById("liste-transactions").innerHTML =
+            `<div style="color:var(--gris-texte);padding:20px 0;">Impossible de charger l'historique.</div>`;
+        }
+      });
+    </script>
+  </body>
+</html>

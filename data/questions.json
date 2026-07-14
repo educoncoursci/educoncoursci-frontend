@@ -1,0 +1,257 @@
+{
+  "version": "1.0",
+  "generated": "2026-07-08",
+  "description": "QCM de démonstration EduConcoursCI — Concours Fonction Publique CI",
+  "qcm": [
+    {
+      "titre": "Culture Générale — Niveau 1",
+      "matiere": "Culture Générale",
+      "difficulte": "Facile",
+      "statut": "publié",
+      "premium": false,
+      "questions": [
+        {
+          "question": "Quelle est la capitale économique de la Côte d'Ivoire ?",
+          "options": ["Yamoussoukro", "Abidjan", "Bouaké", "San-Pédro"],
+          "correct": 1,
+          "explication": "Abidjan est la capitale économique et la plus grande ville. Yamoussoukro est la capitale politique officielle depuis 1983."
+        },
+        {
+          "question": "En quelle année la Côte d'Ivoire a-t-elle accédé à l'indépendance ?",
+          "options": ["1958", "1960", "1962", "1956"],
+          "correct": 1,
+          "explication": "La Côte d'Ivoire a proclamé son indépendance le 7 août 1960, sous la présidence de Félix Houphouët-Boigny."
+        },
+        {
+          "question": "Quel est le fleuve le plus long de Côte d'Ivoire ?",
+          "options": ["Le Sassandra", "Le Bandama", "La Comoé", "Le Cavally"],
+          "correct": 2,
+          "explication": "La Comoé est le fleuve le plus long de Côte d'Ivoire avec environ 1 160 km, prenant sa source au Burkina Faso."
+        },
+        {
+          "question": "Combien de régions compte la Côte d'Ivoire depuis la réforme administrative de 2011 ?",
+          "options": ["14", "19", "31", "33"],
+          "correct": 3,
+          "explication": "La Côte d'Ivoire compte 33 régions réparties en 14 districts autonomes depuis la réforme de 2011."
+        },
+        {
+          "question": "Qui est le fondateur du PDCI-RDA, premier parti politique ivoirien ?",
+          "options": [
+            "Alassane Ouattara",
+            "Félix Houphouët-Boigny",
+            "Laurent Gbagbo",
+            "Henri Konan Bédié"
+          ],
+          "correct": 1,
+          "explication": "Félix Houphouët-Boigny a fondé le PDCI-RDA (Parti Démocratique de Côte d'Ivoire) en 1946."
+        }
+      ]
+    },
+    {
+      "titre": "Logique et Raisonnement — Niveau 1",
+      "matiere": "Logique",
+      "difficulte": "Facile",
+      "statut": "publié",
+      "premium": false,
+      "questions": [
+        {
+          "question": "Complète la série : 2, 5, 10, 17, 26, ?",
+          "options": ["35", "36", "37", "38"],
+          "correct": 2,
+          "explication": "La différence entre termes consécutifs suit : +3, +5, +7, +9, +11. Donc 26 + 11 = 37."
+        },
+        {
+          "question": "Si CHAT = 3-8-1-20, alors CHIEN = ?",
+          "options": ["3-8-9-5-14", "3-7-9-4-13", "3-8-10-5-14", "2-8-9-5-14"],
+          "correct": 0,
+          "explication": "Chaque lettre correspond à sa position dans l'alphabet : C=3, H=8, I=9, E=5, N=14."
+        },
+        {
+          "question": "Un train part à 8h15 et arrive à 11h45. Combien de temps dure le trajet ?",
+          "options": ["2h30", "3h00", "3h30", "3h15"],
+          "correct": 2,
+          "explication": "De 8h15 à 11h45 : 3 heures et 30 minutes = 3h30."
+        },
+        {
+          "question": "Parmi ces figures, laquelle complète logiquement la suite : ▲ ■ ● ▲ ■ ?",
+          "options": ["▲", "■", "●", "◆"],
+          "correct": 2,
+          "explication": "La suite ▲ ■ ● se répète cycliquement. Après ▲ ■, le terme suivant est ●."
+        },
+        {
+          "question": "Si tous les A sont B, et tous les B sont C, alors :",
+          "options": [
+            "Tous les C sont A",
+            "Tous les A sont C",
+            "Aucun A n'est C",
+            "Certains C sont A"
+          ],
+          "correct": 1,
+          "explication": "Par transitivité logique : si A⊂B et B⊂C, alors A⊂C. Donc tous les A sont C."
+        }
+      ]
+    },
+    {
+      "titre": "Travail Social — Méthodes et Pratiques",
+      "matiere": "Travail Social",
+      "difficulte": "Moyen",
+      "statut": "publié",
+      "premium": false,
+      "questions": [
+        {
+          "question": "Quelle est la signification de l'acronyme A.V.E.C. en travail social ?",
+          "options": [
+            "Accueil, Validation, Écoute, Contrat",
+            "Analyse, Visite, Évaluation, Compétences",
+            "Accueil, Visite, Écoute, Contrat",
+            "Analyse, Validation, Évaluation, Compétences"
+          ],
+          "correct": 0,
+          "explication": "A.V.E.C. désigne les 4 étapes clés de l'accompagnement social : Accueil, Validation, Écoute, Contrat."
+        },
+        {
+          "question": "Le Centre Social Treichville Habitat Entente (CSTHE) relève de quelle tutelle ?",
+          "options": [
+            "Ministère de la Santé",
+            "Ministère de la Solidarité et de la Lutte contre la Pauvreté",
+            "Ministère de l'Éducation Nationale",
+            "Ministère de la Justice"
+          ],
+          "correct": 1,
+          "explication": "Les Centres Sociaux en Côte d'Ivoire sont placés sous la tutelle du Ministère en charge de la Solidarité et de la Lutte contre la Pauvreté."
+        },
+        {
+          "question": "Qu'est-ce que le « diagnostic social participatif » ?",
+          "options": [
+            "Un examen médical réalisé par un médecin social",
+            "Une analyse des besoins d'une communauté impliquant les habitants dans le processus",
+            "Un rapport administratif sur les services sociaux",
+            "Une évaluation individuelle des capacités d'un bénéficiaire"
+          ],
+          "correct": 1,
+          "explication": "Le diagnostic social participatif est une méthode d'analyse qui implique activement la communauté concernée pour identifier ses besoins, ressources et priorités."
+        },
+        {
+          "question": "Parmi ces institutions, laquelle est chargée de la formation des Assistants Sociaux en Côte d'Ivoire ?",
+          "options": ["UFHB", "INSFS", "CAFOP", "ENS"],
+          "correct": 1,
+          "explication": "L'INSFS (Institut National Supérieur de Formation Sociale) est l'institution publique de Côte d'Ivoire chargée de la formation des travailleurs sociaux."
+        },
+        {
+          "question": "Le principe d'autodétermination en travail social signifie :",
+          "options": [
+            "Le travailleur social décide à la place du bénéficiaire",
+            "Le bénéficiaire a le droit de prendre ses propres décisions",
+            "L'État détermine les besoins des bénéficiaires",
+            "Le travailleur social impose ses valeurs au bénéficiaire"
+          ],
+          "correct": 1,
+          "explication": "L'autodétermination est un principe fondamental en travail social : le bénéficiaire a le droit et la capacité de faire ses propres choix. Le rôle du travailleur social est de l'accompagner, pas de décider à sa place."
+        }
+      ]
+    },
+    {
+      "titre": "Culture Générale — Niveau Difficile",
+      "matiere": "Culture Générale",
+      "difficulte": "Difficile",
+      "statut": "publié",
+      "premium": true,
+      "questions": [
+        {
+          "question": "Quelle est la superficie totale de la Côte d'Ivoire en km² ?",
+          "options": [
+            "322 463 km²",
+            "322 463 km²",
+            "512 000 km²",
+            "274 000 km²"
+          ],
+          "correct": 0,
+          "explication": "La Côte d'Ivoire couvre une superficie de 322 463 km², la classant parmi les pays de taille moyenne en Afrique de l'Ouest."
+        },
+        {
+          "question": "Le Traité d'Addis-Abeba de 1963 a fondé quelle organisation continentale ?",
+          "options": ["CEDEAO", "Union Africaine", "OUA", "UEMOA"],
+          "correct": 2,
+          "explication": "Le Traité d'Addis-Abeba du 25 mai 1963 a fondé l'Organisation de l'Unité Africaine (OUA), transformée en Union Africaine (UA) en 2002."
+        },
+        {
+          "question": "En économie, le PIB nominal de la Côte d'Ivoire en 2024 était estimé à environ :",
+          "options": [
+            "45 milliards USD",
+            "75 milliards USD",
+            "100 milliards USD",
+            "25 milliards USD"
+          ],
+          "correct": 1,
+          "explication": "Le PIB nominal de la Côte d'Ivoire était estimé à environ 75 milliards USD en 2024, ce qui en fait la première économie de l'UEMOA."
+        },
+        {
+          "question": "Quel texte juridique régit le statut général de la Fonction Publique de Côte d'Ivoire ?",
+          "options": [
+            "Loi n°92-570 du 11 septembre 1992",
+            "Loi n°95-696 du 7 septembre 1995",
+            "Décret n°2020-01 du 5 janvier 2020",
+            "Loi n°60-315 du 21 septembre 1960"
+          ],
+          "correct": 0,
+          "explication": "La Loi n°92-570 du 11 septembre 1992 portant Statut Général de la Fonction Publique de Côte d'Ivoire est le texte de référence pour les fonctionnaires ivoiriens."
+        },
+        {
+          "question": "L'UEMOA regroupe combien de pays membres ?",
+          "options": ["6", "7", "8", "9"],
+          "correct": 2,
+          "explication": "L'UEMOA (Union Économique et Monétaire Ouest-Africaine) regroupe 8 pays : Bénin, Burkina Faso, Côte d'Ivoire, Guinée-Bissau, Mali, Niger, Sénégal, Togo."
+        }
+      ]
+    },
+    {
+      "titre": "Mathématiques et Calcul Mental",
+      "matiere": "Mathématiques",
+      "difficulte": "Moyen",
+      "statut": "publié",
+      "premium": false,
+      "questions": [
+        {
+          "question": "Un commerçant achète un article 15 000 FCFA et le revend avec un bénéfice de 25%. Quel est le prix de vente ?",
+          "options": [
+            "17 500 FCFA",
+            "18 000 FCFA",
+            "18 750 FCFA",
+            "20 000 FCFA"
+          ],
+          "correct": 2,
+          "explication": "Prix de vente = 15 000 × (1 + 25/100) = 15 000 × 1,25 = 18 750 FCFA."
+        },
+        {
+          "question": "Si 3 ouvriers construisent un mur en 8 jours, combien d'ouvriers faudrait-il pour le construire en 4 jours ?",
+          "options": ["4", "5", "6", "8"],
+          "correct": 2,
+          "explication": "Travail total = 3 × 8 = 24 jours-ouvriers. Nombre d'ouvriers pour 4 jours = 24 ÷ 4 = 6 ouvriers."
+        },
+        {
+          "question": "Quel est le PGCD de 48 et 36 ?",
+          "options": ["6", "8", "12", "18"],
+          "correct": 2,
+          "explication": "48 = 2⁴ × 3 et 36 = 2² × 3². Le PGCD = 2² × 3 = 4 × 3 = 12."
+        },
+        {
+          "question": "Un capital de 200 000 FCFA est placé à un taux d'intérêt annuel de 6%. Quel est l'intérêt simple au bout de 18 mois ?",
+          "options": [
+            "12 000 FCFA",
+            "18 000 FCFA",
+            "24 000 FCFA",
+            "36 000 FCFA"
+          ],
+          "correct": 1,
+          "explication": "Intérêt = Capital × taux × durée = 200 000 × 0,06 × (18/12) = 200 000 × 0,06 × 1,5 = 18 000 FCFA."
+        },
+        {
+          "question": "Résoudre : 2x + 5 = 17",
+          "options": ["x = 5", "x = 6", "x = 7", "x = 8"],
+          "correct": 1,
+          "explication": "2x = 17 - 5 = 12, donc x = 12 ÷ 2 = 6."
+        }
+      ]
+    }
+  ]
+}

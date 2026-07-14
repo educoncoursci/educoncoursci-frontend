@@ -1,0 +1,296 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mes Concours — EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon">🎓</div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="dashboard">
+        ```
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar__profil">
+            <div class="sidebar__avatar" id="sidebar-avatar">?</div>
+            <div class="sidebar__nom" id="sidebar-nom">—</div>
+            <div class="sidebar__email" id="sidebar-email"></div>
+            <div id="sidebar-badge"></div>
+          </div>
+          <nav class="sidebar__nav">
+            <div class="sidebar__titre">Menu</div>
+            <a href="/dashboard/index.html" class="sidebar__lien"
+              ><span class="sidebar__icone">📊</span> Tableau de bord</a
+            >
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien"
+              ><span class="sidebar__icone">🏆</span> Mes scores</a
+            >
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien actif"
+              ><span class="sidebar__icone">🏛️</span> Mes concours</a
+            >
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
+              ><span class="sidebar__icone">📥</span> Téléchargements</a
+            >
+            <a href="/dashboard/paiements.html" class="sidebar__lien"
+              ><span class="sidebar__icone">💳</span> Paiements</a
+            >
+            <a href="/dashboard/profil.html" class="sidebar__lien"
+              ><span class="sidebar__icone">👤</span> Mon profil</a
+            >
+          </nav>
+          <div class="sidebar__deconnexion">
+            <button
+              onclick="window.Auth?.deconnecter?.()"
+              class="btn btn--outline-vert btn--sm btn--full"
+            >
+              Déconnexion
+            </button>
+          </div>
+        </aside>
+
+        <main class="dashboard__contenu">
+          <div class="dashboard__header">
+            <div>
+              <h1>🏛️ Mes concours</h1>
+              <p
+                style="
+                  color: var(--gris-texte);
+                  margin: 4px 0 0;
+                  font-size: 0.9rem;
+                "
+              >
+                Concours sauvegardés et suivis
+              </p>
+            </div>
+            <a href="/concours.html" class="btn btn--primaire btn--sm"
+              >🔍 Explorer les concours</a
+            >
+          </div>
+
+          <!-- Onglets -->
+          <div
+            style="
+              display: flex;
+              gap: 0;
+              border-bottom: 2px solid var(--gris-bordure);
+              margin-bottom: 24px;
+            "
+          >
+            <button
+              class="onglet-actif"
+              id="tab-favoris"
+              onclick="changerTab('favoris')"
+              style="
+                padding: 10px 20px;
+                border: none;
+                background: transparent;
+                font-weight: 700;
+                font-size: 0.9rem;
+                cursor: pointer;
+                border-bottom: 3px solid var(--vert);
+                color: var(--vert);
+                margin-bottom: -2px;
+                font-family: inherit;
+              "
+            >
+              ♥ Favoris
+            </button>
+            <button
+              id="tab-ouverts"
+              onclick="changerTab('ouverts')"
+              style="
+                padding: 10px 20px;
+                border: none;
+                background: transparent;
+                font-weight: 700;
+                font-size: 0.9rem;
+                cursor: pointer;
+                border-bottom: 3px solid transparent;
+                color: var(--gris-texte);
+                margin-bottom: -2px;
+                font-family: inherit;
+              "
+            >
+              🔴 Ouverts
+            </button>
+          </div>
+
+          <!-- Favoris -->
+          <div id="zone-favoris">
+            <div id="liste-favoris">
+              <div
+                class="skeleton"
+                style="height: 100px; border-radius: 14px; margin-bottom: 10px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 100px; border-radius: 14px; margin-bottom: 10px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 100px; border-radius: 14px"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Ouverts -->
+          <div id="zone-ouverts" class="hidden">
+            <div id="liste-ouverts">
+              <div
+                class="skeleton"
+                style="height: 100px; border-radius: 14px; margin-bottom: 10px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 100px; border-radius: 14px"
+              ></div>
+            </div>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let tabActif = "favoris";
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estConnecte()) {
+          window.location.href = "/auth/login.html";
+          return;
+        }
+        const session = window.Auth.getSession();
+        document.getElementById("sidebar-avatar").textContent =
+          session.nom?.[0]?.toUpperCase() || "?";
+        document.getElementById("sidebar-nom").textContent = session.nom || "";
+        document.getElementById("sidebar-email").textContent =
+          session.email || "";
+        document.getElementById("sidebar-badge").innerHTML = session.premium
+          ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
+          : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
+
+        await Promise.all([chargerFavoris(), chargerOuverts()]);
+      });
+
+      function changerTab(tab) {
+        tabActif = tab;
+        document
+          .getElementById("zone-favoris")
+          .classList.toggle("hidden", tab !== "favoris");
+        document
+          .getElementById("zone-ouverts")
+          .classList.toggle("hidden", tab !== "ouverts");
+        const tabFav = document.getElementById("tab-favoris");
+        const tabOuv = document.getElementById("tab-ouverts");
+        tabFav.style.borderBottomColor =
+          tab === "favoris" ? "var(--vert)" : "transparent";
+        tabFav.style.color =
+          tab === "favoris" ? "var(--vert)" : "var(--gris-texte)";
+        tabOuv.style.borderBottomColor =
+          tab === "ouverts" ? "var(--vert)" : "transparent";
+        tabOuv.style.color =
+          tab === "ouverts" ? "var(--vert)" : "var(--gris-texte)";
+      }
+
+      async function chargerFavoris() {
+        const ids = JSON.parse(localStorage.getItem("favoris") || "[]");
+        const div = document.getElementById("liste-favoris");
+        if (ids.length === 0) {
+          div.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state__icone">♡</div>
+        <div class="empty-state__titre">Aucun concours sauvegardé</div>
+        <p class="empty-state__texte">Clique sur "Sauvegarder" sur une fiche concours pour le retrouver ici.</p>
+        <a href="/concours.html" class="btn btn--primaire btn--sm">Explorer les concours</a>
+      </div>`;
+          return;
+        }
+
+        try {
+          const promesses = ids.map((id) =>
+            window.API.Concours.detail(id).catch(() => null),
+          );
+          const resultats = await Promise.all(promesses);
+          const concours = resultats.filter(Boolean).map((r) => r.concours);
+          div.innerHTML = concours
+            .map((c) => cardConcoursDash(c, true))
+            .join("");
+        } catch {
+          div.innerHTML = `<div style="color:var(--gris-texte);padding:20px;">Erreur de chargement.</div>`;
+        }
+      }
+
+      async function chargerOuverts() {
+        const div = document.getElementById("liste-ouverts");
+        try {
+          const data = await window.API.Concours.ouverts();
+          const liste = data.concours || [];
+          if (liste.length === 0) {
+            div.innerHTML = `<div style="color:var(--gris-texte);padding:20px 0;">Aucun concours ouvert en ce moment.</div>`;
+            return;
+          }
+          div.innerHTML = liste.map((c) => cardConcoursDash(c, false)).join("");
+        } catch {
+          div.innerHTML = `<div style="color:var(--gris-texte);padding:20px;">Erreur de chargement.</div>`;
+        }
+      }
+
+      function cardConcoursDash(c, avecSuppr) {
+        return `
+    <div style="background:var(--blanc);border-radius:var(--radius-lg);border-left:5px solid ${c.couleur || "var(--vert)"};padding:16px 20px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--ombre-sm);flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;">
+        <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+          <span class="badge badge--vert" style="font-size:0.72rem;">${c.categorie}</span>
+          <span class="badge badge--rouge" style="font-size:0.72rem;">${c.statut === "ouvert" ? "🔴 Ouvert" : "📋 " + c.statut}</span>
+        </div>
+        <div style="font-weight:800;font-size:0.95rem;margin-bottom:4px;">${c.titre}</div>
+        <div style="font-size:0.8rem;color:var(--gris-texte);">🏢 ${c.organisme} · ⏰ ${c.cloture || "—"} · 💰 ${c.frais ? c.frais.toLocaleString("fr-CI") + " FCFA" : "Gratuit"}</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-shrink:0;">
+        <a href="/concours-detail.html?id=${c.id}" class="btn btn--primaire btn--sm">Voir →</a>
+        ${avecSuppr ? `<button onclick="retirerFavori(${c.id},this)" class="btn btn--gris btn--sm" title="Retirer des favoris">♥ Retirer</button>` : ""}
+      </div>
+    </div>`;
+      }
+
+      function retirerFavori(id, btn) {
+        const favoris = JSON.parse(localStorage.getItem("favoris") || "[]");
+        const idx = favoris.indexOf(id);
+        if (idx >= 0) favoris.splice(idx, 1);
+        localStorage.setItem("favoris", JSON.stringify(favoris));
+        btn.closest("div[style]").remove();
+        window.afficherToast("Retiré des favoris.", "info");
+        if (
+          document.querySelectorAll("#liste-favoris > div[style]").length === 0
+        )
+          chargerFavoris();
+      }
+    </script>
+  </body>
+</html>

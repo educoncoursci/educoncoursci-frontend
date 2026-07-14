@@ -1,0 +1,311 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abonnés — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            ⚙️
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <div style="display: flex; gap: 10px">
+          <button onclick="exporterCSV()" class="btn btn--gris btn--sm">
+            📥 Exporter CSV
+          </button>
+          <button
+            onclick="window.Auth?.deconnecter?.()"
+            class="btn btn--gris btn--sm"
+          >
+            Déconnexion
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo">⚙️ Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📊</span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🏛️</span> Concours</a
+          >
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">📄</span> PDFs</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien actif"
+            ><span class="admin-sidebar__icone">👥</span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">💳</span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🔔</span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone">🌐</span> Voir le site</a
+          >
+        </aside>
+
+        ```
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre">👥 Utilisateurs & Abonnés</div>
+              <div class="admin-topbar__sous" id="sub-abonnes">Chargement…</div>
+            </div>
+            <div class="admin-topbar__actions">
+              <button
+                onclick="changerVue('tous')"
+                id="vue-tous"
+                class="btn btn--primaire btn--sm"
+              >
+                Tous
+              </button>
+              <button
+                onclick="changerVue('premium')"
+                id="vue-premium"
+                class="btn btn--gris btn--sm"
+              >
+                ⭐ Premium
+              </button>
+            </div>
+          </div>
+
+          <!-- Recherche -->
+          <div style="display: flex; gap: 12px; margin-bottom: 20px">
+            <input
+              type="text"
+              id="recherche-users"
+              placeholder="🔍 Rechercher par nom ou e-mail…"
+              oninput="filtrerUsers()"
+              style="
+                flex: 1;
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+              "
+            />
+          </div>
+
+          <!-- Tableau -->
+          <div class="admin-tableau-wrap">
+            <table class="admin-tableau">
+              <thead>
+                <tr>
+                  <th>Utilisateur</th>
+                  <th>E-mail</th>
+                  <th>Abonnement</th>
+                  <th>Plan</th>
+                  <th>Expiration</th>
+                  <th>Inscription</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-users">
+                <tr>
+                  <td
+                    colspan="7"
+                    style="
+                      text-align: center;
+                      padding: 40px;
+                      color: var(--gris-texte);
+                    "
+                  >
+                    Chargement…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+        ```
+      </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let tousUsers = [];
+      let vueActive = "tous";
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estAdmin()) {
+          window.location.href = "/";
+          return;
+        }
+        await chargerUsers();
+      });
+
+      async function chargerUsers() {
+        try {
+          const [allData, premData] = await Promise.all([
+            window.API.Admin.users({ limit: 500 }),
+            window.API.Admin.abonnes(),
+          ]);
+          tousUsers = allData.utilisateurs || [];
+          document.getElementById("sub-abonnes").textContent =
+            `${tousUsers.length} utilisateurs · ${premData.total} abonnés Premium · ${premData.revenus} de revenus`;
+          afficherUsers();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      function changerVue(vue) {
+        vueActive = vue;
+        document.getElementById("vue-tous").className =
+          vue === "tous"
+            ? "btn btn--primaire btn--sm"
+            : "btn btn--gris btn--sm";
+        document.getElementById("vue-premium").className =
+          vue === "premium"
+            ? "btn btn--primaire btn--sm"
+            : "btn btn--gris btn--sm";
+        afficherUsers();
+      }
+
+      function filtrerUsers() {
+        afficherUsers();
+      }
+
+      function afficherUsers() {
+        const rech = document
+          .getElementById("recherche-users")
+          .value.toLowerCase();
+        let liste = tousUsers.filter((u) => {
+          if (vueActive === "premium" && !u.premium) return false;
+          if (
+            rech &&
+            !u.nom.toLowerCase().includes(rech) &&
+            !u.email.toLowerCase().includes(rech)
+          )
+            return false;
+          return true;
+        });
+
+        const tbody = document.getElementById("tbody-users");
+        if (liste.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun utilisateur trouvé.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = liste
+          .map(
+            (u) => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="admin-tableau__avatar">${u.nom?.[0]?.toUpperCase() || "?"}</div>
+          <span style="font-weight:700;font-size:0.9rem;">${u.nom}</span>
+          ${u.role === "admin" ? '<span class="badge badge--rouge" style="font-size:0.65rem;">Admin</span>' : ""}
+        </div>
+      </td>
+      <td style="font-size:0.85rem;">${u.email}</td>
+      <td>${u.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--gris">🆓 Gratuit</span>'}</td>
+      <td style="font-size:0.85rem;">${u.premium_plan || "—"}</td>
+      <td style="font-size:0.82rem;">${u.premium_expire ? new Date(u.premium_expire).toLocaleDateString("fr-FR") : "—"}</td>
+      <td style="font-size:0.78rem;color:var(--gris-texte);">${u.date_inscription ? new Date(u.date_inscription).toLocaleDateString("fr-FR") : "—"}</td>
+      <td>
+        <div class="admin-tableau__actions">
+          ${
+            u.premium
+              ? `<button class="admin-tableau__btn" onclick="resilier(${u.id},'${u.nom.replace(/'/g, "\\'")}')" title="Résilier Premium">❌</button>`
+              : `<button class="admin-tableau__btn admin-tableau__btn--edit" onclick="activerPremium(${u.id})" title="Activer Premium">⭐</button>`
+          }
+          <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${u.id},'${u.nom.replace(/'/g, "\\'")}')" title="Supprimer">🗑️</button>
+        </div>
+      </td>
+    </tr>`,
+          )
+          .join("");
+      }
+
+      async function resilier(id, nom) {
+        if (!confirm(`Résilier l'abonnement de ${nom} ?`)) return;
+        try {
+          await window.API.Paiement.resilier(id);
+          window.afficherToast("Abonnement résilié.", "succes");
+          await chargerUsers();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      async function activerPremium(id) {
+        const plan = prompt(
+          "Plan à activer ? (1 Mois / 3 Mois / 12 Mois)",
+          "1 Mois",
+        );
+        if (!plan) return;
+        try {
+          await window.API.Admin.updateUser(id, {
+            premium: true,
+            premium_plan: plan,
+          });
+          window.afficherToast("Premium activé.", "succes");
+          await chargerUsers();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      async function supprimer(id, nom) {
+        if (!confirm(`Supprimer définitivement l'utilisateur "${nom}" ?`))
+          return;
+        try {
+          await window.API.Admin.deleteUser(id);
+          window.afficherToast("Utilisateur supprimé.", "succes");
+          await chargerUsers();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      function exporterCSV() {
+        window.API.Admin.exportUsers();
+        window.afficherToast("Export CSV en cours…", "succes");
+      }
+    </script>
+  </body>
+</html>
