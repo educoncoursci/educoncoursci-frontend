@@ -5,8 +5,8 @@
 // ============================================================
 
 // ── Clés localStorage ────────────────────────────────────────
-const CLE_TOKEN = “ecc_token”;
-const CLE_USER  = “ecc_user”;
+const CLE_TOKEN = "ecc_token";
+const CLE_USER  = "ecc_user";
 
 // ════════════════════════════════════════════════════════════
 //  Session
@@ -39,7 +39,7 @@ return user?.premium === true;
 
 function estAdmin() {
 const user = getSession();
-return user?.role === “admin”;
+return user?.role === "admin";
 }
 
 function supprimerSession() {
@@ -64,12 +64,12 @@ return true;
 // Redirige vers accueil si non admin
 function protegerPageAdmin() {
 if (!estConnecte()) {
-window.location.href = “/auth/login.html?retour=/admin/index.html”;
+window.location.href = "/auth/login.html?retour=/admin/index.html";
 return false;
 }
 if (!estAdmin()) {
-afficherToast(“Accès refusé — droits administrateur requis.”, “erreur”);
-setTimeout(() => window.location.href = “/”, 2000);
+afficherToast("Accès refusé — droits administrateur requis.", "erreur");
+setTimeout(() => window.location.href = "/", 2000);
 return false;
 }
 return true;
@@ -78,11 +78,11 @@ return true;
 // Redirige vers boutique si non Premium
 function protegerPagePremium() {
 if (!estConnecte()) {
-window.location.href = “/auth/login.html”;
+window.location.href = "/auth/login.html";
 return false;
 }
 if (!estPremium()) {
-window.location.href = “/boutique.html?raison=premium-requis”;
+window.location.href = "/boutique.html?raison=premium-requis";
 return false;
 }
 return true;
@@ -115,7 +115,7 @@ return data;
 async function deconnecter() {
 try { await window.API.Auth.logout(); } catch {}
 supprimerSession();
-window.location.href = “/”;
+window.location.href = "/";
 }
 
 // ════════════════════════════════════════════════════════════
@@ -129,18 +129,18 @@ const token = getToken();
 sauvegarderSession(token, data.user);
 return data.user;
 } catch (err) {
-console.warn(“Impossible de rafraîchir le profil:”, err.message);
+console.warn("Impossible de rafraîchir le profil:", err.message);
 return getSession();
 }
 }
 
 // ════════════════════════════════════════════════════════════
-//  Mise à jour de la navbar selon l’état de connexion
+//  Mise à jour de la navbar selon l'état de connexion
 // ════════════════════════════════════════════════════════════
 
 function mettreAJourNavbar() {
 const user = getSession();
-const zone = document.querySelector(”.navbar__actions”);
+const zone = document.querySelector(".navbar__actions");
 if (!zone) return;
 
 if (user) {
@@ -151,18 +151,17 @@ zone.innerHTML = `<a href="/auth/login.html"    class="btn btn--outline-vert btn
 }
 
 // ════════════════════════════════════════════════════════════
-//  Formulaire d’inscription (page register.html)
+//  Formulaire d'inscription (page register.html)
 // ════════════════════════════════════════════════════════════
 
 function initFormulaireInscription() {
-const form = document.getElementById(“form-inscription”);
+const form = document.getElementById("form-inscription");
 if (!form) return;
 
-form.addEventListener(“submit”, async (e) => {
+form.addEventListener("submit", async (e) => {
 e.preventDefault();
-const btn = form.querySelector(’[type=“submit”]’);
+const btn = form.querySelector('[type="submit"]');
 
-```
 const nom      = form.querySelector("#nom").value.trim();
 const email    = form.querySelector("#email").value.trim();
 const password = form.querySelector("#password").value;
@@ -206,7 +205,6 @@ try {
   btn.classList.remove("btn--chargement");
   btn.disabled = false;
 }
-```
 
 });
 }
@@ -216,23 +214,22 @@ try {
 // ════════════════════════════════════════════════════════════
 
 function initFormulaireConnexion() {
-const form = document.getElementById(“form-connexion”);
+const form = document.getElementById("form-connexion");
 if (!form) return;
 
 // Message si session expirée
 const params = new URLSearchParams(window.location.search);
-if (params.get(“session”) === “expiree”) {
-afficherToast(“Ta session a expiré. Reconnecte-toi.”, “info”);
+if (params.get("session") === "expiree") {
+afficherToast("Ta session a expiré. Reconnecte-toi.", "info");
 }
 
-form.addEventListener(“submit”, async (e) => {
+form.addEventListener("submit", async (e) => {
 e.preventDefault();
-const btn    = form.querySelector(’[type=“submit”]’);
-const email  = form.querySelector(”#email”).value.trim();
-const password = form.querySelector(”#password”).value;
-const errDiv = document.getElementById(“erreur-connexion”);
+const btn    = form.querySelector('[type="submit"]');
+const email  = form.querySelector("#email").value.trim();
+const password = form.querySelector("#password").value;
+const errDiv = document.getElementById("erreur-connexion");
 
-```
 if (!email || !password) {
   errDiv.textContent = "E-mail et mot de passe requis.";
   errDiv.classList.remove("hidden");
@@ -257,7 +254,6 @@ try {
   btn.classList.remove("btn--chargement");
   btn.disabled = false;
 }
-```
 
 });
 }

@@ -123,7 +123,6 @@
           >
         </aside>
 
-        ```
         <main class="admin-contenu">
           <div class="admin-topbar">
             <div>
@@ -227,7 +226,6 @@
             </table>
           </div>
         </main>
-        ```
       </div>
     </div>
 
@@ -312,7 +310,6 @@
             </div>
           </div>
 
-          ```
           <!-- Questions -->
           <div
             style="
@@ -345,7 +342,6 @@
             💾 Publier le QCM
           </button>
         </div>
-        ```
       </div>
     </div>
 
@@ -414,7 +410,6 @@
             <label class="form-label">Énoncé de la question <span>*</span></label>
             <textarea class="form-textarea q-enonce" placeholder="Quelle est la capitale de la Côte d'Ivoire ?" rows="2"></textarea>
 
-      ```
       </div>
       <div style="margin-bottom:10px;">
         <label class="form-label" style="margin-bottom:8px;">Options de réponse <span>*</span></label>
@@ -432,57 +427,56 @@
         <label class="form-label">Explication (optionnel)</label>
         <input type="text" class="form-input q-explication" placeholder="Abidjan est la capitale économique…">
       </div>`;
-      ```
 
-      document.getElementById(“liste-questions”).appendChild(div);
+      document.getElementById("liste-questions").appendChild(div);
       }
 
       async function sauvegarderQCM() {
-      const titre   = document.getElementById(“qcm-titre”).value.trim();
-      const matiere = document.getElementById(“qcm-matiere”).value.trim();
-      if (!titre||!matiere) { window.afficherToast(“Titre et matière requis.”,“warn”); return; }
+      const titre   = document.getElementById("qcm-titre").value.trim();
+      const matiere = document.getElementById("qcm-matiere").value.trim();
+      if (!titre||!matiere) { window.afficherToast("Titre et matière requis.","warn"); return; }
 
-      const qItems = document.querySelectorAll(”.q-item”);
-      if (qItems.length===0) { window.afficherToast(“Ajoute au moins une question.”,“warn”); return; }
+      const qItems = document.querySelectorAll(".q-item");
+      if (qItems.length===0) { window.afficherToast("Ajoute au moins une question.","warn"); return; }
 
       const questions = [];
       let erreur = false;
       qItems.forEach((item,i)=>{
-      const enonce  = item.querySelector(”.q-enonce”)?.value.trim();
-      const opts    = […item.querySelectorAll(”.q-opt”)].map(o=>o.value.trim());
+      const enonce  = item.querySelector(".q-enonce")?.value.trim();
+      const opts    = […item.querySelectorAll(".q-opt")].map(o=>o.value.trim());
       const correct = item.querySelector(`input[type="radio"]:checked`);
-      const expl    = item.querySelector(”.q-explication”)?.value.trim();
+      const expl    = item.querySelector(".q-explication")?.value.trim();
       if (!enonce||opts.some(o=>!o)||!correct) {
-      window.afficherToast(`Question ${i+1} incomplète — énoncé, options et bonne réponse requis.`,“warn”);
+      window.afficherToast(`Question ${i+1} incomplète — énoncé, options et bonne réponse requis.`,"warn");
       erreur=true; return;
       }
-      questions.push({ question:enonce, options:opts, correct:parseInt(correct.value), explication:expl||”” });
+      questions.push({ question:enonce, options:opts, correct:parseInt(correct.value), explication:expl||"" });
       });
       if (erreur) return;
 
-      const btn=document.getElementById(“btn-save-qcm”);
-      btn.classList.add(“btn–chargement”); btn.disabled=true;
+      const btn=document.getElementById("btn-save-qcm");
+      btn.classList.add("btn–chargement"); btn.disabled=true;
       try {
       await window.API.QCM.creer({
       titre, matiere,
-      difficulte: document.getElementById(“qcm-diff”).value,
-      premium:    document.getElementById(“qcm-premium”).value===“true”,
-      statut:     “publié”,
+      difficulte: document.getElementById("qcm-diff").value,
+      premium:    document.getElementById("qcm-premium").value==="true",
+      statut:     "publié",
       questions,
       });
-      window.afficherToast(“QCM publié avec succès !”,“succes”);
-      fermerModal(“modal-qcm”);
-      document.getElementById(“liste-questions”).innerHTML=””;
+      window.afficherToast("QCM publié avec succès !","succes");
+      fermerModal("modal-qcm");
+      document.getElementById("liste-questions").innerHTML="";
       qCount=0; ajouterQuestion();
       await charger();
-      } catch(err) { window.afficherToast(err.message,“erreur”); }
-      finally { btn.classList.remove(“btn–chargement”); btn.disabled=false; }
+      } catch(err) { window.afficherToast(err.message,"erreur"); }
+      finally { btn.classList.remove("btn–chargement"); btn.disabled=false; }
       }
 
       async function supprimer(id,titre) {
       if (!confirm(`Supprimer le QCM "${titre}" ?`)) return;
-      try { await window.API.QCM.supprimer(id); window.afficherToast(“QCM supprimé.”,“succes”); await charger(); }
-      catch(err) { window.afficherToast(err.message,“erreur”); }
+      try { await window.API.QCM.supprimer(id); window.afficherToast("QCM supprimé.","succes"); await charger(); }
+      catch(err) { window.afficherToast(err.message,"erreur"); }
       }
     </script>
   </body>

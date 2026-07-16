@@ -134,7 +134,6 @@
 
     <main style="padding: 32px 0 60px; background: var(--gris-clair)">
       <div class="container">
-        ```
         <!-- ERREUR : non connecté -->
         <div
           id="zone-non-connecte"
@@ -631,7 +630,6 @@
             </div>
           </div>
         </div>
-        ```
       </div>
     </main>
 
@@ -645,6 +643,7 @@
       let planSelectionne = null;
       let moyenSelectionne = null;
       let plansData = [];
+      let instructionsData = null;
 
       document.addEventListener("DOMContentLoaded", async () => {
         if (!window.Auth?.estConnecte()) {
@@ -711,7 +710,16 @@
         document.getElementById("recap-label").textContent = `Premium ${label}`;
         document.getElementById("recap-montant").textContent =
           `${montant.toLocaleString("fr-CI")} FCFA`;
-        if (moyenSelectionne) afficherInstructions();
+
+        // Récupère les instructions de paiement (numéros marchands) pour ce plan
+        window.API.Paiement.plans(label)
+          .then((data) => {
+            instructionsData = data.instructions || null;
+            if (moyenSelectionne) afficherInstructions();
+          })
+          .catch(() => {
+            window.afficherToast("Erreur de chargement des instructions.", "erreur");
+          });
       }
 
       function choisirMoyen(moyen) {
@@ -737,46 +745,30 @@
       }
 
       function afficherInstructions() {
-        if (!planSelectionne || !moyenSelectionne) return;
+        if (!planSelectionne || !moyenSelectionne || !instructionsData) return;
         const montant = planSelectionne.montant;
         const isWave = moyenSelectionne === "wave";
+        const infos = isWave ? instructionsData.wave : instructionsData.orange;
+        if (!infos) return;
+
         const div = document.getElementById("zone-instructions");
         const saisie = document.getElementById("zone-saisie");
         div.classList.remove("hidden");
         saisie.classList.remove("hidden");
 
-        // Exemple SMS
-        document.getElementById("exemple-sms").textContent = isWave
-          ? `Ref: WA-AB12345678`
-          : `ID: 987654321`;
-
-        const etapes = isWave
-          ? [
-              `Ouvre l'application <strong>Wave</strong> sur ton téléphone`,
-              `Sélectionne <strong>Envoyer</strong> → Entre le numéro marchand ci-dessous`,
-              `Entre le montant exact : <strong>${montant.toLocaleString("fr-CI")} FCFA</strong>`,
-              `Confirme le paiement`,
-              `Copie l'<strong>identifiant de transaction</strong> dans le SMS reçu`,
-              `Colle-le ci-dessous pour activer ton compte`,
-            ]
-          : [
-              `Compose <strong>#150*1*1*NUMERO*${montant}#</strong> sur ton téléphone Orange`,
-              `Ou ouvre l'app <strong>Orange Money</strong> → Paiement marchand`,
-              `Entre le numéro marchand ci-dessous et le montant : <strong>${montant.toLocaleString("fr-CI")} FCFA</strong>`,
-              `Confirme avec ton code PIN`,
-              `Note l'<strong>identifiant de transaction</strong> dans le SMS reçu`,
-              `Saisis-le ci-dessous pour activer ton compte`,
-            ];
+        // Exemple SMS (basé sur le format réel renvoyé par le backend)
+        document.getElementById("exemple-sms").textContent =
+          `Réf: ${infos.format_exemple || (isWave ? "WA-AB12345678" : "987654321")}`;
 
         document.getElementById("instructions-contenu").innerHTML = `
     <div style="background:${isWave ? "rgba(0,158,226,0.08)" : "rgba(255,102,0,0.08)"};border:1px solid ${isWave ? "#009EE230" : "#FF660030"};border-radius:14px;padding:18px;margin-bottom:14px;text-align:center;">
       <div style="font-size:0.82rem;color:var(--gris-texte);margin-bottom:6px;">Numéro ${isWave ? "Wave" : "Orange Money"} marchand</div>
       <div style="font-size:1.8rem;font-weight:900;letter-spacing:2px;color:${isWave ? "#009EE2" : "#FF6600"};" id="numero-marchand">
-        ${isWave ? window.WAVE_NUMERO || "07 XX XX XX XX" : window.OM_NUMERO || "05 XX XX XX XX"}
+        ${infos.numero || "Non configuré"}
       </div>
       <div style="font-size:0.8rem;color:var(--gris-texte);margin-top:4px;">Montant exact : <strong>${montant.toLocaleString("fr-CI")} FCFA</strong></div>
     </div>
-    ${etapes
+    ${(infos.etapes || [])
       .map(
         (e, i) => `
       <div class="step-item">

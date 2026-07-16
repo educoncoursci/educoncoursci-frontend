@@ -179,7 +179,6 @@
 
     <main style="padding: 36px 0 60px; background: var(--gris-clair)">
       <div class="container">
-        ```
         <!-- Non connecté -->
         <div
           id="zone-non-connecte"
@@ -868,7 +867,6 @@
             </div>
           </div>
         </div>
-        ```
       </div>
     </main>
 
@@ -956,56 +954,56 @@
           </div>
           <div class="form-groupe"><label class="form-label">Missions et réalisations</label><textarea class="form-textarea exp-desc" placeholder="Tes missions, résultats, outils…" rows="2"></textarea></div>`;
 
-      document.getElementById(“liste-exp”).appendChild(div);
+      document.getElementById("liste-exp").appendChild(div);
       }
 
       function supprimerExp(btn) {
-      const items = document.querySelectorAll(”#liste-exp .exp-item”);
-      if (items.length > 1) btn.closest(”.exp-item”).remove();
-      else window.afficherToast(“Garde au moins une expérience.”, “warn”);
+      const items = document.querySelectorAll("#liste-exp .exp-item");
+      if (items.length > 1) btn.closest(".exp-item").remove();
+      else window.afficherToast("Garde au moins une expérience.", "warn");
       }
 
       function ajouterFor() {
-      const div = document.createElement(“div”);
-      div.className = “exp-item”;
+      const div = document.createElement("div");
+      div.className = "exp-item";
       div.innerHTML = ` <button class="exp-suppr" onclick="supprimerFor(this)">×</button> <div class="cv-layout"> <div class="form-groupe"><label class="form-label">Diplôme obtenu</label><input type="text" class="form-input for-diplome" placeholder="Ex: BTS Comptabilité"></div> <div class="form-groupe"><label class="form-label">Établissement</label><input type="text" class="form-input for-etab" placeholder="Ex: CFPA Abidjan"></div> <div class="form-groupe"><label class="form-label">Année</label><input type="text" class="form-input for-annee" placeholder="2024"></div> <div class="form-groupe"><label class="form-label">Mention</label><input type="text" class="form-input for-mention" placeholder="Très bien"></div> </div>`;
-      document.getElementById(“liste-for”).appendChild(div);
+      document.getElementById("liste-for").appendChild(div);
       }
 
       function supprimerFor(btn) {
-      const items = document.querySelectorAll(”#liste-for .exp-item”);
-      if (items.length > 1) btn.closest(”.exp-item”).remove();
-      else window.afficherToast(“Garde au moins une formation.”, “warn”);
+      const items = document.querySelectorAll("#liste-for .exp-item");
+      if (items.length > 1) btn.closest(".exp-item").remove();
+      else window.afficherToast("Garde au moins une formation.", "warn");
       }
 
       // ── Collecte données formulaire CV ────────────────────────────
       function collecterDataCV() {
-      const experiences = […document.querySelectorAll(”#liste-exp .exp-item”)].map(el => ({
-      poste:       el.querySelector(”.exp-poste”)?.value.trim()      || “”,
-      entreprise:  el.querySelector(”.exp-entreprise”)?.value.trim() || “”,
-      debut:       el.querySelector(”.exp-debut”)?.value.trim()      || “”,
-      fin:         el.querySelector(”.exp-fin”)?.value.trim()        || “”,
-      description: el.querySelector(”.exp-desc”)?.value.trim()       || “”,
+      const experiences = [...document.querySelectorAll("#liste-exp .exp-item")].map(el => ({
+      poste:       el.querySelector(".exp-poste")?.value.trim()      || "",
+      entreprise:  el.querySelector(".exp-entreprise")?.value.trim() || "",
+      debut:       el.querySelector(".exp-debut")?.value.trim()      || "",
+      fin:         el.querySelector(".exp-fin")?.value.trim()        || "",
+      description: el.querySelector(".exp-desc")?.value.trim()       || "",
       }));
 
-      const formations = […document.querySelectorAll(”#liste-for .exp-item”)].map(el => ({
-      diplome:        el.querySelector(”.for-diplome”)?.value.trim() || “”,
-      etablissement:  el.querySelector(”.for-etab”)?.value.trim()   || “”,
-      annee:          el.querySelector(”.for-annee”)?.value.trim()  || “”,
-      mention:        el.querySelector(”.for-mention”)?.value.trim()|| “”,
+      const formations = [...document.querySelectorAll("#liste-for .exp-item")].map(el => ({
+      diplome:        el.querySelector(".for-diplome")?.value.trim() || "",
+      etablissement:  el.querySelector(".for-etab")?.value.trim()   || "",
+      annee:          el.querySelector(".for-annee")?.value.trim()  || "",
+      mention:        el.querySelector(".for-mention")?.value.trim()|| "",
       }));
 
       return {
-      nom:         document.getElementById(“cv-nom”).value.trim(),
-      email:       document.getElementById(“cv-email”).value.trim(),
-      telephone:   document.getElementById(“cv-tel”).value.trim(),
-      ville:       document.getElementById(“cv-ville”).value.trim(),
-      pays:        document.getElementById(“cv-pays”).value.trim(),
-      poste:       document.getElementById(“cv-poste”).value.trim(),
-      profil:      document.getElementById(“cv-profil”).value.trim(),
-      competences: document.getElementById(“cv-competences”).value.trim(),
-      langues:     document.getElementById(“cv-langues”).value.trim(),
-      loisirs:     document.getElementById(“cv-loisirs”).value.trim(),
+      nom:         document.getElementById("cv-nom").value.trim(),
+      email:       document.getElementById("cv-email").value.trim(),
+      telephone:   document.getElementById("cv-tel").value.trim(),
+      ville:       document.getElementById("cv-ville").value.trim(),
+      pays:        document.getElementById("cv-pays").value.trim(),
+      poste:       document.getElementById("cv-poste").value.trim(),
+      profil:      document.getElementById("cv-profil").value.trim(),
+      competences: document.getElementById("cv-competences").value.trim(),
+      langues:     document.getElementById("cv-langues").value.trim(),
+      loisirs:     document.getElementById("cv-loisirs").value.trim(),
       experiences, formations,
       };
       }
@@ -1014,93 +1012,93 @@
       async function genererCV() {
       const data = collecterDataCV();
       if (!data.nom || !data.poste) {
-      window.afficherToast(“Nom et poste recherché sont requis.”, “warn”); return;
+      window.afficherToast("Nom et poste recherché sont requis.", "warn"); return;
       }
 
-      const btn = document.getElementById(“btn-generer-cv”);
-      btn.classList.add(“btn–chargement”); btn.disabled = true;
-      btn.textContent = “⏳ L’IA rédige ton CV…”;
+      const btn = document.getElementById("btn-generer-cv");
+      btn.classList.add("btn--chargement"); btn.disabled = true;
+      btn.textContent = "⏳ L'IA rédige ton CV…";
 
       try {
       const res = await window.API.CVLM.genererCV(data);
       dataFormulaire = data;
       contenuGenere  = res.cv;
-      afficherResultat(“📄 Ton CV Professionnel”);
-      window.afficherToast(“CV généré avec succès !”, “succes”);
+      afficherResultat("📄 Ton CV Professionnel");
+      window.afficherToast("CV généré avec succès !", "succes");
       } catch (err) {
-      window.afficherToast(err.message || “Erreur de génération.”, “erreur”);
+      window.afficherToast(err.message || "Erreur de génération.", "erreur");
       } finally {
-      btn.classList.remove(“btn–chargement”); btn.disabled = false;
-      btn.textContent = “🚀 Générer mon CV avec l’IA”;
+      btn.classList.remove("btn--chargement"); btn.disabled = false;
+      btn.textContent = "🚀 Générer mon CV avec l'IA";
       }
       }
 
       // ── Générer LM ────────────────────────────────────────────────
       async function genererLM() {
       const data = {
-      nom:        document.getElementById(“lm-nom”).value.trim(),
-      email:      document.getElementById(“lm-email”).value.trim(),
-      telephone:  document.getElementById(“lm-tel”).value.trim(),
-      ville:      document.getElementById(“lm-ville”).value.trim(),
-      type:       document.getElementById(“lm-type”).value,
-      poste:      document.getElementById(“lm-poste”).value.trim(),
-      organisation: document.getElementById(“lm-org”).value.trim(),
-      destinataire: document.getElementById(“lm-dest”).value.trim(),
-      motivation:   document.getElementById(“lm-motivation”).value.trim(),
-      experience:   document.getElementById(“lm-experience”).value.trim(),
-      atout1:       document.getElementById(“lm-atout1”).value.trim(),
-      atout2:       document.getElementById(“lm-atout2”).value.trim(),
-      atout3:       document.getElementById(“lm-atout3”).value.trim(),
+      nom:        document.getElementById("lm-nom").value.trim(),
+      email:      document.getElementById("lm-email").value.trim(),
+      telephone:  document.getElementById("lm-tel").value.trim(),
+      ville:      document.getElementById("lm-ville").value.trim(),
+      type:       document.getElementById("lm-type").value,
+      poste:      document.getElementById("lm-poste").value.trim(),
+      organisation: document.getElementById("lm-org").value.trim(),
+      destinataire: document.getElementById("lm-dest").value.trim(),
+      motivation:   document.getElementById("lm-motivation").value.trim(),
+      experience:   document.getElementById("lm-experience").value.trim(),
+      atout1:       document.getElementById("lm-atout1").value.trim(),
+      atout2:       document.getElementById("lm-atout2").value.trim(),
+      atout3:       document.getElementById("lm-atout3").value.trim(),
       };
 
       if (!data.nom || !data.poste || !data.organisation) {
-      window.afficherToast(“Nom, poste et organisation sont requis.”, “warn”); return;
+      window.afficherToast("Nom, poste et organisation sont requis.", "warn"); return;
       }
 
-      const btn = document.getElementById(“btn-generer-lm”);
-      btn.classList.add(“btn–chargement”); btn.disabled = true;
-      btn.textContent = “⏳ L’IA rédige ta lettre…”;
+      const btn = document.getElementById("btn-generer-lm");
+      btn.classList.add("btn--chargement"); btn.disabled = true;
+      btn.textContent = "⏳ L'IA rédige ta lettre…";
 
       try {
       const res = await window.API.CVLM.genererLM(data);
       dataFormulaire = data;
       contenuGenere  = res.lm;
-      afficherResultat(“✉️ Ta Lettre de Motivation”);
-      window.afficherToast(“Lettre générée avec succès !”, “succes”);
+      afficherResultat("✉️ Ta Lettre de Motivation");
+      window.afficherToast("Lettre générée avec succès !", "succes");
       } catch (err) {
-      window.afficherToast(err.message || “Erreur de génération.”, “erreur”);
+      window.afficherToast(err.message || "Erreur de génération.", "erreur");
       } finally {
-      btn.classList.remove(“btn–chargement”); btn.disabled = false;
-      btn.textContent = “🚀 Générer ma Lettre de Motivation”;
+      btn.classList.remove("btn--chargement"); btn.disabled = false;
+      btn.textContent = "🚀 Générer ma Lettre de Motivation";
       }
       }
 
       function afficherResultat(titre) {
-      document.getElementById(“resultat-titre”).textContent = titre;
-      document.getElementById(“contenu-resultat”).textContent = contenuGenere;
-      document.getElementById(“zone-resultat”).classList.remove(“hidden”);
-      document.getElementById(“zone-resultat”).scrollIntoView({ behavior:“smooth”, block:“start” });
+      document.getElementById("resultat-titre").textContent = titre;
+      document.getElementById("contenu-resultat").textContent = contenuGenere;
+      document.getElementById("zone-resultat").classList.remove("hidden");
+      document.getElementById("zone-resultat").scrollIntoView({ behavior:"smooth", block:"start" });
       }
 
       async function copierResultat() {
       await window.Utils?.copierTexte?.(contenuGenere);
-      const btn = document.getElementById(“btn-copier”);
-      btn.textContent = “✅ Copié !”;
-      setTimeout(() => btn.textContent = “📋 Copier”, 2000);
+      const btn = document.getElementById("btn-copier");
+      btn.textContent = "✅ Copié !";
+      setTimeout(() => btn.textContent = "📋 Copier", 2000);
       }
 
       async function exporterPDF() {
       if (!contenuGenere) return;
       try {
-      window.afficherToast(“Génération du PDF…”, “info”);
-      await window.API.CVLM.exporterPDF(contenuGenere, typeActuel, dataFormulaire, “simple”);
+      window.afficherToast("Génération du PDF…", "info");
+      await window.API.CVLM.exporterPDF(contenuGenere, typeActuel, dataFormulaire, "simple");
       } catch (err) {
-      window.afficherToast(err.message || “Erreur PDF.”, “erreur”);
+      window.afficherToast(err.message || "Erreur PDF.", "erreur");
       }
       }
 
       function regenerer() {
-      document.getElementById(“zone-resultat”).classList.add(“hidden”);
+      document.getElementById("zone-resultat").classList.add("hidden");
       contenuGenere = null;
       }
     </script>
