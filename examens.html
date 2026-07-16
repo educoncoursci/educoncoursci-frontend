@@ -35,7 +35,7 @@
 
 <nav class="navbar" id="navbar">
   <div class="navbar__inner">
-    <a href="/" class="navbar__logo"><div class="navbar__logo-icon">🎓</div><span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a>
+    <a href="/" class="navbar__logo"><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div><span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a>
     <ul class="navbar__links">
       <li><a href="/concours.html"    class="navbar__link">Concours</a></li>
       <li><a href="/examens.html"     class="navbar__link actif">Examens</a></li>
@@ -50,9 +50,9 @@
     <button class="navbar__hamburger" id="hamburger"><span></span><span></span><span></span></button>
   </div>
   <div class="navbar__mobile" id="menu-mobile">
-    <a href="/concours.html"    class="navbar__link">🏛️ Concours</a>
-    <a href="/examens.html"     class="navbar__link">📋 Examens</a>
-    <a href="/preparation.html" class="navbar__link">📝 Préparation</a>
+    <a href="/concours.html"    class="navbar__link"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Concours</a>
+    <a href="/examens.html"     class="navbar__link"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Examens</a>
+    <a href="/preparation.html" class="navbar__link"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Préparation</a>
     <a href="/boutique.html"    class="navbar__link">⭐ Premium</a>
   </div>
 </nav>
@@ -61,7 +61,7 @@
 
 <div class="page-header main-content" style="background:linear-gradient(135deg,#C84B11,#F5820D);">
   <div class="container">
-    <span class="section__tag" style="background:rgba(255,255,255,0.2);color:#fff;margin-bottom:12px;display:inline-block;">📋 Examens nationaux</span>
+    <span class="section__tag" style="background:rgba(255,255,255,0.2);color:#fff;margin-bottom:12px;display:inline-block;"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Examens nationaux</span>
     <h1>Examens Nationaux CI</h1>
     <p>Prépare le BAC, BEPC, CEPE et BTS avec des cours, sujets corrigés et QCM spécialisés.</p>
   </div>
@@ -80,73 +80,73 @@
 
   <!-- BAC -->
   <div class="examen-card examen-card--bac">
-    <div class="examen-icone">🎓</div>
+    <div class="examen-icone"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
     <div class="examen-titre" style="color:#1A6B3C;">Baccalauréat (BAC)</div>
     <div class="examen-desc">L'examen national de fin de lycée. Prépare toutes les séries (A, B, C, D, E) avec des sujets corrigés officiels et des QCM par matière.</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
-      <span class="matiere-tag">📐 Maths</span>
-      <span class="matiere-tag">🔬 Sciences</span>
-      <span class="matiere-tag">📚 Français</span>
-      <span class="matiere-tag">🌍 Histoire-Géo</span>
+      <span class="matiere-tag"><span data-icone="regle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Maths</span>
+      <span class="matiere-tag"><span data-icone="microscope" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sciences</span>
+      <span class="matiere-tag"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Français</span>
+      <span class="matiere-tag"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Histoire-Géo</span>
       <span class="matiere-tag">🇬🇧 Anglais</span>
       <span class="matiere-tag">⚗️ Chimie-Physique</span>
     </div>
     <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
-      <div class="stat-examen"><span>📄</span> Sujets corrigés</div>
-      <div class="stat-examen"><span>📝</span> QCM par série</div>
-      <div class="stat-examen"><span>🎬</span> Cours vidéo</div>
+      <div class="stat-examen"><span><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Sujets corrigés</div>
+      <div class="stat-examen"><span><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM par série</div>
+      <div class="stat-examen"><span><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Cours vidéo</div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="/preparation.html?matiere=BAC" class="btn btn--primaire btn--sm">📝 QCM BAC</a>
-      <a href="/bibliotheque.html?categorie=BAC" class="btn btn--outline-vert btn--sm">📄 Sujets corrigés</a>
+      <a href="/preparation.html?matiere=BAC" class="btn btn--primaire btn--sm"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> QCM BAC</a>
+      <a href="/bibliotheque.html?categorie=BAC" class="btn btn--outline-vert btn--sm"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sujets corrigés</a>
     </div>
   </div>
 
   <!-- BEPC -->
   <div class="examen-card examen-card--bepc">
-    <div class="examen-icone">📗</div>
+    <div class="examen-icone"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
     <div class="examen-titre" style="color:#0A6EBD;">BEPC</div>
     <div class="examen-desc">Le Brevet d'Études du Premier Cycle, examen de fin de collège. Révise toutes les matières avec des sujets officiels et annales corrigées.</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
-      <span class="matiere-tag">📐 Maths</span>
-      <span class="matiere-tag">📚 Français</span>
-      <span class="matiere-tag">🌍 Histoire-Géo</span>
-      <span class="matiere-tag">🔬 Sciences Nat.</span>
+      <span class="matiere-tag"><span data-icone="regle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Maths</span>
+      <span class="matiere-tag"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Français</span>
+      <span class="matiere-tag"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Histoire-Géo</span>
+      <span class="matiere-tag"><span data-icone="microscope" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sciences Nat.</span>
       <span class="matiere-tag">⚗️ Physique-Chimie</span>
       <span class="matiere-tag">🇬🇧 Anglais</span>
     </div>
     <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
-      <div class="stat-examen"><span>📄</span> Annales</div>
-      <div class="stat-examen"><span>📝</span> QCM</div>
-      <div class="stat-examen"><span>📚</span> Fiches révision</div>
+      <div class="stat-examen"><span><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Annales</div>
+      <div class="stat-examen"><span><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</div>
+      <div class="stat-examen"><span><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Fiches révision</div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="/preparation.html?matiere=BEPC" class="btn btn--bleu btn--sm">📝 QCM BEPC</a>
-      <a href="/bibliotheque.html?categorie=BEPC" class="btn btn--sm" style="background:rgba(10,110,189,0.1);color:var(--bleu);border:1.5px solid rgba(10,110,189,0.3);">📄 Annales</a>
+      <a href="/preparation.html?matiere=BEPC" class="btn btn--bleu btn--sm"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> QCM BEPC</a>
+      <a href="/bibliotheque.html?categorie=BEPC" class="btn btn--sm" style="background:rgba(10,110,189,0.1);color:var(--bleu);border:1.5px solid rgba(10,110,189,0.3);"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Annales</a>
     </div>
   </div>
 
   <!-- CEPE -->
   <div class="examen-card examen-card--cepe">
-    <div class="examen-icone">📘</div>
+    <div class="examen-icone"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
     <div class="examen-titre" style="color:#F5820D;">CEPE</div>
     <div class="examen-desc">Le Certificat d'Études Primaires et Élémentaires, examen de fin de primaire (CM2). Des exercices adaptés et sujets corrigés pour les élèves.</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
-      <span class="matiere-tag">📐 Calcul</span>
-      <span class="matiere-tag">📚 Dictée</span>
+      <span class="matiere-tag"><span data-icone="regle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Calcul</span>
+      <span class="matiere-tag"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Dictée</span>
       <span class="matiere-tag">✍️ Rédaction</span>
-      <span class="matiere-tag">🔬 Sciences</span>
-      <span class="matiere-tag">🌍 Histoire-Géo</span>
+      <span class="matiere-tag"><span data-icone="microscope" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sciences</span>
+      <span class="matiere-tag"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Histoire-Géo</span>
       <span class="matiere-tag">🏃 EPS</span>
     </div>
     <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
-      <div class="stat-examen"><span>📄</span> Sujets types</div>
-      <div class="stat-examen"><span>📝</span> Exercices</div>
-      <div class="stat-examen"><span>📚</span> Leçons</div>
+      <div class="stat-examen"><span><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Sujets types</div>
+      <div class="stat-examen"><span><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Exercices</div>
+      <div class="stat-examen"><span><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Leçons</div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="/preparation.html?matiere=CEPE" class="btn btn--sm" style="background:var(--gradient-orange);color:#fff;border:none;">📝 Exercices CEPE</a>
-      <a href="/bibliotheque.html?categorie=CEPE" class="btn btn--sm" style="background:rgba(245,130,13,0.1);color:var(--orange);border:1.5px solid rgba(245,130,13,0.3);">📄 Sujets types</a>
+      <a href="/preparation.html?matiere=CEPE" class="btn btn--sm" style="background:var(--gradient-orange);color:#fff;border:none;"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Exercices CEPE</a>
+      <a href="/bibliotheque.html?categorie=CEPE" class="btn btn--sm" style="background:rgba(245,130,13,0.1);color:var(--orange);border:1.5px solid rgba(245,130,13,0.3);"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sujets types</a>
     </div>
   </div>
 
@@ -156,21 +156,21 @@
     <div class="examen-titre" style="color:#7B2FBE;">BTS</div>
     <div class="examen-desc">Le Brevet de Technicien Supérieur, diplôme de niveau Bac+2. Prépare les épreuves écrites et orales de ta filière avec des cours spécialisés.</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
-      <span class="matiere-tag">💼 Commerce</span>
+      <span class="matiere-tag"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Commerce</span>
       <span class="matiere-tag">💻 Informatique</span>
       <span class="matiere-tag">🏗️ Génie Civil</span>
-      <span class="matiere-tag">⚡ Électronique</span>
-      <span class="matiere-tag">🏥 Santé</span>
+      <span class="matiere-tag"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Électronique</span>
+      <span class="matiere-tag"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Santé</span>
       <span class="matiere-tag">🌿 Agriculture</span>
     </div>
     <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
-      <div class="stat-examen"><span>📄</span> Sujets corrigés</div>
-      <div class="stat-examen"><span>📝</span> QCM</div>
-      <div class="stat-examen"><span>🎬</span> Cours vidéo</div>
+      <div class="stat-examen"><span><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Sujets corrigés</div>
+      <div class="stat-examen"><span><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</div>
+      <div class="stat-examen"><span><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Cours vidéo</div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="/preparation.html?matiere=BTS" class="btn btn--sm" style="background:var(--violet);color:#fff;border:none;">📝 QCM BTS</a>
-      <a href="/bibliotheque.html?categorie=BTS" class="btn btn--sm" style="background:rgba(123,47,190,0.1);color:var(--violet);border:1.5px solid rgba(123,47,190,0.3);">📄 Sujets BTS</a>
+      <a href="/preparation.html?matiere=BTS" class="btn btn--sm" style="background:var(--violet);color:#fff;border:none;"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> QCM BTS</a>
+      <a href="/bibliotheque.html?categorie=BTS" class="btn btn--sm" style="background:rgba(123,47,190,0.1);color:var(--violet);border:1.5px solid rgba(123,47,190,0.3);"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sujets BTS</a>
     </div>
   </div>
 
@@ -209,7 +209,7 @@
       </tbody>
     </table>
   </div>
-  <p style="font-size:0.8rem;color:var(--gris-texte);margin-top:12px;">⚠️ Dates indicatives — Consulte le site officiel de la DECO (Direction des Examens et Concours) pour les dates officielles.</p>
+  <p style="font-size:0.8rem;color:var(--gris-texte);margin-top:12px;"><span data-icone="attention" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Dates indicatives — Consulte le site officiel de la DECO (Direction des Examens et Concours) pour les dates officielles.</p>
 </div>
 
 <!-- CTA Premium -->
@@ -229,7 +229,7 @@
 <footer class="footer">
   <div class="container">
     <div class="footer__grille">
-      <div><div class="footer__logo">🎓 EduConcoursCI</div><p class="footer__desc">Préparation aux examens et concours CI.</p></div>
+      <div><div class="footer__logo"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> EduConcoursCI</div><p class="footer__desc">Préparation aux examens et concours CI.</p></div>
       <div><div class="footer__titre-col">Examens</div>
         <a href="/examens.html" class="footer__lien">BAC</a>
         <a href="/examens.html" class="footer__lien">BEPC</a>
@@ -252,7 +252,8 @@
   <div class="footer__bas"><div class="container">© 2026 EduConcoursCI — Abidjan, Côte d'Ivoire</div></div>
 </footer>
 
-<script src="/js/api.js"></script>
+<script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
 
 <script src="/js/auth.js"></script>
 

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Paiement Premium — EduConcoursCI</title>
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -109,7 +110,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon">🎓</div>
+          ><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
         <div class="navbar__actions" id="navbar-actions">
@@ -126,7 +127,7 @@
     >
       <div class="container">
         <h1 style="font-size: 1.8rem; margin-bottom: 6px">
-          💳 Paiement sécurisé
+          <span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Paiement sécurisé
         </h1>
         <p>Finalise ton abonnement Premium en quelques étapes simples.</p>
       </div>
@@ -145,7 +146,7 @@
             padding: 60px 20px;
           "
         >
-          <div style="font-size: 3.5rem; margin-bottom: 16px">🔐</div>
+          <div style="font-size: 3.5rem; margin-bottom: 16px"><span data-icone="cadenas" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <h2 style="margin-bottom: 10px">Connexion requise</h2>
           <p style="color: var(--gris-texte); margin-bottom: 24px">
             Tu dois être connecté pour souscrire un abonnement Premium.
@@ -216,7 +217,7 @@
                   id="card-wave"
                   onclick="choisirMoyen('wave')"
                 >
-                  <div class="moyen-logo" style="background: #009ee215">🌊</div>
+                  <div class="moyen-logo" style="background: #009ee215"><span data-icone="vagues" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
                   <div style="flex: 1">
                     <div
                       style="font-weight: 800; font-size: 1rem; color: #009ee2"
@@ -240,7 +241,7 @@
                         margin-top: 4px;
                       "
                     >
-                      ✓ Recommandé
+                      <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Recommandé
                     </div>
                   </div>
                   <div
@@ -389,7 +390,7 @@
                     margin-bottom: 16px;
                   "
                 >
-                  ⚠️ Chaque identifiant ne peut être utilisé qu'une seule fois.
+                  <span data-icone="attention" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Chaque identifiant ne peut être utilisé qu'une seule fois.
                   Montant exact requis.
                 </div>
 
@@ -398,7 +399,7 @@
                   onclick="validerTransaction()"
                   class="btn btn--primaire btn--full btn--lg"
                 >
-                  ✅ Vérifier et activer Premium
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Vérifier et activer Premium
                 </button>
               </div>
             </div>
@@ -490,10 +491,10 @@
                     line-height: 1.8;
                   "
                 >
-                  <div>✅ Accès immédiat après validation</div>
-                  <div>✅ Pas de renouvellement automatique</div>
-                  <div>✅ Paiement mobile 100% local CI</div>
-                  <div>✅ Support par e-mail en cas de problème</div>
+                  <div><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Accès immédiat après validation</div>
+                  <div><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Pas de renouvellement automatique</div>
+                  <div><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Paiement mobile 100% local CI</div>
+                  <div><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Support par e-mail en cas de problème</div>
                 </div>
 
                 <div
@@ -548,7 +549,7 @@
                 font-size: 2.5rem;
               "
             >
-              ✅
+              <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
             </div>
             <h2
               style="font-size: 1.8rem; margin-bottom: 8px; color: var(--vert)"
@@ -622,7 +623,7 @@
               "
             >
               <a href="/bibliotheque.html" class="btn btn--primaire"
-                >📚 Explorer les PDFs</a
+                ><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Explorer les PDFs</a
               >
               <a href="/dashboard/index.html" class="btn btn--gris"
                 >Mon espace →</a
@@ -633,6 +634,7 @@
       </div>
     </main>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

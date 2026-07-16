@@ -193,6 +193,9 @@
 .card-concours__info {
   font-size: 0.8rem;
   color: var(--gris-texte);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 .card-concours__pied {
   padding: 12px 20px;
@@ -205,6 +208,9 @@
   font-size: 0.8rem;
   color: var(--rouge);
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* Card PDF */

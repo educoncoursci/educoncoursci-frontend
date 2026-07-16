@@ -28,7 +28,7 @@
 
 <nav class="navbar" style="background:#0A1628;border-bottom:1px solid rgba(255,255,255,0.08);">
   <div class="navbar__inner">
-    <a href="/admin/index.html" class="navbar__logo" style="color:#fff;"><div class="navbar__logo-icon" style="background:rgba(255,255,255,0.1);">⚙️</div><span style="color:#fff;">EduConcoursCI Admin</span></a>
+    <a href="/admin/index.html" class="navbar__logo" style="color:#fff;"><div class="navbar__logo-icon" style="background:rgba(255,255,255,0.1);"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div><span style="color:#fff;">EduConcoursCI Admin</span></a>
     <button onclick="window.Auth?.deconnecter?.()" class="btn btn--gris btn--sm">Déconnexion</button>
   </div>
 </nav>
@@ -36,27 +36,27 @@
 <div style="padding-top:var(--navbar-h);">
   <div class="admin-layout">
     <aside class="admin-sidebar">
-      <div class="admin-sidebar__header"><div class="admin-sidebar__logo">⚙️ Admin Panel</div></div>
+      <div class="admin-sidebar__header"><div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div></div>
       <div class="admin-sidebar__section">Dashboard</div>
-      <a href="/admin/index.html"         class="admin-sidebar__lien"><span class="admin-sidebar__icone">📊</span> Dashboard</a>
+      <a href="/admin/index.html"         class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a>
       <div class="admin-sidebar__section">Contenu</div>
-      <a href="/admin/concours.html"      class="admin-sidebar__lien"><span class="admin-sidebar__icone">🏛️</span> Concours</a>
-      <a href="/admin/pdfs.html"          class="admin-sidebar__lien"><span class="admin-sidebar__icone">📄</span> PDFs</a>
-      <a href="/admin/videos.html"        class="admin-sidebar__lien"><span class="admin-sidebar__icone">🎬</span> Vidéos</a>
-      <a href="/admin/qcm.html"           class="admin-sidebar__lien"><span class="admin-sidebar__icone">📝</span> QCM</a>
+      <a href="/admin/concours.html"      class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a>
+      <a href="/admin/pdfs.html"          class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a>
+      <a href="/admin/videos.html"        class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a>
+      <a href="/admin/qcm.html"           class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a>
       <div class="admin-sidebar__section">Utilisateurs</div>
-      <a href="/admin/abonnes.html"       class="admin-sidebar__lien"><span class="admin-sidebar__icone">👥</span> Abonnés</a>
-      <a href="/admin/paiements.html"     class="admin-sidebar__lien"><span class="admin-sidebar__icone">💳</span> Paiements</a>
-      <a href="/admin/notifications.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone">🔔</span> Notifications</a>
+      <a href="/admin/abonnes.html"       class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a>
+      <a href="/admin/paiements.html"     class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+      <a href="/admin/notifications.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a>
       <div class="admin-sidebar__section">Système</div>
-      <a href="/admin/parametres.html"    class="admin-sidebar__lien actif"><span class="admin-sidebar__icone">⚙️</span> Paramètres</a>
-      <a href="/" class="admin-sidebar__lien"><span class="admin-sidebar__icone">🌐</span> Voir le site</a>
+      <a href="/admin/parametres.html"    class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a>
+      <a href="/" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a>
     </aside>
 
 <main class="admin-contenu">
   <div class="admin-topbar">
     <div>
-      <div class="admin-topbar__titre">⚙️ Paramètres système</div>
+      <div class="admin-topbar__titre"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Paramètres système</div>
       <div class="admin-topbar__sous">Configuration du backend et des variables d'environnement</div>
     </div>
   </div>
@@ -103,14 +103,14 @@
             <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">${desc}</div>
             <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : ${exemple}</div>
           </div>
-          <span class="env-statut ${requis==="Requis"?"env-ok":"env-optional"}">${requis==="Requis"?"✓ Requis":"◎ Optionnel"}</span>
+          <span class="env-statut ${requis==="Requis"?"env-ok":"env-optional"}">${requis==="Requis"?"<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis":"◎ Optionnel"}</span>
         </div>`).join("")}
     </div>
   </div>
 
   <!-- Actions de maintenance -->
   <div class="param-section">
-    <div class="param-titre">🔧 Actions de maintenance</div>
+    <div class="param-titre"><span data-icone="cle_outil" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Actions de maintenance</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
 
       <div style="background:var(--gris-clair);border-radius:12px;padding:18px;text-align:center;">
@@ -121,14 +121,14 @@
       </div>
 
       <div style="background:var(--gris-clair);border-radius:12px;padding:18px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:8px;">📥</div>
+        <div style="font-size:2rem;margin-bottom:8px;"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
         <div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;">Export utilisateurs</div>
         <p style="font-size:0.8rem;color:var(--gris-texte);margin-bottom:12px;">Télécharge la liste complète des utilisateurs au format CSV.</p>
         <button onclick="window.API.Admin.exportUsers();window.afficherToast('Export en cours…','succes')" class="btn btn--bleu btn--sm btn--full">Exporter CSV</button>
       </div>
 
       <div style="background:var(--gris-clair);border-radius:12px;padding:18px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:8px;">🔄</div>
+        <div style="font-size:2rem;margin-bottom:8px;"><span data-icone="actualiser" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
         <div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;">Vérifier le backend</div>
         <p style="font-size:0.8rem;color:var(--gris-texte);margin-bottom:12px;">Teste la connexion entre le frontend Netlify et le backend Railway.</p>
         <button onclick="verifierConnexion()" class="btn btn--gris btn--sm btn--full">Tester la connexion</button>
@@ -139,7 +139,7 @@
 
   <!-- Infos de déploiement -->
   <div class="param-section">
-    <div class="param-titre">🚀 Infos de déploiement</div>
+    <div class="param-titre"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Infos de déploiement</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
       <div>
         <div style="font-size:0.82rem;font-weight:700;color:var(--gris-texte);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Frontend (Netlify)</div>
@@ -176,7 +176,7 @@
 
   <!-- Compte admin -->
   <div class="param-section">
-    <div class="param-titre">👤 Compte administrateur</div>
+    <div class="param-titre"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Compte administrateur</div>
     <div id="admin-info" style="font-size:0.9rem;color:var(--gris-texte);">Chargement…</div>
     <div style="margin-top:16px;">
       <a href="/dashboard/profil.html" class="btn btn--outline-vert btn--sm">Modifier mon profil →</a>
@@ -188,7 +188,8 @@
   </div>
 </div>
 
-<script src="/js/api.js"></script>
+<script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
 
 <script src="/js/auth.js"></script>
 

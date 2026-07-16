@@ -10,6 +10,7 @@
       content="QCM chronométrés, examens blancs, cours et vidéos pour préparer les concours CI."
     />
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -80,7 +81,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon">🎓</div>
+          ><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
         <ul class="navbar__links">
@@ -112,8 +113,8 @@
         </button>
       </div>
       <div class="navbar__mobile" id="menu-mobile">
-        <a href="/concours.html" class="navbar__link">🏛️ Concours</a>
-        <a href="/preparation.html" class="navbar__link">📝 Préparation</a>
+        <a href="/concours.html" class="navbar__link"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Concours</a>
+        <a href="/preparation.html" class="navbar__link"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Préparation</a>
         <a href="/simulateur.html" class="navbar__link">⏱️ Examen blanc</a>
         <a href="/boutique.html" class="navbar__link">⭐ Premium</a>
       </div>
@@ -131,7 +132,7 @@
             margin-bottom: 12px;
             display: inline-block;
           "
-          >📝 Préparation</span
+          ><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Préparation</span
         >
         <h1>Prépare-toi à réussir</h1>
         <p>
@@ -160,19 +161,19 @@
           "
         >
           <a href="#section-qcm" class="btn btn--outline-vert btn--sm"
-            >📝 QCM</a
+            ><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> QCM</a
           >
           <a href="/simulateur.html" class="btn btn--outline-vert btn--sm"
             >⏱️ Examen blanc</a
           >
           <a href="/bibliotheque.html" class="btn btn--outline-vert btn--sm"
-            >📚 Cours PDF</a
+            ><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Cours PDF</a
           >
           <a href="/videos.html" class="btn btn--outline-vert btn--sm"
-            >🎬 Vidéos</a
+            ><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Vidéos</a
           >
           <a href="/cv-generator.html" class="btn btn--outline-vert btn--sm"
-            >🤖 CV & LM</a
+            ><span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> CV & LM</a
           >
         </div>
       </div>
@@ -200,7 +201,7 @@
                 margin-bottom: 18px;
               "
             >
-              <h3 style="margin: 0">📊 Mes statistiques</h3>
+              <h3 style="margin: 0"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Mes statistiques</h3>
               <a
                 href="/dashboard/mes-scores.html"
                 style="font-size: 0.85rem; color: var(--vert); font-weight: 700"
@@ -220,7 +221,7 @@
                   <div class="stat-card__label">QCM complétés</div>
                   <div class="stat-card__valeur" id="stat-tentatives">—</div>
                 </div>
-                <div class="stat-card__icone">📝</div>
+                <div class="stat-card__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
               </div>
               <div class="stat-card stat-card--bleu">
                 <div>
@@ -231,7 +232,7 @@
                   class="stat-card__icone"
                   style="background: rgba(10, 110, 189, 0.1)"
                 >
-                  📊
+                  <span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
                 </div>
               </div>
               <div class="stat-card stat-card--orange">
@@ -243,7 +244,7 @@
                   class="stat-card__icone"
                   style="background: rgba(245, 130, 13, 0.1)"
                 >
-                  🏆
+                  <span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
                 </div>
               </div>
               <div class="stat-card stat-card--violet">
@@ -255,7 +256,7 @@
                   class="stat-card__icone"
                   style="background: rgba(123, 47, 190, 0.1)"
                 >
-                  📚
+                  <span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
                 </div>
               </div>
             </div>
@@ -275,7 +276,7 @@
             "
           >
             <div>
-              <h2 style="margin-bottom: 4px">📝 QCM de préparation</h2>
+              <h2 style="margin-bottom: 4px"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> QCM de préparation</h2>
               <p style="color: var(--gris-texte); font-size: 0.9rem; margin: 0">
                 Questions corrigées par l'IA avec explications détaillées.
               </p>
@@ -392,7 +393,7 @@
                     font-size: 0.88rem;
                   "
                 >
-                  📝 Toutes matières
+                  <span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Toutes matières
                 </div>
                 <div
                   style="
@@ -402,7 +403,7 @@
                     font-size: 0.88rem;
                   "
                 >
-                  🤖 Correction IA
+                  <span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Correction IA
                 </div>
               </div>
             </div>
@@ -414,7 +415,7 @@
 
         <!-- RESSOURCES COMPLÉMENTAIRES -->
         <section>
-          <h2 style="margin-bottom: 20px">📚 Ressources complémentaires</h2>
+          <h2 style="margin-bottom: 20px"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ressources complémentaires</h2>
           <div class="grille-3">
             <a
               href="/bibliotheque.html"
@@ -427,7 +428,7 @@
                 align-items: flex-start;
               "
             >
-              <div style="font-size: 2.5rem; flex-shrink: 0">📄</div>
+              <div style="font-size: 2.5rem; flex-shrink: 0"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
               <div>
                 <h3 style="font-size: 1rem; margin-bottom: 6px">
                   Bibliothèque PDF
@@ -454,7 +455,7 @@
                 align-items: flex-start;
               "
             >
-              <div style="font-size: 2.5rem; flex-shrink: 0">🎬</div>
+              <div style="font-size: 2.5rem; flex-shrink: 0"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
               <div>
                 <h3 style="font-size: 1rem; margin-bottom: 6px">
                   Cours en Vidéo
@@ -481,7 +482,7 @@
                 align-items: flex-start;
               "
             >
-              <div style="font-size: 2.5rem; flex-shrink: 0">🤖</div>
+              <div style="font-size: 2.5rem; flex-shrink: 0"><span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
               <div>
                 <h3 style="font-size: 1rem; margin-bottom: 6px">
                   Générateur CV/LM IA
@@ -506,7 +507,7 @@
       <div class="container">
         <div class="footer__grille">
           <div>
-            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <div class="footer__logo"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> EduConcoursCI</div>
             <p class="footer__desc">Préparation complète aux concours CI.</p>
           </div>
           <div>
@@ -533,6 +534,7 @@
       </div>
     </footer>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

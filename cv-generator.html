@@ -10,6 +10,7 @@
       content="Génère un CV professionnel et une lettre de motivation adaptés au marché ivoirien grâce à l'IA Claude."
     />
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -88,7 +89,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon">🎓</div>
+          ><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
         <ul class="navbar__links">
@@ -130,7 +131,7 @@
             margin-bottom: 12px;
             display: inline-block;
           "
-          >🤖 IA Claude</span
+          ><span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> IA Claude</span
         >
         <h1>Générateur CV & Lettre de Motivation</h1>
         <p>
@@ -149,7 +150,7 @@
               font-weight: 600;
             "
           >
-            ✅ Gratuit pour les comptes connectés
+            <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Gratuit pour les comptes connectés
           </div>
           <div
             style="
@@ -160,7 +161,7 @@
               font-weight: 600;
             "
           >
-            🤖 Propulsé par Claude AI
+            <span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Propulsé par Claude AI
           </div>
           <div
             style="
@@ -171,7 +172,7 @@
               font-weight: 600;
             "
           >
-            📥 Export PDF
+            <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Export PDF
           </div>
         </div>
       </div>
@@ -190,7 +191,7 @@
             padding: 60px 20px;
           "
         >
-          <div style="font-size: 3.5rem; margin-bottom: 16px">🔐</div>
+          <div style="font-size: 3.5rem; margin-bottom: 16px"><span data-icone="cadenas" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <h2 style="margin-bottom: 10px">Connexion requise</h2>
           <p style="color: var(--gris-texte); margin-bottom: 24px">
             Connecte-toi pour utiliser le générateur CV & LM.
@@ -226,10 +227,10 @@
               class="onglet-btn actif"
               onclick="changerOnglet('cv', this)"
             >
-              📄 Curriculum Vitae
+              <span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Curriculum Vitae
             </button>
             <button class="onglet-btn" onclick="changerOnglet('lm', this)">
-              ✉️ Lettre de Motivation
+              <span data-icone="email" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Lettre de Motivation
             </button>
           </div>
 
@@ -261,7 +262,7 @@
                     margin-bottom: 14px;
                   "
                 >
-                  👤 Informations personnelles
+                  <span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Informations personnelles
                 </div>
                 <div class="cv-layout">
                   <div class="form-groupe">
@@ -355,7 +356,7 @@
                       color: var(--bleu);
                     "
                   >
-                    💼 Expériences professionnelles
+                    <span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Expériences professionnelles
                   </div>
                   <button onclick="ajouterExp()" class="btn btn--bleu btn--sm">
                     + Ajouter
@@ -436,7 +437,7 @@
                       color: var(--violet);
                     "
                   >
-                    🎓 Formations
+                    <span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Formations
                   </div>
                   <button
                     onclick="ajouterFor()"
@@ -505,7 +506,7 @@
                     margin-bottom: 14px;
                   "
                 >
-                  ⚡ Compétences & informations complémentaires
+                  <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Compétences & informations complémentaires
                 </div>
                 <div class="cv-layout">
                   <div class="form-groupe">
@@ -545,7 +546,7 @@
                   onclick="genererCV()"
                   class="btn btn--primaire btn--full btn--lg"
                 >
-                  🚀 Générer mon CV avec l'IA
+                  <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon CV avec l'IA
                 </button>
               </div>
             </div>
@@ -578,7 +579,7 @@
                     margin-bottom: 14px;
                   "
                 >
-                  👤 Tes coordonnées
+                  <span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Tes coordonnées
                 </div>
                 <div class="cv-layout">
                   <div class="form-groupe">
@@ -636,7 +637,7 @@
                     margin-bottom: 14px;
                   "
                 >
-                  🏢 Informations sur le poste
+                  <span data-icone="batiment" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Informations sur le poste
                 </div>
                 <div class="cv-layout">
                   <div class="form-groupe">
@@ -692,7 +693,7 @@
                     margin-bottom: 14px;
                   "
                 >
-                  💡 Tes arguments
+                  <span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Tes arguments
                 </div>
                 <div class="form-groupe">
                   <label class="form-label"
@@ -749,7 +750,7 @@
                 onclick="genererLM()"
                 class="btn btn--bleu btn--full btn--lg"
               >
-                🚀 Générer ma Lettre de Motivation
+                <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer ma Lettre de Motivation
               </button>
             </div>
           </div>
@@ -775,7 +776,7 @@
                 "
               >
                 <h3 style="color: var(--vert); margin: 0" id="resultat-titre">
-                  ✅ Document généré
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Document généré
                 </h3>
                 <div class="action-bar">
                   <button
@@ -783,13 +784,13 @@
                     class="btn btn--outline-vert btn--sm"
                     id="btn-copier"
                   >
-                    📋 Copier
+                    <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Copier
                   </button>
                   <button onclick="exporterPDF()" class="btn btn--bleu btn--sm">
-                    📥 Télécharger PDF
+                    <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Télécharger PDF
                   </button>
                   <button onclick="regenerer()" class="btn btn--gris btn--sm">
-                    🔄 Régénérer
+                    <span data-icone="actualiser" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Régénérer
                   </button>
                 </div>
               </div>
@@ -824,7 +825,7 @@
                       font-size: 1.2rem;
                     "
                   >
-                    🎓
+                    <span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
                   </div>
                   <div>
                     <div
@@ -857,7 +858,7 @@
                   line-height: 1.7;
                 "
               >
-                <strong>💡 Comment utiliser ce document :</strong><br />
+                <strong><span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Comment utiliser ce document :</strong><br />
                 1. Clique <strong>"Copier"</strong> → colle dans Word, Google
                 Docs ou LibreOffice<br />
                 2. Ou clique <strong>"Télécharger PDF"</strong> pour un fichier
@@ -874,7 +875,7 @@
       <div class="container">
         <div class="footer__grille">
           <div>
-            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <div class="footer__logo"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> EduConcoursCI</div>
             <p class="footer__desc">
               Génération CV & LM par IA pour le marché ivoirien.
             </p>
@@ -902,6 +903,7 @@
       </div>
     </footer>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Abonnés — Admin EduConcoursCI</title>
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -30,13 +31,13 @@
             class="navbar__logo-icon"
             style="background: rgba(255, 255, 255, 0.1)"
           >
-            ⚙️
+            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
           </div>
           <span style="color: #fff">EduConcoursCI Admin</span></a
         >
         <div style="display: flex; gap: 10px">
           <button onclick="exporterCSV()" class="btn btn--gris btn--sm">
-            📥 Exporter CSV
+            <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Exporter CSV
           </button>
           <button
             onclick="window.Auth?.deconnecter?.()"
@@ -52,39 +53,39 @@
       <div class="admin-layout">
         <aside class="admin-sidebar">
           <div class="admin-sidebar__header">
-            <div class="admin-sidebar__logo">⚙️ Admin Panel</div>
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
           </div>
           <div class="admin-sidebar__section">Dashboard</div>
           <a href="/admin/index.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">📊</span> Dashboard</a
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a
           >
           <div class="admin-sidebar__section">Contenu</div>
           <a href="/admin/concours.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🏛️</span> Concours</a
+            ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
           >
           <a href="/admin/pdfs.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">📄</span> PDFs</a
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
           >
           <div class="admin-sidebar__section">Utilisateurs</div>
           <a href="/admin/abonnes.html" class="admin-sidebar__lien actif"
-            ><span class="admin-sidebar__icone">👥</span> Abonnés</a
+            ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
           >
           <a href="/admin/paiements.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">💳</span> Paiements</a
+            ><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
           >
           <a href="/admin/notifications.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🔔</span> Notifications</a
+            ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
           >
           <div class="admin-sidebar__section">Système</div>
           <a href="/" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🌐</span> Voir le site</a
+            ><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a
           >
         </aside>
 
         <main class="admin-contenu">
           <div class="admin-topbar">
             <div>
-              <div class="admin-topbar__titre">👥 Utilisateurs & Abonnés</div>
+              <div class="admin-topbar__titre"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Utilisateurs & Abonnés</div>
               <div class="admin-topbar__sous" id="sub-abonnes">Chargement…</div>
             </div>
             <div class="admin-topbar__actions">
@@ -157,6 +158,7 @@
       </div>
     </div>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

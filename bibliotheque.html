@@ -10,6 +10,7 @@
       content="Cours PDF, sujets corrigés, fiches de révision pour les concours CI."
     />
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -67,7 +68,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon">🎓</div>
+          ><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
         <ul class="navbar__links">
@@ -110,7 +111,7 @@
             margin-bottom: 12px;
             display: inline-block;
           "
-          >📚 Bibliothèque</span
+          ><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Bibliothèque</span
         >
         <h1>Bibliothèque PDF</h1>
         <p>
@@ -125,7 +126,7 @@
               placeholder="Rechercher un cours, une matière…"
               autocomplete="off"
             />
-            <button onclick="filtrerPDFs()">🔍</button>
+            <button onclick="filtrerPDFs()"><span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></button>
           </div>
         </div>
       </div>
@@ -147,7 +148,7 @@
                   align-items: center;
                 "
               >
-                🔧 Filtres
+                <span data-icone="cle_outil" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Filtres
                 <button
                   onclick="reinitFiltresPDF()"
                   style="
@@ -396,7 +397,7 @@
       <div class="container">
         <div class="footer__grille">
           <div>
-            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <div class="footer__logo"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> EduConcoursCI</div>
             <p class="footer__desc">
               Bibliothèque de ressources pour les concours CI.
             </p>
@@ -424,6 +425,7 @@
       </div>
     </footer>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

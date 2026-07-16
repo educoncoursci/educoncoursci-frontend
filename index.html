@@ -16,6 +16,7 @@
     />
     <meta property="og:image" content="/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -30,7 +31,7 @@
     <!-- ── BANDEAU PREMIUM ───────────────────────────────────────── -->
 
     <div id="bandeau-premium" class="bandeau-premium hidden">
-      ⭐ Passe en Premium pour accéder à tous les cours et sujets corrigés.
+      <span data-icone="etoile" data-taille="16" style="margin-right:6px;vertical-align:-3px;"></span>Passe en Premium pour accéder à tous les cours et sujets corrigés.
       <a href="/boutique.html">Voir les offres →</a>
     </div>
 
@@ -39,7 +40,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo">
-          <div class="navbar__logo-icon">🎓</div>
+          <div class="navbar__logo-icon" data-icone="logo"></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span>
         </a>
 
@@ -56,7 +57,7 @@
           <li>
             <a href="/actualites.html" class="navbar__link">Actualités</a>
           </li>
-          <li><a href="/boutique.html" class="navbar__link">Premium ⭐</a></li>
+          <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
         </ul>
 
         <div class="navbar__actions" id="navbar-actions">
@@ -74,13 +75,13 @@
       </div>
 
       <div class="navbar__mobile" id="menu-mobile">
-        <a href="/concours.html" class="navbar__link">🏛️ Concours</a>
-        <a href="/examens.html" class="navbar__link">📋 Examens</a>
-        <a href="/preparation.html" class="navbar__link">📝 Préparation</a>
-        <a href="/bibliotheque.html" class="navbar__link">📚 Bibliothèque</a>
-        <a href="/videos.html" class="navbar__link">🎬 Vidéos</a>
-        <a href="/actualites.html" class="navbar__link">📰 Actualités</a>
-        <a href="/boutique.html" class="navbar__link">⭐ Premium</a>
+        <a href="/concours.html" class="navbar__link"><span data-icone="institution" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Concours</a>
+        <a href="/examens.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Examens</a>
+        <a href="/preparation.html" class="navbar__link"><span data-icone="quiz" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Préparation</a>
+        <a href="/bibliotheque.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Bibliothèque</a>
+        <a href="/videos.html" class="navbar__link"><span data-icone="video" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Vidéos</a>
+        <a href="/actualites.html" class="navbar__link"><span data-icone="cloche" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Actualités</a>
+        <a href="/boutique.html" class="navbar__link"><span data-icone="etoile" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Premium</a>
         <hr
           style="
             border: none;
@@ -126,7 +127,7 @@
                 border: none;
               "
             >
-              🚀 Commencer gratuitement
+              Commencer gratuitement
             </a>
             <a href="/concours.html" class="btn btn--outline-blanc btn--lg">
               Voir les concours →
@@ -155,7 +156,7 @@
     <section class="section-gris">
       <div class="container">
         <div class="section__en-tete">
-          <span class="section__tag">🏛️ Concours ouverts</span>
+          <span class="section__tag"><span data-icone="institution" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>Concours ouverts</span>
           <h2>Concours actuellement ouverts</h2>
           <p>Les inscriptions sont en cours — ne rate pas les dates limites.</p>
         </div>
@@ -187,13 +188,13 @@
     <section class="section">
       <div class="container">
         <div class="section__en-tete">
-          <span class="section__tag">✨ Fonctionnalités</span>
+          <span class="section__tag"><span data-icone="coche" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>Fonctionnalités</span>
           <h2>Tout ce dont tu as besoin pour réussir</h2>
           <p>Une plateforme complète conçue pour les candidats ivoiriens.</p>
         </div>
         <div class="grille-3">
           <div class="card" style="padding: 28px; text-align: center">
-            <div style="font-size: 3rem; margin-bottom: 16px">📝</div>
+            <div style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(20,83,45,0.1);display:flex;align-items:center;justify-content:center;color:var(--vert);"><span data-icone="quiz" data-taille="28"></span></div>
             <h3 style="margin-bottom: 10px">QCM Chronométrés</h3>
             <p style="color: var(--gris-texte); font-size: 0.9rem">
               Entraîne-toi avec des centaines de questions adaptées à chaque
@@ -206,7 +207,7 @@
             >
           </div>
           <div class="card" style="padding: 28px; text-align: center">
-            <div style="font-size: 3rem; margin-bottom: 16px">📚</div>
+            <div style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(10,92,158,0.1);display:flex;align-items:center;justify-content:center;color:var(--bleu);"><span data-icone="document" data-taille="28"></span></div>
             <h3 style="margin-bottom: 10px">Bibliothèque PDF</h3>
             <p style="color: var(--gris-texte); font-size: 0.9rem">
               Cours complets, sujets corrigés, fiches de révision — tous les
@@ -219,7 +220,7 @@
             >
           </div>
           <div class="card" style="padding: 28px; text-align: center">
-            <div style="font-size: 3rem; margin-bottom: 16px">🎬</div>
+            <div style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(91,58,142,0.1);display:flex;align-items:center;justify-content:center;color:var(--violet);"><span data-icone="video" data-taille="28"></span></div>
             <h3 style="margin-bottom: 10px">Cours en Vidéo</h3>
             <p style="color: var(--gris-texte); font-size: 0.9rem">
               Des formateurs ivoiriens expliquent les matières clés des concours
@@ -230,7 +231,7 @@
             >
           </div>
           <div class="card" style="padding: 28px; text-align: center">
-            <div style="font-size: 3rem; margin-bottom: 16px">🤖</div>
+            <div style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(194,84,10,0.1);display:flex;align-items:center;justify-content:center;color:var(--orange);"><span data-icone="robot" data-taille="28"></span></div>
             <h3 style="margin-bottom: 10px">Générateur CV & LM</h3>
             <p style="color: var(--gris-texte); font-size: 0.9rem">
               Génère un CV professionnel et une lettre de motivation adaptés au
@@ -243,7 +244,7 @@
             >
           </div>
           <div class="card" style="padding: 28px; text-align: center">
-            <div style="font-size: 3rem; margin-bottom: 16px">🔔</div>
+            <div style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(20,83,45,0.1);display:flex;align-items:center;justify-content:center;color:var(--vert);"><span data-icone="cloche" data-taille="28"></span></div>
             <h3 style="margin-bottom: 10px">Alertes Concours</h3>
             <p style="color: var(--gris-texte); font-size: 0.9rem">
               Reçois les alertes par e-mail dès qu'un concours est publié. Ne
@@ -254,7 +255,7 @@
             >
           </div>
           <div class="card" style="padding: 28px; text-align: center">
-            <div style="font-size: 3rem; margin-bottom: 16px">⏱️</div>
+            <div style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(10,92,158,0.1);display:flex;align-items:center;justify-content:center;color:var(--bleu);"><span data-icone="horloge" data-taille="28"></span></div>
             <h3 style="margin-bottom: 10px">Examen Blanc</h3>
             <p style="color: var(--gris-texte); font-size: 0.9rem">
               Simule les conditions réelles du concours avec un timer, toutes
@@ -275,7 +276,7 @@
     <section class="section-gris" id="section-plans">
       <div class="container">
         <div class="section__en-tete">
-          <span class="section__tag">⭐ Premium</span>
+          <span class="section__tag"><span data-icone="etoile" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>Premium</span>
           <h2>Accède à tout le contenu</h2>
           <p>
             Paiement direct par Wave CI ou Orange Money — aucune carte bancaire
@@ -287,10 +288,12 @@
         </div>
         <p
           class="text-center mt-3"
-          style="color: var(--gris-texte); font-size: 0.88rem"
+          style="color: var(--gris-texte); font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap;"
         >
-          🔒 Paiement sécurisé · 🌊 Wave CI · 🟠 Orange Money · ✅ Activation
-          immédiate
+          <span style="display:flex;align-items:center;gap:6px;"><span data-icone="cadenas" data-taille="16"></span>Paiement sécurisé</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span data-icone="vagues" data-taille="16"></span>Wave CI</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span data-icone="cercleOrange" data-taille="16"></span>Orange Money</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span data-icone="coche" data-taille="16"></span>Activation immédiate</span>
         </p>
       </div>
     </section>
@@ -300,7 +303,7 @@
     <section class="section">
       <div class="container">
         <div class="section__en-tete">
-          <span class="section__tag">📰 Actualités</span>
+          <span class="section__tag"><span data-icone="cloche" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>Actualités</span>
           <h2>Dernières nouvelles</h2>
           <p>Résultats, nouvelles inscriptions, annonces officielles.</p>
         </div>
@@ -332,16 +335,16 @@
       <div class="container">
         <div class="footer__grille">
           <div>
-            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <div class="footer__logo" style="display:flex;align-items:center;gap:10px;"><span data-icone="logo" data-taille="24"></span>EduConcoursCI</div>
             <p class="footer__desc">
               La plateforme de référence pour préparer les concours de Côte
               d'Ivoire. QCM, cours, vidéos, alertes et génération IA de CV.
             </p>
             <div class="footer__reseaux">
-              <a href="#" class="footer__reseau">📘</a>
-              <a href="#" class="footer__reseau">📸</a>
-              <a href="#" class="footer__reseau">💬</a>
-              <a href="#" class="footer__reseau">▶️</a>
+              <a href="#" class="footer__reseau" aria-label="Facebook"><span data-icone="facebook" data-taille="20"></span></a>
+              <a href="#" class="footer__reseau" aria-label="Instagram"><span data-icone="instagram" data-taille="20"></span></a>
+              <a href="#" class="footer__reseau" aria-label="WhatsApp"><span data-icone="whatsapp" data-taille="20"></span></a>
+              <a href="#" class="footer__reseau" aria-label="YouTube"><span data-icone="youtube" data-taille="20"></span></a>
             </div>
           </div>
           <div>
@@ -358,7 +361,7 @@
             <a href="/cv-generator.html" class="footer__lien"
               >Générateur CV/LM</a
             >
-            <a href="/boutique.html" class="footer__lien">Premium ⭐</a>
+            <a href="/boutique.html" class="footer__lien">Premium</a>
             <a href="/alertes.html" class="footer__lien">Alertes e-mail</a>
             <a href="/actualites.html" class="footer__lien">Actualités</a>
             <a href="/guide.html" class="footer__lien">Guide d'utilisation</a>
@@ -390,6 +393,8 @@
 
     <script src="/js/auth.js"></script>
 
+    <script src="/js/icons.js"></script>
+
     <script src="/js/main.js"></script>
 
     <script>
@@ -413,19 +418,19 @@
           <div class="card-concours__en-tete">
             <div class="card-concours__meta">
               <span class="badge badge--vert">${c.categorie}</span>
-              <span class="badge badge--rouge">🔴 Ouvert</span>
-              ${c.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : ""}
+              <span class="badge badge--rouge">Ouvert</span>
+              ${c.premium ? '<span class="badge badge--premium">Premium</span>' : ""}
             </div>
             <div class="card-concours__titre">${c.titre}</div>
             <div class="card-concours__infos">
-              <span class="card-concours__info">🏢 ${c.organisme}</span>
-              <span class="card-concours__info">🎓 ${c.niveau || "—"}</span>
-              <span class="card-concours__info">👥 ${c.places || "—"} places</span>
-              <span class="card-concours__info">💰 ${c.frais ? c.frais.toLocaleString("fr-CI") + " FCFA" : "Gratuit"}</span>
+              <span class="card-concours__info">${window.icone ? window.icone("institution", 14) : ""} ${c.organisme}</span>
+              <span class="card-concours__info">${window.icone ? window.icone("document", 14) : ""} ${c.niveau || "—"}</span>
+              <span class="card-concours__info">${window.icone ? window.icone("utilisateurs", 14) : ""} ${c.places || "—"} places</span>
+              <span class="card-concours__info">${window.icone ? window.icone("paiement", 14) : ""} ${c.frais ? c.frais.toLocaleString("fr-CI") + " FCFA" : "Gratuit"}</span>
             </div>
           </div>
           <div class="card-concours__pied">
-            <span class="card-concours__cloture">⏰ Clôture : ${c.cloture || "—"}</span>
+            <span class="card-concours__cloture">${window.icone ? window.icone("horloge", 13) : ""} Clôture : ${c.cloture || "—"}</span>
             <span class="badge badge--vert">Voir →</span>
           </div>
         </a>
@@ -450,22 +455,22 @@
             .map(
               (p, i) => `
       <div class="pricing-card ${i === 1 ? "pricing-card--vedette" : ""}">
-        ${i === 1 ? '<div class="pricing-card__badge">⭐ Le plus populaire</div>' : ""}
+        ${i === 1 ? `<div class="pricing-card__badge">${window.icone ? window.icone("etoile", 13) : ""} Le plus populaire</div>` : ""}
         <div class="pricing-card__label">${p.label}</div>
         <div class="pricing-card__prix">${p.montant.toLocaleString("fr-CI")}</div>
         <div class="pricing-card__devise">FCFA / ${p.label.toLowerCase()}</div>
         <ul class="pricing-card__liste">
           ${[
-            "✅ Tous les cours PDF",
-            "✅ Vidéos de formation",
-            "✅ Sujets corrigés",
-            "✅ QCM illimités",
-            "✅ Examen blanc",
-            "✅ Générateur CV/LM IA",
+            "Tous les cours PDF",
+            "Vidéos de formation",
+            "Sujets corrigés",
+            "QCM illimités",
+            "Examen blanc",
+            "Générateur CV/LM IA",
           ]
             .map(
               (item) =>
-                `<li class="pricing-card__item"><span class="pricing-card__check">✅</span>${item.replace("✅ ", "")}</li>`,
+                `<li class="pricing-card__item"><span class="pricing-card__check">${window.icone ? window.icone("coche", 14) : ""}</span>${item}</li>`,
             )
             .join("")}
         </ul>

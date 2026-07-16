@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mon Profil — EduConcoursCI</title>
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -20,7 +21,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon">🎓</div>
+          ><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
         <div class="navbar__actions" id="navbar-actions"></div>
@@ -39,22 +40,22 @@
           <nav class="sidebar__nav">
             <div class="sidebar__titre">Menu</div>
             <a href="/dashboard/index.html" class="sidebar__lien"
-              ><span class="sidebar__icone">📊</span> Tableau de bord</a
+              ><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a
             >
             <a href="/dashboard/mes-scores.html" class="sidebar__lien"
-              ><span class="sidebar__icone">🏆</span> Mes scores</a
+              ><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a
             >
             <a href="/dashboard/mes-concours.html" class="sidebar__lien"
-              ><span class="sidebar__icone">🏛️</span> Mes concours</a
+              ><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a
             >
             <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
-              ><span class="sidebar__icone">📥</span> Téléchargements</a
+              ><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a
             >
             <a href="/dashboard/paiements.html" class="sidebar__lien"
-              ><span class="sidebar__icone">💳</span> Paiements</a
+              ><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
             >
             <a href="/dashboard/profil.html" class="sidebar__lien actif"
-              ><span class="sidebar__icone">👤</span> Mon profil</a
+              ><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a
             >
           </nav>
           <div class="sidebar__deconnexion">
@@ -70,7 +71,7 @@
         <main class="dashboard__contenu">
           <div class="dashboard__header">
             <div>
-              <h1>👤 Mon profil</h1>
+              <h1><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Mon profil</h1>
               <p
                 style="
                   color: var(--gris-texte);
@@ -96,7 +97,7 @@
             >
               <div class="profil-avatar" id="profil-avatar">
                 ?
-                <button class="profil-avatar__edit" title="Modifier">✏️</button>
+                <button class="profil-avatar__edit" title="Modifier"><span data-icone="crayon" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></button>
               </div>
               <div>
                 <div
@@ -147,14 +148,14 @@
               </div>
             </div>
             <button onclick="sauvegarderProfil()" class="btn btn--primaire">
-              💾 Sauvegarder
+              <span data-icone="disquette" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sauvegarder
             </button>
           </div>
 
           <!-- Changer mot de passe -->
           <div class="dash-section" style="margin-bottom: 20px">
             <div class="dash-section__titre" style="margin-bottom: 18px">
-              🔐 Changer le mot de passe
+              <span data-icone="cadenas" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Changer le mot de passe
             </div>
             <div id="msg-mdp" class="hidden" style="margin-bottom: 16px"></div>
             <div style="max-width: 480px">
@@ -188,7 +189,7 @@
                 />
               </div>
               <button onclick="changerMotDePasse()" class="btn btn--bleu">
-                🔐 Mettre à jour
+                <span data-icone="cadenas" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Mettre à jour
               </button>
             </div>
           </div>
@@ -205,7 +206,7 @@
               class="dash-section__titre"
               style="margin-bottom: 8px; color: var(--rouge)"
             >
-              ⚠️ Zone danger
+              <span data-icone="attention" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Zone danger
             </div>
             <p
               style="
@@ -228,6 +229,7 @@
       </div>
     </div>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

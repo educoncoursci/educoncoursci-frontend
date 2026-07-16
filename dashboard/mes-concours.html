@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mes Concours — EduConcoursCI</title>
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -20,7 +21,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon">🎓</div>
+          ><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
         <div class="navbar__actions" id="navbar-actions"></div>
@@ -39,22 +40,22 @@
           <nav class="sidebar__nav">
             <div class="sidebar__titre">Menu</div>
             <a href="/dashboard/index.html" class="sidebar__lien"
-              ><span class="sidebar__icone">📊</span> Tableau de bord</a
+              ><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a
             >
             <a href="/dashboard/mes-scores.html" class="sidebar__lien"
-              ><span class="sidebar__icone">🏆</span> Mes scores</a
+              ><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a
             >
             <a href="/dashboard/mes-concours.html" class="sidebar__lien actif"
-              ><span class="sidebar__icone">🏛️</span> Mes concours</a
+              ><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a
             >
             <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
-              ><span class="sidebar__icone">📥</span> Téléchargements</a
+              ><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a
             >
             <a href="/dashboard/paiements.html" class="sidebar__lien"
-              ><span class="sidebar__icone">💳</span> Paiements</a
+              ><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
             >
             <a href="/dashboard/profil.html" class="sidebar__lien"
-              ><span class="sidebar__icone">👤</span> Mon profil</a
+              ><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a
             >
           </nav>
           <div class="sidebar__deconnexion">
@@ -70,7 +71,7 @@
         <main class="dashboard__contenu">
           <div class="dashboard__header">
             <div>
-              <h1>🏛️ Mes concours</h1>
+              <h1><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Mes concours</h1>
               <p
                 style="
                   color: var(--gris-texte);
@@ -82,7 +83,7 @@
               </p>
             </div>
             <a href="/concours.html" class="btn btn--primaire btn--sm"
-              >🔍 Explorer les concours</a
+              ><span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Explorer les concours</a
             >
           </div>
 
@@ -112,7 +113,7 @@
                 font-family: inherit;
               "
             >
-              ♥ Favoris
+              <span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Favoris
             </button>
             <button
               id="tab-ouverts"
@@ -169,6 +170,7 @@
       </div>
     </div>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

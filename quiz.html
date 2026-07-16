@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QCM — EduConcoursCI</title>
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -120,7 +121,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon">🎓</div>
+          ><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
         <div class="navbar__actions" id="navbar-actions">
@@ -206,7 +207,7 @@
               class="btn btn--primaire"
               onclick="validerReponse()"
             >
-              Valider ✓
+              Valider <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
             </button>
             <button
               id="btn-suivant"
@@ -220,7 +221,7 @@
               class="btn btn--orange hidden"
               onclick="terminerQCM()"
             >
-              Terminer 🏁
+              Terminer <span data-icone="drapeau" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
             </button>
           </div>
         </div>
@@ -232,7 +233,7 @@
         <div class="quiz-corps">
           <div class="resultat-section">
             <div id="res-emoji" style="font-size: 4rem; margin-bottom: 16px">
-              🎉
+              <span data-icone="fete" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
             </div>
             <div class="resultat-score" id="res-pct" style="color: var(--vert)">
               80%
@@ -283,7 +284,7 @@
                   margin-bottom: 8px;
                 "
               >
-                🤖 Conseil personnalisé IA
+                <span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Conseil personnalisé IA
               </div>
               <div
                 id="conseil-texte"
@@ -308,7 +309,7 @@
               "
             >
               <button onclick="rejouerQCM()" class="btn btn--outline-vert">
-                🔄 Recommencer
+                <span data-icone="actualiser" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Recommencer
               </button>
               <a href="/preparation.html" class="btn btn--gris"
                 >← Retour aux QCM</a
@@ -321,7 +322,7 @@
 
           <!-- Détail des réponses -->
           <div class="detail-reponses">
-            <h3 style="margin-bottom: 16px">📋 Détail des réponses</h3>
+            <h3 style="margin-bottom: 16px"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Détail des réponses</h3>
             <div id="detail-reponses-liste"></div>
           </div>
         </div>
@@ -339,7 +340,7 @@
             box-shadow: var(--ombre-sm);
           "
         >
-          <div class="empty-state__icone">❌</div>
+          <div class="empty-state__icone"><span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <div class="empty-state__titre">QCM introuvable</div>
           <p class="empty-state__texte">
             Ce QCM n'existe pas ou n'est pas accessible.
@@ -351,6 +352,7 @@
       </div>
     </div>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

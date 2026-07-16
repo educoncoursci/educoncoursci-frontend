@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Détail Concours — EduConcoursCI</title>
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -58,7 +59,7 @@
         border: none;
       }
       .piece-item::before {
-        content: "📄";
+        content: "<span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>";
       }
       @media (max-width: 900px) {
         .detail-layout {
@@ -71,7 +72,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon">🎓</div>
+          ><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
         <ul class="navbar__links">
@@ -164,7 +165,7 @@
             <div>
               <!-- Infos principales -->
               <div class="detail-card">
-                <h3 style="margin-bottom: 16px">📋 Informations générales</h3>
+                <h3 style="margin-bottom: 16px"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Informations générales</h3>
                 <div id="detail-infos"></div>
               </div>
 
@@ -245,7 +246,7 @@
                   class="btn btn--outline-vert btn--full mb-2"
                   onclick="toggleFavori()"
                 >
-                  ♡ Sauvegarder
+                  <span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sauvegarder
                 </button>
                 <button
                   class="btn btn--primaire btn--full"
@@ -257,7 +258,7 @@
                     )
                   "
                 >
-                  📋 Déposer mon dossier
+                  <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Déposer mon dossier
                 </button>
                 <div
                   style="
@@ -270,7 +271,7 @@
                     href="/preparation.html"
                     class="btn btn--bleu btn--full btn--sm"
                   >
-                    📝 Préparer ce concours →
+                    <span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Préparer ce concours →
                   </a>
                 </div>
               </div>
@@ -321,7 +322,7 @@
         <!-- Erreur -->
         <div id="erreur-detail" class="hidden">
           <div class="empty-state" style="padding: 80px 0">
-            <div class="empty-state__icone">❌</div>
+            <div class="empty-state__icone"><span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
             <div class="empty-state__titre">Concours introuvable</div>
             <p class="empty-state__texte">
               Ce concours n'existe pas ou a été supprimé.
@@ -338,7 +339,7 @@
       <div class="container">
         <div class="footer__grille">
           <div>
-            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <div class="footer__logo"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> EduConcoursCI</div>
             <p class="footer__desc">Préparation aux concours CI.</p>
           </div>
           <div>
@@ -363,6 +364,7 @@
       </div>
     </footer>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

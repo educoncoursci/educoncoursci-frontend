@@ -4,8 +4,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard — EduConcoursCI</title>
+    <title>Mon tableau de bord — EduConcoursCI</title>
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -13,394 +14,225 @@
     />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/components.css" />
-    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
   </head>
   <body style="background: var(--gris-clair)">
-    <nav
-      class="navbar"
-      id="navbar"
-      style="
-        background: #0a1628;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      "
-    >
+    <nav class="navbar" id="navbar">
       <div class="navbar__inner">
-        <a href="/admin/index.html" class="navbar__logo" style="color: #fff">
-          <div
-            class="navbar__logo-icon"
-            style="background: rgba(255, 255, 255, 0.1)"
-          >
-            ⚙️
-          </div>
-          <span style="color: #fff"
-            >EduConcoursCI
-            <span style="color: rgba(255, 255, 255, 0.4); font-size: 0.8rem"
-              >Admin</span
-            ></span
-          >
-        </a>
-        <div style="display: flex; align-items: center; gap: 12px">
-          <div
-            style="
-              width: 8px;
-              height: 8px;
-              border-radius: 50%;
-              background: var(--vert-clair);
-            "
-          ></div>
-          <span
-            style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem"
-            id="admin-email-nav"
-          ></span>
-          <button
-            onclick="window.Auth?.deconnecter?.()"
-            class="btn btn--gris btn--sm"
-          >
-            Déconnexion
-          </button>
-        </div>
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
       </div>
     </nav>
 
     <div style="padding-top: var(--navbar-h)">
-      <div class="admin-layout">
-        <!-- Sidebar Admin -->
-        <aside class="admin-sidebar" id="admin-sidebar">
-          <div class="admin-sidebar__header">
-            <div class="admin-sidebar__logo">⚙️ Admin Panel</div>
-            <div class="admin-sidebar__role">Administrateur</div>
+      <div class="dashboard">
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar__profil">
+            <div class="sidebar__avatar" id="sidebar-avatar">?</div>
+            <div class="sidebar__nom" id="sidebar-nom">—</div>
+            <div class="sidebar__email" id="sidebar-email"></div>
+            <div id="sidebar-badge"></div>
           </div>
-
-          <div class="admin-sidebar__section">Tableau de bord</div>
-          <a href="/admin/index.html" class="admin-sidebar__lien actif"
-            ><span class="admin-sidebar__icone">📊</span> Dashboard</a
-          >
-
-          <div class="admin-sidebar__section">Contenu</div>
-          <a href="/admin/concours.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🏛️</span> Concours</a
-          >
-          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">📄</span> PDFs</a
-          >
-          <a href="/admin/videos.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🎬</span> Vidéos</a
-          >
-          <a href="/admin/qcm.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">📝</span> QCM</a
-          >
-
-          <div class="admin-sidebar__section">Utilisateurs</div>
-          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">👥</span> Abonnés</a
-          >
-          <a href="/admin/paiements.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">💳</span> Paiements</a
-          >
-          <a href="/admin/notifications.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🔔</span> Notifications</a
-          >
-
-          <div class="admin-sidebar__section">Système</div>
-          <a href="/admin/parametres.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">⚙️</span> Paramètres</a
-          >
-          <a href="/" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🌐</span> Voir le site</a
-          >
+          <nav class="sidebar__nav">
+            <div class="sidebar__titre">Menu</div>
+            <a href="/dashboard/index.html" class="sidebar__lien actif"
+              ><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a
+            >
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a
+            >
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a
+            >
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a
+            >
+            <a href="/dashboard/paiements.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
+            >
+            <a href="/dashboard/profil.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a
+            >
+          </nav>
+          <div class="sidebar__deconnexion">
+            <button
+              onclick="window.Auth?.deconnecter?.()"
+              class="btn btn--outline-vert btn--sm btn--full"
+            >
+              Déconnexion
+            </button>
+          </div>
         </aside>
 
-        <!-- Contenu admin -->
-        <main class="admin-contenu">
-          <div class="admin-topbar">
+        <main class="dashboard__contenu">
+          <div class="dashboard__header">
             <div>
-              <div class="admin-topbar__titre">Tableau de bord</div>
-              <div class="admin-topbar__sous" id="admin-date"></div>
-            </div>
-            <div class="admin-topbar__actions">
-              <a href="/admin/concours.html" class="btn btn--primaire btn--sm"
-                >+ Concours</a
+              <h1 id="titre-bienvenue">👋 Bienvenue</h1>
+              <p
+                style="
+                  color: var(--gris-texte);
+                  margin: 4px 0 0;
+                  font-size: 0.9rem;
+                "
               >
-              <a href="/admin/pdfs.html" class="btn btn--bleu btn--sm">+ PDF</a>
+                Voici un résumé de ta progression.
+              </p>
             </div>
           </div>
 
-          <!-- Skeletons -->
-          <div id="skeleton-stats" class="admin-stats">
-            <div
-              class="skeleton"
-              style="height: 90px; border-radius: 14px"
-            ></div>
-            <div
-              class="skeleton"
-              style="height: 90px; border-radius: 14px"
-            ></div>
-            <div
-              class="skeleton"
-              style="height: 90px; border-radius: 14px"
-            ></div>
-            <div
-              class="skeleton"
-              style="height: 90px; border-radius: 14px"
-            ></div>
-          </div>
-
-          <!-- Stats réelles -->
-          <div id="stats-grille" class="admin-stats hidden"></div>
-
-          <div
-            style="
-              display: grid;
-              grid-template-columns: 1fr 1fr;
-              gap: 20px;
-              margin-bottom: 20px;
-            "
-          >
-            <!-- Graphique revenus -->
-            <div class="admin-card">
-              <div class="admin-card__header">
-                <div class="admin-card__titre">📈 Revenus mensuels</div>
-              </div>
-              <div class="admin-card__corps">
-                <div class="graphique-barres" id="graphique-revenus">
-                  <div style="color: var(--gris-texte); font-size: 0.9rem">
-                    Chargement…
-                  </div>
-                </div>
-              </div>
+          <!-- Stats principales -->
+          <div class="dash-stats" id="dash-stats">
+            <div class="dash-section" style="margin-bottom: 0; text-align: center">
+              <div style="font-size: 1.8rem; font-weight: 900; color: var(--vert)" id="stat-tentatives">—</div>
+              <div style="font-size: 0.82rem; color: var(--gris-texte); margin-top: 4px">QCM réalisés</div>
             </div>
-
-            <!-- Répartition moyens paiement -->
-            <div class="admin-card">
-              <div class="admin-card__header">
-                <div class="admin-card__titre">💳 Répartition paiements</div>
-              </div>
-              <div class="admin-card__corps" id="repartition-moyens">
-                <div style="color: var(--gris-texte); font-size: 0.9rem">
-                  Chargement…
-                </div>
-              </div>
+            <div class="dash-section" style="margin-bottom: 0; text-align: center">
+              <div style="font-size: 1.8rem; font-weight: 900; color: var(--bleu)" id="stat-moyenne">—</div>
+              <div style="font-size: 0.82rem; color: var(--gris-texte); margin-top: 4px">Moyenne générale</div>
+            </div>
+            <div class="dash-section" style="margin-bottom: 0; text-align: center">
+              <div style="font-size: 1.8rem; font-weight: 900; color: var(--violet)" id="stat-qcm-disponibles">—</div>
+              <div style="font-size: 0.82rem; color: var(--gris-texte); margin-top: 4px">Concours disponibles</div>
+            </div>
+            <div class="dash-section" style="margin-bottom: 0; text-align: center">
+              <div style="font-size: 1.8rem; font-weight: 900" id="stat-statut">—</div>
+              <div style="font-size: 0.82rem; color: var(--gris-texte); margin-top: 4px">Statut du compte</div>
             </div>
           </div>
 
-          <!-- Derniers inscrits + dernières transactions -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
-            <div class="admin-card">
-              <div class="admin-card__header">
-                <div class="admin-card__titre">👥 Derniers inscrits</div>
-                <a
-                  href="/admin/abonnes.html"
-                  style="
-                    font-size: 0.82rem;
-                    color: var(--vert);
-                    font-weight: 700;
-                  "
-                  >Voir tout →</a
-                >
-              </div>
-              <div class="admin-card__corps">
-                <div id="derniers-inscrits"></div>
-              </div>
+          <!-- Promo Premium (affichée seulement si compte gratuit) -->
+          <div class="premium-promo hidden" id="promo-premium">
+            <div class="premium-promo__icone">⭐</div>
+            <div class="premium-promo__titre">Passe à EduConcoursCI Premium</div>
+            <div class="premium-promo__texte">
+              Accède à tous les packs PDF, sujets corrigés et QCM illimités.
             </div>
+            <a href="/boutique.html" class="btn btn--primaire btn--sm" style="margin-top: 12px">
+              Découvrir Premium →
+            </a>
+          </div>
 
-            <div class="admin-card">
-              <div class="admin-card__header">
-                <div class="admin-card__titre">💳 Dernières transactions</div>
-                <a
-                  href="/admin/paiements.html"
-                  style="
-                    font-size: 0.82rem;
-                    color: var(--vert);
-                    font-weight: 700;
-                  "
-                  >Voir tout →</a
-                >
-              </div>
-              <div class="admin-card__corps">
-                <div id="dernieres-transactions"></div>
-              </div>
+          <!-- Derniers scores -->
+          <div class="dash-section">
+            <div class="dash-section__header">
+              <div class="dash-section__titre"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Tes derniers scores</div>
+              <a href="/dashboard/mes-scores.html" class="dash-section__voir">Voir tout →</a>
+            </div>
+            <div id="derniers-scores">
+              <div style="color: var(--gris-texte); font-size: 0.9rem">Chargement…</div>
+            </div>
+          </div>
+
+          <!-- Actions rapides -->
+          <div class="dash-section">
+            <div class="dash-section__header">
+              <div class="dash-section__titre"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Actions rapides</div>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap">
+              <a href="/cv-generator.html" class="btn btn--primaire btn--sm"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer un CV</a>
+              <a href="/preparation.html" class="btn btn--bleu btn--sm"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Faire un QCM</a>
+              <a href="/bibliotheque.html" class="btn btn--gris btn--sm"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Voir la bibliothèque</a>
             </div>
           </div>
         </main>
       </div>
     </div>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
-
     <script src="/js/auth.js"></script>
-
     <script src="/js/main.js"></script>
-
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        if (!window.Auth?.estConnecte() || !window.Auth?.estAdmin()) {
-          window.afficherToast?.("Accès refusé.", "erreur");
-          setTimeout(() => (window.location.href = "/"), 1500);
+        if (!window.Auth?.estConnecte()) {
+          window.location.href = "/auth/login.html";
           return;
         }
         const session = window.Auth.getSession();
-        document.getElementById("admin-email-nav").textContent =
-          session.email || "";
-        document.getElementById("admin-date").textContent =
-          new Date().toLocaleDateString("fr-FR", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-          });
 
-        await chargerStats();
-      });
+        // Sidebar
+        document.getElementById("sidebar-avatar").textContent =
+          session.nom?.[0]?.toUpperCase() || "?";
+        document.getElementById("sidebar-nom").textContent = session.nom || "";
+        document.getElementById("sidebar-email").textContent = session.email || "";
+        document.getElementById("sidebar-badge").innerHTML = session.premium
+          ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
+          : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
 
-      async function chargerStats() {
-        try {
-          const data = await window.API.Admin.stats();
+        // En-tête
+        const prenom = session.nom ? session.nom.split(" ")[0] : "";
+        document.getElementById("titre-bienvenue").textContent = `👋 Bienvenue, ${prenom}`;
 
-          // Masque skeletons
-          document.getElementById("skeleton-stats").classList.add("hidden");
-          const grille = document.getElementById("stats-grille");
-          grille.classList.remove("hidden");
-
-          const {
-            utilisateurs,
-            contenu,
-            finances,
-            graphique,
-            repartition_moyens,
-            derniers_inscrits,
-            dernieres_transactions,
-          } = data;
-
-          // Stat cards
-          grille.innerHTML = [
-            {
-              label: "Revenus totaux",
-              valeur: finances.revenus_formate,
-              sub: `+${finances.revenus_mois_formate} ce mois`,
-              icone: "💰",
-              couleur: "vert",
-            },
-            {
-              label: "Abonnés Premium",
-              valeur: utilisateurs.premium,
-              sub: `/${utilisateurs.total} total · ${utilisateurs.tauxConversion}% conv.`,
-              icone: "⭐",
-              couleur: "orange",
-            },
-            {
-              label: "Utilisateurs",
-              valeur: utilisateurs.total,
-              sub: `${utilisateurs.gratuit} gratuits`,
-              icone: "👥",
-              couleur: "bleu",
-            },
-            {
-              label: "Contenus publiés",
-              valeur:
-                contenu.concours + contenu.pdfs + contenu.videos + contenu.qcm,
-              sub: `${contenu.concours} concours · ${contenu.pdfs} PDFs`,
-              icone: "📚",
-              couleur: "violet",
-            },
-          ]
-            .map(
-              (s) => `
-      <div class="stat-card stat-card--${s.couleur}">
-        <div>
-          <div class="stat-card__label">${s.label}</div>
-          <div class="stat-card__valeur">${s.valeur}</div>
-          <div class="stat-card__sub">${s.sub}</div>
-        </div>
-        <div class="stat-card__icone" style="background:var(--${s.couleur === "vert" ? "vert" : "bleu" === "bleu" ? s.couleur : s.couleur},0.1)">${s.icone}</div>
-      </div>`,
-            )
-            .join("");
-
-          // Graphique barres
-          if (graphique?.length > 0) {
-            const max = Math.max(
-              ...graphique.map((g) => Number(g.revenus) || 0),
-            );
-            document.getElementById("graphique-revenus").innerHTML = graphique
-              .map((g) => {
-                const h =
-                  max > 0 ? Math.round((Number(g.revenus) / max) * 130) : 4;
-                return `
-          <div class="graphique-barre__wrap">
-            <div class="graphique-barre__valeur">${Number(g.revenus || 0).toLocaleString("fr-CI")} F</div>
-            <div class="graphique-barre" style="height:${h}px;"></div>
-            <div class="graphique-barre__label">${g.mois}</div>
-          </div>`;
-              })
-              .join("");
-          }
-
-          // Répartition moyens
-          if (repartition_moyens?.length > 0) {
-            const total = repartition_moyens.reduce(
-              (s, m) => s + Number(m.total || 0),
-              0,
-            );
-            document.getElementById("repartition-moyens").innerHTML =
-              repartition_moyens
-                .map((m) => {
-                  const pct =
-                    total > 0 ? Math.round((Number(m.total) / total) * 100) : 0;
-                  const c = m.moyen?.includes("Wave") ? "#009EE2" : "#FF6600";
-                  return `
-          <div style="margin-bottom:14px;">
-            <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-              <span style="font-weight:700;">${m.moyen?.includes("Wave") ? "🌊" : "🟠"} ${m.moyen}</span>
-              <span style="font-weight:700;">${pct}% · ${Number(m.revenus || 0).toLocaleString("fr-CI")} F</span>
-            </div>
-            <div class="progression"><div class="progression__barre" style="width:${pct}%;background:${c};"></div></div>
-          </div>`;
-                })
-                .join("");
-          }
-
-          // Derniers inscrits
-          document.getElementById("derniers-inscrits").innerHTML =
-            (derniers_inscrits || [])
-              .map(
-                (u) => `
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-clair);">
-        <div class="admin-tableau__avatar">${u.nom?.[0]?.toUpperCase() || "?"}</div>
-        <div style="flex:1;">
-          <div style="font-weight:700;font-size:0.9rem;">${u.nom}</div>
-          <div style="font-size:0.78rem;color:var(--gris-texte);">${u.email}</div>
-        </div>
-        ${u.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐ Premium</span>' : '<span class="badge badge--gris" style="font-size:0.7rem;">Gratuit</span>'}
-      </div>`,
-              )
-              .join("") ||
-            '<div style="color:var(--gris-texte);font-size:0.9rem;">Aucun utilisateur.</div>';
-
-          // Dernières transactions
-          document.getElementById("dernieres-transactions").innerHTML =
-            (dernieres_transactions || [])
-              .map(
-                (t) => `
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--gris-clair);">
-        <div>
-          <div style="font-weight:700;font-size:0.9rem;">${t.user_nom || t.email || "—"}</div>
-          <div style="font-size:0.75rem;color:var(--gris-texte);font-family:monospace;">Réf: ${t.tx_id}</div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-weight:900;font-size:0.95rem;">${Number(t.montant || 0).toLocaleString("fr-CI")} F</div>
-          <span class="badge ${t.statut === "validé" ? "badge--vert" : "badge--rouge"}" style="font-size:0.7rem;">${t.statut}</span>
-        </div>
-      </div>`,
-              )
-              .join("") ||
-            '<div style="color:var(--gris-texte);font-size:0.9rem;">Aucune transaction.</div>';
-        } catch (err) {
-          window.afficherToast?.(
-            "Erreur de chargement des stats : " + err.message,
-            "erreur",
-          );
+        // Statut du compte
+        const statutEl = document.getElementById("stat-statut");
+        if (session.premium) {
+          statutEl.textContent = "Premium";
+          statutEl.style.color = "#f59e0b";
+        } else {
+          statutEl.textContent = "Gratuit";
+          statutEl.style.color = "var(--gris-texte)";
+          document.getElementById("promo-premium").classList.remove("hidden");
         }
-      }
+
+        // Scores (depuis la session, déjà présents dans le JWT/profil)
+        const scores = JSON.parse(session.scores_json || "[]");
+        const nbTentatives = scores.length;
+        document.getElementById("stat-tentatives").textContent = nbTentatives;
+
+        if (nbTentatives > 0) {
+          const moyenne = Math.round(
+            scores.reduce((acc, s) => acc + (s.pourcentage || 0), 0) / nbTentatives,
+          );
+          document.getElementById("stat-moyenne").textContent = `${moyenne}%`;
+        } else {
+          document.getElementById("stat-moyenne").textContent = "—";
+        }
+
+        // Affiche les 5 derniers scores
+        const derniersEl = document.getElementById("derniers-scores");
+        if (nbTentatives === 0) {
+          derniersEl.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state__icone">📝</div>
+              <div class="empty-state__titre">Aucun QCM réalisé pour le moment</div>
+              <div class="empty-state__texte">Commence ta préparation dès maintenant.</div>
+              <a href="/preparation.html" class="btn btn--primaire btn--sm" style="margin-top: 12px">Faire un QCM →</a>
+            </div>`;
+        } else {
+          derniersEl.innerHTML = scores
+            .slice()
+            .reverse()
+            .slice(0, 5)
+            .map((sc) => {
+              const p = sc.pourcentage || 0;
+              const c = p >= 75 ? "var(--vert)" : p >= 50 ? "var(--orange)" : "var(--rouge)";
+              return `
+                <div class="score-item">
+                  <div class="score-item__cercle" style="border-color:${c};">
+                    <div class="score-item__pct" style="color:${c};">${p}%</div>
+                  </div>
+                  <div class="score-item__info">
+                    <div class="score-item__titre">${sc.qcmTitre || "QCM"}</div>
+                    <div class="score-item__meta">${sc.score || 0}/${sc.total || 0} bonnes réponses · ${sc.date || ""}</div>
+                  </div>
+                </div>`;
+            })
+            .join("");
+        }
+
+        // Concours disponibles (donnée réelle du catalogue)
+        try {
+          const concoursData = await window.API.Concours.ouverts();
+          document.getElementById("stat-qcm-disponibles").textContent =
+            (concoursData.concours || []).length;
+        } catch {
+          document.getElementById("stat-qcm-disponibles").textContent = "—";
+        }
+      });
     </script>
   </body>
 </html>

@@ -10,6 +10,7 @@
       content="Abonnement Premium EduConcoursCI. Accès illimité aux cours, vidéos, QCM. Paiement Wave CI ou Orange Money."
     />
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -81,7 +82,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon">🎓</div>
+          ><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
         <ul class="navbar__links">
@@ -136,7 +137,7 @@
             font-weight: 600;
           "
         >
-          ✅ Tu es déjà abonné Premium ! Ton abonnement expire le
+          <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Tu es déjà abonné Premium ! Ton abonnement expire le
           <span id="date-expiration"></span>.
         </div>
 
@@ -201,7 +202,7 @@
               font-weight: 600;
             "
           >
-            🌊 Wave CI
+            <span data-icone="vagues" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Wave CI
           </div>
           <div
             style="
@@ -225,7 +226,7 @@
               font-weight: 600;
             "
           >
-            ✅ Activation immédiate
+            <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Activation immédiate
           </div>
         </div>
       </div>
@@ -266,7 +267,7 @@
             color: var(--gris-texte);
           "
         >
-          🔒 Paiement 100% sécurisé · Pas de renouvellement automatique ·
+          <span data-icone="cadenas" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Paiement 100% sécurisé · Pas de renouvellement automatique ·
           Activation en moins de 2 minutes
         </p>
       </div>
@@ -277,7 +278,7 @@
     <section style="background: var(--blanc); padding: 60px 0">
       <div class="container">
         <div class="section__en-tete">
-          <span class="section__tag">✅ Inclus dans Premium</span>
+          <span class="section__tag"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Inclus dans Premium</span>
           <h2>Tout ce que tu obtiens</h2>
         </div>
         <div
@@ -291,7 +292,7 @@
           "
         >
           <div class="avantage-item">
-            <div class="avantage-icone">📄</div>
+            <div class="avantage-icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
             <div>
               <div style="font-weight: 800; margin-bottom: 4px">
                 Tous les PDFs Premium
@@ -305,7 +306,7 @@
             </div>
           </div>
           <div class="avantage-item">
-            <div class="avantage-icone">🎬</div>
+            <div class="avantage-icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
             <div>
               <div style="font-weight: 800; margin-bottom: 4px">
                 Cours en vidéo illimités
@@ -319,7 +320,7 @@
             </div>
           </div>
           <div class="avantage-item">
-            <div class="avantage-icone">📝</div>
+            <div class="avantage-icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
             <div>
               <div style="font-weight: 800; margin-bottom: 4px">
                 QCM avancés et difficiles
@@ -347,7 +348,7 @@
             </div>
           </div>
           <div class="avantage-item">
-            <div class="avantage-icone">🤖</div>
+            <div class="avantage-icone"><span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
             <div>
               <div style="font-weight: 800; margin-bottom: 4px">
                 Générateur CV & LM IA
@@ -361,7 +362,7 @@
             </div>
           </div>
           <div class="avantage-item">
-            <div class="avantage-icone">🏛️</div>
+            <div class="avantage-icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
             <div>
               <div style="font-weight: 800; margin-bottom: 4px">
                 Fiches concours détaillées
@@ -375,7 +376,7 @@
             </div>
           </div>
           <div class="avantage-item">
-            <div class="avantage-icone">🔔</div>
+            <div class="avantage-icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
             <div>
               <div style="font-weight: 800; margin-bottom: 4px">
                 Alertes prioritaires
@@ -451,13 +452,13 @@
               </tr>
             </thead>
             <tbody>
-              ${[ ["Concours ouverts","✅","✅"], ["QCM de base","✅","✅"],
-              ["Alertes concours","✅","✅"], ["PDFs gratuits","✅","✅"],
-              ["PDFs Premium","❌","✅"], ["Vidéos Premium","❌","✅"], ["QCM
-              difficiles","❌","✅"], ["Examens blancs illimités","❌","✅"],
-              ["Sujets corrigés officiels","❌","✅"], ["Générateur CV & LM
-              IA","❌","✅"], ["Fiches concours complètes","❌","✅"], ["Support
-              prioritaire","❌","✅"], ].map(([feat, gratuit, premium]) => `
+              ${[ ["Concours ouverts","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["QCM de base","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"],
+              ["Alertes concours","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["PDFs gratuits","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"],
+              ["PDFs Premium","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["Vidéos Premium","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["QCM
+              difficiles","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["Examens blancs illimités","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"],
+              ["Sujets corrigés officiels","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["Générateur CV & LM
+              IA","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["Fiches concours complètes","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["Support
+              prioritaire","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ].map(([feat, gratuit, premium]) => `
               <tr>
                 <td
                   style="
@@ -506,7 +507,7 @@
 
     <section style="background: var(--blanc); padding: 60px 0">
       <div class="container">
-        <div class="section__en-tete"><h2>❓ Questions fréquentes</h2></div>
+        <div class="section__en-tete"><h2><span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Questions fréquentes</h2></div>
         <div style="max-width: 700px; margin: 0 auto" id="faq">
           ${[ ["Comment fonctionne le paiement ?","Tu envoies le montant par
           Wave ou Orange Money au numéro indiqué, puis tu saisis l'identifiant
@@ -541,7 +542,7 @@
       <div class="container">
         <div class="footer__grille">
           <div>
-            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <div class="footer__logo"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> EduConcoursCI</div>
             <p class="footer__desc">
               Accès Premium aux ressources de préparation CI.
             </p>
@@ -569,6 +570,7 @@
       </div>
     </footer>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

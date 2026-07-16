@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestion PDFs — Admin EduConcoursCI</title>
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -30,7 +31,7 @@
             class="navbar__logo-icon"
             style="background: rgba(255, 255, 255, 0.1)"
           >
-            ⚙️
+            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
           </div>
           <span style="color: #fff">EduConcoursCI Admin</span></a
         >
@@ -47,48 +48,48 @@
       <div class="admin-layout">
         <aside class="admin-sidebar">
           <div class="admin-sidebar__header">
-            <div class="admin-sidebar__logo">⚙️ Admin Panel</div>
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
           </div>
           <div class="admin-sidebar__section">Dashboard</div>
           <a href="/admin/index.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">📊</span> Dashboard</a
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a
           >
           <div class="admin-sidebar__section">Contenu</div>
           <a href="/admin/concours.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🏛️</span> Concours</a
+            ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
           >
           <a href="/admin/pdfs.html" class="admin-sidebar__lien actif"
-            ><span class="admin-sidebar__icone">📄</span> PDFs</a
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
           >
           <a href="/admin/videos.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🎬</span> Vidéos</a
+            ><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a
           >
           <a href="/admin/qcm.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">📝</span> QCM</a
+            ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
           >
           <div class="admin-sidebar__section">Utilisateurs</div>
           <a href="/admin/abonnes.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">👥</span> Abonnés</a
+            ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
           >
           <a href="/admin/paiements.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">💳</span> Paiements</a
+            ><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
           >
           <a href="/admin/notifications.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🔔</span> Notifications</a
+            ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
           >
           <div class="admin-sidebar__section">Système</div>
           <a href="/admin/parametres.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">⚙️</span> Paramètres</a
+            ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
           >
           <a href="/" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone">🌐</span> Voir le site</a
+            ><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a
           >
         </aside>
 
         <main class="admin-contenu">
           <div class="admin-topbar">
             <div>
-              <div class="admin-topbar__titre">📄 Gestion des PDFs</div>
+              <div class="admin-topbar__titre"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Gestion des PDFs</div>
               <div class="admin-topbar__sous" id="compteur-pdfs">
                 Chargement…
               </div>
@@ -204,9 +205,9 @@
     <div class="modal-overlay" id="modal-add-pdf">
       <div class="modal modal--lg">
         <div class="modal__header">
-          <div class="modal__titre" id="modal-pdf-titre">➕ Ajouter un PDF</div>
+          <div class="modal__titre" id="modal-pdf-titre"><span data-icone="plus" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ajouter un PDF</div>
           <button class="modal__fermer" onclick="fermerModal('modal-add-pdf')">
-            ✕
+            <span data-icone="croix" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
           </button>
         </div>
         <div class="modal__corps">
@@ -294,12 +295,13 @@
             class="btn btn--primaire"
             id="btn-save-pdf"
           >
-            💾 Sauvegarder
+            <span data-icone="disquette" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sauvegarder
           </button>
         </div>
       </div>
     </div>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

@@ -10,6 +10,7 @@
       content="Tous les concours de la Fonction Publique, grandes écoles et sécurité en Côte d'Ivoire. Filtres par catégorie, statut et niveau."
     />
     <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
@@ -101,7 +102,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo">
-          <div class="navbar__logo-icon">🎓</div>
+          <div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span>
         </a>
         <ul class="navbar__links">
@@ -134,9 +135,9 @@
         </button>
       </div>
       <div class="navbar__mobile" id="menu-mobile">
-        <a href="/concours.html" class="navbar__link">🏛️ Concours</a>
-        <a href="/preparation.html" class="navbar__link">📝 Préparation</a>
-        <a href="/bibliotheque.html" class="navbar__link">📚 Bibliothèque</a>
+        <a href="/concours.html" class="navbar__link"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Concours</a>
+        <a href="/preparation.html" class="navbar__link"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Préparation</a>
+        <a href="/bibliotheque.html" class="navbar__link"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Bibliothèque</a>
         <a href="/boutique.html" class="navbar__link">⭐ Premium</a>
       </div>
     </nav>
@@ -145,7 +146,7 @@
 
     <div class="page-header main-content">
       <div class="container">
-        <h1>🏛️ Concours de Côte d'Ivoire</h1>
+        <h1><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Concours de Côte d'Ivoire</h1>
         <p>
           Tous les concours de la Fonction Publique, grandes écoles, sécurité et
           santé — mis à jour en temps réel.
@@ -158,7 +159,7 @@
               placeholder="Rechercher un concours, organisme…"
               autocomplete="off"
             />
-            <button onclick="lancerRecherche()">🔍 Rechercher</button>
+            <button onclick="lancerRecherche()"><span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Rechercher</button>
           </div>
         </div>
       </div>
@@ -187,7 +188,7 @@
                   align-items: center;
                 "
               >
-                🔧 Filtres
+                <span data-icone="cle_outil" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Filtres
                 <button
                   onclick="reinitialiserFiltres()"
                   style="
@@ -250,7 +251,7 @@
                     value="résultats"
                     onchange="appliquerFiltres()"
                   />
-                  🏆 Résultats</label
+                  <span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Résultats</label
                 >
               </div>
 
@@ -376,7 +377,7 @@
                   href="/alertes.html"
                   class="btn btn--outline-vert btn--sm btn--full"
                 >
-                  🔔 Activer les alertes
+                  <span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Activer les alertes
                 </a>
               </div>
             </div>
@@ -457,7 +458,7 @@
       <div class="container">
         <div class="footer__grille">
           <div>
-            <div class="footer__logo">🎓 EduConcoursCI</div>
+            <div class="footer__logo"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> EduConcoursCI</div>
             <p class="footer__desc">
               La plateforme de référence pour les concours CI.
             </p>
@@ -503,6 +504,7 @@
       </div>
     </footer>
 
+    <script src="/js/icons.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

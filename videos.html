@@ -27,7 +27,7 @@
 
 <nav class="navbar" id="navbar">
   <div class="navbar__inner">
-    <a href="/" class="navbar__logo"><div class="navbar__logo-icon">🎓</div><span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a>
+    <a href="/" class="navbar__logo"><div class="navbar__logo-icon"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div><span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a>
     <ul class="navbar__links">
       <li><a href="/concours.html"     class="navbar__link">Concours</a></li>
       <li><a href="/preparation.html"  class="navbar__link">Préparation</a></li>
@@ -45,13 +45,13 @@
 
 <div class="page-header main-content" style="background:linear-gradient(135deg,#1A1A2E,#7B2FBE);">
   <div class="container">
-    <span class="section__tag" style="background:rgba(255,255,255,0.2);color:#fff;margin-bottom:12px;display:inline-block;">🎬 Vidéos</span>
+    <span class="section__tag" style="background:rgba(255,255,255,0.2);color:#fff;margin-bottom:12px;display:inline-block;"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Vidéos</span>
     <h1>Cours en Vidéo</h1>
     <p>Formateurs ivoiriens, explications claires et pratiques pour chaque matière.</p>
     <div class="mt-3">
       <div class="barre-recherche" style="max-width:480px;">
         <input type="text" id="recherche-video" placeholder="Rechercher une vidéo, un sujet…">
-        <button onclick="filtrerVideos()">🔍</button>
+        <button onclick="filtrerVideos()"><span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></button>
       </div>
     </div>
   </div>
@@ -62,7 +62,7 @@
 
 <!-- Onglets catégories -->
 <div class="filtres scroll-x" id="onglets-videos" style="margin-bottom:24px;">
-  <button class="filtre-btn actif" data-cat="" onclick="changerCat(this,'')">🎬 Toutes</button>
+  <button class="filtre-btn actif" data-cat="" onclick="changerCat(this,'')"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Toutes</button>
 </div>
 
 <!-- Tri + compteur -->
@@ -92,7 +92,7 @@
 
 <div class="modal-video" id="modal-video" onclick="fermerVideo(event)">
   <div class="modal-video__contenu">
-    <button class="modal-video__fermer" onclick="fermerModalVideo()">✕</button>
+    <button class="modal-video__fermer" onclick="fermerModalVideo()"><span data-icone="croix" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></button>
     <iframe class="modal-video__iframe" id="iframe-video" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
     <div style="margin-top:14px;color:#fff;">
       <div style="font-weight:800;font-size:1.1rem;" id="modal-video-titre"></div>
@@ -104,7 +104,7 @@
 <footer class="footer">
   <div class="container">
     <div class="footer__grille">
-      <div><div class="footer__logo">🎓 EduConcoursCI</div><p class="footer__desc">Vidéos de formation pour les concours CI.</p></div>
+      <div><div class="footer__logo"><span data-icone="logo" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> EduConcoursCI</div><p class="footer__desc">Vidéos de formation pour les concours CI.</p></div>
       <div><div class="footer__titre-col">Ressources</div><a href="/videos.html" class="footer__lien">Vidéos</a><a href="/bibliotheque.html" class="footer__lien">Bibliothèque</a><a href="/preparation.html" class="footer__lien">QCM</a></div>
       <div><div class="footer__titre-col">Services</div><a href="/boutique.html" class="footer__lien">Premium</a><a href="/cv-generator.html" class="footer__lien">CV & LM IA</a></div>
       <div><div class="footer__titre-col">Compte</div><a href="/auth/login.html" class="footer__lien">Connexion</a><a href="/auth/register.html" class="footer__lien">Inscription</a></div>
@@ -113,7 +113,8 @@
   <div class="footer__bas"><div class="container">© 2026 EduConcoursCI</div></div>
 </footer>
 
-<script src="/js/api.js"></script>
+<script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
 
 <script src="/js/auth.js"></script>
 
