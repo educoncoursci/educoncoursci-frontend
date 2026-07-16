@@ -32,7 +32,7 @@ async create(data) {
 // Extrait l'ID YouTube si non fourni
 let youtubeId = data.youtube_id || null;
 if (!youtubeId && data.url) {
-const m = data.url.match(/(?:v=|youtu.be/)([a-zA-Z0-9_-]{11})/);
+const m = data.url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
 if (m) youtubeId = m[1];
 }
 const miniature = youtubeId

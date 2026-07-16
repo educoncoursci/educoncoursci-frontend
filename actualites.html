@@ -1,0 +1,234 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Actualités des concours — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Toute l'actualité des concours administratifs en Côte d'Ivoire : dates de résultats, ouvertures d'inscription, communiqués officiels."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .actu-carte {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        padding: 26px;
+        margin-bottom: 20px;
+        box-shadow: var(--ombre-sm);
+        border-left: 4px solid var(--vert);
+      }
+      .actu-carte--info {
+        border-left-color: var(--bleu);
+      }
+      .actu-carte--alerte {
+        border-left-color: #e6820a;
+      }
+      .actu-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.8rem;
+        color: var(--gris-texte);
+        margin-bottom: 10px;
+      }
+      .actu-tag {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        background: rgba(26, 107, 60, 0.1);
+        color: var(--vert);
+      }
+      .actu-titre {
+        font-family: var(--font-titre);
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--encre, #1f2937);
+      }
+      .actu-texte {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: #444;
+      }
+      .actu-source {
+        margin-top: 12px;
+        font-size: 0.8rem;
+      }
+      .actu-source a {
+        color: var(--bleu);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions">
+          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm">Connexion</a>
+          <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription</a>
+        </div>
+      </div>
+    </nav>
+
+    <div
+      class="page-header main-content"
+      style="background: linear-gradient(135deg, #14532d, #1a6b3c)"
+    >
+      <div class="container">
+        <h1><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Actualités des concours</h1>
+        <p>Les dernières informations officielles sur les concours administratifs en Côte d'Ivoire.</p>
+      </div>
+    </div>
+
+    <main class="container" style="max-width: 820px; padding: 32px 20px 60px;">
+
+      <div class="actu-carte actu-carte--alerte">
+        <div class="actu-meta">
+          <span class="actu-tag">Résultats</span>
+          <span>Juillet 2026</span>
+        </div>
+        <div class="actu-titre">Concours administratifs 2026 : calendrier des résultats en 4 vagues</div>
+        <p class="actu-texte">
+          Le ministère de la Fonction publique a fixé quatre dates de proclamation des résultats
+          pour la session 2026, réparties entre juillet et septembre. Les candidats ayant composé
+          les 27 et 28 juin ont été les premiers concernés, avec une première vague de résultats
+          publiée le 21 juillet. Une deuxième vague est prévue le 4 août pour les candidats ayant
+          composé les 25 et 26 juillet. Les résultats sont consultables uniquement en ligne, sur la
+          plateforme du Guichet unique des concours administratifs (GUCA-CI), à l'aide du numéro
+          d'inscription individuel — aucun déplacement n'est nécessaire.
+        </p>
+        <div class="actu-source">Source : <a href="https://www.yeclo.com/concours-administratifs-2026-la-1ere-vague-des-resultats-en-cours-de-publication-tout-savoir/" target="_blank" rel="noopener">Yeclo.com</a></div>
+      </div>
+
+      <div class="actu-carte">
+        <div class="actu-meta">
+          <span class="actu-tag">CAFOP</span>
+          <span>Avril 2026</span>
+        </div>
+        <div class="actu-titre">CAFOP 2026 : plus de 67 800 candidats pour 7 000 places</div>
+        <p class="actu-texte">
+          Le concours d'entrée dans les Centres d'Animation et de Formation Pédagogique (CAFOP) a
+          démarré le 11 avril 2026 sur l'ensemble du territoire national, avec un lancement officiel
+          au Collège Moderne de Cocody. Cette session enregistre une hausse de près de 4 850
+          candidats par rapport à 2025 (67 803 contre 62 955), pour seulement 7 000 postes
+          budgétaires disponibles — confirmant la forte sélectivité de ce concours, l'une des
+          principales voies d'accès au métier d'instituteur en Côte d'Ivoire.
+        </p>
+        <div class="actu-source">Source : <a href="https://afriksoir.net/cafop-2026-en-cote-divoire-67-800-candidats-en-competition-pour-7-000-places/" target="_blank" rel="noopener">Afrik Soir</a></div>
+      </div>
+
+      <div class="actu-carte actu-carte--info">
+        <div class="actu-meta">
+          <span class="actu-tag">ENA</span>
+          <span>2026</span>
+        </div>
+        <div class="actu-titre">ENA 2027 : six concours ouverts pour environ 600 places</div>
+        <p class="actu-texte">
+          Pour l'année 2027, six concours d'entrée à l'École Nationale d'Administration (ENA)
+          seront ouverts : trois concours directs (environ 450 places, soit 75%) et trois concours
+          professionnels (environ 150 places, soit 25%), donnant accès aux trois cycles de
+          formation (Moyen, Moyen Supérieur, Supérieur). Les inscriptions en ligne pour l'ENA se
+          déroulent du 12 mars au 7 avril, tandis que les inscriptions aux autres concours
+          administratifs courent du 16 mars au 30 avril. La ministre a par ailleurs mis en garde
+          contre les promesses frauduleuses de réussite, rappelant qu'un numéro vert (1364) est
+          disponible pour signaler toute tentative de fraude ou de corruption.
+        </p>
+        <div class="actu-source">Source : <a href="https://fonctionpublique.gouv.ci/index.php/front-page/navigator/viewpage/_alaune/2571" target="_blank" rel="noopener">Ministère de la Fonction Publique de Côte d'Ivoire</a></div>
+      </div>
+
+      <div class="actu-carte">
+        <div class="actu-meta">
+          <span class="actu-tag">Recrutement</span>
+          <span>Novembre 2025</span>
+        </div>
+        <div class="actu-titre">Dépôt exceptionnel de dossiers pour les admis 2023, 2024 et 2025</div>
+        <p class="actu-texte">
+          Les candidats déclarés admis aux concours administratifs des sessions 2023, 2024 et 2025
+          n'ayant pas pu déposer leur dossier de candidature ont pu le faire de façon exceptionnelle
+          début novembre 2025. Les sites retenus pour cette opération étaient l'École de Police
+          d'Abidjan et le Lycée professionnel sectoriel agro-industriel et maintenance de Yopougon.
+          Les intéressés étaient invités à se connecter sur le site du ministère pour imprimer leur
+          fiche de rendez-vous et leur fiche de visite médicale.
+        </p>
+        <div class="actu-source">Source : <a href="https://fr.allafrica.com/stories/202511040548.html" target="_blank" rel="noopener">AllAfrica</a></div>
+      </div>
+
+      <div class="actu-carte actu-carte--info">
+        <div class="actu-meta">
+          <span class="actu-tag">Info officielle</span>
+          <span>Janvier 2026</span>
+        </div>
+        <div class="actu-titre">La Fonction publique clarifie les règles d'organisation des concours</div>
+        <p class="actu-texte">
+          Lors d'un point de presse tenu le 9 janvier 2026 à Abidjan-Plateau, le directeur général
+          de la Fonction publique, Soro Gninagafol, a rappelé que l'organisation des concours est
+          strictement encadrée par les textes en vigueur. Tout lancement de concours fait l'objet
+          d'un communiqué officiel précisant les conditions de candidature, les diplômes requis, le
+          public cible et les modalités de sélection — une clarification faisant suite à une
+          publication virale sur les réseaux sociaux évoquant des conditions de recrutement
+          contestées au sein de la douane.
+        </p>
+        <div class="actu-source">Source : <a href="https://fr.allafrica.com/stories/202601100153.html" target="_blank" rel="noopener">AllAfrica</a></div>
+      </div>
+
+      <div style="text-align: center; margin-top: 32px; padding: 24px; background: var(--gris-clair); border-radius: var(--radius-lg);">
+        <p style="font-size: 0.85rem; color: var(--gris-texte); margin-bottom: 8px;">
+          Pour les informations officielles et à jour, consulte toujours les sources gouvernementales directement.
+        </p>
+        <a href="https://gucaci.ciconcours.com" target="_blank" rel="noopener" class="btn btn--outline-vert btn--sm">
+          Guichet unique des concours (GUCA-CI) →
+        </a>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grille">
+          <div>
+            <div class="footer__logo"><img src="/assets/logo-icon.png" alt="EduConcoursCI" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" /> EduConcoursCI</div>
+            <p class="footer__desc">Études, CV, lettre de motivation & concours.</p>
+          </div>
+          <div>
+            <div class="footer__titre-col">Navigation</div>
+            <a href="/concours.html" class="footer__lien">Concours</a
+            ><a href="/preparation.html" class="footer__lien">Préparation</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Services</div>
+            <a href="/boutique.html" class="footer__lien">Premium</a
+            ><a href="/alertes.html" class="footer__lien">Alertes</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Compte</div>
+            <a href="/auth/login.html" class="footer__lien">Connexion</a
+            ><a href="/auth/register.html" class="footer__lien">Inscription</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bas">
+        <div class="container">© 2026 EduConcoursCI</div>
+      </div>
+    </footer>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
