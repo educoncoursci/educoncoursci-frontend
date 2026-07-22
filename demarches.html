@@ -1,0 +1,328 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Démarches administratives — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Guides pratiques pour tes démarches administratives ivoiriennes : CNI, authentification de diplôme, équivalences BEPC/BAC."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/flash-info.css" />
+    <style>
+      .demarche-carte {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        margin-bottom: 24px;
+        box-shadow: var(--ombre-sm);
+      }
+      .demarche-entete {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+      .demarche-icone {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: rgba(26, 107, 60, 0.1);
+        color: var(--vert);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .demarche-titre {
+        font-family: var(--font-titre);
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--encre, #1f2937);
+      }
+      .demarche-sous {
+        font-size: 0.85rem;
+        color: var(--gris-texte);
+      }
+      .demarche-bloc {
+        margin: 16px 0;
+      }
+      .demarche-bloc h3 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--vert);
+      }
+      .demarche-liste {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .demarche-liste li {
+        padding: 6px 0 6px 22px;
+        position: relative;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: #444;
+      }
+      .demarche-liste li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 14px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--vert);
+      }
+      .demarche-info {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        background: var(--gris-clair);
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin: 14px 0;
+        font-size: 0.85rem;
+      }
+      .demarche-info strong {
+        color: var(--encre, #1f2937);
+      }
+      .demarche-source {
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid var(--gris-bordure, #e5e5e5);
+        font-size: 0.82rem;
+      }
+      .demarche-source a {
+        color: var(--bleu);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions">
+          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm">Connexion</a>
+          <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="page-header" style="background: linear-gradient(135deg, #14532d, #1a6b3c)">
+      <div class="container">
+        <h1><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Démarches administratives</h1>
+        <p>Guides pratiques pour tes démarches officielles en Côte d'Ivoire — étapes, pièces à fournir, coûts.</p>
+      </div>
+    </div>
+
+    <main class="container" style="max-width: 820px; padding: 32px 20px 60px;">
+
+      <div style="background:#fff8e6; border:1px solid #f5d98a; border-radius:12px; padding:14px 18px; margin-bottom:24px; font-size:0.85rem; color:#7a5c00;">
+        <span data-icone="attention" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
+        Ces guides résument les procédures officielles à titre indicatif. Pour toute démarche, vérifie toujours les informations à jour sur le site officiel concerné avant de te déplacer.
+      </div>
+
+      <!-- Guide 1 : CNI -->
+      <div class="demarche-carte">
+        <div class="demarche-entete">
+          <div class="demarche-icone"><span data-icone="cle" data-taille="24"></span></div>
+          <div>
+            <div class="demarche-titre">Carte Nationale d'Identité (CNI)</div>
+            <div class="demarche-sous">Première demande — ONECI</div>
+          </div>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>Qui peut demander ?</h3>
+          <p style="font-size:0.9rem; color:#444;">Tout Ivoirien majeur n'ayant jamais eu de CNI, ou souhaitant son premier titre d'identité.</p>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>Étapes</h3>
+          <ul class="demarche-liste">
+            <li>Aller sur <strong>www.rnpp.ci</strong> pour remplir le formulaire en ligne et acheter le timbre (paiement par Orange Money, MTN Mobile Money, Visa, Mastercard, ou autre)</li>
+            <li>Imprimer le reçu d'achat et le formulaire rempli</li>
+            <li>Se rendre dans un centre d'enrôlement ONECI muni des documents imprimés et des pièces originales requises pour l'enregistrement biométrique</li>
+            <li>Recevoir un SMS dès que la carte est disponible pour le retrait</li>
+          </ul>
+        </div>
+
+        <div class="demarche-info">
+          <div><strong>Coût</strong><br>5 000 FCFA (timbre)</div>
+          <div><strong>Délai</strong><br>Variable selon le centre — vérifiable via le serveur vocal</div>
+          <div><strong>Contact</strong><br>Call Center ONECI : (+225) 20 30 79 40 · Numéro vert : 1340</div>
+        </div>
+
+        <div class="demarche-source">
+          Sources : <a href="https://www.oneci.ci" target="_blank" rel="noopener">ONECI — oneci.ci</a> ·
+          <a href="https://servicepublic.gouv.ci" target="_blank" rel="noopener">Service Public de Côte d'Ivoire</a>
+        </div>
+      </div>
+
+      <!-- Guide 2 : Authentification diplôme -->
+      <div class="demarche-carte">
+        <div class="demarche-entete">
+          <div class="demarche-icone"><span data-icone="diplome" data-taille="24"></span></div>
+          <div>
+            <div class="demarche-titre">Authentification d'un diplôme supérieur (établissement privé, CI)</div>
+            <div class="demarche-sous">Ministère de l'Enseignement Supérieur (MESRS)</div>
+          </div>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>À quoi ça sert ?</h3>
+          <p style="font-size:0.9rem; color:#444;">
+            Confirme la validité d'un diplôme (DUT, Licence, Master, Ingénieur...) obtenu dans un
+            établissement privé ivoirien dont la filière a reçu l'habilitation nationale (homologation).
+            Cette authentification est souvent exigée pour se présenter à un concours administratif ivoirien.
+          </p>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>Qui peut demander ?</h3>
+          <ul class="demarche-liste">
+            <li>Titulaires d'une Licence, Maîtrise, DESS ou autre diplôme supérieur obtenu en Côte d'Ivoire</li>
+            <li>Diplôme délivré par un établissement disposant d'un arrêté d'autorisation de création et d'ouverture de filière</li>
+          </ul>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>Pièces à fournir (dossier)</h3>
+          <ul class="demarche-liste">
+            <li>La fiche de demande d'authentification, dûment renseignée</li>
+            <li>Copie du diplôme concerné</li>
+          </ul>
+        </div>
+
+        <div class="demarche-info">
+          <div><strong>Où s'adresser</strong><br>Direction des Examens et Concours (DECO) — Boulevard Angoulvant, après l'Externat Saint Paul</div>
+        </div>
+
+        <div class="demarche-source">
+          Sources : <a href="https://enseignement.gouv.ci/dossier/16" target="_blank" rel="noopener">Ministère de l'Enseignement Supérieur (enseignement.gouv.ci)</a> ·
+          <a href="https://servicepublic.gouv.ci" target="_blank" rel="noopener">Service Public de Côte d'Ivoire</a>
+        </div>
+      </div>
+
+      <!-- Guide 3 : Équivalence CEPE/BEPC/BAC -->
+      <div class="demarche-carte">
+        <div class="demarche-entete">
+          <div class="demarche-icone"><span data-icone="livre" data-taille="24"></span></div>
+          <div>
+            <div class="demarche-titre">Équivalence du CEPE, BEPC et BAC (diplôme obtenu hors CI)</div>
+            <div class="demarche-sous">Direction des Examens et Concours (DECO)</div>
+          </div>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>À quoi ça sert ?</h3>
+          <p style="font-size:0.9rem; color:#444;">
+            Si ton diplôme a été obtenu hors de Côte d'Ivoire (ou dans un cursus qui n'existe pas sur
+            le territoire national), la DECO établit une correspondance avec un diplôme national
+            reconnu (CEPE, BEPC ou BAC). Obligatoire pour se présenter à un concours ivoirien avec un
+            diplôme étranger.
+          </p>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>Qui peut demander ?</h3>
+          <p style="font-size:0.9rem; color:#444;">Toute personne titulaire d'un BAC, BEPC ou CAP (Pédagogique).</p>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>Pièces à fournir</h3>
+          <ul class="demarche-liste">
+            <li>Demande à imprimer en ligne sur le site de la DECO (men-deco.org)</li>
+            <li>Photocopie de la CNI, du passeport, de l'attestation d'identité ou de la carte consulaire</li>
+            <li>Photocopie de l'attestation de réussite si disponible</li>
+            <li>Pièces justificatives motivant toute demande introduite en urgence</li>
+          </ul>
+        </div>
+
+        <div class="demarche-info">
+          <div><strong>Coût</strong><br>1 000 FCFA</div>
+          <div><strong>Où s'adresser</strong><br>DECO — Service Équivalence et Authentification, Boulevard Angoulvant</div>
+        </div>
+
+        <div class="demarche-source">
+          Sources : <a href="https://servicepublic.gouv.ci" target="_blank" rel="noopener">Service Public de Côte d'Ivoire</a> ·
+          <a href="https://erequests.men-deco.org" target="_blank" rel="noopener">eRequests DECO (demandes en ligne)</a>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin: 32px 0; padding: 28px; background: linear-gradient(135deg, #0a2540, #0a6ebd); border-radius: var(--radius-lg); color: #fff;">
+        <div style="font-size: 1.1rem; font-weight: 700; font-family: var(--font-titre); margin-bottom: 8px;">
+          <span data-icone="fusee" data-taille="20" style="display:inline-flex;vertical-align:-4px;"></span>
+          Besoin de rédiger toi-même un document ?
+        </div>
+        <p style="font-size: 0.88rem; opacity: 0.9; margin-bottom: 16px;">
+          Génère une demande, une attestation ou un courrier administratif en quelques minutes grâce à l'IA.
+        </p>
+        <a href="/documents-admin.html" class="btn btn--primaire btn--sm" style="background:#fff; color:#0a2540;">
+          Générer un document →
+        </a>
+      </div>
+
+      <div style="text-align: center; margin-top: 32px; padding: 24px; background: var(--gris-clair); border-radius: var(--radius-lg);">
+        <p style="font-size: 0.85rem; color: var(--gris-texte); margin-bottom: 8px;">
+          Pour d'autres démarches non listées ici, consulte le portail officiel du gouvernement.
+        </p>
+        <a href="https://servicepublic.gouv.ci" target="_blank" rel="noopener" class="btn btn--outline-vert btn--sm">
+          Service Public de Côte d'Ivoire →
+        </a>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__grille">
+          <div>
+            <div class="footer__logo"><img src="/assets/logo-icon.png" alt="EduConcoursCI" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" /> EduConcoursCI</div>
+            <p class="footer__desc">Études, CV, lettre de motivation & concours.</p>
+          </div>
+          <div>
+            <div class="footer__titre-col">Navigation</div>
+            <a href="/concours.html" class="footer__lien">Concours</a
+            ><a href="/actualites.html" class="footer__lien">Actualités</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Ressources</div>
+            <a href="/demarches.html" class="footer__lien">Démarches admin.</a
+            ><a href="/videos.html" class="footer__lien">Vidéos</a>
+          </div>
+          <div>
+            <div class="footer__titre-col">Compte</div>
+            <a href="/auth/login.html" class="footer__lien">Connexion</a
+            ><a href="/auth/register.html" class="footer__lien">Inscription</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bas">
+        <div class="container">© 2026 EduConcoursCI</div>
+      </div>
+    </footer>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

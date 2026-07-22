@@ -17,6 +17,7 @@
     />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
     <style>
       .cv-layout {
@@ -76,6 +77,93 @@
         gap: 10px;
         flex-wrap: wrap;
         margin-top: 16px;
+      }
+      .modeles-categorie-titre {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--gris-texte);
+        margin: 14px 0 8px;
+        letter-spacing: 0.03em;
+      }
+      .modeles-grille {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+      }
+      .modele-carte {
+        border: 2px solid var(--gris-bordure);
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        background: var(--blanc);
+        position: relative;
+      }
+      .modele-carte:hover {
+        border-color: var(--vert);
+        transform: translateY(-2px);
+      }
+      .modele-carte.selectionne {
+        border-color: var(--vert);
+        box-shadow: 0 0 0 3px rgba(26, 107, 60, 0.15);
+      }
+      .modele-carte__apercu {
+        height: 88px;
+        display: flex;
+        align-items: stretch;
+      }
+      .modele-carte__colonne {
+        width: 35%;
+        flex-shrink: 0;
+      }
+      .modele-carte__corps {
+        flex: 1;
+        padding: 8px;
+        background: #fafafa;
+      }
+      .modele-carte__ligne {
+        height: 4px;
+        background: #d8d8d8;
+        border-radius: 2px;
+        margin-bottom: 5px;
+      }
+      .modele-carte__info {
+        padding: 8px 10px;
+        border-top: 1px solid var(--gris-bordure);
+      }
+      .modele-carte__nom {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--encre, #1f2937);
+        line-height: 1.3;
+      }
+      .modele-carte__badge {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        background: #f59e0b;
+        color: #fff;
+        font-size: 0.62rem;
+        font-weight: 800;
+        padding: 2px 6px;
+        border-radius: 20px;
+      }
+      .modele-carte__check {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 20px;
+        height: 20px;
+        background: var(--vert);
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+      }
+      .modele-carte.selectionne .modele-carte__check {
+        display: flex;
       }
       @media (max-width: 900px) {
         .cv-layout {
@@ -538,6 +626,17 @@
                 </div>
               </div>
 
+              <!-- Choix du modèle de CV -->
+              <div style="margin-top: 28px">
+                <label class="form-label" style="margin-bottom: 12px; display: block;">
+                  <span data-icone="graphique" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
+                  Choisis un modèle de CV
+                </label>
+                <div id="modeles-cv-conteneur" style="color: var(--gris-texte); font-size: 0.85rem;">
+                  Chargement des modèles…
+                </div>
+              </div>
+
               <!-- Bouton générer -->
               <div style="margin-top: 24px">
                 <button
@@ -786,13 +885,36 @@
                     <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Copier
                   </button>
                   <button onclick="exporterPDF()" class="btn btn--bleu btn--sm">
-                    <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Télécharger PDF
+                    <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> PDF
+                  </button>
+                  <button onclick="exporterDOCX()" class="btn btn--bleu btn--sm">
+                    <span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Word
+                  </button>
+                  <button onclick="lancerAnalyseATS()" class="btn btn--primaire btn--sm" id="btn-analyse-ats">
+                    <span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Analyser ATS
                   </button>
                   <button onclick="regenerer()" class="btn btn--gris btn--sm">
                     <span data-icone="actualiser" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Régénérer
                   </button>
                 </div>
               </div>
+
+              <!-- Zone d'adaptation à une offre d'emploi (CV uniquement) -->
+              <div id="zone-adapter-offre" class="hidden" style="background: var(--gris-clair); border-radius: 12px; padding: 18px; margin-bottom: 16px;">
+                <label class="form-label" style="margin-bottom: 8px; display: block;">
+                  <span data-icone="fusee" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
+                  Adapter ce CV à une offre d'emploi précise (optionnel)
+                </label>
+                <textarea id="texte-offre-emploi" class="form-textarea" rows="4" placeholder="Colle ici le texte de l'offre d'emploi…"></textarea>
+                <div style="display:flex; gap:10px; margin-top:10px; flex-wrap: wrap;">
+                  <button onclick="adapterAOffre()" class="btn btn--primaire btn--sm" id="btn-adapter-offre">
+                    <span data-icone="actualiser" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span> Adapter mon CV à cette offre
+                  </button>
+                </div>
+              </div>
+
+              <!-- Zone résultat de l'analyse ATS -->
+              <div id="zone-analyse-ats" class="hidden" style="border-radius: 12px; padding: 20px; margin-bottom: 16px;"></div>
 
               <!-- Aperçu document stylisé -->
               <div
@@ -903,6 +1025,7 @@
     </footer>
 
     <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>
@@ -913,6 +1036,8 @@
       let typeActuel = "cv";
       let contenuGenere = null;
       let dataFormulaire = null;
+      let modeleChoisi = "ats_classique_1";
+      let modelesCatalogue = {};
       let expCount = 1, forCount = 1;
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -929,7 +1054,57 @@
           if (session.nom)   { document.getElementById("cv-nom").value  = session.nom;  document.getElementById("lm-nom").value  = session.nom; }
           if (session.email) { document.getElementById("cv-email").value = session.email; document.getElementById("lm-email").value = session.email; }
         }
+
+        chargerModelesCv();
       });
+
+      // ── Chargement et affichage des modèles de CV ──────────────────
+      async function chargerModelesCv() {
+        const conteneur = document.getElementById("modeles-cv-conteneur");
+        try {
+          const data = await window.API.CVLM.modeles();
+          modelesCatalogue = data.modeles || {};
+
+          let html = "";
+          for (const [categorie, modeles] of Object.entries(modelesCatalogue)) {
+            html += `<div class="modeles-categorie-titre">${categorie}</div><div class="modeles-grille">`;
+            for (const m of modeles) {
+              const estSelectionne = m.id === modeleChoisi;
+              html += `
+                <div class="modele-carte ${estSelectionne ? "selectionne" : ""}" data-modele-id="${m.id}" onclick="choisirModele('${m.id}')" title="${m.description}">
+                  ${m.premium ? '<div class="modele-carte__badge">⭐ Premium</div>' : ""}
+                  <div class="modele-carte__check">
+                    <span data-icone="coche" data-taille="12"></span>
+                  </div>
+                  <div class="modele-carte__apercu">
+                    <div class="modele-carte__colonne" style="background:${m.couleurs.primaire};"></div>
+                    <div class="modele-carte__corps">
+                      <div class="modele-carte__ligne" style="width:80%; background:${m.couleurs.primaire};"></div>
+                      <div class="modele-carte__ligne" style="width:60%;"></div>
+                      <div class="modele-carte__ligne" style="width:70%;"></div>
+                      <div class="modele-carte__ligne" style="width:40%; background:${m.couleurs.accent};"></div>
+                      <div class="modele-carte__ligne" style="width:55%;"></div>
+                    </div>
+                  </div>
+                  <div class="modele-carte__info">
+                    <div class="modele-carte__nom">${m.nom}</div>
+                  </div>
+                </div>`;
+            }
+            html += `</div>`;
+          }
+          conteneur.innerHTML = html;
+        } catch (err) {
+          conteneur.innerHTML = `<span style="color: var(--rouge, #c0392b);">Impossible de charger les modèles. Un modèle par défaut sera utilisé.</span>`;
+        }
+      }
+
+      function choisirModele(id) {
+        modeleChoisi = id;
+        document.querySelectorAll(".modele-carte").forEach((carte) => {
+          carte.classList.toggle("selectionne", carte.dataset.modeleId === id);
+        });
+      }
 
       // ── Onglets ───────────────────────────────────────────────────
       function changerOnglet(type, btn) {
@@ -1078,6 +1253,9 @@
       document.getElementById("resultat-titre").textContent = titre;
       document.getElementById("contenu-resultat").textContent = contenuGenere;
       document.getElementById("zone-resultat").classList.remove("hidden");
+      document.getElementById("zone-analyse-ats").classList.add("hidden");
+      document.getElementById("zone-adapter-offre").classList.add("hidden");
+      document.getElementById("btn-analyse-ats").classList.toggle("hidden", typeActuel !== "cv");
       document.getElementById("zone-resultat").scrollIntoView({ behavior:"smooth", block:"start" });
       }
 
@@ -1092,14 +1270,112 @@
       if (!contenuGenere) return;
       try {
       window.afficherToast("Génération du PDF…", "info");
-      await window.API.CVLM.exporterPDF(contenuGenere, typeActuel, dataFormulaire, "simple");
+      const style = typeActuel === "cv" ? "structure" : "simple";
+      await window.API.CVLM.exporterPDF(contenuGenere, typeActuel, dataFormulaire, style, modeleChoisi);
       } catch (err) {
       window.afficherToast(err.message || "Erreur PDF.", "erreur");
       }
       }
 
+      async function exporterDOCX() {
+      if (!contenuGenere) return;
+      try {
+      window.afficherToast("Génération du document Word…", "info");
+      await window.API.CVLM.exporterDOCX(contenuGenere, typeActuel, dataFormulaire, modeleChoisi);
+      } catch (err) {
+      window.afficherToast(err.message || "Erreur Word.", "erreur");
+      }
+      }
+
+      async function lancerAnalyseATS() {
+      if (!contenuGenere || typeActuel !== "cv") {
+      window.afficherToast("L'analyse ATS est disponible uniquement pour les CV.", "info");
+      return;
+      }
+
+      const btn = document.getElementById("btn-analyse-ats");
+      const zone = document.getElementById("zone-analyse-ats");
+      btn.disabled = true;
+      btn.textContent = "⏳ Analyse en cours…";
+
+      try {
+      const offre = document.getElementById("texte-offre-emploi")?.value?.trim() || null;
+      const res = await window.API.CVLM.analyserATS(contenuGenere, offre);
+      const a = res.analyse;
+
+      const couleurScore = a.score >= 75 ? "var(--vert)" : a.score >= 50 ? "#f59e0b" : "#dc2626";
+
+      zone.innerHTML = `
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px; flex-wrap:wrap;">
+          <div style="width:70px; height:70px; border-radius:50%; border:5px solid ${couleurScore}; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1.3rem; color:${couleurScore}; flex-shrink:0;">
+            ${a.score ?? "?"}
+          </div>
+          <div>
+            <div style="font-weight:700; font-family:var(--font-titre); margin-bottom:4px;">Score de compatibilité ATS</div>
+            <div style="font-size:0.88rem; color:var(--gris-texte);">${a.resume || ""}</div>
+          </div>
+        </div>
+        ${a.pointsForts?.length ? `
+          <div style="margin-bottom:12px;">
+            <div style="font-weight:700; font-size:0.85rem; color:var(--vert); margin-bottom:6px;">✅ Points forts</div>
+            <ul style="margin:0; padding-left:20px; font-size:0.85rem; color:#444;">
+              ${a.pointsForts.map(p => `<li>${p}</li>`).join("")}
+            </ul>
+          </div>` : ""}
+        ${a.motsClesManquants?.length ? `
+          <div style="margin-bottom:12px;">
+            <div style="font-weight:700; font-size:0.85rem; color:#dc2626; margin-bottom:6px;">Mots-clés à ajouter</div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              ${a.motsClesManquants.map(m => `<span style="background:#fef2f2; color:#dc2626; padding:3px 10px; border-radius:20px; font-size:0.78rem; font-weight:600;">${m}</span>`).join("")}
+            </div>
+          </div>` : ""}
+        ${a.recommandations?.length ? `
+          <div>
+            <div style="font-weight:700; font-size:0.85rem; color:var(--bleu); margin-bottom:6px;">Recommandations</div>
+            <ul style="margin:0; padding-left:20px; font-size:0.85rem; color:#444;">
+              ${a.recommandations.map(r => `<li>${r}</li>`).join("")}
+            </ul>
+          </div>` : ""}
+      `;
+      zone.style.background = "var(--gris-clair)";
+      zone.classList.remove("hidden");
+      document.getElementById("zone-adapter-offre").classList.remove("hidden");
+      } catch (err) {
+      window.afficherToast(err.message || "Erreur lors de l'analyse ATS.", "erreur");
+      } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Analyser ATS';
+      }
+      }
+
+      async function adapterAOffre() {
+      const offre = document.getElementById("texte-offre-emploi")?.value?.trim();
+      if (!offre) {
+      window.afficherToast("Colle d'abord le texte de l'offre d'emploi.", "warn");
+      return;
+      }
+
+      const btn = document.getElementById("btn-adapter-offre");
+      btn.disabled = true;
+      btn.textContent = "⏳ Adaptation en cours…";
+
+      try {
+      const res = await window.API.CVLM.adapterOffre(contenuGenere, offre);
+      contenuGenere = res.cv;
+      afficherResultat("📄 Ton CV Adapté à l'offre");
+      window.afficherToast("CV adapté avec succès à l'offre !", "succes");
+      } catch (err) {
+      window.afficherToast(err.message || "Erreur lors de l'adaptation.", "erreur");
+      } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<span data-icone="actualiser" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span> Adapter mon CV à cette offre';
+      }
+      }
+
       function regenerer() {
       document.getElementById("zone-resultat").classList.add("hidden");
+      document.getElementById("zone-analyse-ats").classList.add("hidden");
+      document.getElementById("zone-adapter-offre").classList.add("hidden");
       contenuGenere = null;
       }
     </script>

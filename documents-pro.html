@@ -1,0 +1,528 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documents Professionnels — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Génère des documents professionnels avec l'IA : business plan, devis, facture, rapport, contrat, présentation."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/flash-info.css" />
+    <style>
+      .types-grille {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 14px;
+        margin-bottom: 28px;
+      }
+      .type-carte {
+        background: var(--blanc);
+        border: 2px solid var(--gris-bordure);
+        border-radius: var(--radius-lg);
+        padding: 18px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        text-align: center;
+        position: relative;
+      }
+      .type-carte:hover {
+        border-color: var(--vert);
+        transform: translateY(-2px);
+      }
+      .type-carte.actif {
+        border-color: var(--vert);
+        background: rgba(26, 107, 60, 0.05);
+      }
+      .type-carte__icone {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(26, 107, 60, 0.1);
+        color: var(--vert);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 10px;
+      }
+      .type-carte__nom {
+        font-family: var(--font-titre);
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+      }
+      .type-carte__desc {
+        font-size: 0.75rem;
+        color: var(--gris-texte);
+        line-height: 1.4;
+      }
+      .type-carte__badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: #f59e0b;
+        color: #fff;
+        font-size: 0.6rem;
+        font-weight: 800;
+        padding: 2px 7px;
+        border-radius: 20px;
+      }
+      .form-doc {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        box-shadow: var(--ombre-sm);
+        margin-bottom: 24px;
+      }
+      .article-item {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr auto;
+        gap: 10px;
+        align-items: end;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px dashed var(--gris-bordure);
+      }
+      .article-suppr {
+        background: #fef2f2;
+        color: #dc2626;
+        border: none;
+        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        font-size: 1.1rem;
+      }
+      .resultat-doc {
+        background: var(--blanc);
+        border: 1px solid var(--gris-bordure);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        font-family: "Georgia", serif;
+        font-size: 0.93rem;
+        line-height: 1.85;
+        color: #222;
+        white-space: pre-wrap;
+        word-break: break-word;
+        max-height: 600px;
+        overflow-y: auto;
+      }
+      .action-bar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+      @media (max-width: 700px) {
+        .article-item {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+    <!-- ── FLASH INFO ──────────────────────────────────────────── -->
+    <div class="flash-info">
+      <div class="flash-info__label">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+        <span>Flash info</span>
+      </div>
+      <div class="flash-info__piste">
+        <div class="flash-info__track">
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+          <!-- Duplication pour un défilement continu sans interruption -->
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="page-header" style="background: linear-gradient(135deg, #14532d, #1a6b3c)">
+      <div class="container">
+        <h1><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Documents Professionnels</h1>
+        <p>Business plan, devis, facture, rapport, contrat, présentation — générés par l'IA en quelques minutes.</p>
+      </div>
+    </div>
+
+    <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
+
+      <!-- Zone non connecté -->
+      <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
+        <p style="margin-bottom:16px; color:var(--gris-texte);">Connecte-toi pour créer tes documents professionnels.</p>
+        <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
+      </div>
+
+      <div id="zone-generateur">
+        <!-- Sélection du type de document -->
+        <div id="types-conteneur" class="types-grille">
+          <div style="grid-column: 1/-1; color: var(--gris-texte); font-size: 0.85rem;">Chargement des types de documents…</div>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE BUSINESS PLAN ═══════════════ -->
+        <div id="form-business_plan" class="form-doc hidden">
+          <h3 style="margin-top:0;">Business Plan</h3>
+          <div class="form-groupe"><label class="form-label">Nom de l'entreprise *</label><input type="text" id="bp-nom" class="form-input" placeholder="Ex: Ferme Avicole Ivoire+" /></div>
+          <div class="form-groupe"><label class="form-label">Secteur d'activité *</label><input type="text" id="bp-secteur" class="form-input" placeholder="Ex: Agroalimentaire" /></div>
+          <div class="form-groupe"><label class="form-label">Ville</label><input type="text" id="bp-ville" class="form-input" placeholder="Abidjan" /></div>
+          <div class="form-groupe"><label class="form-label">Description du projet *</label><textarea id="bp-description" class="form-textarea" rows="3" placeholder="Décris ton projet en quelques phrases…"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Marché cible</label><textarea id="bp-marche" class="form-textarea" rows="2" placeholder="Qui sont tes clients ?"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Produits / Services</label><textarea id="bp-produits" class="form-textarea" rows="2" placeholder="Ce que tu vends ou proposes"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Stratégie envisagée</label><textarea id="bp-strategie" class="form-textarea" rows="2" placeholder="Comment comptes-tu te démarquer ?"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Budget / Projections (si connus)</label><textarea id="bp-projections" class="form-textarea" rows="2" placeholder="Investissement de départ, revenus visés…"></textarea></div>
+          <button onclick="genererDocument('business_plan')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-business_plan">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Business Plan
+          </button>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE DEVIS ═══════════════ -->
+        <div id="form-devis" class="form-doc hidden">
+          <h3 style="margin-top:0;">Devis</h3>
+          <div class="form-groupe"><label class="form-label">Numéro de devis</label><input type="text" id="devis-numero" class="form-input" placeholder="Ex: DEV-2026-001" /></div>
+          <div class="form-groupe"><label class="form-label">Émetteur (toi/ton entreprise) *</label><textarea id="devis-emetteur" class="form-textarea" rows="2" placeholder="Nom, adresse, téléphone, email…"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Client *</label><textarea id="devis-client" class="form-textarea" rows="2" placeholder="Nom du client, adresse…"></textarea></div>
+          <label class="form-label">Articles / Prestations *</label>
+          <div id="devis-articles"></div>
+          <button type="button" onclick="ajouterArticle('devis')" class="btn btn--outline-vert btn--sm" style="margin-bottom:16px;">+ Ajouter un article</button>
+          <div class="form-groupe"><label class="form-label">Validité de l'offre</label><input type="text" id="devis-validite" class="form-input" placeholder="Ex: 30 jours" /></div>
+          <div class="form-groupe"><label class="form-label">Conditions particulières</label><textarea id="devis-conditions" class="form-textarea" rows="2"></textarea></div>
+          <button onclick="genererDocument('devis')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-devis">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Devis
+          </button>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE FACTURE ═══════════════ -->
+        <div id="form-facture" class="form-doc hidden">
+          <h3 style="margin-top:0;">Facture</h3>
+          <div class="form-groupe"><label class="form-label">Numéro de facture</label><input type="text" id="facture-numero" class="form-input" placeholder="Ex: FAC-2026-001" /></div>
+          <div class="form-groupe"><label class="form-label">Émetteur (toi/ton entreprise) *</label><textarea id="facture-emetteur" class="form-textarea" rows="2"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Client *</label><textarea id="facture-client" class="form-textarea" rows="2"></textarea></div>
+          <label class="form-label">Articles / Prestations *</label>
+          <div id="facture-articles"></div>
+          <button type="button" onclick="ajouterArticle('facture')" class="btn btn--outline-vert btn--sm" style="margin-bottom:16px;">+ Ajouter un article</button>
+          <div class="form-groupe"><label class="form-label">Mode de paiement</label><input type="text" id="facture-mode" class="form-input" placeholder="Wave, Orange Money, Virement…" /></div>
+          <div class="form-groupe"><label class="form-label">Échéance de paiement</label><input type="text" id="facture-echeance" class="form-input" placeholder="À réception" /></div>
+          <button onclick="genererDocument('facture')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-facture">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer ma Facture
+          </button>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE RAPPORT ═══════════════ -->
+        <div id="form-rapport" class="form-doc hidden">
+          <h3 style="margin-top:0;">Rapport</h3>
+          <div class="form-groupe"><label class="form-label">Titre du rapport *</label><input type="text" id="rapport-titre" class="form-input" placeholder="Ex: Rapport d'activité trimestriel" /></div>
+          <div class="form-groupe"><label class="form-label">Auteur</label><input type="text" id="rapport-auteur" class="form-input" /></div>
+          <div class="form-groupe"><label class="form-label">Contexte *</label><textarea id="rapport-contexte" class="form-textarea" rows="2" placeholder="Dans quel cadre ce rapport est-il rédigé ?"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Objectifs</label><textarea id="rapport-objectifs" class="form-textarea" rows="2"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Contenu / Constats *</label><textarea id="rapport-contenu" class="form-textarea" rows="4" placeholder="Détaille les faits, observations, données à intégrer…"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Recommandations envisagées</label><textarea id="rapport-recommandations" class="form-textarea" rows="2"></textarea></div>
+          <button onclick="genererDocument('rapport')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-rapport">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Rapport
+          </button>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE CONTRAT ═══════════════ -->
+        <div id="form-contrat" class="form-doc hidden">
+          <h3 style="margin-top:0;">Contrat</h3>
+          <div style="background:#fff8e6; border:1px solid #f5d98a; border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:0.82rem; color:#7a5c00;">
+            Ce document est un modèle indicatif. Fais-le toujours vérifier par un juriste avant signature.
+          </div>
+          <div class="form-groupe"><label class="form-label">Type de contrat *</label><input type="text" id="contrat-type" class="form-input" placeholder="Ex: Contrat de prestation de service" /></div>
+          <div class="form-groupe"><label class="form-label">Ville</label><input type="text" id="contrat-ville" class="form-input" placeholder="Abidjan" /></div>
+          <div class="form-groupe"><label class="form-label">Partie A *</label><textarea id="contrat-partieA" class="form-textarea" rows="2" placeholder="Nom, statut, adresse…"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Partie B *</label><textarea id="contrat-partieB" class="form-textarea" rows="2"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Objet du contrat *</label><textarea id="contrat-objet" class="form-textarea" rows="2"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Durée</label><input type="text" id="contrat-duree" class="form-input" placeholder="Ex: 12 mois renouvelables" /></div>
+          <div class="form-groupe"><label class="form-label">Conditions particulières</label><textarea id="contrat-conditions" class="form-textarea" rows="2"></textarea></div>
+          <button onclick="genererDocument('contrat')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-contrat">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Contrat
+          </button>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE PRÉSENTATION ═══════════════ -->
+        <div id="form-presentation" class="form-doc hidden">
+          <h3 style="margin-top:0;">Présentation</h3>
+          <div class="form-groupe"><label class="form-label">Titre *</label><input type="text" id="presentation-titre" class="form-input" placeholder="Ex: Présentation du projet X" /></div>
+          <div class="form-groupe"><label class="form-label">Sujet à développer *</label><textarea id="presentation-sujet" class="form-textarea" rows="3" placeholder="De quoi doit parler la présentation ?"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Public visé</label><input type="text" id="presentation-public" class="form-input" placeholder="Ex: Investisseurs, équipe interne…" /></div>
+          <div class="form-groupe"><label class="form-label">Nombre de slides visé</label><input type="text" id="presentation-nbslides" class="form-input" placeholder="Ex: 10" /></div>
+          <button onclick="genererDocument('presentation')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-presentation">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer ma Présentation
+          </button>
+        </div>
+
+        <!-- ═══════════════ RÉSULTAT ═══════════════ -->
+        <div id="zone-resultat" class="hidden">
+          <div style="background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+              <h3 style="color: var(--vert); margin: 0;" id="resultat-titre">Document généré</h3>
+              <div class="action-bar">
+                <button onclick="copierResultat()" class="btn btn--outline-vert btn--sm" id="btn-copier">
+                  <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Copier
+                </button>
+                <button onclick="exporterPDF()" class="btn btn--bleu btn--sm">
+                  <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> PDF
+                </button>
+                <button onclick="exporterDOCX()" class="btn btn--bleu btn--sm">
+                  <span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Word
+                </button>
+                <button onclick="regenerer()" class="btn btn--gris btn--sm">
+                  <span data-icone="actualiser" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Recommencer
+                </button>
+              </div>
+            </div>
+            <div class="resultat-doc" id="contenu-resultat"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      let typeChoisi = null;
+      let contenuGenere = null;
+      let typesCatalogue = [];
+
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!window.Auth?.estConnecte()) {
+          document.getElementById("zone-non-connecte").classList.remove("hidden");
+          document.getElementById("zone-generateur").classList.add("hidden");
+          return;
+        }
+        chargerTypes();
+        // Une ligne d'article par défaut sur devis/facture
+        ajouterArticle("devis");
+        ajouterArticle("facture");
+      });
+
+      async function chargerTypes() {
+        const conteneur = document.getElementById("types-conteneur");
+        try {
+          const data = await window.API.Documents.types();
+          typesCatalogue = data.types || [];
+
+          conteneur.innerHTML = typesCatalogue.map(t => `
+            <div class="type-carte" data-type-id="${t.id}" onclick="choisirType('${t.id}')">
+              ${t.premium ? '<div class="type-carte__badge">⭐ Premium</div>' : ""}
+              <div class="type-carte__icone"><span data-icone="${t.icone}" data-taille="22"></span></div>
+              <div class="type-carte__nom">${t.nom}</div>
+              <div class="type-carte__desc">${t.description}</div>
+            </div>
+          `).join("");
+        } catch (err) {
+          conteneur.innerHTML = `<div style="grid-column:1/-1; color:#dc2626;">Impossible de charger les types de documents.</div>`;
+        }
+      }
+
+      function choisirType(id) {
+        typeChoisi = id;
+        document.querySelectorAll(".type-carte").forEach(c => c.classList.toggle("actif", c.dataset.typeId === id));
+        document.querySelectorAll("[id^='form-']").forEach(f => f.classList.add("hidden"));
+        document.getElementById(`form-${id}`)?.classList.remove("hidden");
+        document.getElementById("zone-resultat").classList.add("hidden");
+        document.getElementById(`form-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      // ── Gestion des lignes d'articles (devis/facture) ──────────────
+      function ajouterArticle(prefixe) {
+        const div = document.createElement("div");
+        div.className = "article-item";
+        div.innerHTML = `
+          <div class="form-groupe" style="margin-bottom:0;"><label class="form-label">Désignation</label><input type="text" class="form-input art-designation" placeholder="Ex: Prestation de conseil"></div>
+          <div class="form-groupe" style="margin-bottom:0;"><label class="form-label">Quantité</label><input type="number" class="form-input art-quantite" value="1" min="1"></div>
+          <div class="form-groupe" style="margin-bottom:0;"><label class="form-label">Prix unitaire (FCFA)</label><input type="number" class="form-input art-prix" placeholder="0"></div>
+          <button type="button" class="article-suppr" onclick="this.closest('.article-item').remove()">×</button>`;
+        document.getElementById(`${prefixe}-articles`).appendChild(div);
+      }
+
+      function collecterArticles(prefixe) {
+        return [...document.querySelectorAll(`#${prefixe}-articles .article-item`)].map(el => ({
+          designation: el.querySelector(".art-designation").value.trim(),
+          quantite: el.querySelector(".art-quantite").value,
+          prixUnitaire: el.querySelector(".art-prix").value,
+        })).filter(a => a.designation);
+      }
+
+      // ── Génération ──────────────────────────────────────────────────
+      async function genererDocument(type) {
+        let donnees = { type };
+
+        if (type === "business_plan") {
+          donnees = { ...donnees,
+            nomEntreprise: document.getElementById("bp-nom").value.trim(),
+            secteur: document.getElementById("bp-secteur").value.trim(),
+            ville: document.getElementById("bp-ville").value.trim(),
+            description: document.getElementById("bp-description").value.trim(),
+            marcheCible: document.getElementById("bp-marche").value.trim(),
+            produitsServices: document.getElementById("bp-produits").value.trim(),
+            strategie: document.getElementById("bp-strategie").value.trim(),
+            projections: document.getElementById("bp-projections").value.trim(),
+          };
+        } else if (type === "devis") {
+          donnees = { ...donnees,
+            numero: document.getElementById("devis-numero").value.trim(),
+            emetteur: document.getElementById("devis-emetteur").value.trim(),
+            client: document.getElementById("devis-client").value.trim(),
+            articles: collecterArticles("devis"),
+            validite: document.getElementById("devis-validite").value.trim(),
+            conditions: document.getElementById("devis-conditions").value.trim(),
+          };
+        } else if (type === "facture") {
+          donnees = { ...donnees,
+            numero: document.getElementById("facture-numero").value.trim(),
+            emetteur: document.getElementById("facture-emetteur").value.trim(),
+            client: document.getElementById("facture-client").value.trim(),
+            articles: collecterArticles("facture"),
+            modePaiement: document.getElementById("facture-mode").value.trim(),
+            echeance: document.getElementById("facture-echeance").value.trim(),
+          };
+        } else if (type === "rapport") {
+          donnees = { ...donnees,
+            titre: document.getElementById("rapport-titre").value.trim(),
+            auteur: document.getElementById("rapport-auteur").value.trim(),
+            contexte: document.getElementById("rapport-contexte").value.trim(),
+            objectifs: document.getElementById("rapport-objectifs").value.trim(),
+            contenu: document.getElementById("rapport-contenu").value.trim(),
+            recommandations: document.getElementById("rapport-recommandations").value.trim(),
+          };
+        } else if (type === "contrat") {
+          donnees = { ...donnees,
+            typeContrat: document.getElementById("contrat-type").value.trim(),
+            ville: document.getElementById("contrat-ville").value.trim(),
+            partieA: document.getElementById("contrat-partieA").value.trim(),
+            partieB: document.getElementById("contrat-partieB").value.trim(),
+            objet: document.getElementById("contrat-objet").value.trim(),
+            duree: document.getElementById("contrat-duree").value.trim(),
+            conditions: document.getElementById("contrat-conditions").value.trim(),
+          };
+        } else if (type === "presentation") {
+          donnees = { ...donnees,
+            titre: document.getElementById("presentation-titre").value.trim(),
+            sujet: document.getElementById("presentation-sujet").value.trim(),
+            public: document.getElementById("presentation-public").value.trim(),
+            nbSlides: document.getElementById("presentation-nbslides").value.trim(),
+          };
+        }
+
+        const btn = document.getElementById(`btn-generer-${type}`);
+        const texteOriginal = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = "⏳ L'IA rédige ton document…";
+
+        try {
+          const res = await window.API.Documents.generer(donnees);
+          contenuGenere = res.document;
+          const typeInfo = typesCatalogue.find(t => t.id === type);
+          afficherResultat(typeInfo?.nom || "Document généré");
+          window.afficherToast("Document généré avec succès !", "succes");
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur de génération.", "erreur");
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = texteOriginal;
+        }
+      }
+
+      function afficherResultat(titre) {
+        document.getElementById("resultat-titre").textContent = titre;
+        document.getElementById("contenu-resultat").textContent = contenuGenere;
+        document.getElementById("zone-resultat").classList.remove("hidden");
+        document.getElementById("zone-resultat").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      async function copierResultat() {
+        await window.Utils?.copierTexte?.(contenuGenere);
+        const btn = document.getElementById("btn-copier");
+        const original = btn.innerHTML;
+        btn.textContent = "✅ Copié !";
+        setTimeout(() => btn.innerHTML = original, 2000);
+      }
+
+      async function exporterPDF() {
+        if (!contenuGenere || !typeChoisi) return;
+        try {
+          window.afficherToast("Génération du PDF…", "info");
+          await window.API.Documents.exporterPDF(contenuGenere, typeChoisi);
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur PDF.", "erreur");
+        }
+      }
+
+      async function exporterDOCX() {
+        if (!contenuGenere || !typeChoisi) return;
+        try {
+          window.afficherToast("Génération du document Word…", "info");
+          await window.API.Documents.exporterDOCX(contenuGenere, typeChoisi);
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur Word.", "erreur");
+        }
+      }
+
+      function regenerer() {
+        document.getElementById("zone-resultat").classList.add("hidden");
+        contenuGenere = null;
+      }
+    </script>
+  </body>
+</html>

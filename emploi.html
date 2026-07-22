@@ -1,0 +1,352 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offres d'Emploi & Stages — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Trouve ton prochain emploi, stage ou mission freelance en Côte d'Ivoire."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/flash-info.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <style>
+      .filtres-bar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+        background: var(--blanc);
+        padding: 16px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--ombre-sm);
+      }
+      .filtres-bar select,
+      .filtres-bar input {
+        flex: 1;
+        min-width: 140px;
+      }
+      .offres-grille {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 18px;
+      }
+      .card-emploi {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        padding: 22px;
+        box-shadow: var(--ombre-sm);
+        cursor: pointer;
+        transition: transform 0.15s ease;
+        border-top: 3px solid var(--vert);
+      }
+      .card-emploi:hover {
+        transform: translateY(-3px);
+      }
+      .card-emploi__type {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        padding: 3px 10px;
+        border-radius: 20px;
+        background: rgba(26, 107, 60, 0.1);
+        color: var(--vert);
+        margin-bottom: 10px;
+      }
+      .card-emploi__titre {
+        font-family: var(--font-titre);
+        font-weight: 700;
+        font-size: 1.05rem;
+        margin-bottom: 4px;
+      }
+      .card-emploi__entreprise {
+        color: var(--gris-texte);
+        font-size: 0.88rem;
+        margin-bottom: 12px;
+      }
+      .card-emploi__meta {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        font-size: 0.8rem;
+        color: var(--gris-texte);
+      }
+      .card-emploi__meta span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 61, 34, 0.4);
+        z-index: 9998;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .modal-boite {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        max-width: 620px;
+        width: 100%;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 32px;
+        position: relative;
+      }
+      .modal-fermer {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: var(--gris-clair);
+        border: none;
+        border-radius: 8px;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+    <!-- ── FLASH INFO ──────────────────────────────────────────── -->
+    <div class="flash-info">
+      <div class="flash-info__label">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+        <span>Flash info</span>
+      </div>
+      <div class="flash-info__piste">
+        <div class="flash-info__track">
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+          <!-- Duplication pour un défilement continu sans interruption -->
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="page-header" style="background: linear-gradient(135deg, #14532d, #1a6b3c)">
+      <div class="container">
+        <h1><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Offres d'Emploi & Stages</h1>
+        <p>Emplois, stages, alternances et missions freelance en Côte d'Ivoire.</p>
+      </div>
+    </div>
+
+    <main class="container" style="max-width: 1000px; padding: 32px 20px 60px;">
+
+      <div class="filtres-bar">
+        <select id="filtre-type" class="form-input">
+          <option value="">Tous les types de contrat</option>
+          <option value="CDI">CDI</option>
+          <option value="CDD">CDD</option>
+          <option value="Stage">Stage</option>
+          <option value="Freelance">Freelance</option>
+          <option value="Alternance">Alternance</option>
+        </select>
+        <input type="text" id="filtre-ville" class="form-input" placeholder="Ville (ex: Abidjan)" />
+        <input type="text" id="filtre-recherche" class="form-input" placeholder="Mot-clé, entreprise…" />
+        <button onclick="chargerOffres()" class="btn btn--primaire btn--sm">Filtrer</button>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <div style="color: var(--gris-texte); font-size: 0.88rem;" id="total-offres">Chargement…</div>
+        <a href="/dashboard/mes-candidatures.html" class="btn btn--outline-vert btn--sm">Mes candidatures</a>
+      </div>
+
+      <div id="offres-conteneur" class="offres-grille">
+        <div style="grid-column: 1/-1; text-align:center; color: var(--gris-texte); padding: 40px;">Chargement des offres…</div>
+      </div>
+    </main>
+
+    <!-- Modal détail offre -->
+    <div id="modal-detail" class="modal-overlay hidden" onclick="if(event.target===this) fermerModal()">
+      <div class="modal-boite">
+        <button class="modal-fermer" onclick="fermerModal()">✕</button>
+        <div id="modal-contenu"></div>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      let offreCourante = null;
+
+      document.addEventListener("DOMContentLoaded", chargerOffres);
+
+      async function chargerOffres() {
+        const conteneur = document.getElementById("offres-conteneur");
+        conteneur.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color: var(--gris-texte); padding: 40px;">Chargement…</div>`;
+
+        try {
+          const params = {};
+          const type = document.getElementById("filtre-type").value;
+          const ville = document.getElementById("filtre-ville").value.trim();
+          const recherche = document.getElementById("filtre-recherche").value.trim();
+          if (type) params.typeContrat = type;
+          if (ville) params.ville = ville;
+          if (recherche) params.recherche = recherche;
+
+          const data = await window.API.Emploi.liste(params);
+          document.getElementById("total-offres").textContent = `${data.total} offre(s) disponible(s)`;
+
+          if (data.total === 0) {
+            conteneur.innerHTML = `
+              <div style="grid-column: 1/-1;" class="empty-state">
+                <div class="empty-state__icone">💼</div>
+                <div class="empty-state__titre">Aucune offre ne correspond à ta recherche</div>
+                <div class="empty-state__texte">Essaie d'élargir tes critères, ou crée une alerte pour être notifié.</div>
+              </div>`;
+            return;
+          }
+
+          conteneur.innerHTML = data.offres.map(o => `
+            <div class="card-emploi" onclick="voirDetail(${o.id})">
+              <div class="card-emploi__type">${o.type_contrat}</div>
+              <div class="card-emploi__titre">${o.titre}</div>
+              <div class="card-emploi__entreprise">${o.entreprise}</div>
+              <div class="card-emploi__meta">
+                <span><span data-icone="institution" data-taille="14"></span> ${o.ville || "Non précisé"}</span>
+                ${o.salaire ? `<span><span data-icone="portefeuille" data-taille="14"></span> ${o.salaire}</span>` : ""}
+              </div>
+            </div>
+          `).join("");
+        } catch (err) {
+          conteneur.innerHTML = `<div style="grid-column: 1/-1; color:#dc2626; text-align:center; padding:40px;">Erreur de chargement des offres.</div>`;
+        }
+      }
+
+      async function voirDetail(id) {
+        const modal = document.getElementById("modal-detail");
+        const contenu = document.getElementById("modal-contenu");
+        contenu.innerHTML = `<div style="text-align:center; padding:40px;">Chargement…</div>`;
+        modal.classList.remove("hidden");
+
+        try {
+          const data = await window.API.Emploi.detail(id);
+          offreCourante = data.offre;
+          const o = offreCourante;
+
+          contenu.innerHTML = `
+            <div class="card-emploi__type">${o.type_contrat}</div>
+            <h2 style="margin: 10px 0 4px;">${o.titre}</h2>
+            <p style="color: var(--gris-texte); margin-bottom: 16px;">${o.entreprise} · ${o.ville || ""}</p>
+
+            ${o.salaire ? `<p><strong>Rémunération :</strong> ${o.salaire}</p>` : ""}
+            ${o.experience ? `<p><strong>Expérience requise :</strong> ${o.experience}</p>` : ""}
+            ${o.date_limite ? `<p><strong>Date limite :</strong> ${o.date_limite}</p>` : ""}
+
+            <h3 style="margin-top:20px; font-size:1rem;">Description du poste</h3>
+            <p style="white-space:pre-wrap; font-size:0.9rem; line-height:1.6;">${o.description}</p>
+
+            ${o.profil_recherche ? `
+              <h3 style="margin-top:16px; font-size:1rem;">Profil recherché</h3>
+              <p style="white-space:pre-wrap; font-size:0.9rem; line-height:1.6;">${o.profil_recherche}</p>
+            ` : ""}
+
+            <div id="zone-candidature" style="margin-top:24px;">
+              ${o.lien_externe ? `
+                <a href="${o.lien_externe}" target="_blank" rel="noopener" class="btn btn--primaire btn--full">Postuler sur le site de l'entreprise →</a>
+              ` : `
+                <textarea id="message-candidature" class="form-textarea" rows="3" placeholder="Un message pour accompagner ta candidature (optionnel)"></textarea>
+                <button onclick="postulerOffre(${o.id})" class="btn btn--primaire btn--full btn--lg" style="margin-top:10px;" id="btn-postuler">
+                  <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Postuler à cette offre
+                </button>
+              `}
+            </div>
+          `;
+        } catch (err) {
+          contenu.innerHTML = `<div style="color:#dc2626; text-align:center; padding:40px;">Impossible de charger cette offre.</div>`;
+        }
+      }
+
+      async function postulerOffre(id) {
+        if (!window.Auth?.estConnecte()) {
+          window.afficherToast("Connecte-toi pour postuler à cette offre.", "info");
+          setTimeout(() => window.location.href = "/auth/login.html", 1200);
+          return;
+        }
+
+        const btn = document.getElementById("btn-postuler");
+        const message = document.getElementById("message-candidature")?.value?.trim() || "";
+        btn.disabled = true;
+        btn.textContent = "Envoi en cours…";
+
+        try {
+          await window.API.Emploi.postuler(id, { message });
+          window.afficherToast("Candidature envoyée avec succès !", "succes");
+          fermerModal();
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur lors de l'envoi.", "erreur");
+          btn.disabled = false;
+          btn.innerHTML = '<span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Postuler à cette offre';
+        }
+      }
+
+      function fermerModal() {
+        document.getElementById("modal-detail").classList.add("hidden");
+      }
+    </script>
+  </body>
+</html>

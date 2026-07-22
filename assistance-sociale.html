@@ -1,0 +1,563 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assistance Sociale — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Orientation sociale, structures d'aide, documents et assistant IA pour t'accompagner en Côte d'Ivoire."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/flash-info.css" />
+    <style>
+      .bandeau-urgence {
+        background: #7c2d12;
+        color: #fff;
+        padding: 14px 20px;
+        text-align: center;
+      }
+      .bandeau-urgence__titre {
+        font-weight: 800;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        letter-spacing: 0.03em;
+      }
+      .bandeau-urgence__liste {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+        font-size: 0.85rem;
+      }
+      .bandeau-urgence__item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(255,255,255,0.12);
+        padding: 4px 12px;
+        border-radius: 20px;
+      }
+      .bandeau-urgence__item strong { font-weight: 800; }
+
+      .onglets-nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+        border-bottom: 2px solid var(--gris-bordure);
+      }
+      .onglet-btn {
+        background: none;
+        border: none;
+        padding: 12px 18px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--gris-texte);
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -2px;
+      }
+      .onglet-btn.actif {
+        color: var(--vert);
+        border-bottom-color: var(--vert);
+      }
+      .onglet-contenu { display: none; }
+      .onglet-contenu.actif { display: block; }
+
+      .structure-carte {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        box-shadow: var(--ombre-sm);
+        margin-bottom: 12px;
+      }
+      .structure-carte__categorie {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        padding: 3px 10px;
+        border-radius: 20px;
+        background: rgba(10,110,189,0.1);
+        color: var(--bleu);
+        margin-bottom: 8px;
+      }
+
+      .chat-conteneur {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--ombre-sm);
+        display: flex;
+        flex-direction: column;
+        height: 500px;
+      }
+      .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+      .chat-message {
+        margin-bottom: 14px;
+        max-width: 85%;
+      }
+      .chat-message--user {
+        margin-left: auto;
+        background: var(--vert);
+        color: #fff;
+        padding: 10px 14px;
+        border-radius: 14px 14px 4px 14px;
+      }
+      .chat-message--assistant {
+        background: var(--gris-clair);
+        padding: 10px 14px;
+        border-radius: 14px 14px 14px 4px;
+      }
+      .chat-alerte {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 14px;
+        font-size: 0.85rem;
+      }
+      .chat-input-zone {
+        display: flex;
+        gap: 10px;
+        padding: 14px;
+        border-top: 1px solid var(--gris-bordure);
+      }
+      .chat-input-zone input {
+        flex: 1;
+      }
+      .form-doc {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        box-shadow: var(--ombre-sm);
+        margin-bottom: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+    <!-- ── FLASH INFO ──────────────────────────────────────────── -->
+    <div class="flash-info">
+      <div class="flash-info__label">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+        <span>Flash info</span>
+      </div>
+      <div class="flash-info__piste">
+        <div class="flash-info__track">
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+          <!-- Duplication pour un défilement continu sans interruption -->
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Bandeau d'urgence permanent -->
+    <div class="bandeau-urgence">
+      <div class="bandeau-urgence__titre">En cas d'urgence, appelle immédiatement</div>
+      <div class="bandeau-urgence__liste" id="bandeau-urgence-liste">
+        <div class="bandeau-urgence__item"><strong>185</strong> SAMU</div>
+        <div class="bandeau-urgence__item"><strong>111</strong> Police</div>
+        <div class="bandeau-urgence__item"><strong>139</strong> Écoute psychologique</div>
+        <div class="bandeau-urgence__item"><strong>116</strong> Enfance en détresse</div>
+      </div>
+    </div>
+
+    <div class="page-header" style="background: linear-gradient(135deg, #7c2d12, #9a3412)">
+      <div class="container">
+        <h1><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Assistance Sociale</h1>
+        <p>Orientation, structures d'aide, documents et accompagnement pour toi et tes proches.</p>
+      </div>
+    </div>
+
+    <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
+
+      <div class="onglets-nav">
+        <button class="onglet-btn actif" onclick="changerOnglet('annuaire', this)">Structures d'aide</button>
+        <button class="onglet-btn" onclick="changerOnglet('documents', this)">Documents sociaux</button>
+        <button class="onglet-btn" onclick="changerOnglet('assistant', this)">Assistant IA</button>
+      </div>
+
+      <!-- ═══════════════ ONGLET ANNUAIRE ═══════════════ -->
+      <div id="onglet-annuaire" class="onglet-contenu actif">
+        <p style="color: var(--gris-texte); font-size: 0.88rem; margin-bottom: 16px;">
+          Structures officielles et institutions d'aide en Côte d'Ivoire. Vérifie toujours les coordonnées avant de te déplacer.
+        </p>
+        <div id="structures-conteneur">
+          <div style="text-align:center; color: var(--gris-texte); padding: 30px;">Chargement…</div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ ONGLET DOCUMENTS ═══════════════ -->
+      <div id="onglet-documents" class="onglet-contenu">
+        <div id="zone-non-connecte-doc" class="hidden" style="text-align:center; padding:40px 20px;">
+          <p style="margin-bottom:16px; color:var(--gris-texte);">Connecte-toi pour générer tes documents sociaux.</p>
+          <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
+        </div>
+
+        <div id="zone-generateur-doc">
+          <div id="types-doc-conteneur" class="types-grille" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; margin-bottom:24px;">
+            <div style="grid-column:1/-1; color:var(--gris-texte); font-size:0.85rem;">Chargement…</div>
+          </div>
+
+          <!-- Rapport social -->
+          <div id="form-rapport_social" class="form-doc hidden">
+            <h3 style="margin-top:0;">Rapport social</h3>
+            <div class="form-groupe"><label class="form-label">Rédacteur</label><input type="text" id="rs-redacteur" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Bénéficiaire *</label><input type="text" id="rs-beneficiaire" class="form-input" placeholder="Nom, âge, situation familiale…" /></div>
+            <div class="form-groupe"><label class="form-label">Situation observée *</label><textarea id="rs-situation" class="form-textarea" rows="4"></textarea></div>
+            <div class="form-groupe"><label class="form-label">Besoins identifiés *</label><textarea id="rs-besoins" class="form-textarea" rows="3"></textarea></div>
+            <div class="form-groupe"><label class="form-label">Actions déjà menées</label><textarea id="rs-actions" class="form-textarea" rows="2"></textarea></div>
+            <button onclick="genererDocument('rapport_social')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-rapport_social">Générer le rapport</button>
+          </div>
+
+          <!-- Demande d'aide sociale -->
+          <div id="form-demande_aide_sociale" class="form-doc hidden">
+            <h3 style="margin-top:0;">Demande d'aide sociale</h3>
+            <div class="form-groupe"><label class="form-label">Toi (demandeur) *</label><textarea id="das-demandeur" class="form-textarea" rows="2" placeholder="Nom, adresse, contact…"></textarea></div>
+            <div class="form-groupe"><label class="form-label">Type d'aide demandée *</label><input type="text" id="das-type" class="form-input" placeholder="Ex: Aide alimentaire, CMU, secours d'urgence…" /></div>
+            <div class="form-groupe"><label class="form-label">Institution destinataire</label><input type="text" id="das-institution" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Motif de la demande *</label><textarea id="das-motif" class="form-textarea" rows="3"></textarea></div>
+            <div class="form-groupe"><label class="form-label">Situation familiale</label><textarea id="das-situation" class="form-textarea" rows="2"></textarea></div>
+            <button onclick="genererDocument('demande_aide_sociale')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-demande_aide_sociale">Générer la demande</button>
+          </div>
+
+          <!-- Fiche de liaison -->
+          <div id="form-fiche_liaison" class="form-doc hidden">
+            <h3 style="margin-top:0;">Fiche de liaison</h3>
+            <div class="form-groupe"><label class="form-label">Rédacteur</label><input type="text" id="fl-redacteur" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Bénéficiaire *</label><input type="text" id="fl-beneficiaire" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Structure destinataire *</label><input type="text" id="fl-structure" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Motif de la transmission *</label><textarea id="fl-motif" class="form-textarea" rows="3"></textarea></div>
+            <div class="form-groupe"><label class="form-label">Éléments à transmettre</label><textarea id="fl-elements" class="form-textarea" rows="3"></textarea></div>
+            <button onclick="genererDocument('fiche_liaison')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-fiche_liaison">Générer la fiche</button>
+          </div>
+
+          <!-- Projet d'intervention -->
+          <div id="form-projet_intervention" class="form-doc hidden">
+            <h3 style="margin-top:0;">Projet d'intervention sociale</h3>
+            <div class="form-groupe"><label class="form-label">Rédacteur</label><input type="text" id="pi-redacteur" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Bénéficiaire *</label><input type="text" id="pi-beneficiaire" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Contexte</label><textarea id="pi-contexte" class="form-textarea" rows="2"></textarea></div>
+            <div class="form-groupe"><label class="form-label">Objectifs *</label><textarea id="pi-objectifs" class="form-textarea" rows="3"></textarea></div>
+            <div class="form-groupe"><label class="form-label">Actions envisagées *</label><textarea id="pi-actions" class="form-textarea" rows="3"></textarea></div>
+            <div class="form-groupe"><label class="form-label">Échéance</label><input type="text" id="pi-echeance" class="form-input" /></div>
+            <button onclick="genererDocument('projet_intervention')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-projet_intervention">Générer le projet</button>
+          </div>
+
+          <!-- Résultat -->
+          <div id="zone-resultat-doc" class="hidden">
+            <div style="background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+                <h3 style="color: var(--vert); margin: 0;" id="resultat-doc-titre">Document généré</h3>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <button onclick="exporterDocPDF()" class="btn btn--bleu btn--sm">PDF</button>
+                  <button onclick="exporterDocDOCX()" class="btn btn--bleu btn--sm">Word</button>
+                  <button onclick="regenererDoc()" class="btn btn--gris btn--sm">Recommencer</button>
+                </div>
+              </div>
+              <div class="resultat-doc" id="contenu-resultat-doc" style="white-space:pre-wrap; font-family:Georgia,serif; font-size:0.9rem; line-height:1.8; max-height:500px; overflow-y:auto;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════ ONGLET ASSISTANT ═══════════════ -->
+      <div id="onglet-assistant" class="onglet-contenu">
+        <p style="color: var(--gris-texte); font-size: 0.85rem; margin-bottom: 16px;">
+          Cet assistant t'oriente et t'informe. Il ne remplace pas un professionnel de santé, un travailleur social ou un avocat.
+          En cas d'urgence, contacte directement les numéros affichés en haut de page.
+        </p>
+        <div class="chat-conteneur">
+          <div class="chat-messages" id="chat-messages">
+            <div class="chat-message chat-message--assistant">
+              Bonjour 👋 Je peux t'orienter sur les démarches sociales et administratives, ou répondre à tes questions. Comment puis-je t'aider ?
+            </div>
+          </div>
+          <div class="chat-input-zone">
+            <input type="text" id="chat-input" class="form-input" placeholder="Écris ton message…" onkeydown="if(event.key==='Enter') envoyerMessage()" />
+            <button onclick="envoyerMessage()" class="btn btn--primaire" id="btn-chat-envoyer">Envoyer</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      let typeDocChoisi = null;
+      let contenuDocGenere = null;
+      let typesDocCatalogue = [];
+      let historiqueChat = [];
+
+      document.addEventListener("DOMContentLoaded", () => {
+        chargerUrgences();
+        chargerStructures();
+        if (window.Auth?.estConnecte()) {
+          chargerTypesDocuments();
+        } else {
+          document.getElementById("zone-non-connecte-doc").classList.remove("hidden");
+          document.getElementById("zone-generateur-doc").classList.add("hidden");
+        }
+      });
+
+      function changerOnglet(nom, btn) {
+        document.querySelectorAll(".onglet-btn").forEach(b => b.classList.remove("actif"));
+        document.querySelectorAll(".onglet-contenu").forEach(c => c.classList.remove("actif"));
+        btn.classList.add("actif");
+        document.getElementById(`onglet-${nom}`).classList.add("actif");
+      }
+
+      // ── Urgences (bandeau déjà pré-rempli en dur pour un affichage instantané,
+      //    mais on le met à jour avec les vraies données si l'API répond différemment) ──
+      async function chargerUrgences() {
+        try {
+          const data = await window.API.AssistanceSociale.urgences();
+          const principaux = data.numeros.filter(n => ["185","111","139","116"].includes(n.numero));
+          document.getElementById("bandeau-urgence-liste").innerHTML = principaux.map(n => `
+            <div class="bandeau-urgence__item"><strong>${n.numero}</strong> ${n.nom}</div>
+          `).join("");
+        } catch (err) {
+          // Le bandeau statique déjà affiché reste en place — pas d'échec silencieux critique
+        }
+      }
+
+      // ── Annuaire des structures ──────────────────────────────────
+      async function chargerStructures() {
+        const conteneur = document.getElementById("structures-conteneur");
+        try {
+          const data = await window.API.AssistanceSociale.structures();
+          conteneur.innerHTML = data.structures.map(s => `
+            <div class="structure-carte">
+              <div class="structure-carte__categorie">${s.categorie}</div>
+              <div style="font-weight:700; margin-bottom:4px;">${s.nom}</div>
+              <div style="font-size:0.88rem; color:#444; margin-bottom:8px;">${s.description}</div>
+              <div style="display:flex; gap:14px; flex-wrap:wrap; font-size:0.82rem; color:var(--gris-texte);">
+                ${s.telephone ? `<span><span data-icone="telephone" data-taille="14"></span> ${s.telephone}</span>` : ""}
+                ${s.adresse ? `<span><span data-icone="institution" data-taille="14"></span> ${s.adresse}</span>` : ""}
+                <span>${s.zone}</span>
+              </div>
+            </div>
+          `).join("");
+        } catch (err) {
+          conteneur.innerHTML = `<div style="color:#dc2626; text-align:center; padding:30px;">Erreur de chargement.</div>`;
+        }
+      }
+
+      // ── Documents sociaux ────────────────────────────────────────
+      async function chargerTypesDocuments() {
+        const conteneur = document.getElementById("types-doc-conteneur");
+        try {
+          const data = await window.API.AssistanceSociale.typesDocuments();
+          typesDocCatalogue = data.types || [];
+          conteneur.innerHTML = typesDocCatalogue.map(t => `
+            <div class="type-carte" data-type-id="${t.id}" onclick="choisirTypeDoc('${t.id}')" style="background:var(--blanc); border:2px solid var(--gris-bordure); border-radius:var(--radius-lg); padding:16px; cursor:pointer; text-align:center; position:relative;">
+              ${t.premium ? '<div style="position:absolute; top:6px; right:6px; background:#f59e0b; color:#fff; font-size:0.6rem; font-weight:800; padding:2px 7px; border-radius:20px;">⭐ Premium</div>' : ""}
+              <div style="width:40px; height:40px; border-radius:10px; background:rgba(124,45,18,0.1); color:#7c2d12; display:flex; align-items:center; justify-content:center; margin:0 auto 8px;"><span data-icone="${t.icone}" data-taille="20"></span></div>
+              <div style="font-weight:700; font-size:0.85rem;">${t.nom}</div>
+            </div>
+          `).join("");
+        } catch (err) {
+          conteneur.innerHTML = `<div style="color:#dc2626;">Erreur de chargement.</div>`;
+        }
+      }
+
+      function choisirTypeDoc(id) {
+        typeDocChoisi = id;
+        document.querySelectorAll("#types-doc-conteneur .type-carte").forEach(c => {
+          c.style.borderColor = c.dataset.typeId === id ? "var(--vert)" : "var(--gris-bordure)";
+        });
+        document.querySelectorAll("[id^='form-']").forEach(f => f.classList.add("hidden"));
+        document.getElementById(`form-${id}`)?.classList.remove("hidden");
+        document.getElementById("zone-resultat-doc").classList.add("hidden");
+        document.getElementById(`form-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      async function genererDocument(type) {
+        let donnees = { type };
+
+        if (type === "rapport_social") {
+          donnees = { ...donnees,
+            redacteur: document.getElementById("rs-redacteur").value.trim(),
+            beneficiaire: document.getElementById("rs-beneficiaire").value.trim(),
+            situation: document.getElementById("rs-situation").value.trim(),
+            besoins: document.getElementById("rs-besoins").value.trim(),
+            actionsMenees: document.getElementById("rs-actions").value.trim(),
+          };
+        } else if (type === "demande_aide_sociale") {
+          donnees = { ...donnees,
+            demandeur: document.getElementById("das-demandeur").value.trim(),
+            typeAide: document.getElementById("das-type").value.trim(),
+            institution: document.getElementById("das-institution").value.trim(),
+            motif: document.getElementById("das-motif").value.trim(),
+            situationFamiliale: document.getElementById("das-situation").value.trim(),
+          };
+        } else if (type === "fiche_liaison") {
+          donnees = { ...donnees,
+            redacteur: document.getElementById("fl-redacteur").value.trim(),
+            beneficiaire: document.getElementById("fl-beneficiaire").value.trim(),
+            structureDestinataire: document.getElementById("fl-structure").value.trim(),
+            motifTransmission: document.getElementById("fl-motif").value.trim(),
+            elementsATransmettre: document.getElementById("fl-elements").value.trim(),
+          };
+        } else if (type === "projet_intervention") {
+          donnees = { ...donnees,
+            redacteur: document.getElementById("pi-redacteur").value.trim(),
+            beneficiaire: document.getElementById("pi-beneficiaire").value.trim(),
+            contexte: document.getElementById("pi-contexte").value.trim(),
+            objectifs: document.getElementById("pi-objectifs").value.trim(),
+            actionsEnvisagees: document.getElementById("pi-actions").value.trim(),
+            echeance: document.getElementById("pi-echeance").value.trim(),
+          };
+        }
+
+        const btn = document.getElementById(`btn-generer-${type}`);
+        const texteOriginal = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = "⏳ Génération en cours…";
+
+        try {
+          const res = await window.API.AssistanceSociale.genererDocument(donnees);
+          contenuDocGenere = res.document;
+          const typeInfo = typesDocCatalogue.find(t => t.id === type);
+          document.getElementById("resultat-doc-titre").textContent = typeInfo?.nom || "Document généré";
+          document.getElementById("contenu-resultat-doc").textContent = contenuDocGenere;
+          document.getElementById("zone-resultat-doc").classList.remove("hidden");
+          document.getElementById("zone-resultat-doc").scrollIntoView({ behavior: "smooth" });
+          window.afficherToast("Document généré avec succès !", "succes");
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur de génération.", "erreur");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = texteOriginal;
+        }
+      }
+
+      async function exporterDocPDF() {
+        if (!contenuDocGenere || !typeDocChoisi) return;
+        try {
+          await window.API.AssistanceSociale.exporterPDF(contenuDocGenere, typeDocChoisi);
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur PDF.", "erreur");
+        }
+      }
+
+      async function exporterDocDOCX() {
+        if (!contenuDocGenere || !typeDocChoisi) return;
+        try {
+          await window.API.AssistanceSociale.exporterDOCX(contenuDocGenere, typeDocChoisi);
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur Word.", "erreur");
+        }
+      }
+
+      function regenererDoc() {
+        document.getElementById("zone-resultat-doc").classList.add("hidden");
+        contenuDocGenere = null;
+      }
+
+      // ── Assistant IA ──────────────────────────────────────────────
+      async function envoyerMessage() {
+        const input = document.getElementById("chat-input");
+        const message = input.value.trim();
+        if (!message) return;
+
+        const messagesDiv = document.getElementById("chat-messages");
+        messagesDiv.innerHTML += `<div class="chat-message chat-message--user">${message}</div>`;
+        input.value = "";
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        const btn = document.getElementById("btn-chat-envoyer");
+        btn.disabled = true;
+
+        try {
+          const res = await window.API.AssistanceSociale.demanderAssistant(message, historiqueChat);
+
+          let htmlAlerte = "";
+          if (res.alerte && res.numerosUrgence?.length > 0) {
+            htmlAlerte = `
+              <div class="chat-alerte">
+                <strong>⚠️ Si tu es en danger ou en détresse, contacte immédiatement :</strong><br>
+                ${res.numerosUrgence.map(n => `<strong>${n.numero}</strong> — ${n.nom}`).join("<br>")}
+              </div>`;
+          }
+
+          messagesDiv.innerHTML += htmlAlerte + `<div class="chat-message chat-message--assistant">${res.reponse}</div>`;
+          messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+          historiqueChat.push({ role: "user", contenu: message });
+          historiqueChat.push({ role: "assistant", contenu: res.reponse });
+        } catch (err) {
+          messagesDiv.innerHTML += `<div class="chat-message chat-message--assistant" style="color:#dc2626;">Erreur : ${err.message || "impossible de répondre pour le moment."}</div>`;
+        } finally {
+          btn.disabled = false;
+        }
+      }
+    </script>
+  </body>
+</html>

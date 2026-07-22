@@ -112,8 +112,8 @@ function icone(nom, taille = 24, couleur = "currentColor") {
 }
 
 // Remplace automatiquement tout élément portant data-icone="nom" au chargement
-function initIcones() {
-  document.querySelectorAll("[data-icone]").forEach((el) => {
+function initIcones(racine = document) {
+  racine.querySelectorAll("[data-icone]").forEach((el) => {
     const nom = el.getAttribute("data-icone");
     const taille = el.getAttribute("data-taille") || 24;
     const couleur = el.getAttribute("data-couleur") || "currentColor";
@@ -128,8 +128,32 @@ function initIcones() {
   });
 }
 
+// Surveille en continu le DOM pour transformer aussi les icônes insérées
+// dynamiquement après coup (innerHTML généré par du JS, boutons de chargement, etc.)
+function surveillerNouvellesIcones() {
+  if (typeof MutationObserver === "undefined") return;
+
+  const observateur = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      for (const noeud of mutation.addedNodes) {
+        if (noeud.nodeType !== 1) continue; // ignore les nœuds texte
+        if (noeud.hasAttribute?.("data-icone")) {
+          initIcones(noeud.parentElement || document);
+        } else if (noeud.querySelector?.("[data-icone]")) {
+          initIcones(noeud);
+        }
+      }
+    }
+  });
+
+  observateur.observe(document.body, { childList: true, subtree: true });
+}
+
 if (typeof document !== "undefined") {
-  document.addEventListener("DOMContentLoaded", initIcones);
+  document.addEventListener("DOMContentLoaded", () => {
+    initIcones();
+    surveillerNouvellesIcones();
+  });
 }
 
 window.ICONS = ICONS;

@@ -13,7 +13,9 @@
     />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/flash-info.css" />
     <style>
       .guide-nav {
         position: sticky;
@@ -87,6 +89,59 @@
         </div>
       </div>
     </nav>
+    <!-- ── FLASH INFO ──────────────────────────────────────────── -->
+    <div class="flash-info">
+      <div class="flash-info__label">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+        <span>Flash info</span>
+      </div>
+      <div class="flash-info__piste">
+        <div class="flash-info__track">
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+          <!-- Duplication pour un défilement continu sans interruption -->
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
 
     <div
       class="page-header main-content"
@@ -565,6 +620,7 @@
     </footer>
 
     <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>

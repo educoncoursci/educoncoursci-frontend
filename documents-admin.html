@@ -1,0 +1,445 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documents Administratifs — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Génère tes documents administratifs avec l'IA : demandes, attestations, courriers, comptes rendus, procès-verbaux."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/flash-info.css" />
+    <style>
+      .types-grille {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 14px;
+        margin-bottom: 28px;
+      }
+      .type-carte {
+        background: var(--blanc);
+        border: 2px solid var(--gris-bordure);
+        border-radius: var(--radius-lg);
+        padding: 18px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        text-align: center;
+        position: relative;
+      }
+      .type-carte:hover {
+        border-color: var(--bleu);
+        transform: translateY(-2px);
+      }
+      .type-carte.actif {
+        border-color: var(--bleu);
+        background: rgba(10, 110, 189, 0.05);
+      }
+      .type-carte__icone {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(10, 110, 189, 0.1);
+        color: var(--bleu);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 10px;
+      }
+      .type-carte__nom {
+        font-family: var(--font-titre);
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+      }
+      .type-carte__desc {
+        font-size: 0.75rem;
+        color: var(--gris-texte);
+        line-height: 1.4;
+      }
+      .type-carte__badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: #f59e0b;
+        color: #fff;
+        font-size: 0.6rem;
+        font-weight: 800;
+        padding: 2px 7px;
+        border-radius: 20px;
+      }
+      .form-doc {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        box-shadow: var(--ombre-sm);
+        margin-bottom: 24px;
+      }
+      .resultat-doc {
+        background: var(--blanc);
+        border: 1px solid var(--gris-bordure);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        font-family: "Georgia", serif;
+        font-size: 0.93rem;
+        line-height: 1.85;
+        color: #222;
+        white-space: pre-wrap;
+        word-break: break-word;
+        max-height: 600px;
+        overflow-y: auto;
+      }
+      .action-bar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+    <!-- ── FLASH INFO ──────────────────────────────────────────── -->
+    <div class="flash-info">
+      <div class="flash-info__label">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+        <span>Flash info</span>
+      </div>
+      <div class="flash-info__piste">
+        <div class="flash-info__track">
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+          <!-- Duplication pour un défilement continu sans interruption -->
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="page-header" style="background: linear-gradient(135deg, #0a2540, #0a6ebd)">
+      <div class="container">
+        <h1><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Documents Administratifs</h1>
+        <p>Demandes, attestations, courriers, comptes rendus et procès-verbaux — générés par l'IA.</p>
+      </div>
+    </div>
+
+    <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
+
+      <!-- Zone non connecté -->
+      <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
+        <p style="margin-bottom:16px; color:var(--gris-texte);">Connecte-toi pour créer tes documents administratifs.</p>
+        <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
+      </div>
+
+      <div id="zone-generateur">
+        <!-- Sélection du type de document -->
+        <div id="types-conteneur" class="types-grille">
+          <div style="grid-column: 1/-1; color: var(--gris-texte); font-size: 0.85rem;">Chargement des types de documents…</div>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE DEMANDE ═══════════════ -->
+        <div id="form-demande" class="form-doc hidden">
+          <h3 style="margin-top:0;">Demande officielle</h3>
+          <div class="form-groupe"><label class="form-label">Toi (expéditeur)</label><textarea id="demande-expediteur" class="form-textarea" rows="2" placeholder="Nom, adresse, téléphone…"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Destinataire *</label><input type="text" id="demande-destinataire" class="form-input" placeholder="Ex: Monsieur le Directeur Général de..." /></div>
+          <div class="form-groupe"><label class="form-label">Objet *</label><input type="text" id="demande-objet" class="form-input" placeholder="Ex: Demande de stage" /></div>
+          <div class="form-groupe"><label class="form-label">Motif détaillé *</label><textarea id="demande-motif" class="form-textarea" rows="4" placeholder="Explique ta demande en détail…"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Ville</label><input type="text" id="demande-ville" class="form-input" placeholder="Abidjan" /></div>
+          <button onclick="genererDocument('demande')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-demande">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer ma Demande
+          </button>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE ATTESTATION ═══════════════ -->
+        <div id="form-attestation" class="form-doc hidden">
+          <h3 style="margin-top:0;">Attestation</h3>
+          <div class="form-groupe"><label class="form-label">Type d'attestation *</label><input type="text" id="attestation-type" class="form-input" placeholder="Ex: Attestation sur l'honneur, Attestation de travail…" /></div>
+          <div class="form-groupe"><label class="form-label">Déclarant (qui atteste) *</label><textarea id="attestation-declarant" class="form-textarea" rows="2" placeholder="Nom complet, statut, adresse…"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Objet de l'attestation *</label><textarea id="attestation-objet" class="form-textarea" rows="2" placeholder="Ce que l'attestation certifie"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Détails complémentaires</label><textarea id="attestation-details" class="form-textarea" rows="2"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Ville</label><input type="text" id="attestation-ville" class="form-input" placeholder="Abidjan" /></div>
+          <button onclick="genererDocument('attestation')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-attestation">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Attestation
+          </button>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE COURRIER ═══════════════ -->
+        <div id="form-courrier" class="form-doc hidden">
+          <h3 style="margin-top:0;">Courrier administratif</h3>
+          <div class="form-groupe"><label class="form-label">Toi (expéditeur)</label><textarea id="courrier-expediteur" class="form-textarea" rows="2"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Destinataire *</label><input type="text" id="courrier-destinataire" class="form-input" /></div>
+          <div class="form-groupe"><label class="form-label">Objet *</label><input type="text" id="courrier-objet" class="form-input" /></div>
+          <div class="form-groupe"><label class="form-label">Éléments à inclure *</label><textarea id="courrier-contenu" class="form-textarea" rows="4" placeholder="Que doit contenir le courrier ?"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Ville</label><input type="text" id="courrier-ville" class="form-input" placeholder="Abidjan" /></div>
+          <button onclick="genererDocument('courrier')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-courrier">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Courrier
+          </button>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE COMPTE RENDU ═══════════════ -->
+        <div id="form-compte_rendu" class="form-doc hidden">
+          <h3 style="margin-top:0;">Compte rendu de réunion</h3>
+          <div class="form-groupe"><label class="form-label">Titre de la réunion *</label><input type="text" id="cr-titre" class="form-input" /></div>
+          <div class="form-groupe"><label class="form-label">Date *</label><input type="text" id="cr-date" class="form-input" placeholder="jj/mm/aaaa" /></div>
+          <div class="form-groupe"><label class="form-label">Lieu</label><input type="text" id="cr-lieu" class="form-input" /></div>
+          <div class="form-groupe"><label class="form-label">Participants *</label><textarea id="cr-participants" class="form-textarea" rows="2" placeholder="Liste des personnes présentes"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Points abordés *</label><textarea id="cr-points" class="form-textarea" rows="4"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Décisions prises</label><textarea id="cr-decisions" class="form-textarea" rows="2"></textarea></div>
+          <button onclick="genererDocument('compte_rendu')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-compte_rendu">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Compte rendu
+          </button>
+        </div>
+
+        <!-- ═══════════════ FORMULAIRE PROCÈS-VERBAL ═══════════════ -->
+        <div id="form-proces_verbal" class="form-doc hidden">
+          <h3 style="margin-top:0;">Procès-verbal</h3>
+          <div style="background:#fff8e6; border:1px solid #f5d98a; border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:0.82rem; color:#7a5c00;">
+            Ce document est un modèle indicatif. Fais-le toujours valider par les instances compétentes.
+          </div>
+          <div class="form-groupe"><label class="form-label">Type de procès-verbal *</label><input type="text" id="pv-type" class="form-input" placeholder="Ex: PV d'Assemblée Générale" /></div>
+          <div class="form-groupe"><label class="form-label">Date *</label><input type="text" id="pv-date" class="form-input" placeholder="jj/mm/aaaa" /></div>
+          <div class="form-groupe"><label class="form-label">Lieu</label><input type="text" id="pv-lieu" class="form-input" /></div>
+          <div class="form-groupe"><label class="form-label">Participants/Membres présents *</label><textarea id="pv-participants" class="form-textarea" rows="2"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Contexte</label><textarea id="pv-contexte" class="form-textarea" rows="2"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Délibérations / Décisions *</label><textarea id="pv-decisions" class="form-textarea" rows="4"></textarea></div>
+          <button onclick="genererDocument('proces_verbal')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-proces_verbal">
+            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Procès-verbal
+          </button>
+        </div>
+
+        <!-- ═══════════════ RÉSULTAT ═══════════════ -->
+        <div id="zone-resultat" class="hidden">
+          <div style="background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+              <h3 style="color: var(--bleu); margin: 0;" id="resultat-titre">Document généré</h3>
+              <div class="action-bar">
+                <button onclick="copierResultat()" class="btn btn--outline-vert btn--sm" id="btn-copier">
+                  <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Copier
+                </button>
+                <button onclick="exporterPDF()" class="btn btn--bleu btn--sm">
+                  <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> PDF
+                </button>
+                <button onclick="exporterDOCX()" class="btn btn--bleu btn--sm">
+                  <span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Word
+                </button>
+                <button onclick="regenerer()" class="btn btn--gris btn--sm">
+                  <span data-icone="actualiser" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Recommencer
+                </button>
+              </div>
+            </div>
+            <div class="resultat-doc" id="contenu-resultat"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      let typeChoisi = null;
+      let contenuGenere = null;
+      let typesCatalogue = [];
+
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!window.Auth?.estConnecte()) {
+          document.getElementById("zone-non-connecte").classList.remove("hidden");
+          document.getElementById("zone-generateur").classList.add("hidden");
+          return;
+        }
+        chargerTypes();
+      });
+
+      async function chargerTypes() {
+        const conteneur = document.getElementById("types-conteneur");
+        try {
+          const data = await window.API.DocumentsAdmin.types();
+          typesCatalogue = data.types || [];
+
+          conteneur.innerHTML = typesCatalogue.map(t => `
+            <div class="type-carte" data-type-id="${t.id}" onclick="choisirType('${t.id}')">
+              ${t.premium ? '<div class="type-carte__badge">⭐ Premium</div>' : ""}
+              <div class="type-carte__icone"><span data-icone="${t.icone}" data-taille="22"></span></div>
+              <div class="type-carte__nom">${t.nom}</div>
+              <div class="type-carte__desc">${t.description}</div>
+            </div>
+          `).join("");
+        } catch (err) {
+          conteneur.innerHTML = `<div style="grid-column:1/-1; color:#dc2626;">Impossible de charger les types de documents.</div>`;
+        }
+      }
+
+      function choisirType(id) {
+        typeChoisi = id;
+        document.querySelectorAll(".type-carte").forEach(c => c.classList.toggle("actif", c.dataset.typeId === id));
+        document.querySelectorAll("[id^='form-']").forEach(f => f.classList.add("hidden"));
+        document.getElementById(`form-${id}`)?.classList.remove("hidden");
+        document.getElementById("zone-resultat").classList.add("hidden");
+        document.getElementById(`form-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      async function genererDocument(type) {
+        let donnees = { type };
+
+        if (type === "demande") {
+          donnees = { ...donnees,
+            expediteur: document.getElementById("demande-expediteur").value.trim(),
+            destinataire: document.getElementById("demande-destinataire").value.trim(),
+            objet: document.getElementById("demande-objet").value.trim(),
+            motif: document.getElementById("demande-motif").value.trim(),
+            ville: document.getElementById("demande-ville").value.trim(),
+          };
+        } else if (type === "attestation") {
+          donnees = { ...donnees,
+            typeAttestation: document.getElementById("attestation-type").value.trim(),
+            declarant: document.getElementById("attestation-declarant").value.trim(),
+            objet: document.getElementById("attestation-objet").value.trim(),
+            details: document.getElementById("attestation-details").value.trim(),
+            ville: document.getElementById("attestation-ville").value.trim(),
+          };
+        } else if (type === "courrier") {
+          donnees = { ...donnees,
+            expediteur: document.getElementById("courrier-expediteur").value.trim(),
+            destinataire: document.getElementById("courrier-destinataire").value.trim(),
+            objet: document.getElementById("courrier-objet").value.trim(),
+            contenu: document.getElementById("courrier-contenu").value.trim(),
+            ville: document.getElementById("courrier-ville").value.trim(),
+          };
+        } else if (type === "compte_rendu") {
+          donnees = { ...donnees,
+            titreReunion: document.getElementById("cr-titre").value.trim(),
+            date: document.getElementById("cr-date").value.trim(),
+            lieu: document.getElementById("cr-lieu").value.trim(),
+            participants: document.getElementById("cr-participants").value.trim(),
+            pointsAbordes: document.getElementById("cr-points").value.trim(),
+            decisions: document.getElementById("cr-decisions").value.trim(),
+          };
+        } else if (type === "proces_verbal") {
+          donnees = { ...donnees,
+            typeProcesVerbal: document.getElementById("pv-type").value.trim(),
+            date: document.getElementById("pv-date").value.trim(),
+            lieu: document.getElementById("pv-lieu").value.trim(),
+            participants: document.getElementById("pv-participants").value.trim(),
+            contexte: document.getElementById("pv-contexte").value.trim(),
+            decisions: document.getElementById("pv-decisions").value.trim(),
+          };
+        }
+
+        const btn = document.getElementById(`btn-generer-${type}`);
+        const texteOriginal = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = "⏳ L'IA rédige ton document…";
+
+        try {
+          const res = await window.API.DocumentsAdmin.generer(donnees);
+          contenuGenere = res.document;
+          const typeInfo = typesCatalogue.find(t => t.id === type);
+          afficherResultat(typeInfo?.nom || "Document généré");
+          window.afficherToast("Document généré avec succès !", "succes");
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur de génération.", "erreur");
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = texteOriginal;
+        }
+      }
+
+      function afficherResultat(titre) {
+        document.getElementById("resultat-titre").textContent = titre;
+        document.getElementById("contenu-resultat").textContent = contenuGenere;
+        document.getElementById("zone-resultat").classList.remove("hidden");
+        document.getElementById("zone-resultat").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      async function copierResultat() {
+        await window.Utils?.copierTexte?.(contenuGenere);
+        const btn = document.getElementById("btn-copier");
+        const original = btn.innerHTML;
+        btn.textContent = "✅ Copié !";
+        setTimeout(() => btn.innerHTML = original, 2000);
+      }
+
+      async function exporterPDF() {
+        if (!contenuGenere || !typeChoisi) return;
+        try {
+          window.afficherToast("Génération du PDF…", "info");
+          await window.API.DocumentsAdmin.exporterPDF(contenuGenere, typeChoisi);
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur PDF.", "erreur");
+        }
+      }
+
+      async function exporterDOCX() {
+        if (!contenuGenere || !typeChoisi) return;
+        try {
+          window.afficherToast("Génération du document Word…", "info");
+          await window.API.DocumentsAdmin.exporterDOCX(contenuGenere, typeChoisi);
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur Word.", "erreur");
+        }
+      }
+
+      function regenerer() {
+        document.getElementById("zone-resultat").classList.add("hidden");
+        contenuGenere = null;
+      }
+    </script>
+  </body>
+</html>

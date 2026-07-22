@@ -279,6 +279,277 @@ body: JSON.stringify({ userId }),
 //  CV / LM
 // ════════════════════════════════════════════════════════════
 
+const AssistanceSociale = {
+async urgences() {
+return apiCall("/assistance-sociale/urgences");
+},
+
+async structures(categorie = null) {
+const qs = categorie ? `?categorie=${encodeURIComponent(categorie)}` : "";
+return apiCall(`/assistance-sociale/structures${qs}`);
+},
+
+async typesDocuments() {
+return apiCall("/assistance-sociale/documents/types");
+},
+
+async genererDocument(donnees) {
+return apiCall("/assistance-sociale/documents/generate", {
+method: "POST",
+body: JSON.stringify(donnees),
+});
+},
+
+async exporterPDF(contenu, type) {
+const token = getToken();
+const response = await fetch(`${API_URL}/assistance-sociale/documents/pdf`, {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+Authorization: `Bearer ${token}`,
+},
+body: JSON.stringify({ contenu, type }),
+});
+if (!response.ok) {
+  const err = await response.json();
+  throw new Error(err.error || "Erreur génération PDF");
+}
+const blob = await response.blob();
+const url  = URL.createObjectURL(blob);
+const a    = document.createElement("a");
+a.href     = url;
+a.download = `${type}.pdf`;
+a.click();
+URL.revokeObjectURL(url);
+},
+
+async exporterDOCX(contenu, type) {
+const token = getToken();
+const response = await fetch(`${API_URL}/assistance-sociale/documents/docx`, {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+Authorization: `Bearer ${token}`,
+},
+body: JSON.stringify({ contenu, type }),
+});
+if (!response.ok) {
+  const err = await response.json();
+  throw new Error(err.error || "Erreur génération Word");
+}
+const blob = await response.blob();
+const url  = URL.createObjectURL(blob);
+const a    = document.createElement("a");
+a.href     = url;
+a.download = `${type}.docx`;
+a.click();
+URL.revokeObjectURL(url);
+},
+
+async demanderAssistant(message, historique = []) {
+return apiCall("/assistance-sociale/assistant", {
+method: "POST",
+body: JSON.stringify({ message, historique }),
+});
+},
+};
+
+const Emploi = {
+async liste(params = {}) {
+const qs = new URLSearchParams(params).toString();
+return apiCall(`/emploi${qs ? "?" + qs : ""}`);
+},
+
+async detail(id) {
+return apiCall(`/emploi/${id}`);
+},
+
+async postuler(id, data) {
+return apiCall(`/emploi/${id}/postuler`, {
+method: "POST",
+body: JSON.stringify(data),
+});
+},
+
+async mesCandidatures() {
+return apiCall("/emploi/mes-candidatures");
+},
+
+async creerAlerte(data) {
+return apiCall("/emploi/alertes", {
+method: "POST",
+body: JSON.stringify(data),
+});
+},
+
+async mesAlertes() {
+return apiCall("/emploi/alertes");
+},
+
+async supprimerAlerte(id) {
+return apiCall(`/emploi/alertes/${id}`, { method: "DELETE" });
+},
+
+// Admin
+async creer(data) {
+return apiCall("/emploi", {
+method: "POST",
+body: JSON.stringify(data),
+});
+},
+
+async modifier(id, data) {
+return apiCall(`/emploi/${id}`, {
+method: "PUT",
+body: JSON.stringify(data),
+});
+},
+
+async supprimer(id) {
+return apiCall(`/emploi/${id}`, { method: "DELETE" });
+},
+
+async candidaturesRecues(id) {
+return apiCall(`/emploi/${id}/candidatures`);
+},
+};
+
+const Search = {
+async rechercher(terme) {
+return apiCall(`/search?q=${encodeURIComponent(terme)}`);
+},
+};
+
+const Documents = {
+async types() {
+return apiCall("/documents/types");
+},
+
+async generer(donnees) {
+return apiCall("/documents/generate", {
+method: "POST",
+body: JSON.stringify(donnees),
+});
+},
+
+async exporterPDF(contenu, type) {
+const token = getToken();
+const response = await fetch(`${API_URL}/documents/pdf`, {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+Authorization: `Bearer ${token}`,
+},
+body: JSON.stringify({ contenu, type }),
+});
+
+if (!response.ok) {
+  const err = await response.json();
+  throw new Error(err.error || "Erreur génération PDF");
+}
+
+const blob = await response.blob();
+const url  = URL.createObjectURL(blob);
+const a    = document.createElement("a");
+a.href     = url;
+a.download = `${type}.pdf`;
+a.click();
+URL.revokeObjectURL(url);
+
+},
+
+async exporterDOCX(contenu, type) {
+const token = getToken();
+const response = await fetch(`${API_URL}/documents/docx`, {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+Authorization: `Bearer ${token}`,
+},
+body: JSON.stringify({ contenu, type }),
+});
+
+if (!response.ok) {
+  const err = await response.json();
+  throw new Error(err.error || "Erreur génération Word");
+}
+
+const blob = await response.blob();
+const url  = URL.createObjectURL(blob);
+const a    = document.createElement("a");
+a.href     = url;
+a.download = `${type}.docx`;
+a.click();
+URL.revokeObjectURL(url);
+
+},
+};
+
+const DocumentsAdmin = {
+async types() {
+return apiCall("/documents-admin/types");
+},
+
+async generer(donnees) {
+return apiCall("/documents-admin/generate", {
+method: "POST",
+body: JSON.stringify(donnees),
+});
+},
+
+async exporterPDF(contenu, type) {
+const token = getToken();
+const response = await fetch(`${API_URL}/documents-admin/pdf`, {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+Authorization: `Bearer ${token}`,
+},
+body: JSON.stringify({ contenu, type }),
+});
+
+if (!response.ok) {
+  const err = await response.json();
+  throw new Error(err.error || "Erreur génération PDF");
+}
+
+const blob = await response.blob();
+const url  = URL.createObjectURL(blob);
+const a    = document.createElement("a");
+a.href     = url;
+a.download = `${type}.pdf`;
+a.click();
+URL.revokeObjectURL(url);
+
+},
+
+async exporterDOCX(contenu, type) {
+const token = getToken();
+const response = await fetch(`${API_URL}/documents-admin/docx`, {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+Authorization: `Bearer ${token}`,
+},
+body: JSON.stringify({ contenu, type }),
+});
+
+if (!response.ok) {
+  const err = await response.json();
+  throw new Error(err.error || "Erreur génération Word");
+}
+
+const blob = await response.blob();
+const url  = URL.createObjectURL(blob);
+const a    = document.createElement("a");
+a.href     = url;
+a.download = `${type}.docx`;
+a.click();
+URL.revokeObjectURL(url);
+
+},
+};
+
 const CVLM = {
 async genererCV(data) {
 return apiCall("/cv/generate", {
@@ -294,7 +565,11 @@ body: JSON.stringify(data),
 });
 },
 
-async exporterPDF(contenu, type, data, style = "simple") {
+async modeles() {
+return apiCall("/cv/modeles");
+},
+
+async exporterPDF(contenu, type, data, style = "simple", modeleId = null) {
 const token = getToken();
 const response = await fetch(`${API_URL}/cv/pdf`, {
 method: "POST",
@@ -302,7 +577,7 @@ headers: {
 "Content-Type": "application/json",
 Authorization: `Bearer ${token}`,
 },
-body: JSON.stringify({ contenu, type, data, style }),
+body: JSON.stringify({ contenu, type, data, style, modeleId }),
 });
 
 if (!response.ok) {
@@ -319,6 +594,46 @@ a.download = `${type === "cv" ? "CV" : "LM"}_${data?.nom || "document"}.pdf`;
 a.click();
 URL.revokeObjectURL(url);
 
+},
+
+async exporterDOCX(contenu, type, data, modeleId = null) {
+const token = getToken();
+const response = await fetch(`${API_URL}/cv/docx`, {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+Authorization: `Bearer ${token}`,
+},
+body: JSON.stringify({ contenu, type, data, modeleId }),
+});
+
+if (!response.ok) {
+  const err = await response.json();
+  throw new Error(err.error || "Erreur génération Word");
+}
+
+const blob = await response.blob();
+const url  = URL.createObjectURL(blob);
+const a    = document.createElement("a");
+a.href     = url;
+a.download = `${type === "cv" ? "CV" : "LM"}_${data?.nom || "document"}.docx`;
+a.click();
+URL.revokeObjectURL(url);
+
+},
+
+async analyserATS(contenuCV, offreEmploi = null) {
+return apiCall("/cv/analyse-ats", {
+method: "POST",
+body: JSON.stringify({ contenuCV, offreEmploi }),
+});
+},
+
+async adapterOffre(contenuCV, offreEmploi) {
+return apiCall("/cv/adapter-offre", {
+method: "POST",
+body: JSON.stringify({ contenuCV, offreEmploi }),
+});
 },
 
 async conseilRevision(matiere, score, total) {
@@ -407,6 +722,6 @@ return false;
 
 // ── Exporte tout en global (utilisable dans les pages HTML) ──
 window.API = {
-Auth, Concours, PDFs, Videos, QCM, Paiement, CVLM, Admin,
+Auth, Concours, PDFs, Videos, QCM, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale,
 verifierBackend, getToken,
 };

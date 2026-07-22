@@ -13,6 +13,7 @@
     />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
     <style>
       .paiement-layout {
@@ -643,6 +644,7 @@
     </main>
 
     <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
     <script src="/js/api.js"></script>
 
     <script src="/js/auth.js"></script>
@@ -764,6 +766,34 @@
         const div = document.getElementById("zone-instructions");
         const saisie = document.getElementById("zone-saisie");
         div.classList.remove("hidden");
+
+        // ── Mode "lien de paiement" (Wave Business avec vrai lien configuré) ──
+        if (infos.modePaiement === "lien" && infos.lienPaiement) {
+          saisie.classList.add("hidden"); // pas besoin de saisir un ID manuellement
+
+          document.getElementById("instructions-contenu").innerHTML = `
+      <div style="background:rgba(0,158,226,0.08);border:1px solid #009EE230;border-radius:14px;padding:18px;margin-bottom:14px;text-align:center;">
+        <div style="font-size:0.82rem;color:var(--gris-texte);margin-bottom:6px;">Montant à payer</div>
+        <div style="font-size:1.8rem;font-weight:900;color:#009EE2;">${montant.toLocaleString("fr-CI")} FCFA</div>
+      </div>
+      ${(infos.etapes || [])
+        .map((e, i) => `
+        <div class="step-item">
+          <div class="step-num" style="background:#009EE2;">${i + 1}</div>
+          <div style="font-size:0.9rem;line-height:1.6;padding-top:4px;">${e}</div>
+        </div>`)
+        .join("")}
+      <a href="${infos.lienPaiement}" target="_blank" rel="noopener" class="btn btn--primaire btn--full btn--lg" style="margin-top:16px; background:#009EE2;">
+        Payer ${montant.toLocaleString("fr-CI")} FCFA avec Wave →
+      </a>
+      <p style="text-align:center; font-size:0.78rem; color:var(--gris-texte); margin-top:10px;">
+        Une fois le paiement effectué, ton compte Premium sera activé après vérification (sous 24h ouvrées).
+      </p>
+    `;
+          return;
+        }
+
+        // ── Mode manuel (numéro marchand + saisie de l'ID de transaction) ──
         saisie.classList.remove("hidden");
 
         // Exemple SMS (basé sur le format réel renvoyé par le backend)

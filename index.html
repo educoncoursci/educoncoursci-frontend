@@ -24,7 +24,9 @@
     />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/flash-info.css" />
   </head>
   <body>
     <!-- ── BANDEAU PREMIUM ───────────────────────────────────────── -->
@@ -53,9 +55,12 @@
             <a href="/bibliotheque.html" class="navbar__link">Bibliothèque</a>
           </li>
           <li><a href="/videos.html" class="navbar__link">Vidéos</a></li>
+          <li><a href="/emploi.html" class="navbar__link">Emploi</a></li>
+          <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
           <li>
             <a href="/actualites.html" class="navbar__link">Actualités</a>
           </li>
+          <li><a href="/demarches.html" class="navbar__link">Démarches</a></li>
           <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
         </ul>
 
@@ -98,6 +103,59 @@
         >
       </div>
     </nav>
+
+    <!-- ── FLASH INFO ──────────────────────────────────────────── -->
+    <div class="flash-info">
+      <div class="flash-info__label">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+        <span>Flash info</span>
+      </div>
+      <div class="flash-info__piste">
+        <div class="flash-info__track">
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+          <!-- Duplication pour un défilement continu sans interruption -->
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Résultats</span>
+            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">CAFOP</span>
+            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">ENA</span>
+            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
+          </a>
+          <a href="/actualites.html" class="flash-info__item">
+            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Vigilance</span>
+            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
+          </a>
+        </div>
+      </div>
+    </div>
 
     <!-- ── HERO ──────────────────────────────────────────────────── -->
 
@@ -243,6 +301,19 @@
             >
           </div>
           <div class="card" style="padding: 28px; text-align: center">
+            <div style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(10,110,189,0.1);display:flex;align-items:center;justify-content:center;color:var(--bleu);"><span data-icone="portefeuille" data-taille="28"></span></div>
+            <h3 style="margin-bottom: 10px">Documents Professionnels</h3>
+            <p style="color: var(--gris-texte); font-size: 0.9rem">
+              Business plan, devis, facture, rapport, contrat ou présentation —
+              générés par l'IA en quelques minutes.
+            </p>
+            <a
+              href="/documents-pro.html"
+              class="btn btn--outline-vert btn--sm mt-2"
+              >Créer →</a
+            >
+          </div>
+          <div class="card" style="padding: 28px; text-align: center">
             <div style="width:60px;height:60px;margin:0 auto 16px;border-radius:16px;background:rgba(20,83,45,0.1);display:flex;align-items:center;justify-content:center;color:var(--vert);"><span data-icone="cloche" data-taille="28"></span></div>
             <h3 style="margin-bottom: 10px">Alertes Concours</h3>
             <p style="color: var(--gris-texte); font-size: 0.9rem">
@@ -360,6 +431,10 @@
             <a href="/cv-generator.html" class="footer__lien"
               >Générateur CV/LM</a
             >
+            <a href="/documents-pro.html" class="footer__lien">Documents Pro</a>
+            <a href="/documents-admin.html" class="footer__lien">Documents Admin</a>
+            <a href="/emploi.html" class="footer__lien">Emploi & Stages</a>
+            <a href="/assistance-sociale.html" class="footer__lien">Assistance Sociale</a>
             <a href="/boutique.html" class="footer__lien">Premium</a>
             <a href="/alertes.html" class="footer__lien">Alertes e-mail</a>
             <a href="/actualites.html" class="footer__lien">Actualités</a>
@@ -393,6 +468,7 @@
     <script src="/js/auth.js"></script>
 
     <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
 
     <script src="/js/main.js"></script>
 
