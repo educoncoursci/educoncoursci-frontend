@@ -179,17 +179,44 @@
           ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
-        <ul class="navbar__links">
-          <li>
-            <a href="/preparation.html" class="navbar__link">Préparation</a>
+                <ul class="navbar__links">
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Concours
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
+              <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
+              <a href="/preparation.html" class="navbar__sous-lien"><span data-icone="diplome" data-taille="16"></span> Préparation</a>
+            </div>
           </li>
-          <li>
-            <a href="/bibliotheque.html" class="navbar__link">Bibliothèque</a>
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Ressources
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
+              <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
+              <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
+              <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
+            </div>
           </li>
-          <li>
-            <a href="/cv-generator.html" class="navbar__link actif">CV & LM</a>
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Carrière
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
+              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
+              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
+              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
+            </div>
           </li>
-          <li><a href="/boutique.html" class="navbar__link">Premium ⭐</a></li>
+          <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
+          <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
         </ul>
         <div class="navbar__actions" id="navbar-actions">
           <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"

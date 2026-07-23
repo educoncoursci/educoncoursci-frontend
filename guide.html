@@ -79,6 +79,46 @@
           ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
+                <ul class="navbar__links">
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Concours
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
+              <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
+              <a href="/preparation.html" class="navbar__sous-lien"><span data-icone="diplome" data-taille="16"></span> Préparation</a>
+            </div>
+          </li>
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Ressources
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
+              <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
+              <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
+              <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
+            </div>
+          </li>
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Carrière
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
+              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
+              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
+              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
+            </div>
+          </li>
+          <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
+          <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
+        </ul>
+
         <div class="navbar__actions" id="navbar-actions">
           <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"
             >Connexion</a
@@ -89,7 +129,7 @@
         </div>
       </div>
     </nav>
-    <!-- ── FLASH INFO ──────────────────────────────────────────── -->
+        <!-- ── FLASH INFO ──────────────────────────────────────────── -->
     <div class="flash-info">
       <div class="flash-info__label">
         <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
@@ -117,6 +157,26 @@
             <span class="flash-info__tag">Vigilance</span>
             <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
           </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
+          </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
+          </a>
           <!-- Duplication pour un défilement continu sans interruption -->
           <a href="/actualites.html" class="flash-info__item">
             <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
@@ -138,290 +198,29 @@
             <span class="flash-info__tag">Vigilance</span>
             <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
           </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
+          </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
+          </a>
         </div>
       </div>
     </div>
-
-
-    <div
-      class="page-header main-content"
-      style="background: linear-gradient(135deg, #1a3a6b, #0a6ebd)"
-    >
-      <div class="container">
-        <h1><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Guide d'utilisation</h1>
-        <p>Tout ce qu'il faut savoir pour tirer le meilleur d'EduConcoursCI.</p>
-      </div>
-    </div>
-
-    <main style="padding: 36px 0 60px; background: var(--gris-clair)">
-      <div class="container">
-        <div
-          class="guide-layout"
-          style="display: flex; gap: 28px; align-items: flex-start"
-        >
-          <!-- Navigation latérale -->
-          <aside style="width: 220px; flex-shrink: 0" class="guide-nav">
-            <div
-              style="
-                background: var(--blanc);
-                border-radius: var(--radius-lg);
-                padding: 16px;
-                box-shadow: var(--ombre-sm);
-              "
-            >
-              <div
-                style="
-                  font-size: 0.75rem;
-                  font-weight: 800;
-                  color: var(--gris-texte);
-                  text-transform: uppercase;
-                  letter-spacing: 0.5px;
-                  margin-bottom: 10px;
-                "
-              >
-                Sommaire
-              </div>
-              <a href="#debuter"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Débuter</a>
-              <a href="#concours"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Concours</a>
-              <a href="#preparation"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Préparation</a>
-              <a href="#bibliotheque"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Bibliothèque</a>
-              <a href="#premium">⭐ Premium</a>
-              <a href="#paiement"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Paiement</a>
-              <a href="#cv"><span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> CV & LM</a>
-              <a href="#alertes"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Alertes</a>
-              <a href="#faq"><span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> FAQ</a>
-            </div>
-          </aside>
-
-          <!-- Contenu -->
-          <div style="flex: 1; min-width: 0">
-            <div class="guide-section" id="debuter">
-              <h2 style="margin-bottom: 18px"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Débuter sur EduConcoursCI</h2>
-              <div class="guide-etape">
-                <div class="guide-num">1</div>
-                <div>
-                  <strong>Crée un compte gratuit</strong> — Va sur
-                  <a href="/auth/register.html" style="color: var(--vert)"
-                    >/auth/register.html</a
-                  >
-                  et remplis le formulaire. C'est gratuit et immédiat.
-                </div>
-              </div>
-              <div class="guide-etape">
-                <div class="guide-num">2</div>
-                <div>
-                  <strong>Explore les concours</strong> — Consulte la liste
-                  complète des concours CI avec les filtres par catégorie,
-                  statut et niveau.
-                </div>
-              </div>
-              <div class="guide-etape">
-                <div class="guide-num">3</div>
-                <div>
-                  <strong>Fais des QCM</strong> — Entraîne-toi avec les quiz
-                  chronométrés gratuits. La correction et les conseils IA sont
-                  inclus.
-                </div>
-              </div>
-              <div class="guide-etape">
-                <div class="guide-num">4</div>
-                <div>
-                  <strong>Active les alertes</strong> — Reçois les nouvelles
-                  inscriptions directement dans ta boîte e-mail.
-                </div>
-              </div>
-              <div class="guide-etape">
-                <div class="guide-num">5</div>
-                <div>
-                  <strong>Passe Premium</strong> (optionnel) — Pour accéder aux
-                  PDFs, vidéos et QCM avancés, souscris un abonnement par Wave
-                  ou Orange Money.
-                </div>
-              </div>
-            </div>
-
-            <div class="guide-section" id="concours">
-              <h2 style="margin-bottom: 18px">
-                <span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Comment utiliser la section Concours
-              </h2>
-              <p>
-                La section Concours liste tous les concours de la Fonction
-                Publique, des grandes écoles et du secteur de la sécurité de
-                Côte d'Ivoire.
-              </p>
-              <ul style="padding-left: 20px; line-height: 2">
-                <li>
-                  Utilise les <strong>filtres</strong> (statut, catégorie,
-                  niveau) pour affiner ta recherche
-                </li>
-                <li>
-                  Clique sur un concours pour voir les
-                  <strong>pièces à fournir</strong> et les
-                  <strong>centres de dépôt</strong>
-                </li>
-                <li>
-                  Sauvegarde tes concours favoris avec le bouton
-                  <strong>"<span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sauvegarder"</strong>
-                </li>
-                <li>
-                  Partage un concours directement sur
-                  <strong>WhatsApp</strong> depuis la fiche
-                </li>
-                <li>
-                  Les concours
-                  <span class="badge badge--rouge">🔴 Ouverts</span> sont ceux
-                  pour lesquels les inscriptions sont en cours
-                </li>
-              </ul>
-            </div>
-
-            <div class="guide-section" id="preparation">
-              <h2 style="margin-bottom: 18px"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Préparation aux concours</h2>
-              <p style="margin-bottom: 14px">
-                La section Préparation propose des QCM chronométrés et des
-                examens blancs.
-              </p>
-              <div
-                style="
-                  background: rgba(10, 110, 189, 0.06);
-                  border-radius: 12px;
-                  padding: 16px;
-                  margin-bottom: 14px;
-                "
-              >
-                <strong style="color: var(--bleu)">QCM chronométrés</strong>
-                <ul
-                  style="
-                    padding-left: 20px;
-                    margin-top: 8px;
-                    line-height: 1.9;
-                    font-size: 0.9rem;
-                  "
-                >
-                  <li>
-                    Filtre par matière (Culture Générale, Logique, Travail
-                    Social…)
-                  </li>
-                  <li>Sélectionne la difficulté (Facile, Moyen, Difficile)</li>
-                  <li>
-                    Les réponses sont corrigées <strong>côté serveur</strong> —
-                    pas de triche possible
-                  </li>
-                  <li>
-                    Chaque question inclut une
-                    <strong>explication détaillée</strong>
-                  </li>
-                  <li>
-                    Un <strong>conseil IA personnalisé</strong> est généré selon
-                    ton score
-                  </li>
-                </ul>
-              </div>
-              <div
-                style="
-                  background: rgba(26, 107, 60, 0.06);
-                  border-radius: 12px;
-                  padding: 16px;
-                "
-              >
-                <strong style="color: var(--vert)">Examen blanc</strong>
-                <ul
-                  style="
-                    padding-left: 20px;
-                    margin-top: 8px;
-                    line-height: 1.9;
-                    font-size: 0.9rem;
-                  "
-                >
-                  <li>
-                    Configure la durée (30 min à 2h) et le nombre de questions
-                  </li>
-                  <li>Toutes les matières sont mélangées aléatoirement</li>
-                  <li>Navigation libre entre les questions pendant l'examen</li>
-                  <li>
-                    Résultats détaillés <strong>par matière</strong> avec barres
-                    de progression
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="guide-section" id="bibliotheque">
-              <h2 style="margin-bottom: 18px"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Bibliothèque PDF</h2>
-              <p>
-                La bibliothèque contient des cours, sujets corrigés et fiches de
-                révision.
-              </p>
-              <ul style="padding-left: 20px; line-height: 2">
-                <li>
-                  Les PDFs
-                  <span class="badge badge--gratuit">🆓 Gratuit</span> sont
-                  téléchargeables avec un compte gratuit
-                </li>
-                <li>
-                  Les PDFs
-                  <span class="badge badge--premium">⭐ Premium</span>
-                  nécessitent un abonnement
-                </li>
-                <li>
-                  Utilise les filtres par catégorie (BAC, BEPC, Fonction
-                  Publique…) pour trouver tes documents
-                </li>
-              </ul>
-            </div>
-
-            <div class="guide-section" id="premium">
-              <h2 style="margin-bottom: 18px">⭐ Abonnement Premium</h2>
-              <p style="margin-bottom: 12px">
-                Le Premium débloque tout le contenu avancé de la plateforme.
-              </p>
-              <div
-                style="
-                  display: grid;
-                  grid-template-columns: 1fr 1fr;
-                  gap: 12px;
-                  margin-bottom: 16px;
-                "
-              >
-                <div
-                  style="
-                    background: var(--gris-clair);
-                    border-radius: 12px;
-                    padding: 14px;
-                  "
-                >
-                  <div
-                    style="
-                      font-weight: 700;
-                      margin-bottom: 8px;
-                      color: var(--vert);
-                    "
-                  >
-                    <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Inclus dans Premium
-                  </div>
-                  <div style="font-size: 0.85rem; line-height: 1.9">
-                    Tous les PDFs · Toutes les vidéos · QCM difficiles · Examens
-                    blancs illimités · Générateur CV & LM IA · Fiches concours
-                    complètes
-                  </div>
-                </div>
-                <div
-                  style="
-                    background: var(--gris-clair);
-                    border-radius: 12px;
-                    padding: 14px;
-                  "
-                >
-                  <div style="font-weight: 700; margin-bottom: 8px">
-                    <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Plans disponibles
-                  </div>
-                  <div style="font-size: 0.85rem; line-height: 1.9">
-                    <span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> 1 Mois — 2 000 FCFA<br /><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> 3 Mois — 5 000 FCFA<br /><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
-                    12 Mois — 15 000 FCFA
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div class="guide-section" id="paiement">
               <h2 style="margin-bottom: 18px"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Comment payer</h2>

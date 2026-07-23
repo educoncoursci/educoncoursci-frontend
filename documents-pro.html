@@ -138,10 +138,50 @@
           ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
         >
+                <ul class="navbar__links">
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Concours
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
+              <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
+              <a href="/preparation.html" class="navbar__sous-lien"><span data-icone="diplome" data-taille="16"></span> Préparation</a>
+            </div>
+          </li>
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Ressources
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
+              <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
+              <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
+              <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
+            </div>
+          </li>
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Carrière
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
+              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
+              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
+              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
+            </div>
+          </li>
+          <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
+          <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
+        </ul>
+
         <div class="navbar__actions" id="navbar-actions"></div>
       </div>
     </nav>
-    <!-- ── FLASH INFO ──────────────────────────────────────────── -->
+        <!-- ── FLASH INFO ──────────────────────────────────────────── -->
     <div class="flash-info">
       <div class="flash-info__label">
         <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
@@ -169,6 +209,26 @@
             <span class="flash-info__tag">Vigilance</span>
             <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
           </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
+          </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
+          </a>
           <!-- Duplication pour un défilement continu sans interruption -->
           <a href="/actualites.html" class="flash-info__item">
             <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
@@ -190,148 +250,29 @@
             <span class="flash-info__tag">Vigilance</span>
             <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
           </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
+          </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
+          </a>
         </div>
       </div>
     </div>
-
-
-    <div class="page-header" style="background: linear-gradient(135deg, #14532d, #1a6b3c)">
-      <div class="container">
-        <h1><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Documents Professionnels</h1>
-        <p>Business plan, devis, facture, rapport, contrat, présentation — générés par l'IA en quelques minutes.</p>
-      </div>
-    </div>
-
-    <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
-
-      <!-- Zone non connecté -->
-      <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
-        <p style="margin-bottom:16px; color:var(--gris-texte);">Connecte-toi pour créer tes documents professionnels.</p>
-        <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
-      </div>
-
-      <div id="zone-generateur">
-        <!-- Sélection du type de document -->
-        <div id="types-conteneur" class="types-grille">
-          <div style="grid-column: 1/-1; color: var(--gris-texte); font-size: 0.85rem;">Chargement des types de documents…</div>
-        </div>
-
-        <!-- ═══════════════ FORMULAIRE BUSINESS PLAN ═══════════════ -->
-        <div id="form-business_plan" class="form-doc hidden">
-          <h3 style="margin-top:0;">Business Plan</h3>
-          <div class="form-groupe"><label class="form-label">Nom de l'entreprise *</label><input type="text" id="bp-nom" class="form-input" placeholder="Ex: Ferme Avicole Ivoire+" /></div>
-          <div class="form-groupe"><label class="form-label">Secteur d'activité *</label><input type="text" id="bp-secteur" class="form-input" placeholder="Ex: Agroalimentaire" /></div>
-          <div class="form-groupe"><label class="form-label">Ville</label><input type="text" id="bp-ville" class="form-input" placeholder="Abidjan" /></div>
-          <div class="form-groupe"><label class="form-label">Description du projet *</label><textarea id="bp-description" class="form-textarea" rows="3" placeholder="Décris ton projet en quelques phrases…"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Marché cible</label><textarea id="bp-marche" class="form-textarea" rows="2" placeholder="Qui sont tes clients ?"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Produits / Services</label><textarea id="bp-produits" class="form-textarea" rows="2" placeholder="Ce que tu vends ou proposes"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Stratégie envisagée</label><textarea id="bp-strategie" class="form-textarea" rows="2" placeholder="Comment comptes-tu te démarquer ?"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Budget / Projections (si connus)</label><textarea id="bp-projections" class="form-textarea" rows="2" placeholder="Investissement de départ, revenus visés…"></textarea></div>
-          <button onclick="genererDocument('business_plan')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-business_plan">
-            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Business Plan
-          </button>
-        </div>
-
-        <!-- ═══════════════ FORMULAIRE DEVIS ═══════════════ -->
-        <div id="form-devis" class="form-doc hidden">
-          <h3 style="margin-top:0;">Devis</h3>
-          <div class="form-groupe"><label class="form-label">Numéro de devis</label><input type="text" id="devis-numero" class="form-input" placeholder="Ex: DEV-2026-001" /></div>
-          <div class="form-groupe"><label class="form-label">Émetteur (toi/ton entreprise) *</label><textarea id="devis-emetteur" class="form-textarea" rows="2" placeholder="Nom, adresse, téléphone, email…"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Client *</label><textarea id="devis-client" class="form-textarea" rows="2" placeholder="Nom du client, adresse…"></textarea></div>
-          <label class="form-label">Articles / Prestations *</label>
-          <div id="devis-articles"></div>
-          <button type="button" onclick="ajouterArticle('devis')" class="btn btn--outline-vert btn--sm" style="margin-bottom:16px;">+ Ajouter un article</button>
-          <div class="form-groupe"><label class="form-label">Validité de l'offre</label><input type="text" id="devis-validite" class="form-input" placeholder="Ex: 30 jours" /></div>
-          <div class="form-groupe"><label class="form-label">Conditions particulières</label><textarea id="devis-conditions" class="form-textarea" rows="2"></textarea></div>
-          <button onclick="genererDocument('devis')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-devis">
-            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Devis
-          </button>
-        </div>
-
-        <!-- ═══════════════ FORMULAIRE FACTURE ═══════════════ -->
-        <div id="form-facture" class="form-doc hidden">
-          <h3 style="margin-top:0;">Facture</h3>
-          <div class="form-groupe"><label class="form-label">Numéro de facture</label><input type="text" id="facture-numero" class="form-input" placeholder="Ex: FAC-2026-001" /></div>
-          <div class="form-groupe"><label class="form-label">Émetteur (toi/ton entreprise) *</label><textarea id="facture-emetteur" class="form-textarea" rows="2"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Client *</label><textarea id="facture-client" class="form-textarea" rows="2"></textarea></div>
-          <label class="form-label">Articles / Prestations *</label>
-          <div id="facture-articles"></div>
-          <button type="button" onclick="ajouterArticle('facture')" class="btn btn--outline-vert btn--sm" style="margin-bottom:16px;">+ Ajouter un article</button>
-          <div class="form-groupe"><label class="form-label">Mode de paiement</label><input type="text" id="facture-mode" class="form-input" placeholder="Wave, Orange Money, Virement…" /></div>
-          <div class="form-groupe"><label class="form-label">Échéance de paiement</label><input type="text" id="facture-echeance" class="form-input" placeholder="À réception" /></div>
-          <button onclick="genererDocument('facture')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-facture">
-            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer ma Facture
-          </button>
-        </div>
-
-        <!-- ═══════════════ FORMULAIRE RAPPORT ═══════════════ -->
-        <div id="form-rapport" class="form-doc hidden">
-          <h3 style="margin-top:0;">Rapport</h3>
-          <div class="form-groupe"><label class="form-label">Titre du rapport *</label><input type="text" id="rapport-titre" class="form-input" placeholder="Ex: Rapport d'activité trimestriel" /></div>
-          <div class="form-groupe"><label class="form-label">Auteur</label><input type="text" id="rapport-auteur" class="form-input" /></div>
-          <div class="form-groupe"><label class="form-label">Contexte *</label><textarea id="rapport-contexte" class="form-textarea" rows="2" placeholder="Dans quel cadre ce rapport est-il rédigé ?"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Objectifs</label><textarea id="rapport-objectifs" class="form-textarea" rows="2"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Contenu / Constats *</label><textarea id="rapport-contenu" class="form-textarea" rows="4" placeholder="Détaille les faits, observations, données à intégrer…"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Recommandations envisagées</label><textarea id="rapport-recommandations" class="form-textarea" rows="2"></textarea></div>
-          <button onclick="genererDocument('rapport')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-rapport">
-            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Rapport
-          </button>
-        </div>
-
-        <!-- ═══════════════ FORMULAIRE CONTRAT ═══════════════ -->
-        <div id="form-contrat" class="form-doc hidden">
-          <h3 style="margin-top:0;">Contrat</h3>
-          <div style="background:#fff8e6; border:1px solid #f5d98a; border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:0.82rem; color:#7a5c00;">
-            Ce document est un modèle indicatif. Fais-le toujours vérifier par un juriste avant signature.
-          </div>
-          <div class="form-groupe"><label class="form-label">Type de contrat *</label><input type="text" id="contrat-type" class="form-input" placeholder="Ex: Contrat de prestation de service" /></div>
-          <div class="form-groupe"><label class="form-label">Ville</label><input type="text" id="contrat-ville" class="form-input" placeholder="Abidjan" /></div>
-          <div class="form-groupe"><label class="form-label">Partie A *</label><textarea id="contrat-partieA" class="form-textarea" rows="2" placeholder="Nom, statut, adresse…"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Partie B *</label><textarea id="contrat-partieB" class="form-textarea" rows="2"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Objet du contrat *</label><textarea id="contrat-objet" class="form-textarea" rows="2"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Durée</label><input type="text" id="contrat-duree" class="form-input" placeholder="Ex: 12 mois renouvelables" /></div>
-          <div class="form-groupe"><label class="form-label">Conditions particulières</label><textarea id="contrat-conditions" class="form-textarea" rows="2"></textarea></div>
-          <button onclick="genererDocument('contrat')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-contrat">
-            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon Contrat
-          </button>
-        </div>
-
-        <!-- ═══════════════ FORMULAIRE PRÉSENTATION ═══════════════ -->
-        <div id="form-presentation" class="form-doc hidden">
-          <h3 style="margin-top:0;">Présentation</h3>
-          <div class="form-groupe"><label class="form-label">Titre *</label><input type="text" id="presentation-titre" class="form-input" placeholder="Ex: Présentation du projet X" /></div>
-          <div class="form-groupe"><label class="form-label">Sujet à développer *</label><textarea id="presentation-sujet" class="form-textarea" rows="3" placeholder="De quoi doit parler la présentation ?"></textarea></div>
-          <div class="form-groupe"><label class="form-label">Public visé</label><input type="text" id="presentation-public" class="form-input" placeholder="Ex: Investisseurs, équipe interne…" /></div>
-          <div class="form-groupe"><label class="form-label">Nombre de slides visé</label><input type="text" id="presentation-nbslides" class="form-input" placeholder="Ex: 10" /></div>
-          <button onclick="genererDocument('presentation')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-presentation">
-            <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer ma Présentation
-          </button>
-        </div>
-
-        <!-- ═══════════════ RÉSULTAT ═══════════════ -->
-        <div id="zone-resultat" class="hidden">
-          <div style="background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
-              <h3 style="color: var(--vert); margin: 0;" id="resultat-titre">Document généré</h3>
-              <div class="action-bar">
-                <button onclick="copierResultat()" class="btn btn--outline-vert btn--sm" id="btn-copier">
-                  <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Copier
-                </button>
-                <button onclick="exporterPDF()" class="btn btn--bleu btn--sm">
-                  <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> PDF
-                </button>
-                <button onclick="exporterDOCX()" class="btn btn--bleu btn--sm">
-                  <span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Word
-                </button>
-                <button onclick="regenerer()" class="btn btn--gris btn--sm">
-                  <span data-icone="actualiser" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Recommencer
-                </button>
-              </div>
-            </div>
-            <div class="resultat-doc" id="contenu-resultat"></div>
-          </div>
-        </div>
-      </div>
     </main>
 
     <script src="/js/icons.js"></script>

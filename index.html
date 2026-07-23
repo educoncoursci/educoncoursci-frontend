@@ -4,10 +4,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EduConcoursCI — Prépare ton concours en Côte d'Ivoire</title>
+    <title>EduConcoursCI — Concours, CV, Emploi & Accompagnement en Côte d'Ivoire</title>
     <meta
       name="description"
-      content="La plateforme de référence pour préparer les concours et examens de Côte d'Ivoire. QCM, cours, vidéos, sujets corrigés, alertes concours."
+      content="La plateforme de référence en Côte d'Ivoire : préparation aux concours, générateur de CV et documents par IA, offres d'emploi et assistance sociale — réunis au même endroit."
     />
     <meta property="og:title" content="EduConcoursCI" />
     <meta
@@ -45,22 +45,43 @@
           <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span>
         </a>
 
-        <ul class="navbar__links">
-          <li><a href="/concours.html" class="navbar__link">Concours</a></li>
-          <li><a href="/examens.html" class="navbar__link">Examens</a></li>
-          <li>
-            <a href="/preparation.html" class="navbar__link">Préparation</a>
+                <ul class="navbar__links">
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Concours
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
+              <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
+              <a href="/preparation.html" class="navbar__sous-lien"><span data-icone="diplome" data-taille="16"></span> Préparation</a>
+            </div>
           </li>
-          <li>
-            <a href="/bibliotheque.html" class="navbar__link">Bibliothèque</a>
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Ressources
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
+              <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
+              <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
+              <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
+            </div>
           </li>
-          <li><a href="/videos.html" class="navbar__link">Vidéos</a></li>
-          <li><a href="/emploi.html" class="navbar__link">Emploi</a></li>
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Carrière
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
+              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
+              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
+              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
+            </div>
+          </li>
           <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
-          <li>
-            <a href="/actualites.html" class="navbar__link">Actualités</a>
-          </li>
-          <li><a href="/demarches.html" class="navbar__link">Démarches</a></li>
           <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
         </ul>
 
@@ -104,7 +125,7 @@
       </div>
     </nav>
 
-    <!-- ── FLASH INFO ──────────────────────────────────────────── -->
+        <!-- ── FLASH INFO ──────────────────────────────────────────── -->
     <div class="flash-info">
       <div class="flash-info__label">
         <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
@@ -132,6 +153,26 @@
             <span class="flash-info__tag">Vigilance</span>
             <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
           </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
+          </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
+          </a>
           <!-- Duplication pour un défilement continu sans interruption -->
           <a href="/actualites.html" class="flash-info__item">
             <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
@@ -153,59 +194,29 @@
             <span class="flash-info__tag">Vigilance</span>
             <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
           </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
+          </a>
+          <a href="/emploi.html" class="flash-info__item">
+            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Emploi</span>
+            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
+          </a>
+          <a href="/assistance-sociale.html" class="flash-info__item">
+            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
+            <span class="flash-info__tag">Social</span>
+            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
+          </a>
         </div>
       </div>
     </div>
-
-    <!-- ── HERO ──────────────────────────────────────────────────── -->
-
-    <section class="hero">
-      <div class="container">
-        <div class="hero__contenu">
-          <div class="hero__tag">
-            🇨🇮 Plateforme N°1 de préparation aux concours CI
-          </div>
-          <h1 class="hero__titre">
-            Réussis ton concours<br />
-            <span>en Côte d'Ivoire</span>
-          </h1>
-          <p class="hero__sous-titre">
-            QCM chronométrés, sujets corrigés, vidéos de formation, alertes
-            concours et générateur de CV — tout ce qu'il faut pour décrocher ton
-            poste.
-          </p>
-          <div class="hero__actions">
-            <a
-              href="/auth/register.html"
-              class="btn btn--vert btn--lg"
-              style="
-                background: var(--gradient-vert);
-                color: #fff;
-                border: none;
-              "
-            >
-              Commencer gratuitement
-            </a>
-            <a href="/concours.html" class="btn btn--outline-blanc btn--lg">
-              Voir les concours →
-            </a>
-          </div>
-          <div class="hero__stats">
-            <div class="hero__stat">
-              <span class="hero__stat-nombre" id="stat-concours">150+</span>
-              <span class="hero__stat-label">Concours répertoriés</span>
-            </div>
-            <div class="hero__stat">
-              <span class="hero__stat-nombre" id="stat-qcm">500+</span>
-              <span class="hero__stat-label">Questions QCM</span>
-            </div>
-            <div class="hero__stat">
-              <span class="hero__stat-nombre" id="stat-users">8 000+</span>
-              <span class="hero__stat-label">Candidats préparés</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- ── CONCOURS EN VEDETTE ────────────────────────────────────── -->

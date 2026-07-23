@@ -77,6 +77,25 @@ menuMobile.querySelectorAll("a").forEach(lien => {
 
 }
 
+// Sous-menus déroulants de la navbar (groupes de fonctionnalités)
+document.querySelectorAll(".navbar__groupe").forEach(groupe => {
+  const bouton = groupe.querySelector(".navbar__groupe-btn");
+  if (!bouton) return;
+
+  bouton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const etaitOuvert = groupe.classList.contains("ouvert");
+    // Ferme tous les autres groupes avant d'ouvrir celui-ci
+    document.querySelectorAll(".navbar__groupe.ouvert").forEach(g => g.classList.remove("ouvert"));
+    if (!etaitOuvert) groupe.classList.add("ouvert");
+  });
+});
+
+// Ferme tous les sous-menus au clic en dehors de la navbar
+document.addEventListener("click", () => {
+  document.querySelectorAll(".navbar__groupe.ouvert").forEach(g => g.classList.remove("ouvert"));
+});
+
 // Marque le lien actif selon la page courante
 const chemin = window.location.pathname;
 document.querySelectorAll(".navbar__link").forEach(lien => {

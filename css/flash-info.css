@@ -11,6 +11,7 @@
   position: relative;
   height: 42px;
   font-size: 0.85rem;
+  margin-top: var(--navbar-h, 70px);
 }
 
 .flash-info__label {
