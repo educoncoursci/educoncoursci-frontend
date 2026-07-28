@@ -72,6 +72,58 @@
         color: var(--bleu);
         font-weight: 600;
       }
+.carrousel-actu {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        background: linear-gradient(135deg, #14532d, #1a6b3c);
+        color: #fff;
+        margin-bottom: 28px;
+        height: 110px;
+      }
+      .carrousel-actu__piste {
+        display: flex;
+        height: 100%;
+        transition: transform 0.6s ease;
+      }
+      .carrousel-actu__slide {
+        min-width: 100%;
+        padding: 24px 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+      .carrousel-actu__slide .actu-tag {
+        background: rgba(255,255,255,0.2);
+        color: #fff;
+        width: fit-content;
+      }
+      .carrousel-actu__titre {
+        font-family: var(--font-titre);
+        font-weight: 700;
+        font-size: 1.05rem;
+      }
+      .carrousel-actu__points {
+        position: absolute;
+        bottom: 10px;
+        right: 16px;
+        display: flex;
+        gap: 6px;
+      }
+      .carrousel-actu__point {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.4);
+        cursor: pointer;
+      }
+      .carrousel-actu__point.actif {
+        background: #fff;
+      }
     </style>
   </head>
   <body>
@@ -233,6 +285,32 @@
 
     <main class="container" style="max-width: 820px; padding: 32px 20px 60px;">
 
+      <div class="carrousel-actu" id="carrousel-actu">
+        <div class="carrousel-actu__piste" id="carrousel-piste">
+          <div class="carrousel-actu__slide">
+            <span class="actu-tag">Résultats</span>
+            <div class="carrousel-actu__titre">Concours administratifs 2026 : 1ère vague de résultats disponible</div>
+          </div>
+          <div class="carrousel-actu__slide">
+            <span class="actu-tag">CAFOP</span>
+            <div class="carrousel-actu__titre">67 800 candidats en compétition pour 7 000 places au CAFOP 2026</div>
+          </div>
+          <div class="carrousel-actu__slide">
+            <span class="actu-tag">ENA</span>
+            <div class="carrousel-actu__titre">ENA 2027 : six concours ouverts pour environ 600 places</div>
+          </div>
+          <div class="carrousel-actu__slide">
+            <span class="actu-tag">Emploi</span>
+            <div class="carrousel-actu__titre">PNSAR 2026 : 152 000 opportunités professionnelles, dont 100 000 stages</div>
+          </div>
+          <div class="carrousel-actu__slide">
+            <span class="actu-tag">Social</span>
+            <div class="carrousel-actu__titre">CMU : plus de 25 millions de personnes enrôlées en Côte d'Ivoire</div>
+          </div>
+        </div>
+        <div class="carrousel-actu__points" id="carrousel-points"></div>
+      </div>
+
       <div class="actu-carte actu-carte--alerte">
         <div class="actu-meta">
           <span class="actu-tag">Résultats</span>
@@ -366,5 +444,85 @@
     <script src="/js/api.js"></script>
     <script src="/js/auth.js"></script>
     <script src="/js/main.js"></script>
+    <script>
+      (function initCarrouselActu() {
+        const piste = document.getElementById("carrousel-piste");
+        const pointsConteneur = document.getElementById("carrousel-points");
+        if (!piste) return;
+
+        let index = 0;
+        let minuteur = null;
+
+        // Échappe le texte injecté dynamiquement (sécurité anti-XSS)
+        function echapper(texte) {
+          const div = document.createElement("div");
+          div.textContent = texte || "";
+          return div.innerHTML;
+        }
+
+        // Construit les slides à partir des actualités reçues de l'API
+        function construireSlides(actualites) {
+          piste.innerHTML = actualites
+            .map((a) => {
+              const contenu = `
+                <span class="actu-tag">${echapper(a.tag || "Actualité")}</span>
+                <div class="carrousel-actu__titre">${echapper(a.titre)}</div>
+              `;
+              return a.lien
+                ? `<a class="carrousel-actu__slide" href="${encodeURI(a.lien)}" target="_blank" rel="noopener">${contenu}</a>`
+                : `<div class="carrousel-actu__slide">${contenu}</div>`;
+            })
+            .join("");
+        }
+
+        // (Re)génère les points de pagination + relance le défilement automatique
+        function demarrerDefilement() {
+          const slides = piste.querySelectorAll(".carrousel-actu__slide");
+          pointsConteneur.innerHTML = "";
+          index = 0;
+          piste.style.transform = "translateX(0)";
+          if (!slides.length) return;
+
+          slides.forEach((_, i) => {
+            const point = document.createElement("div");
+            point.className = "carrousel-actu__point" + (i === 0 ? " actif" : "");
+            point.onclick = () => allerASlide(i);
+            pointsConteneur.appendChild(point);
+          });
+
+          function allerASlide(i) {
+            index = i;
+            piste.style.transform = `translateX(-${index * 100}%)`;
+            pointsConteneur.querySelectorAll(".carrousel-actu__point").forEach((p, j) => {
+              p.classList.toggle("actif", j === index);
+            });
+          }
+
+          if (minuteur) clearInterval(minuteur);
+          if (slides.length > 1) {
+            minuteur = setInterval(() => {
+              allerASlide((index + 1) % slides.length);
+            }, 5000);
+          }
+        }
+
+        // Charge les actualités depuis l'API ; en cas d'échec, on garde
+        // les slides déjà présentes dans le HTML (repli automatique).
+        async function chargerActualites() {
+          try {
+            const data = await window.API.Actualites.carrousel(8);
+            if (data && Array.isArray(data.actualites) && data.actualites.length) {
+              construireSlides(data.actualites);
+            }
+          } catch (err) {
+            console.warn("Carrousel actualités : flux indisponible, affichage du repli local.", err.message);
+          } finally {
+            demarrerDefilement();
+          }
+        }
+
+        chargerActualites();
+      })();
+    </script>
   </body>
 </html>

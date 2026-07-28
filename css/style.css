@@ -51,6 +51,7 @@
   --transition: all 0.25s ease;
   --container: 1200px;
   --navbar-h: 70px;
+  --flash-info-h: 42px;
 }
 
 /* ── Reset ───────────────────────────────────────────────────── */
@@ -113,7 +114,7 @@ select {
   padding-top: var(--navbar-h);
 }
 .main-content--apres-flash {
-  padding-top: 0;
+  padding-top: calc(var(--navbar-h) + var(--flash-info-h));
 }
 
 /* ── Typographie ─────────────────────────────────────────────── */
@@ -369,7 +370,7 @@ p {
   padding: calc(var(--navbar-h) + 40px) 0 60px;
 }
 .hero--apres-flash {
-  padding-top: 40px;
+  padding-top: calc(var(--navbar-h) + var(--flash-info-h) + 40px);
 }
 .hero::before {
   content: "";
@@ -455,7 +456,7 @@ p {
   color: var(--blanc);
 }
 .page-header--apres-flash {
-  padding-top: 40px;
+  padding-top: calc(var(--navbar-h) + var(--flash-info-h) + 40px);
 }
 .page-header--bleu {
   background: var(--gradient-bleu);

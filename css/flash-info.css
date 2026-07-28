@@ -8,10 +8,13 @@
   display: flex;
   align-items: stretch;
   overflow: hidden;
-  position: relative;
   height: 42px;
   font-size: 0.85rem;
-  margin-top: var(--navbar-h, 70px);
+  position: fixed;
+  top: var(--navbar-h, 70px);
+  left: 0;
+  right: 0;
+  z-index: 999;
 }
 
 .flash-info__label {

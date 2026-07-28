@@ -207,6 +207,39 @@ return apiCall(`/videos/${id}`, { method: "DELETE" });
 };
 
 // ════════════════════════════════════════════════════════════
+//  ACTUALITÉS (carrousel dynamique, alimenté en continu)
+// ════════════════════════════════════════════════════════════
+
+const Actualites = {
+// Données du carrousel (public) — pas besoin d'être connecté
+async carrousel(limit = 8) {
+return apiCall(`/actualites/carrousel?limit=${limit}`);
+},
+
+async liste(params = {}) {
+const qs = new URLSearchParams(params).toString();
+return apiCall(`/actualites${qs ? "?" + qs : ""}`);
+},
+
+async creer(data) {
+return apiCall("/actualites", { method: "POST", body: JSON.stringify(data) });
+},
+
+async modifier(id, data) {
+return apiCall(`/actualites/${id}`, { method: "PATCH", body: JSON.stringify(data) });
+},
+
+async supprimer(id) {
+return apiCall(`/actualites/${id}`, { method: "DELETE" });
+},
+
+// Force une synchronisation immédiate du flux RSS (admin)
+async actualiser() {
+return apiCall("/actualites/actualiser", { method: "POST" });
+},
+};
+
+// ════════════════════════════════════════════════════════════
 //  QCM
 // ════════════════════════════════════════════════════════════
 
@@ -722,6 +755,6 @@ return false;
 
 // ── Exporte tout en global (utilisable dans les pages HTML) ──
 window.API = {
-Auth, Concours, PDFs, Videos, QCM, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale,
+Auth, Concours, PDFs, Videos, QCM, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites,
 verifierBackend, getToken,
 };
