@@ -79,6 +79,20 @@
         color: var(--gris-texte);
         font-weight: 600;
       }
+      .recherche-concours {
+        width: 100%;
+        padding: 10px 14px;
+        margin-bottom: 20px;
+        border: 1.5px solid var(--gris-bordure);
+        border-radius: var(--radius-md);
+        font-size: 0.9rem;
+        font-family: inherit;
+        outline: none;
+        box-sizing: border-box;
+      }
+      .recherche-concours:focus {
+        border-color: var(--vert);
+      }
       @media (max-width: 900px) {
         .concours-layout {
           flex-direction: column;
@@ -302,6 +316,14 @@
                   Réinitialiser
                 </button>
               </div>
+
+              <!-- Recherche -->
+              <input
+                type="text"
+                id="input-recherche"
+                class="recherche-concours"
+                placeholder="Rechercher un concours..."
+              />
 
               <!-- Statut -->
               <div class="filtre-groupe">
@@ -647,8 +669,8 @@
           }
         }
         if (params.get("recherche")) {
-          document.getElementById("input-recherche").value =
-            params.get("recherche");
+          const champRecherche = document.getElementById("input-recherche");
+          if (champRecherche) champRecherche.value = params.get("recherche");
         }
         appliquerFiltres();
       });
@@ -680,9 +702,10 @@
 
       // ── Applique les filtres et la recherche ──────────────────────
       function appliquerFiltres() {
-        const recherche = document
-          .getElementById("input-recherche")
-          .value.toLowerCase()
+        const recherche = (
+          document.getElementById("input-recherche")?.value || ""
+        )
+          .toLowerCase()
           .trim();
         const statut =
           document.querySelector('input[name="statut"]:checked')?.value || "";
@@ -693,7 +716,7 @@
           document.querySelector('input[name="niveau"]:checked')?.value || "";
         const premium =
           document.querySelector('input[name="premium"]:checked')?.value || "";
-        const tri = document.getElementById("tri-select").value;
+        const tri = document.getElementById("tri-select")?.value || "recent";
 
         concoursFiltres = tousConcours.filter((c) => {
           if (
@@ -730,7 +753,8 @@
       }
 
       function reinitialiserFiltres() {
-        document.getElementById("input-recherche").value = "";
+        const champRecherche = document.getElementById("input-recherche");
+        if (champRecherche) champRecherche.value = "";
         document.querySelectorAll('input[name="statut"]')[0].checked = true;
         document.querySelectorAll('input[name="categorie"]')[0].checked = true;
         document.querySelectorAll('input[name="niveau"]')[0].checked = true;

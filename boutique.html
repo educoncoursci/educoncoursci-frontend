@@ -479,14 +479,7 @@
               </tr>
             </thead>
             <tbody>
-              ${[ ["Concours ouverts","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["QCM de base","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"],
-              ["Alertes concours","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["PDFs gratuits","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"],
-              ["PDFs Premium","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["Vidéos Premium","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["QCM
-              difficiles","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["Examens blancs illimités","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"],
-              ["Sujets corrigés officiels","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["Générateur CV & LM
-              IA","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["Fiches concours complètes","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ["Support
-              prioritaire","<span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>","<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>"], ].map(([feat, gratuit, premium]) => `
-              <tr>
+                            <tr>
                 <td
                   style="
                     padding: 13px 20px;
@@ -494,7 +487,7 @@
                     border-bottom: 1px solid var(--gris-clair);
                   "
                 >
-                  ${feat}
+                  Concours ouverts
                 </td>
                 <td
                   style="
@@ -504,7 +497,7 @@
                     border-bottom: 1px solid var(--gris-clair);
                   "
                 >
-                  ${gratuit}
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
                 </td>
                 <td
                   style="
@@ -515,10 +508,361 @@
                     background: rgba(26, 107, 60, 0.03);
                   "
                 >
-                  ${premium}
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
                 </td>
               </tr>
-              `).join("")}
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  QCM de base
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  Alertes concours
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  PDFs gratuits
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  PDFs Premium
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  Vidéos Premium
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  QCM difficiles
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  Examens blancs illimités
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  Sujets corrigés officiels
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  Générateur CV & LM IA
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  Fiches concours complètes
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    font-size: 0.9rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  Support prioritaire
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                  "
+                >
+                  <span data-icone="croixCercle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+                <td
+                  style="
+                    padding: 13px 20px;
+                    text-align: center;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid var(--gris-clair);
+                    background: rgba(26, 107, 60, 0.03);
+                  "
+                >
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -536,31 +880,42 @@
       <div class="container">
         <div class="section__en-tete"><h2><span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Questions fréquentes</h2></div>
         <div style="max-width: 700px; margin: 0 auto" id="faq">
-          ${[ ["Comment fonctionne le paiement ?","Tu envoies le montant par
-          Wave ou Orange Money au numéro indiqué, puis tu saisis l'identifiant
-          de transaction reçu par SMS. Ton compte est activé immédiatement, sans
-          attente."], ["Mon abonnement se renouvelle-t-il automatiquement
-          ?","Non. Chaque abonnement est à durée fixe (1, 3 ou 12 mois). Tu dois
-          renouveler manuellement quand il expire. Pas de prélèvement
-          automatique."], ["Puis-je utiliser EduConcoursCI sur mobile ?","Oui,
-          le site est entièrement responsive. Tu peux aussi l'installer comme
-          application sur ton téléphone (PWA) en ajoutant le site à l'écran
-          d'accueil."], ["Que se passe-t-il si mon paiement n'est pas reconnu
-          ?","Vérifie que l'identifiant de transaction est correct (copie-colle
-          depuis le SMS). Si le problème persiste, contacte-nous par e-mail avec
-          une capture d'écran de ton SMS de confirmation."], ["Puis-je partager
-          mon compte avec quelqu'un ?","Non, les comptes sont personnels. Chaque
-          utilisateur doit créer son propre compte."], ["Y a-t-il une période
-          d'essai gratuite ?","Le plan gratuit te donne accès à de nombreux
-          contenus sans limitation de durée. Tu peux tester la plateforme avant
-          de passer Premium."], ].map(([q, r]) => `
+                    <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              Comment fonctionne le paiement ?<span>▼</span>
+            </div>
+            <div class="faq-reponse">Tu envoies le montant par Wave ou Orange Money au numéro indiqué, puis tu saisis l'identifiant de transaction reçu par SMS. Ton compte est activé immédiatement, sans attente.</div>
+          </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFAQ(this)">
-              ${q}<span>▼</span>
+              Mon abonnement se renouvelle-t-il automatiquement ?<span>▼</span>
             </div>
-            <div class="faq-reponse">${r}</div>
+            <div class="faq-reponse">Non. Chaque abonnement est à durée fixe (1, 3 ou 12 mois). Tu dois renouveler manuellement quand il expire. Pas de prélèvement automatique.</div>
           </div>
-          `).join("")}
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              Puis-je utiliser EduConcoursCI sur mobile ?<span>▼</span>
+            </div>
+            <div class="faq-reponse">Oui, le site est entièrement responsive. Tu peux aussi l'installer comme application sur ton téléphone (PWA) en ajoutant le site à l'écran d'accueil.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              Que se passe-t-il si mon paiement n'est pas reconnu ?<span>▼</span>
+            </div>
+            <div class="faq-reponse">Vérifie que l'identifiant de transaction est correct (copie-colle depuis le SMS). Si le problème persiste, contacte-nous par e-mail avec une capture d'écran de ton SMS de confirmation.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              Puis-je partager mon compte avec quelqu'un ?<span>▼</span>
+            </div>
+            <div class="faq-reponse">Non, les comptes sont personnels. Chaque utilisateur doit créer son propre compte.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              Y a-t-il une période d'essai gratuite ?<span>▼</span>
+            </div>
+            <div class="faq-reponse">Le plan gratuit te donne accès à de nombreux contenus sans limitation de durée. Tu peux tester la plateforme avant de passer Premium.</div>
+          </div>
         </div>
       </div>
     </section>

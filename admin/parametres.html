@@ -77,34 +77,150 @@
     <div class="param-titre">🔑 Variables d'environnement Railway</div>
     <p style="font-size:0.85rem;color:var(--gris-texte);margin-bottom:16px;">Ces variables doivent être configurées dans ton projet Railway → Settings → Variables.</p>
     <div id="liste-env">
-      ${[
-        ["PORT","3000","Requis","Port du serveur Express"],
-        ["NODE_ENV","production","Requis","Environnement (production/development)"],
-        ["FRONTEND_URL","https://educoncoursci.netlify.app","Requis","URL du frontend Netlify"],
-        ["DATABASE_URL","postgresql://...","Requis","URL complète PostgreSQL (auto-générée par Railway)"],
-        ["JWT_SECRET","une_clé_secrète_longue","Requis","Clé de signature des tokens JWT"],
-        ["JWT_EXPIRES_IN","7d","Requis","Durée de validité des tokens"],
-        ["ANTHROPIC_API_KEY","sk-ant-...","Requis","Clé API Claude (console.anthropic.com)"],
-        ["WAVE_NUMERO","07XXXXXXXX","Requis","Numéro Wave CI marchand"],
-        ["OM_NUMERO","07XXXXXXXX","Requis","Numéro Orange Money marchand"],
-        ["EMAIL_HOST","smtp.gmail.com","Requis","Serveur SMTP pour les e-mails"],
-        ["EMAIL_PORT","587","Requis","Port SMTP (587 pour TLS)"],
-        ["EMAIL_USER","ton@gmail.com","Requis","Adresse Gmail pour l'envoi"],
-        ["EMAIL_PASS","mot_de_passe_app","Requis","Mot de passe application Gmail"],
-        ["EMAIL_FROM","EduConcoursCI <noreply@educoncoursci.ci>","Requis","Expéditeur affiché"],
-        ["ADMIN_EMAIL","ton@email.com","Requis","E-mail du compte admin par défaut"],
-        ["ADMIN_PASSWORD","MotDePasseAdmin123!","Requis","Mot de passe admin initial (change-le après connexion)"],
-        ["MAX_FILE_SIZE_MB","10","Optionnel","Taille max upload PDF en MB"],
-        ["UPLOAD_PATH","./uploads","Optionnel","Dossier de stockage des PDFs uploadés"],
-      ].map(([cle, exemple, requis, desc]) => `
-        <div class="env-row">
-          <div class="env-key">${cle}</div>
-          <div style="flex:1;">
-            <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">${desc}</div>
-            <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : ${exemple}</div>
-          </div>
-          <span class="env-statut ${requis==="Requis"?"env-ok":"env-optional"}">${requis==="Requis"?"<span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis":"◎ Optionnel"}</span>
-        </div>`).join("")}
+            <div class="env-row">
+        <div class="env-key">PORT</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Port du serveur Express</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : 3000</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">NODE_ENV</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Environnement (production/development)</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : production</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">FRONTEND_URL</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">URL du frontend Netlify</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : https://educoncoursci.netlify.app</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">DATABASE_URL</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">URL complète PostgreSQL (auto-générée par Railway)</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : postgresql://...</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">JWT_SECRET</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Clé de signature des tokens JWT</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : une_clé_secrète_longue</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">JWT_EXPIRES_IN</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Durée de validité des tokens</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : 7d</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">ANTHROPIC_API_KEY</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Clé API Claude (console.anthropic.com)</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : sk-ant-...</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">WAVE_NUMERO</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Numéro Wave CI marchand</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : 07XXXXXXXX</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">OM_NUMERO</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Numéro Orange Money marchand</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : 07XXXXXXXX</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">EMAIL_HOST</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Serveur SMTP pour les e-mails</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : smtp.gmail.com</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">EMAIL_PORT</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Port SMTP (587 pour TLS)</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : 587</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">EMAIL_USER</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Adresse Gmail pour l'envoi</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : ton@gmail.com</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">EMAIL_PASS</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Mot de passe application Gmail</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : mot_de_passe_app</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">EMAIL_FROM</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Expéditeur affiché</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : EduConcoursCI &lt;noreply@educoncoursci.ci&gt;</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">ADMIN_EMAIL</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">E-mail du compte admin par défaut</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : ton@email.com</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">ADMIN_PASSWORD</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Mot de passe admin initial (change-le après connexion)</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : MotDePasseAdmin123!</div>
+        </div>
+        <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">MAX_FILE_SIZE_MB</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Taille max upload PDF en MB</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : 10</div>
+        </div>
+        <span class="env-statut env-optional">◎ Optionnel</span>
+      </div>
+      <div class="env-row">
+        <div class="env-key">UPLOAD_PATH</div>
+        <div style="flex:1;">
+          <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Dossier de stockage des PDFs uploadés</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : ./uploads</div>
+        </div>
+        <span class="env-statut env-optional">◎ Optionnel</span>
+      </div>
     </div>
   </div>
 

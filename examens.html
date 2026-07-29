@@ -316,22 +316,54 @@
         </tr>
       </thead>
       <tbody>
-        ${[
-          ["CEPE","Session normale","Avril - Mai 2026","🟡 À venir"],
-          ["BEPC","Session normale","Mai - Juin 2026","🟡 À venir"],
-          ["BAC série A, B","Session normale","Juin 2026","🟡 À venir"],
-          ["BAC séries C, D, E","Session normale","Juin 2026","🟡 À venir"],
-          ["BTS","Session normale","Juin - Juillet 2026","🟡 À venir"],
-          ["CEPE","Session de rattrapage","Juillet 2026","🔵 Planifié"],
-          ["BEPC","Session de rattrapage","Juillet - Août 2026","🔵 Planifié"],
-          ["BAC","Session de rattrapage","Août 2026","🔵 Planifié"],
-        ].map((r,i) => `
-          <tr style="border-bottom:1px solid var(--gris-clair);${i%2===0?"background:rgba(26,107,60,0.02)":""}">
-            <td style="padding:13px 16px;font-weight:700;">${r[0]}</td>
-            <td style="padding:13px 16px;">${r[1]}</td>
-            <td style="padding:13px 16px;color:var(--gris-texte);">${r[2]}</td>
-            <td style="padding:13px 16px;">${r[3]}</td>
-          </tr>`).join("")}
+        <tr style="border-bottom:1px solid var(--gris-clair);background:rgba(26,107,60,0.02);">
+          <td style="padding:13px 16px;font-weight:700;">CEPE</td>
+          <td style="padding:13px 16px;">Session normale</td>
+          <td style="padding:13px 16px;color:var(--gris-texte);">Avril - Mai 2026</td>
+          <td style="padding:13px 16px;">🟡 À venir</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--gris-clair);">
+          <td style="padding:13px 16px;font-weight:700;">BEPC</td>
+          <td style="padding:13px 16px;">Session normale</td>
+          <td style="padding:13px 16px;color:var(--gris-texte);">Mai - Juin 2026</td>
+          <td style="padding:13px 16px;">🟡 À venir</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--gris-clair);background:rgba(26,107,60,0.02);">
+          <td style="padding:13px 16px;font-weight:700;">BAC série A, B</td>
+          <td style="padding:13px 16px;">Session normale</td>
+          <td style="padding:13px 16px;color:var(--gris-texte);">Juin 2026</td>
+          <td style="padding:13px 16px;">🟡 À venir</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--gris-clair);">
+          <td style="padding:13px 16px;font-weight:700;">BAC séries C, D, E</td>
+          <td style="padding:13px 16px;">Session normale</td>
+          <td style="padding:13px 16px;color:var(--gris-texte);">Juin 2026</td>
+          <td style="padding:13px 16px;">🟡 À venir</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--gris-clair);background:rgba(26,107,60,0.02);">
+          <td style="padding:13px 16px;font-weight:700;">BTS</td>
+          <td style="padding:13px 16px;">Session normale</td>
+          <td style="padding:13px 16px;color:var(--gris-texte);">Juin - Juillet 2026</td>
+          <td style="padding:13px 16px;">🟡 À venir</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--gris-clair);">
+          <td style="padding:13px 16px;font-weight:700;">CEPE</td>
+          <td style="padding:13px 16px;">Session de rattrapage</td>
+          <td style="padding:13px 16px;color:var(--gris-texte);">Juillet 2026</td>
+          <td style="padding:13px 16px;">🔵 Planifié</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--gris-clair);background:rgba(26,107,60,0.02);">
+          <td style="padding:13px 16px;font-weight:700;">BEPC</td>
+          <td style="padding:13px 16px;">Session de rattrapage</td>
+          <td style="padding:13px 16px;color:var(--gris-texte);">Juillet - Août 2026</td>
+          <td style="padding:13px 16px;">🔵 Planifié</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--gris-clair);">
+          <td style="padding:13px 16px;font-weight:700;">BAC</td>
+          <td style="padding:13px 16px;">Session de rattrapage</td>
+          <td style="padding:13px 16px;color:var(--gris-texte);">Août 2026</td>
+          <td style="padding:13px 16px;">🔵 Planifié</td>
+        </tr>
       </tbody>
     </table>
   </div>

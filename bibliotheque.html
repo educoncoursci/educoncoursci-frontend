@@ -257,6 +257,24 @@
               </div>
 
               <div style="margin-bottom: 16px">
+                <input
+                  type="text"
+                  id="recherche-pdf"
+                  placeholder="Rechercher un document..."
+                  style="
+                    width: 100%;
+                    padding: 9px 12px;
+                    border: 1.5px solid var(--gris-bordure);
+                    border-radius: 10px;
+                    font-size: 0.88rem;
+                    font-family: inherit;
+                    outline: none;
+                    box-sizing: border-box;
+                  "
+                />
+              </div>
+
+              <div style="margin-bottom: 16px">
                 <div
                   style="
                     font-size: 0.75rem;
@@ -555,14 +573,15 @@
       }
 
       function filtrerPDFs() {
-        const recherche = document
-          .getElementById("recherche-pdf")
-          .value.toLowerCase()
+        const recherche = (
+          document.getElementById("recherche-pdf")?.value || ""
+        )
+          .toLowerCase()
           .trim();
-        const categorie = document.getElementById("filtre-cat-pdf").value;
+        const categorie = document.getElementById("filtre-cat-pdf")?.value || "";
         const acces =
           document.querySelector('input[name="acc-pdf"]:checked')?.value || "";
-        const tri = document.getElementById("tri-pdf").value;
+        const tri = document.getElementById("tri-pdf")?.value || "recent";
 
         let liste = tousPDFs.filter((p) => {
           if (
@@ -588,10 +607,14 @@
       }
 
       function reinitFiltresPDF() {
-        document.getElementById("recherche-pdf").value = "";
-        document.getElementById("filtre-cat-pdf").value = "";
-        document.getElementById("tri-pdf").value = "recent";
-        document.querySelector('input[name="acc-pdf"]').checked = true;
+        const champRecherche = document.getElementById("recherche-pdf");
+        if (champRecherche) champRecherche.value = "";
+        const champCat = document.getElementById("filtre-cat-pdf");
+        if (champCat) champCat.value = "";
+        const champTri = document.getElementById("tri-pdf");
+        if (champTri) champTri.value = "recent";
+        const champAcces = document.querySelector('input[name="acc-pdf"]');
+        if (champAcces) champAcces.checked = true;
         filtrerPDFs();
       }
 

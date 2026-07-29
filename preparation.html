@@ -246,6 +246,46 @@
     <main style="padding: 36px 0 60px">
       <div class="container">
 
+        <!-- Mes statistiques (utilisateurs connectés) -->
+        <section id="section-mes-stats" class="hidden" style="margin-bottom: 32px">
+          <div class="dash-stats">
+            <div class="stat-card">
+              <div>
+                <div class="stat-card__label">Tentatives</div>
+                <div class="stat-card__valeur" id="stat-tentatives">—</div>
+              </div>
+              <div class="stat-card__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+            </div>
+            <div class="stat-card stat-card--bleu">
+              <div>
+                <div class="stat-card__label">Moyenne générale</div>
+                <div class="stat-card__valeur" id="stat-moyenne">—</div>
+              </div>
+              <div class="stat-card__icone" style="background: rgba(10, 110, 189, 0.1)">
+                <span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+              </div>
+            </div>
+            <div class="stat-card stat-card--orange">
+              <div>
+                <div class="stat-card__label">Meilleur score</div>
+                <div class="stat-card__valeur" id="stat-meilleur">—</div>
+              </div>
+              <div class="stat-card__icone" style="background: rgba(245, 130, 13, 0.1)">
+                <span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+              </div>
+            </div>
+            <div class="stat-card stat-card--violet">
+              <div>
+                <div class="stat-card__label">Matières</div>
+                <div class="stat-card__valeur" id="stat-matieres">—</div>
+              </div>
+              <div class="stat-card__icone" style="background: rgba(123, 47, 190, 0.1)">
+                <span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- QCM -->
         <section id="section-qcm" style="margin-bottom: 48px">
           <div
@@ -628,7 +668,7 @@
         const session = window.Auth?.getSession();
         if (!session) return;
 
-        document.getElementById("section-mes-stats").classList.remove("hidden");
+        document.getElementById("section-mes-stats")?.classList.remove("hidden");
         try {
           const scores = JSON.parse(session.scores_json || "[]");
           if (scores.length === 0) return;
@@ -638,11 +678,14 @@
           );
           const best = Math.max(...scores.map((sc) => sc.pourcentage || 0));
           const mats = new Set(scores.map((sc) => sc.qcmTitre)).size;
-          document.getElementById("stat-tentatives").textContent =
-            scores.length;
-          document.getElementById("stat-moyenne").textContent = `${moy}%`;
-          document.getElementById("stat-meilleur").textContent = `${best}%`;
-          document.getElementById("stat-matieres").textContent = mats;
+          const elTentatives = document.getElementById("stat-tentatives");
+          const elMoyenne = document.getElementById("stat-moyenne");
+          const elMeilleur = document.getElementById("stat-meilleur");
+          const elMatieres = document.getElementById("stat-matieres");
+          if (elTentatives) elTentatives.textContent = scores.length;
+          if (elMoyenne) elMoyenne.textContent = `${moy}%`;
+          if (elMeilleur) elMeilleur.textContent = `${best}%`;
+          if (elMatieres) elMatieres.textContent = mats;
         } catch {}
       }
     </script>

@@ -183,6 +183,14 @@
   <button class="filtre-btn actif" data-cat="" onclick="changerCat(this,'')"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Toutes</button>
 </div>
 
+<!-- Recherche -->
+<input
+  type="text"
+  id="recherche-video"
+  placeholder="Rechercher une vidéo..."
+  style="width:100%;padding:10px 14px;margin-bottom:18px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.9rem;font-family:inherit;outline:none;box-sizing:border-box;background:var(--blanc);"
+/>
+
 <!-- Tri + compteur -->
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
   <span style="font-size:0.88rem;color:var(--gris-texte);font-weight:600;" id="compteur-videos">Chargement…</span>
@@ -272,8 +280,8 @@ function changerCat(btn, cat) {
 }
 
 function filtrerVideos() {
-  const recherche = document.getElementById("recherche-video").value.toLowerCase().trim();
-  const tri       = document.getElementById("tri-videos").value;
+  const recherche = (document.getElementById("recherche-video")?.value || "").toLowerCase().trim();
+  const tri       = document.getElementById("tri-videos")?.value || "recent";
 
   let liste = toutesVideos.filter(v => {
     if (catActive && v.categorie !== catActive) return false;

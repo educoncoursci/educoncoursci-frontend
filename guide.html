@@ -360,19 +360,32 @@
             <div class="guide-section" id="faq">
               <h2 style="margin-bottom: 18px"><span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Questions fréquentes</h2>
               <div style="display: flex; flex-direction: column; gap: 12px">
-                ${[ ["La plateforme est-elle gratuite ?","Oui, l'inscription et
-                l'accès de base sont entièrement gratuits. Le Premium (payant)
-                débloque les contenus avancés."], ["Mes données sont-elles
-                sécurisées ?","Oui. Les mots de passe sont hashés (bcrypt) et
-                les tokens JWT expirent automatiquement. Aucune donnée bancaire
-                n'est stockée."], ["Puis-je utiliser la plateforme hors ligne
-                ?","Partiellement. Le site peut être installé comme application
-                PWA (ajoute-le à l'écran d'accueil). Les pages déjà visitées
-                restent accessibles sans connexion."], ["Comment contacter le
-                support ?","Par e-mail à support@educoncoursci.ci. Nous
-                répondons en moins de 48h."], ["Les concours sont-ils mis à jour
-                en temps réel ?","Oui, notre équipe met à jour les fiches
-                concours dès les annonces officielles."], ].map(([q,r]) => `
+                                <div
+                  style="
+                    border: 1px solid var(--gris-bordure);
+                    border-radius: 12px;
+                    padding: 16px;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 700;
+                      font-size: 0.95rem;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    <span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> La plateforme est-elle gratuite ?
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.88rem;
+                      color: var(--gris-texte);
+                      line-height: 1.7;
+                    "
+                  >
+                    Oui, l'inscription et l'accès de base sont entièrement gratuits. Le Premium (payant) débloque les contenus avancés.
+                  </div>
+                </div>
                 <div
                   style="
                     border: 1px solid var(--gris-bordure);
@@ -387,7 +400,7 @@
                       margin-bottom: 6px;
                     "
                   >
-                    <span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> ${q}
+                    <span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Mes données sont-elles sécurisées ?
                   </div>
                   <div
                     style="
@@ -396,10 +409,87 @@
                       line-height: 1.7;
                     "
                   >
-                    ${r}
+                    Oui. Les mots de passe sont hashés (bcrypt) et les tokens JWT expirent automatiquement. Aucune donnée bancaire n'est stockée.
                   </div>
                 </div>
-                `).join("")}
+                <div
+                  style="
+                    border: 1px solid var(--gris-bordure);
+                    border-radius: 12px;
+                    padding: 16px;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 700;
+                      font-size: 0.95rem;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    <span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Puis-je utiliser la plateforme hors ligne ?
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.88rem;
+                      color: var(--gris-texte);
+                      line-height: 1.7;
+                    "
+                  >
+                    Partiellement. Le site peut être installé comme application PWA (ajoute-le à l'écran d'accueil). Les pages déjà visitées restent accessibles sans connexion.
+                  </div>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--gris-bordure);
+                    border-radius: 12px;
+                    padding: 16px;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 700;
+                      font-size: 0.95rem;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    <span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Comment contacter le support ?
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.88rem;
+                      color: var(--gris-texte);
+                      line-height: 1.7;
+                    "
+                  >
+                    Par e-mail à support@educoncoursci.ci. Nous répondons en moins de 48h.
+                  </div>
+                </div>
+                <div
+                  style="
+                    border: 1px solid var(--gris-bordure);
+                    border-radius: 12px;
+                    padding: 16px;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 700;
+                      font-size: 0.95rem;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    <span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Les concours sont-ils mis à jour en temps réel ?
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.88rem;
+                      color: var(--gris-texte);
+                      line-height: 1.7;
+                    "
+                  >
+                    Oui, notre équipe met à jour les fiches concours dès les annonces officielles.
+                  </div>
+                </div>
               </div>
             </div>
           </div>

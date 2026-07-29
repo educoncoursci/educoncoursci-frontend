@@ -134,11 +134,30 @@
       <div class="form-groupe">
         <label class="form-label">Catégories qui t'intéressent</label>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
-          ${["Fonction Publique","Grandes Écoles","Sécurité","Santé","Travail Social","Éducation","Finance","Tous"].map(c =>
-            `<label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
-              <input type="checkbox" value="${c}" ${c==="Tous"?"checked":""} style="accent-color:var(--vert);">${c}
-            </label>`
-          ).join("")}
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
+            <input type="checkbox" value="Fonction Publique" style="accent-color:var(--vert);">Fonction Publique
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
+            <input type="checkbox" value="Grandes Écoles" style="accent-color:var(--vert);">Grandes Écoles
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
+            <input type="checkbox" value="Sécurité" style="accent-color:var(--vert);">Sécurité
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
+            <input type="checkbox" value="Santé" style="accent-color:var(--vert);">Santé
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
+            <input type="checkbox" value="Travail Social" style="accent-color:var(--vert);">Travail Social
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
+            <input type="checkbox" value="Éducation" style="accent-color:var(--vert);">Éducation
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
+            <input type="checkbox" value="Finance" style="accent-color:var(--vert);">Finance
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
+            <input type="checkbox" value="Tous" checked style="accent-color:var(--vert);">Tous
+          </label>
         </div>
       </div>
 
