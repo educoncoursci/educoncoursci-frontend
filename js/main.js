@@ -330,3 +330,53 @@ getYoutubeId, miniatureYoutube, getParam,
 copierTexte, debounce, initiales,
 afficherSkeleton, afficherEtatVide, afficherBandeauPremium,
 };
+
+// ════════════════════════════════════════════════════════════
+//  Bascule affichage/masquage des mots de passe (icône œil)
+//  Ajoute automatiquement un bouton œil à tout champ
+//  <input type="password" data-toggle-oeil> de la page.
+// ════════════════════════════════════════════════════════════
+function initTogglePasswords() {
+document.querySelectorAll('input[type="password"][data-toggle-oeil]').forEach((input) => {
+if (input.dataset.oeilInit) return; // évite une double-initialisation
+input.dataset.oeilInit = "1";
+
+const wrapper = document.createElement("div");
+wrapper.style.position = "relative";
+input.parentNode.insertBefore(wrapper, input);
+wrapper.appendChild(input);
+input.style.paddingRight = "42px";
+
+const btn = document.createElement("button");
+btn.type = "button";
+btn.setAttribute("aria-label", "Afficher ou masquer le mot de passe");
+btn.style.cssText =
+  "position:absolute; right:8px; top:50%; transform:translateY(-50%); " +
+  "background:none; border:none; cursor:pointer; padding:6px; " +
+  "display:flex; align-items:center; color:var(--gris-texte,#666); z-index:2;";
+btn.innerHTML =
+  '<span data-icone="oeil" data-taille="18" style="display:inline-flex; position:relative;"></span>';
+const traitBarre = document.createElement("span");
+// Petit trait diagonal superposé quand le mot de passe est masqué,
+// pour indiquer visuellement l'état "caché" (convention œil barré)
+traitBarre.style.cssText =
+  "position:absolute; width:20px; height:2px; background:currentColor; " +
+  "top:50%; left:50%; transform:translate(-50%,-50%) rotate(-45deg); border-radius:2px;";
+btn.style.position = "absolute";
+btn.appendChild(traitBarre);
+
+const majBarre = () => {
+  traitBarre.style.display = input.type === "password" ? "block" : "none";
+};
+majBarre();
+
+btn.addEventListener("click", () => {
+  input.type = input.type === "password" ? "text" : "password";
+  majBarre();
+});
+
+wrapper.appendChild(btn);
+});
+}
+document.addEventListener("DOMContentLoaded", initTogglePasswords);
+window.initTogglePasswords = initTogglePasswords;

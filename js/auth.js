@@ -61,7 +61,9 @@ return false;
 return true;
 }
 
-// Redirige vers accueil si non admin
+// Redirige vers le tableau de bord si non admin (jamais vers l'accueil :
+// un utilisateur standard qui tente une URL d'admin doit atterrir sur SON
+// espace, pas sur une page publique)
 function protegerPageAdmin() {
 if (!estConnecte()) {
 window.location.href = "/auth/login.html?retour=/admin/index.html";
@@ -69,7 +71,7 @@ return false;
 }
 if (!estAdmin()) {
 afficherToast("Accès refusé — droits administrateur requis.", "erreur");
-setTimeout(() => window.location.href = "/", 2000);
+setTimeout(() => window.location.href = "/dashboard/index.html?raison=acces-refuse", 900);
 return false;
 }
 return true;
@@ -193,9 +195,13 @@ try {
   await inscrire(nom, email, password);
   afficherToast("Compte créé avec succès ! Bienvenue 🎓", "succes");
 
-  // Redirige vers la page demandée ou le dashboard
+  // Redirige vers la page demandée ou le dashboard.
+  // Un compte fraîchement créé n'est jamais admin : on ignore tout
+  // ?retour= qui pointerait vers /admin/ pour ne jamais y envoyer
+  // un nouvel utilisateur, même si l'URL le demande.
   const params  = new URLSearchParams(window.location.search);
-  const retour  = params.get("retour") || "/dashboard/index.html";
+  const demande = params.get("retour") || "/dashboard/index.html";
+  const retour  = demande.startsWith("/admin/") ? "/dashboard/index.html" : demande;
   setTimeout(() => window.location.href = retour, 1000);
 
 } catch (err) {
@@ -244,7 +250,14 @@ try {
   await connecter(email, password);
   afficherToast("Connexion réussie !", "succes");
 
-  const retour = params.get("retour") || "/dashboard/index.html";
+  // Un ?retour= vers /admin/ n'est honoré que si ce compte est
+  // réellement admin (ex: admin non connecté qui visitait /admin/x).
+  // Pour tout le monde d'autre, direction le tableau de bord — jamais
+  // l'administration, même si l'URL le demandait.
+  const demande = params.get("retour") || "/dashboard/index.html";
+  const retour  = (demande.startsWith("/admin/") && !estAdmin())
+    ? "/dashboard/index.html"
+    : demande;
   setTimeout(() => window.location.href = retour, 800);
 
 } catch (err) {

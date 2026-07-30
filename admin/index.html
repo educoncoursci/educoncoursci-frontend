@@ -90,6 +90,9 @@
           <a href="/admin/qcm.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
           >
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a
+          >
 
           <div class="admin-sidebar__section">Utilisateurs</div>
           <a href="/admin/abonnes.html" class="admin-sidebar__lien"
@@ -235,11 +238,7 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        if (!window.Auth?.estConnecte() || !window.Auth?.estAdmin()) {
-          window.afficherToast?.("Accès refusé.", "erreur");
-          setTimeout(() => (window.location.href = "/"), 1500);
-          return;
-        }
+        if (!window.Auth?.protegerPageAdmin()) return;
         const session = window.Auth.getSession();
         document.getElementById("admin-email-nav").textContent =
           session.email || "";

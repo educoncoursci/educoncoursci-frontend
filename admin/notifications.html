@@ -66,6 +66,9 @@
           <a href="/admin/qcm.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
           >
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a
+          >
           <div class="admin-sidebar__section">Utilisateurs</div>
           <a href="/admin/abonnes.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
@@ -258,10 +261,7 @@
       let cibleActive = "tous";
 
       document.addEventListener("DOMContentLoaded", async () => {
-        if (!window.Auth?.estAdmin()) {
-          window.location.href = "/";
-          return;
-        }
+        if (!window.Auth?.protegerPageAdmin()) return;
         await Promise.all([chargerStats(), chargerHistorique()]);
       });
 

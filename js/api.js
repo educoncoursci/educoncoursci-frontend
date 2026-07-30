@@ -91,6 +91,20 @@ method: "POST",
 body: JSON.stringify({ ancienPassword, nouveauPassword }),
 });
 },
+
+async forgotPassword(email) {
+return apiCall("/auth/forgot-password", {
+method: "POST",
+body: JSON.stringify({ email }),
+});
+},
+
+async resetPassword(token, password) {
+return apiCall("/auth/reset-password", {
+method: "POST",
+body: JSON.stringify({ token, password }),
+});
+},
 };
 
 // ════════════════════════════════════════════════════════════
@@ -195,6 +209,19 @@ return apiCall(`/videos/${id}`);
 
 async creer(data) {
 return apiCall("/videos", { method: "POST", body: JSON.stringify(data) });
+},
+
+// Admin — upload d'un fichier vidéo avec FormData (pas JSON)
+async uploader(formData) {
+const token = getToken();
+const response = await fetch(`${API_URL}/videos`, {
+method: "POST",
+headers: { Authorization: `Bearer ${token}` }, // pas Content-Type (multipart)
+body: formData,
+});
+const data = await response.json();
+if (!response.ok) throw new Error(data.error || "Erreur upload");
+return data;
 },
 
 async modifier(id, data) {
@@ -444,6 +471,10 @@ return apiCall(`/emploi/${id}`, { method: "DELETE" });
 
 async candidaturesRecues(id) {
 return apiCall(`/emploi/${id}/candidatures`);
+},
+
+async actualiser() {
+return apiCall("/emploi/actualiser", { method: "POST" });
 },
 };
 

@@ -208,6 +208,56 @@
         <!-- ZONE PAIEMENT -->
         <div id="zone-paiement" class="hidden">
           <div class="paiement-layout">
+            <!-- Bloc d'information : comment ça marche avant de payer -->
+            <div style="grid-column: 1 / -1; margin-bottom: 4px;">
+              <div
+                style="
+                  background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+                  border: 1px solid #d1fae5;
+                  border-radius: var(--radius-lg);
+                  padding: 22px 24px;
+                "
+              >
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom: 12px;">
+                  <span data-icone="aide" data-taille="20" style="display:inline-flex;"></span>
+                  <div style="font-weight: 800; font-size: 1.05rem;">Comment se déroule le paiement ?</div>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--gris-texte); line-height: 1.7; margin-bottom: 12px;">
+                  Ton paiement est traité en toute simplicité, directement depuis ton téléphone,
+                  via <strong>Wave CI</strong> ou <strong>Orange Money CI</strong> — deux moyens de
+                  paiement mobile largement utilisés en Côte d'Ivoire. Aucune carte bancaire n'est
+                  nécessaire.
+                </p>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 14px; margin-bottom: 12px;">
+                  <div style="background:var(--blanc); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-weight:700; font-size:0.86rem; margin-bottom:4px;">1️⃣ Choisis ton plan et ton moyen</div>
+                    <div style="font-size:0.82rem; color:var(--gris-texte); line-height:1.5;">Sélectionne la durée d'abonnement puis Wave ou Orange Money ci-dessous.</div>
+                  </div>
+                  <div style="background:var(--blanc); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-weight:700; font-size:0.86rem; margin-bottom:4px;">2️⃣ Effectue le paiement</div>
+                    <div style="font-size:0.82rem; color:var(--gris-texte); line-height:1.5;">Suis les instructions affichées et envoie le <strong>montant exact</strong> indiqué.</div>
+                  </div>
+                  <div style="background:var(--blanc); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-weight:700; font-size:0.86rem; margin-bottom:4px;">3️⃣ Saisis ta référence</div>
+                    <div style="font-size:0.82rem; color:var(--gris-texte); line-height:1.5;">Recopie l'identifiant de transaction reçu par SMS dans le formulaire prévu.</div>
+                  </div>
+                  <div style="background:var(--blanc); border-radius: 12px; padding: 14px 16px;">
+                    <div style="font-weight:700; font-size:0.86rem; margin-bottom:4px;">4️⃣ Activation immédiate</div>
+                    <div style="font-size:0.82rem; color:var(--gris-texte); line-height:1.5;">Ton Premium est activé instantanément, dès que la référence est validée.</div>
+                  </div>
+                </div>
+                <div style="background:#fff8e8; border:1px solid #fde68a; border-radius:10px; padding:12px 16px; font-size:0.82rem; color:#92400e;">
+                  <span data-icone="attention" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
+                  À bien vérifier avant de valider : envoie <strong>exactement</strong> le montant affiché
+                  (un montant différent empêchera la validation), conserve le SMS de confirmation jusqu'à
+                  l'activation, et sache qu'un même identifiant de transaction ne peut servir qu'une seule
+                  fois. En cas de souci, écris-nous à
+                  <a href="mailto:support@educoncoursci.ci" style="color:#92400e; font-weight:700;">support@educoncoursci.ci</a>,
+                  nous te répondons rapidement.
+                </div>
+              </div>
+            </div>
+
             <!-- Gauche : étapes de paiement -->
             <div>
               <!-- ÉTAPE 1 : Choisir le plan -->
@@ -808,8 +858,15 @@
         div.classList.remove("hidden");
 
         // ── Mode "lien de paiement" (Wave Business avec vrai lien configuré) ──
+        // Important : on garde quand même le formulaire de saisie de l'ID de
+        // transaction (étape 4) car c'est le SEUL mécanisme qui active le
+        // Premium (POST /api/payment/verify). Le lien Wave simplifie juste le
+        // paiement lui-même ; il ne remplace pas la vérification.
         if (infos.modePaiement === "lien" && infos.lienPaiement) {
-          saisie.classList.add("hidden"); // pas besoin de saisir un ID manuellement
+          saisie.classList.remove("hidden");
+
+          document.getElementById("exemple-sms").textContent =
+            `Réf: ${infos.format_exemple || "WA-AB12345678"}`;
 
           document.getElementById("instructions-contenu").innerHTML = `
       <div style="background:rgba(0,158,226,0.08);border:1px solid #009EE230;border-radius:14px;padding:18px;margin-bottom:14px;text-align:center;">
@@ -827,7 +884,7 @@
         Payer ${montant.toLocaleString("fr-CI")} FCFA avec Wave →
       </a>
       <p style="text-align:center; font-size:0.78rem; color:var(--gris-texte); margin-top:10px;">
-        Une fois le paiement effectué, ton compte Premium sera activé après vérification (sous 24h ouvrées).
+        Une fois le paiement effectué, récupère l'identifiant de transaction reçu par SMS Wave et saisis-le ci-dessous pour activer ton Premium immédiatement.
       </p>
     `;
           return;

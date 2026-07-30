@@ -337,7 +337,7 @@ function afficherVideos(liste) {
             <span style="font-size:0.78rem;color:var(--gris-texte);">👁 ${(v.vues||0).toLocaleString("fr-CI")} vues</span>
             ${verrouille
               ? `<a href="/boutique.html" class="btn btn--orange btn--sm">⭐ Débloquer</a>`
-              : `<button onclick="${v.youtube_id ? `lireVideo('${v.youtube_id}','${v.url||""}','${v.titre.replace(/'/g,"\\'")}','${v.categorie||""}')` : `ouvrirLien('${v.url}')`}" class="btn btn--violet btn--sm" style="background:var(--violet);color:#fff;border:none;">▶ Regarder</button>`
+              : `<button onclick="lireVideo('${v.youtube_id||""}','${v.url||""}','${v.titre.replace(/'/g,"\\'")}','${v.categorie||""}')" class="btn btn--violet btn--sm" style="background:var(--violet);color:#fff;border:none;">▶ Regarder</button>`
             }
           </div>
         </div>

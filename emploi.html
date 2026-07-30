@@ -283,6 +283,7 @@
           <option value="Alternance">Alternance</option>
         </select>
         <input type="text" id="filtre-ville" class="form-input" placeholder="Ville (ex: Abidjan)" />
+        <input type="text" id="filtre-secteur" class="form-input" placeholder="Secteur (ex: Banque, BTP…)" />
         <input type="text" id="filtre-recherche" class="form-input" placeholder="Mot-clé, entreprise…" />
         <button onclick="chargerOffres()" class="btn btn--primaire btn--sm">Filtrer</button>
       </div>
@@ -323,9 +324,11 @@
           const params = {};
           const type = document.getElementById("filtre-type").value;
           const ville = document.getElementById("filtre-ville").value.trim();
+          const secteur = document.getElementById("filtre-secteur").value.trim();
           const recherche = document.getElementById("filtre-recherche").value.trim();
           if (type) params.typeContrat = type;
           if (ville) params.ville = ville;
+          if (secteur) params.secteur = secteur;
           if (recherche) params.recherche = recherche;
 
           const data = await window.API.Emploi.liste(params);

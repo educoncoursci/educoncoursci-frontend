@@ -313,7 +313,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  if (!window.Auth?.estAdmin()) { window.location.href="/"; return; }
+  if (!window.Auth?.protegerPageAdmin()) return;
   const session = window.Auth.getSession();
 
   // URL dynamiques

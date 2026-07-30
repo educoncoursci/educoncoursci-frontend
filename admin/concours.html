@@ -66,6 +66,9 @@
           <a href="/admin/qcm.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
           >
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a
+          >
           <div class="admin-sidebar__section">Utilisateurs</div>
           <a href="/admin/abonnes.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
@@ -89,7 +92,7 @@
           <div class="admin-topbar">
             <div>
               <div class="admin-topbar__titre"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Gestion des Concours</div>
-              <div class="admin-topbar__sous" id="compteur-concours">
+              <div class="admin-topbar__sous" id="compteur-conc">
                 Chargement…
               </div>
             </div>
@@ -111,7 +114,7 @@
           >
             <input
               type="text"
-              id="rech-concours"
+              id="rech-conc"
               placeholder="🔍 Rechercher…"
               oninput="filtrerConcours()"
               style="
@@ -124,7 +127,7 @@
               "
             />
             <select
-              id="fil-statut-concours"
+              id="fil-statut-conc"
               onchange="filtrerConcours()"
               style="
                 padding: 10px 14px;
@@ -136,10 +139,26 @@
               "
             >
               <option value="">Tous les statuts</option>
-              <option value="ouvert">🔴 Ouvert</option>
+              <option value="ouvert">🔴 En cours</option>
               <option value="à venir">🔵 À venir</option>
               <option value="fermé">⚫ Fermé</option>
-              <option value="résultats">🏆 Résultats</option>
+              <option value="résultats">🏆 Résultats publiés</option>
+            </select>
+            <select
+              id="fil-acc-conc"
+              onchange="filtrerConcours()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Tous les accès</option>
+              <option value="false">🆓 Gratuits</option>
+              <option value="true">⭐ Premium</option>
             </select>
           </div>
 
@@ -152,14 +171,15 @@
                   <th>Catégorie</th>
                   <th>Statut</th>
                   <th>Clôture</th>
+                  <th>Places</th>
                   <th>Accès</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody id="tbody-concours">
+              <tbody id="tbody-conc">
                 <tr>
                   <td
-                    colspan="7"
+                    colspan="8"
                     style="
                       text-align: center;
                       padding: 40px;
@@ -176,12 +196,12 @@
       </div>
     </div>
 
-    <!-- Modal Ajout / Édition -->
+    <!-- Modal Ajout / Modification -->
 
     <div class="modal-overlay" id="modal-add-concours">
       <div class="modal" style="max-width: 640px">
         <div class="modal__header">
-          <div class="modal__titre" id="modal-concours-titre">
+          <div class="modal__titre" id="modal-conc-titre">
             <span data-icone="plus" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ajouter un concours
           </div>
           <button
@@ -193,12 +213,12 @@
         </div>
         <div class="modal__corps">
           <div class="form-groupe">
-            <label class="form-label">Titre <span>*</span></label>
-            <input
+            <label class="form-label">Titre <span>*</span></label
+            ><input
               type="text"
-              id="c-titre"
+              id="conc-titre"
               class="form-input"
-              placeholder="Ex: Concours direct ENA 2027"
+              placeholder="Ex: Concours de la Fonction Publique 2026"
             />
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
@@ -206,7 +226,7 @@
               <label class="form-label">Organisme <span>*</span></label>
               <input
                 type="text"
-                id="c-organisme"
+                id="conc-organisme"
                 class="form-input"
                 placeholder="Ex: Fonction Publique"
               />
@@ -215,127 +235,111 @@
               <label class="form-label">Catégorie <span>*</span></label>
               <input
                 type="text"
-                id="c-categorie"
+                id="conc-categorie"
                 class="form-input"
-                list="liste-categories"
-                placeholder="Ex: Fonction Publique"
+                placeholder="Ex: Administration, Sécurité, Enseignement…"
               />
-              <datalist id="liste-categories">
-                <option value="Fonction Publique"></option>
-                <option value="Grandes Écoles"></option>
-                <option value="Sécurité"></option>
-                <option value="Santé"></option>
-                <option value="Travail Social"></option>
-                <option value="Éducation"></option>
-                <option value="Finance"></option>
-              </datalist>
             </div>
           </div>
-
-          <div class="form-groupe">
-            <label class="form-label"
-              >Statut <span>*</span>
-              <span style="font-weight: 400; color: var(--gris-texte); font-size: 0.8rem;"
-                >— détermine l'onglet où le concours apparaît sur le site</span
-              ></label
-            >
-            <select id="c-statut" class="form-input">
-              <option value="ouvert">🔴 Ouvert (inscriptions en cours)</option>
-              <option value="à venir">🔵 À venir (pas encore ouvert)</option>
-              <option value="fermé">⚫ Fermé (inscriptions closes)</option>
-              <option value="résultats">🏆 Résultats disponibles</option>
-            </select>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Statut <span>*</span></label>
+              <select id="conc-statut" class="form-input">
+                <option value="ouvert">🔴 En cours</option>
+                <option value="à venir">🔵 À venir</option>
+                <option value="fermé">⚫ Fermé</option>
+                <option value="résultats">🏆 Résultats publiés</option>
+              </select>
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Niveau requis</label>
+              <select id="conc-niveau" class="form-input">
+                <option value="">—</option>
+                <option value="CEPE">CEPE</option>
+                <option value="BEPC">BEPC</option>
+                <option value="BAC">BAC</option>
+                <option value="BAC+2">BAC+2</option>
+                <option value="Licence">Licence</option>
+              </select>
+            </div>
           </div>
-
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
             <div class="form-groupe">
               <label class="form-label">Date d'ouverture</label>
-              <input
-                type="text"
-                id="c-ouverture"
-                class="form-input"
-                placeholder="Ex: 12 mars 2026"
-              />
+              <input type="date" id="conc-ouverture" class="form-input" />
             </div>
             <div class="form-groupe">
               <label class="form-label">Date de clôture</label>
-              <input
-                type="text"
-                id="c-cloture"
-                class="form-input"
-                placeholder="Ex: 7 avril 2026"
-              />
+              <input type="date" id="conc-cloture" class="form-input" />
             </div>
           </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
             <div class="form-groupe">
-              <label class="form-label">Niveau requis</label>
+              <label class="form-label">Frais d'inscription (FCFA)</label>
               <input
-                type="text"
-                id="c-niveau"
+                type="number"
+                id="conc-frais"
                 class="form-input"
-                placeholder="Ex: BAC+3"
+                placeholder="0"
+                min="0"
               />
             </div>
             <div class="form-groupe">
-              <label class="form-label">Places</label>
-              <input type="number" id="c-places" class="form-input" min="0" />
-            </div>
-            <div class="form-groupe">
-              <label class="form-label">Frais (FCFA)</label>
-              <input type="number" id="c-frais" class="form-input" min="0" placeholder="0 = gratuit" />
+              <label class="form-label">Places disponibles</label>
+              <input
+                type="number"
+                id="conc-places"
+                class="form-input"
+                placeholder="Ex: 600"
+                min="0"
+              />
             </div>
           </div>
-
+          <div class="form-groupe">
+            <label class="form-label">Conditions de candidature</label>
+            <textarea
+              id="conc-conditions"
+              class="form-textarea"
+              placeholder="Conditions à remplir pour candidater…"
+              rows="2"
+            ></textarea>
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">Pièces à fournir</label>
+            <input
+              type="text"
+              id="conc-pieces"
+              class="form-input"
+              placeholder="Séparées par des virgules : CNI, Extrait de naissance, CV…"
+            />
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">Centres de composition</label>
+            <input
+              type="text"
+              id="conc-centres"
+              class="form-input"
+              placeholder="Séparés par des virgules : Abidjan, Bouaké, Yamoussoukro…"
+            />
+          </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
             <div class="form-groupe">
               <label class="form-label">Accès</label>
-              <select id="c-premium" class="form-input">
+              <select id="conc-premium" class="form-input">
                 <option value="false">🆓 Gratuit</option>
                 <option value="true">⭐ Premium</option>
               </select>
             </div>
             <div class="form-groupe">
-              <label class="form-label">Couleur de la carte</label>
-              <input type="color" id="c-couleur" class="form-input" value="#1A6B3C" style="height: 42px; padding: 4px;" />
+              <label class="form-label">Couleur (badge)</label>
+              <input
+                type="color"
+                id="conc-couleur"
+                class="form-input"
+                value="#1A6B3C"
+                style="height: 42px; padding: 4px"
+              />
             </div>
-          </div>
-
-          <div class="form-groupe">
-            <label class="form-label">Conditions d'accès <span style="font-weight: 400; color: var(--gris-texte); font-size: 0.8rem;">(une par ligne)</span></label>
-            <textarea
-              id="c-conditions"
-              class="form-textarea"
-              rows="3"
-              placeholder="Être de nationalité ivoirienne
-Avoir moins de 30 ans
-Être titulaire du diplôme requis"
-            ></textarea>
-          </div>
-
-          <div class="form-groupe">
-            <label class="form-label">Pièces à fournir <span style="font-weight: 400; color: var(--gris-texte); font-size: 0.8rem;">(une par ligne)</span></label>
-            <textarea
-              id="c-pieces"
-              class="form-textarea"
-              rows="3"
-              placeholder="Copie de la CNI
-Extrait de naissance
-Diplôme ou attestation"
-            ></textarea>
-          </div>
-
-          <div class="form-groupe">
-            <label class="form-label">Centres d'examen <span style="font-weight: 400; color: var(--gris-texte); font-size: 0.8rem;">(un par ligne)</span></label>
-            <textarea
-              id="c-centres"
-              class="form-textarea"
-              rows="2"
-              placeholder="Abidjan
-Bouaké
-Yamoussoukro"
-            ></textarea>
           </div>
         </div>
         <div class="modal__pied">
@@ -348,7 +352,7 @@ Yamoussoukro"
           <button
             onclick="sauvegarderConcours()"
             class="btn btn--primaire"
-            id="btn-save-concours"
+            id="btn-save-conc"
           >
             <span data-icone="disquette" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sauvegarder
           </button>
@@ -365,26 +369,29 @@ Yamoussoukro"
 
     <script>
       let tousConcoursAdmin = [];
-      let editConcoursId = null;
+      let editConcId = null;
 
-      const STATUT_BADGE = {
-        ouvert: '<span class="badge" style="background:rgba(220,38,38,0.1);color:#DC2626;font-size:0.7rem;">🔴 Ouvert</span>',
-        "à venir": '<span class="badge" style="background:rgba(10,110,189,0.1);color:#0A6EBD;font-size:0.7rem;">🔵 À venir</span>',
-        fermé: '<span class="badge" style="background:rgba(100,100,100,0.1);color:#666;font-size:0.7rem;">⚫ Fermé</span>',
-        résultats: '<span class="badge" style="background:rgba(245,158,11,0.1);color:#F59E0B;font-size:0.7rem;">🏆 Résultats</span>',
+      const STATUT_EMOJI_ADMIN = {
+        ouvert: "🔴",
+        "à venir": "🔵",
+        fermé: "⚫",
+        résultats: "🏆",
+      };
+      const STATUT_LABEL_ADMIN = {
+        ouvert: "En cours",
+        "à venir": "À venir",
+        fermé: "Fermé",
+        résultats: "Résultats publiés",
       };
 
       document.addEventListener("DOMContentLoaded", async () => {
-        if (!window.Auth?.estAdmin()) {
-          window.location.href = "/";
-          return;
-        }
+        if (!window.Auth?.protegerPageAdmin()) return;
         await charger();
       });
 
       async function charger() {
         try {
-          const data = await window.API.Concours.liste({ limit: 200 });
+          const data = await window.API.Concours.liste({ limit: 500 });
           tousConcoursAdmin = data.concours || [];
           filtrerConcours();
         } catch (err) {
@@ -393,33 +400,41 @@ Yamoussoukro"
       }
 
       function filtrerConcours() {
-        const rech = document.getElementById("rech-concours").value.toLowerCase();
-        const statut = document.getElementById("fil-statut-concours").value;
+        const rech = document.getElementById("rech-conc").value.toLowerCase();
+        const statut = document.getElementById("fil-statut-conc").value;
+        const acc = document.getElementById("fil-acc-conc").value;
         const liste = tousConcoursAdmin.filter((c) => {
-          if (rech && !c.titre.toLowerCase().includes(rech) && !c.organisme.toLowerCase().includes(rech)) return false;
+          if (
+            rech &&
+            !c.titre.toLowerCase().includes(rech) &&
+            !(c.organisme || "").toLowerCase().includes(rech)
+          )
+            return false;
           if (statut && c.statut !== statut) return false;
+          if (acc !== "" && String(c.premium) !== acc) return false;
           return true;
         });
-        document.getElementById("compteur-concours").textContent =
+        document.getElementById("compteur-conc").textContent =
           `${liste.length} / ${tousConcoursAdmin.length} concours`;
-        const tbody = document.getElementById("tbody-concours");
+        const tbody = document.getElementById("tbody-conc");
         if (liste.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
           return;
         }
         tbody.innerHTML = liste
           .map(
             (c) => `
     <tr>
-      <td style="font-weight:700;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.titre}</td>
-      <td style="font-size:0.85rem;">${c.organisme}</td>
-      <td><span class="badge badge--gris" style="font-size:0.7rem;">${c.categorie || "—"}</span></td>
-      <td>${STATUT_BADGE[c.statut] || c.statut}</td>
+      <td style="font-weight:700;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.titre}</td>
+      <td style="font-size:0.85rem;">${c.organisme || "—"}</td>
+      <td><span class="badge badge--violet" style="font-size:0.7rem;">${c.categorie || "—"}</span></td>
+      <td style="font-size:0.82rem;">${STATUT_EMOJI_ADMIN[c.statut] || "📋"} ${STATUT_LABEL_ADMIN[c.statut] || c.statut || "—"}</td>
       <td style="font-size:0.82rem;">${c.cloture || "—"}</td>
+      <td style="font-size:0.85rem;">${c.places || "—"}</td>
       <td>${c.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐</span>' : '<span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span>'}</td>
       <td><div class="admin-tableau__actions">
         <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${c.id})">✏️</button>
-        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${c.id},'${c.titre.replace(/'/g, "\\'")}')">🗑️</button>
+        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${c.id},'${(c.titre || "").replace(/'/g, "\\'")}')">🗑️</button>
       </div></td>
     </tr>`,
           )
@@ -427,97 +442,109 @@ Yamoussoukro"
       }
 
       function ouvrirAjout() {
-        editConcoursId = null;
-        document.getElementById("modal-concours-titre").innerHTML =
+        editConcId = null;
+        document.getElementById("modal-conc-titre").innerHTML =
           '<span data-icone="plus" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ajouter un concours';
-        document.getElementById("c-titre").value = "";
-        document.getElementById("c-organisme").value = "";
-        document.getElementById("c-categorie").value = "";
-        document.getElementById("c-statut").value = "à venir";
-        document.getElementById("c-ouverture").value = "";
-        document.getElementById("c-cloture").value = "";
-        document.getElementById("c-niveau").value = "";
-        document.getElementById("c-places").value = "";
-        document.getElementById("c-frais").value = "";
-        document.getElementById("c-premium").value = "false";
-        document.getElementById("c-couleur").value = "#1A6B3C";
-        document.getElementById("c-conditions").value = "";
-        document.getElementById("c-pieces").value = "";
-        document.getElementById("c-centres").value = "";
+        document.getElementById("conc-titre").value = "";
+        document.getElementById("conc-organisme").value = "";
+        document.getElementById("conc-categorie").value = "";
+        document.getElementById("conc-statut").value = "ouvert";
+        document.getElementById("conc-niveau").value = "";
+        document.getElementById("conc-ouverture").value = "";
+        document.getElementById("conc-cloture").value = "";
+        document.getElementById("conc-frais").value = "";
+        document.getElementById("conc-places").value = "";
+        document.getElementById("conc-conditions").value = "";
+        document.getElementById("conc-pieces").value = "";
+        document.getElementById("conc-centres").value = "";
+        document.getElementById("conc-premium").value = "false";
+        document.getElementById("conc-couleur").value = "#1A6B3C";
         ouvrirModal("modal-add-concours");
       }
 
       function editer(id) {
         const c = tousConcoursAdmin.find((x) => x.id === id);
         if (!c) return;
-        editConcoursId = id;
-        document.getElementById("modal-concours-titre").innerHTML =
+        editConcId = id;
+        document.getElementById("modal-conc-titre").innerHTML =
           '<span data-icone="crayon" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Modifier le concours';
-        document.getElementById("c-titre").value = c.titre || "";
-        document.getElementById("c-organisme").value = c.organisme || "";
-        document.getElementById("c-categorie").value = c.categorie || "";
-        document.getElementById("c-statut").value = c.statut || "à venir";
-        document.getElementById("c-ouverture").value = c.ouverture || "";
-        document.getElementById("c-cloture").value = c.cloture || "";
-        document.getElementById("c-niveau").value = c.niveau || "";
-        document.getElementById("c-places").value = c.places || "";
-        document.getElementById("c-frais").value = c.frais || "";
-        document.getElementById("c-premium").value = String(c.premium || false);
-        document.getElementById("c-couleur").value = c.couleur || "#1A6B3C";
-        document.getElementById("c-conditions").value = c.conditions || "";
-        const pieces = Array.isArray(c.pieces) ? c.pieces : [];
-        const centres = Array.isArray(c.centres) ? c.centres : [];
-        document.getElementById("c-pieces").value = pieces.join("\n");
-        document.getElementById("c-centres").value = centres.join("\n");
+        document.getElementById("conc-titre").value = c.titre || "";
+        document.getElementById("conc-organisme").value = c.organisme || "";
+        document.getElementById("conc-categorie").value = c.categorie || "";
+        document.getElementById("conc-statut").value = c.statut || "ouvert";
+        document.getElementById("conc-niveau").value = c.niveau || "";
+        document.getElementById("conc-ouverture").value = c.ouverture
+          ? String(c.ouverture).slice(0, 10)
+          : "";
+        document.getElementById("conc-cloture").value = c.cloture
+          ? String(c.cloture).slice(0, 10)
+          : "";
+        document.getElementById("conc-frais").value = c.frais || "";
+        document.getElementById("conc-places").value = c.places || "";
+        document.getElementById("conc-conditions").value = c.conditions || "";
+        document.getElementById("conc-pieces").value = Array.isArray(
+          c.pieces,
+        )
+          ? c.pieces.join(", ")
+          : "";
+        document.getElementById("conc-centres").value = Array.isArray(
+          c.centres,
+        )
+          ? c.centres.join(", ")
+          : "";
+        document.getElementById("conc-premium").value = String(
+          c.premium || false,
+        );
+        document.getElementById("conc-couleur").value = c.couleur || "#1A6B3C";
         ouvrirModal("modal-add-concours");
       }
 
       async function sauvegarderConcours() {
         const payload = {
-          titre: document.getElementById("c-titre").value.trim(),
-          organisme: document.getElementById("c-organisme").value.trim(),
-          categorie: document.getElementById("c-categorie").value.trim(),
-          statut: document.getElementById("c-statut").value,
-          ouverture: document.getElementById("c-ouverture").value.trim(),
-          cloture: document.getElementById("c-cloture").value.trim(),
-          niveau: document.getElementById("c-niveau").value.trim(),
-          places: document.getElementById("c-places").value
-            ? parseInt(document.getElementById("c-places").value, 10)
-            : null,
-          frais: document.getElementById("c-frais").value
-            ? parseInt(document.getElementById("c-frais").value, 10)
-            : 0,
-          premium: document.getElementById("c-premium").value === "true",
-          couleur: document.getElementById("c-couleur").value,
-          conditions: document.getElementById("c-conditions").value.trim(),
+          titre: document.getElementById("conc-titre").value.trim(),
+          organisme: document.getElementById("conc-organisme").value.trim(),
+          categorie: document.getElementById("conc-categorie").value.trim(),
+          statut: document.getElementById("conc-statut").value,
+          niveau: document.getElementById("conc-niveau").value,
+          ouverture: document.getElementById("conc-ouverture").value || null,
+          cloture: document.getElementById("conc-cloture").value || null,
+          frais: parseInt(document.getElementById("conc-frais").value) || 0,
+          places:
+            parseInt(document.getElementById("conc-places").value) || null,
+          conditions: document.getElementById("conc-conditions").value.trim(),
           pieces: document
-            .getElementById("c-pieces")
-            .value.split("\n")
+            .getElementById("conc-pieces")
+            .value.split(",")
             .map((s) => s.trim())
             .filter(Boolean),
           centres: document
-            .getElementById("c-centres")
-            .value.split("\n")
+            .getElementById("conc-centres")
+            .value.split(",")
             .map((s) => s.trim())
             .filter(Boolean),
+          premium: document.getElementById("conc-premium").value === "true",
+          couleur: document.getElementById("conc-couleur").value,
         };
         if (!payload.titre || !payload.organisme || !payload.categorie) {
-          window.afficherToast("Titre, organisme et catégorie sont requis.", "warn");
+          window.afficherToast(
+            "Titre, organisme et catégorie sont requis.",
+            "warn",
+          );
           return;
         }
-        const btn = document.getElementById("btn-save-concours");
+        const btn = document.getElementById("btn-save-conc");
         btn.classList.add("btn--chargement");
         btn.disabled = true;
         try {
-          if (editConcoursId) {
-            await window.API.Concours.modifier(editConcoursId, payload);
+          if (editConcId) {
+            await window.API.Concours.modifier(editConcId, payload);
             window.afficherToast("Concours modifié !", "succes");
           } else {
             await window.API.Concours.creer(payload);
             window.afficherToast("Concours ajouté !", "succes");
           }
           fermerModal("modal-add-concours");
-          editConcoursId = null;
+          editConcId = null;
           await charger();
         } catch (err) {
           window.afficherToast(err.message, "erreur");

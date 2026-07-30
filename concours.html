@@ -333,7 +333,6 @@
                     type="radio"
                     name="statut"
                     value=""
-                    checked
                     onchange="appliquerFiltres()"
                   />
                   Tous</label
@@ -343,9 +342,10 @@
                     type="radio"
                     name="statut"
                     value="ouvert"
+                    checked
                     onchange="appliquerFiltres()"
                   />
-                  🔴 Ouverts</label
+                  🔴 Ouverts (en cours)</label
                 >
                 <label class="filtre-check"
                   ><input
@@ -755,7 +755,10 @@
       function reinitialiserFiltres() {
         const champRecherche = document.getElementById("input-recherche");
         if (champRecherche) champRecherche.value = "";
-        document.querySelectorAll('input[name="statut"]')[0].checked = true;
+        const radioOuvert = document.querySelector(
+          'input[name="statut"][value="ouvert"]',
+        );
+        if (radioOuvert) radioOuvert.checked = true;
         document.querySelectorAll('input[name="categorie"]')[0].checked = true;
         document.querySelectorAll('input[name="niveau"]')[0].checked = true;
         document.querySelectorAll('input[name="premium"]')[0].checked = true;

@@ -156,6 +156,9 @@
           window.location.href = "/auth/login.html";
           return;
         }
+        if (new URLSearchParams(window.location.search).get("raison") === "acces-refuse") {
+          window.afficherToast?.("Tu n'as pas les autorisations nécessaires pour accéder à cette page.", "erreur", 4500);
+        }
         const session = window.Auth.getSession();
 
         // Sidebar

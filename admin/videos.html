@@ -66,6 +66,9 @@
           <a href="/admin/qcm.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
           >
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a
+          >
           <div class="admin-sidebar__section">Utilisateurs</div>
           <a href="/admin/abonnes.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
@@ -94,7 +97,7 @@
               </div>
             </div>
             <button
-              onclick="ouvrirModal('modal-add-video')"
+              onclick="ouvrirAjoutVid()"
               class="btn btn--primaire"
             >
               + Ajouter une vidéo
@@ -151,13 +154,14 @@
                   <th>Durée</th>
                   <th>Vues</th>
                   <th>Accès</th>
+                  <th>Source</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody id="tbody-vids">
                 <tr>
                   <td
-                    colspan="7"
+                    colspan="8"
                     style="
                       text-align: center;
                       padding: 40px;
@@ -200,6 +204,24 @@
             />
           </div>
           <div class="form-groupe">
+            <label class="form-label">Source de la vidéo</label>
+            <div style="display:flex; gap: 16px; margin-bottom: 8px;">
+              <label style="display:flex; align-items:center; gap: 6px; font-size: 0.88rem; font-weight: 500;">
+                <input type="radio" name="vid-source" value="lien" checked onchange="basculerSourceVid()" />
+                🔗 Lien (YouTube ou URL directe)
+              </label>
+              <label id="label-vid-upload" style="display:flex; align-items:center; gap: 6px; font-size: 0.88rem; font-weight: 500;">
+                <input type="radio" name="vid-source" value="upload" onchange="basculerSourceVid()" />
+                ⬆️ Uploader un fichier
+              </label>
+            </div>
+            <div class="form-hint" style="margin-bottom: 10px;">
+              Le lien YouTube reste recommandé (gratuit, sans limite, streaming optimisé).
+              L'upload direct est utile si la vidéo n'est pas sur YouTube — attention, les
+              gros fichiers consomment l'espace disque du serveur.
+            </div>
+          </div>
+          <div class="form-groupe" id="bloc-vid-url">
             <label class="form-label"
               >URL YouTube ou lien direct <span>*</span></label
             >
@@ -214,6 +236,16 @@
               L'identifiant YouTube est extrait automatiquement pour la
               miniature.
             </div>
+          </div>
+          <div class="form-groupe hidden" id="bloc-vid-fichier">
+            <label class="form-label">Fichier vidéo (MP4, WebM, MOV) <span>*</span></label>
+            <input
+              type="file"
+              id="vid-fichier"
+              class="form-input"
+              accept="video/mp4,video/webm,video/quicktime"
+            />
+            <div class="form-hint">Taille maximale : 200 MB.</div>
           </div>
           <div
             id="vid-preview"
@@ -293,10 +325,7 @@
       let editVidId = null;
 
       document.addEventListener("DOMContentLoaded", async () => {
-        if (!window.Auth?.estAdmin()) {
-          window.location.href = "/";
-          return;
-        }
+        if (!window.Auth?.protegerPageAdmin()) return;
         await charger();
       });
 
@@ -322,7 +351,7 @@
           `${liste.length} / ${toutesVids.length} vidéos`;
         const tbody = document.getElementById("tbody-vids");
         if (liste.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
           return;
         }
         tbody.innerHTML = liste
@@ -335,6 +364,7 @@
       <td style="font-size:0.82rem;">${v.duree || "—"}</td>
       <td style="font-size:0.85rem;">👁 ${(v.vues || 0).toLocaleString("fr-CI")}</td>
       <td>${v.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐</span>' : '<span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span>'}</td>
+      <td>${v.origine === "upload" ? '<span class="badge" style="font-size:0.7rem;background:#e0f2fe;color:#0369a1;">⬆️ Upload</span>' : '<span class="badge" style="font-size:0.7rem;background:#f1f5f9;color:#475569;">🔗 Lien</span>'}</td>
       <td><div class="admin-tableau__actions">
         <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${v.id})">✏️</button>
         <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${v.id},'${v.titre.replace(/'/g, "\\'")}')">🗑️</button>
@@ -342,6 +372,12 @@
     </tr>`,
           )
           .join("");
+      }
+
+      function basculerSourceVid() {
+        const mode = document.querySelector('input[name="vid-source"]:checked').value;
+        document.getElementById("bloc-vid-url").classList.toggle("hidden", mode !== "lien");
+        document.getElementById("bloc-vid-fichier").classList.toggle("hidden", mode !== "upload");
       }
 
       function previewYoutube() {
@@ -356,6 +392,24 @@
         }
       }
 
+      function ouvrirAjoutVid() {
+        editVidId = null;
+        document.getElementById("modal-vid-titre").innerHTML =
+          '<span data-icone="plus" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ajouter une vidéo';
+        document.getElementById("vid-titre").value = "";
+        document.getElementById("vid-url").value = "";
+        document.getElementById("vid-fichier").value = "";
+        document.getElementById("vid-cat").value = "";
+        document.getElementById("vid-duree").value = "";
+        document.getElementById("vid-premium").value = "false";
+        document.getElementById("vid-desc").value = "";
+        document.getElementById("vid-preview").classList.add("hidden");
+        document.querySelector('input[name="vid-source"][value="lien"]').checked = true;
+        document.getElementById("label-vid-upload").classList.remove("hidden");
+        basculerSourceVid();
+        ouvrirModal("modal-add-video");
+      }
+
       function editer(id) {
         const v = toutesVids.find((x) => x.id === id);
         if (!v) return;
@@ -364,39 +418,68 @@
           "✏️ Modifier la vidéo";
         document.getElementById("vid-titre").value = v.titre || "";
         document.getElementById("vid-url").value = v.url || "";
+        document.getElementById("vid-fichier").value = "";
         document.getElementById("vid-cat").value = v.categorie || "";
         document.getElementById("vid-duree").value = v.duree || "";
         document.getElementById("vid-premium").value = String(
           v.premium || false,
         );
         document.getElementById("vid-desc").value = v.description || "";
+        // La modification se fait toujours via lien (l'édition ne permet pas
+        // de remplacer le fichier uploadé — supprime et recrée si besoin).
+        document.querySelector('input[name="vid-source"][value="lien"]').checked = true;
+        document.getElementById("label-vid-upload").classList.add("hidden");
+        basculerSourceVid();
         previewYoutube();
         ouvrirModal("modal-add-video");
       }
 
       async function sauvegarderVid() {
-        const payload = {
-          titre: document.getElementById("vid-titre").value.trim(),
-          url: document.getElementById("vid-url").value.trim(),
-          categorie: document.getElementById("vid-cat").value.trim(),
-          duree: document.getElementById("vid-duree").value.trim(),
-          premium: document.getElementById("vid-premium").value === "true",
-          description: document.getElementById("vid-desc").value.trim(),
-        };
-        if (!payload.titre || !payload.url) {
-          window.afficherToast("Titre et URL requis.", "warn");
+        const mode = document.querySelector('input[name="vid-source"]:checked').value;
+        const titre = document.getElementById("vid-titre").value.trim();
+        const categorie = document.getElementById("vid-cat").value.trim();
+        const duree = document.getElementById("vid-duree").value.trim();
+        const premium = document.getElementById("vid-premium").value === "true";
+        const description = document.getElementById("vid-desc").value.trim();
+
+        if (!titre) {
+          window.afficherToast("Le titre est requis.", "warn");
           return;
         }
+
         const btn = document.getElementById("btn-save-vid");
         btn.classList.add("btn--chargement");
         btn.disabled = true;
         try {
-          if (editVidId) {
-            await window.API.Videos.modifier(editVidId, payload);
-            window.afficherToast("Vidéo modifiée !", "succes");
+          if (mode === "upload" && !editVidId) {
+            const fichier = document.getElementById("vid-fichier").files[0];
+            if (!fichier) {
+              window.afficherToast("Sélectionne un fichier vidéo.", "warn");
+              return;
+            }
+            const fd = new FormData();
+            fd.append("fichier", fichier);
+            fd.append("titre", titre);
+            fd.append("categorie", categorie);
+            fd.append("duree", duree);
+            fd.append("premium", premium);
+            fd.append("description", description);
+            await window.API.Videos.uploader(fd);
+            window.afficherToast("Vidéo uploadée !", "succes");
           } else {
-            await window.API.Videos.creer(payload);
-            window.afficherToast("Vidéo ajoutée !", "succes");
+            const url = document.getElementById("vid-url").value.trim();
+            if (!url) {
+              window.afficherToast("URL requise.", "warn");
+              return;
+            }
+            const payload = { titre, url, categorie, duree, premium, description };
+            if (editVidId) {
+              await window.API.Videos.modifier(editVidId, payload);
+              window.afficherToast("Vidéo modifiée !", "succes");
+            } else {
+              await window.API.Videos.creer(payload);
+              window.afficherToast("Vidéo ajoutée !", "succes");
+            }
           }
           fermerModal("modal-add-video");
           editVidId = null;
