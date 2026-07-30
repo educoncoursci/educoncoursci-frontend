@@ -1,0 +1,536 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion Offres d'Emploi — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
+          >
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
+          >
+          <a href="/admin/emploi.html" class="admin-sidebar__lien actif"
+            ><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a
+          >
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Gestion des Offres d'Emploi</div>
+              <div class="admin-topbar__sous" id="compteur-emploi">
+                Chargement…
+              </div>
+            </div>
+            <button onclick="ouvrirAjout()" class="btn btn--primaire">
+              + Ajouter une offre
+            </button>
+          </div>
+
+          <div
+            style="
+              background: rgba(10, 110, 189, 0.06);
+              border: 1px solid rgba(10, 110, 189, 0.2);
+              border-radius: var(--radius-md);
+              padding: 12px 16px;
+              margin-bottom: 20px;
+              font-size: 0.85rem;
+              color: #0a4a7a;
+            "
+          >
+            <span data-icone="attention" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
+            Renseigne un <strong>lien externe</strong> pour qu'un clic sur "Postuler" redirige directement vers l'offre réelle (site de l'entreprise, emploi.ci, abbih.com…). Sans ce lien, le candidat postule directement sur EduConcoursCI.
+          </div>
+
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              margin-bottom: 20px;
+              flex-wrap: wrap;
+            "
+          >
+            <input
+              type="text"
+              id="rech-emploi"
+              placeholder="🔍 Rechercher…"
+              oninput="filtrerEmploi()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                width: 220px;
+              "
+            />
+            <select
+              id="fil-statut-emploi"
+              onchange="filtrerEmploi()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Tous les statuts</option>
+              <option value="publié">Publiée</option>
+              <option value="fermé">Fermée</option>
+              <option value="brouillon">Brouillon</option>
+            </select>
+          </div>
+
+          <div class="admin-tableau-wrap">
+            <table class="admin-tableau">
+              <thead>
+                <tr>
+                  <th>Titre</th>
+                  <th>Entreprise</th>
+                  <th>Ville</th>
+                  <th>Contrat</th>
+                  <th>Lien externe</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-emploi">
+                <tr>
+                  <td
+                    colspan="7"
+                    style="
+                      text-align: center;
+                      padding: 40px;
+                      color: var(--gris-texte);
+                    "
+                  >
+                    Chargement…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal Ajout / Édition -->
+
+    <div class="modal-overlay" id="modal-add-emploi">
+      <div class="modal" style="max-width: 640px">
+        <div class="modal__header">
+          <div class="modal__titre" id="modal-emploi-titre">
+            <span data-icone="plus" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ajouter une offre
+          </div>
+          <button
+            class="modal__fermer"
+            onclick="fermerModal('modal-add-emploi')"
+          >
+            <span data-icone="croix" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+          </button>
+        </div>
+        <div class="modal__corps">
+          <div class="form-groupe">
+            <label class="form-label">Titre du poste <span>*</span></label>
+            <input
+              type="text"
+              id="e-titre"
+              class="form-input"
+              placeholder="Ex: Commercial(e) terrain"
+            />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Entreprise <span>*</span></label>
+              <input type="text" id="e-entreprise" class="form-input" />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Secteur</label>
+              <input
+                type="text"
+                id="e-secteur"
+                class="form-input"
+                list="liste-secteurs"
+                placeholder="Ex: Banque & Finance"
+              />
+              <datalist id="liste-secteurs">
+                <option value="Banque & Finance"></option>
+                <option value="Informatique & Tech"></option>
+                <option value="Immobilier"></option>
+                <option value="Automobile & Distribution"></option>
+                <option value="Hôtellerie & Restauration"></option>
+                <option value="Santé"></option>
+                <option value="BTP & Construction"></option>
+                <option value="Commerce & Vente"></option>
+                <option value="Éducation & Formation"></option>
+              </datalist>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Type de contrat</label>
+              <select id="e-typeContrat" class="form-input">
+                <option value="CDI">CDI</option>
+                <option value="CDD">CDD</option>
+                <option value="Stage">Stage</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Alternance">Alternance</option>
+              </select>
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Ville</label>
+              <input
+                type="text"
+                id="e-ville"
+                class="form-input"
+                value="Abidjan"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Statut</label>
+              <select id="e-statut" class="form-input">
+                <option value="publié">Publiée</option>
+                <option value="brouillon">Brouillon</option>
+                <option value="fermé">Fermée</option>
+              </select>
+            </div>
+          </div>
+
+          <div
+            class="form-groupe"
+            style="
+              background: rgba(26, 107, 60, 0.05);
+              border: 1.5px solid rgba(26, 107, 60, 0.25);
+              border-radius: var(--radius-md);
+              padding: 12px;
+            "
+          >
+            <label class="form-label"
+              ><span data-icone="monde" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span> Lien externe de candidature
+              <span style="font-weight: 400; color: var(--gris-texte); font-size: 0.8rem;"
+                >— si rempli, "Postuler" renvoie directement vers ce lien (site de l'entreprise, emploi.ci, LinkedIn…)</span
+              ></label
+            >
+            <input
+              type="url"
+              id="e-lienExterne"
+              class="form-input"
+              placeholder="https://www.emploi.ci/offre/..."
+            />
+          </div>
+
+          <div class="form-groupe">
+            <label class="form-label">Description du poste <span>*</span></label>
+            <textarea
+              id="e-description"
+              class="form-textarea"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="form-groupe">
+            <label class="form-label">Profil recherché</label>
+            <textarea
+              id="e-profilRecherche"
+              class="form-textarea"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Expérience requise</label>
+              <input
+                type="text"
+                id="e-experience"
+                class="form-input"
+                placeholder="Ex: 2 à 5 ans"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Rémunération</label>
+              <input
+                type="text"
+                id="e-salaire"
+                class="form-input"
+                placeholder="Ex: Selon profil"
+              />
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Date limite</label>
+              <input
+                type="text"
+                id="e-dateLimite"
+                class="form-input"
+                placeholder="Ex: 30 septembre 2026"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">E-mail de contact</label>
+              <input
+                type="email"
+                id="e-emailContact"
+                class="form-input"
+                placeholder="recrutement@entreprise.com"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal__pied">
+          <button
+            onclick="fermerModal('modal-add-emploi')"
+            class="btn btn--gris"
+          >
+            Annuler
+          </button>
+          <button
+            onclick="sauvegarderEmploi()"
+            class="btn btn--primaire"
+            id="btn-save-emploi"
+          >
+            <span data-icone="disquette" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sauvegarder
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let toutesOffresAdmin = [];
+      let editEmploiId = null;
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estAdmin()) {
+          window.location.href = "/";
+          return;
+        }
+        await charger();
+      });
+
+      async function charger() {
+        try {
+          const data = await window.API.Emploi.liste({ limit: 200, statut: "all" });
+          toutesOffresAdmin = data.offres || data.emplois || [];
+          filtrerEmploi();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      function filtrerEmploi() {
+        const rech = document.getElementById("rech-emploi").value.toLowerCase();
+        const statut = document.getElementById("fil-statut-emploi").value;
+        const liste = toutesOffresAdmin.filter((o) => {
+          if (
+            rech &&
+            !o.titre.toLowerCase().includes(rech) &&
+            !o.entreprise.toLowerCase().includes(rech)
+          )
+            return false;
+          if (statut && o.statut !== statut) return false;
+          return true;
+        });
+        document.getElementById("compteur-emploi").textContent =
+          `${liste.length} / ${toutesOffresAdmin.length} offres`;
+        const tbody = document.getElementById("tbody-emploi");
+        if (liste.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = liste
+          .map(
+            (o) => `
+    <tr>
+      <td style="font-weight:700;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${o.titre}</td>
+      <td style="font-size:0.85rem;">${o.entreprise}</td>
+      <td style="font-size:0.85rem;">${o.ville || "—"}</td>
+      <td><span class="badge badge--gris" style="font-size:0.7rem;">${o.type_contrat || o.typeContrat || "—"}</span></td>
+      <td style="text-align:center;">${o.lien_externe || o.lienExterne ? '<span title="Redirige vers le site externe" style="color:#1A6B3C;font-size:1.1rem;">🔗</span>' : '<span title="Candidature interne" style="color:#999;font-size:0.78rem;">interne</span>'}</td>
+      <td><span class="badge ${o.statut === "publié" ? "badge--gratuit" : "badge--gris"}" style="font-size:0.7rem;">${o.statut}</span></td>
+      <td><div class="admin-tableau__actions">
+        <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${o.id})">✏️</button>
+        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${o.id},'${(o.titre || "").replace(/'/g, "\\'")}')">🗑️</button>
+      </div></td>
+    </tr>`,
+          )
+          .join("");
+      }
+
+      function ouvrirAjout() {
+        editEmploiId = null;
+        document.getElementById("modal-emploi-titre").innerHTML =
+          '<span data-icone="plus" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ajouter une offre';
+        [
+          "e-titre", "e-entreprise", "e-secteur", "e-lienExterne",
+          "e-description", "e-profilRecherche", "e-experience",
+          "e-salaire", "e-dateLimite", "e-emailContact",
+        ].forEach((id) => (document.getElementById(id).value = ""));
+        document.getElementById("e-typeContrat").value = "CDI";
+        document.getElementById("e-ville").value = "Abidjan";
+        document.getElementById("e-statut").value = "publié";
+        ouvrirModal("modal-add-emploi");
+      }
+
+      function editer(id) {
+        const o = toutesOffresAdmin.find((x) => x.id === id);
+        if (!o) return;
+        editEmploiId = id;
+        document.getElementById("modal-emploi-titre").innerHTML =
+          '<span data-icone="crayon" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Modifier l\'offre';
+        document.getElementById("e-titre").value = o.titre || "";
+        document.getElementById("e-entreprise").value = o.entreprise || "";
+        document.getElementById("e-secteur").value = o.secteur || "";
+        document.getElementById("e-typeContrat").value = o.type_contrat || o.typeContrat || "CDI";
+        document.getElementById("e-ville").value = o.ville || "Abidjan";
+        document.getElementById("e-statut").value = o.statut || "publié";
+        document.getElementById("e-lienExterne").value = o.lien_externe || o.lienExterne || "";
+        document.getElementById("e-description").value = o.description || "";
+        document.getElementById("e-profilRecherche").value = o.profil_recherche || o.profilRecherche || "";
+        document.getElementById("e-experience").value = o.experience || "";
+        document.getElementById("e-salaire").value = o.salaire || "";
+        document.getElementById("e-dateLimite").value = o.date_limite || o.dateLimite || "";
+        document.getElementById("e-emailContact").value = o.email_contact || o.emailContact || "";
+        ouvrirModal("modal-add-emploi");
+      }
+
+      async function sauvegarderEmploi() {
+        const payload = {
+          titre: document.getElementById("e-titre").value.trim(),
+          entreprise: document.getElementById("e-entreprise").value.trim(),
+          secteur: document.getElementById("e-secteur").value.trim(),
+          typeContrat: document.getElementById("e-typeContrat").value,
+          ville: document.getElementById("e-ville").value.trim() || "Abidjan",
+          statut: document.getElementById("e-statut").value,
+          lienExterne: document.getElementById("e-lienExterne").value.trim() || null,
+          description: document.getElementById("e-description").value.trim(),
+          profilRecherche: document.getElementById("e-profilRecherche").value.trim(),
+          experience: document.getElementById("e-experience").value.trim(),
+          salaire: document.getElementById("e-salaire").value.trim(),
+          dateLimite: document.getElementById("e-dateLimite").value.trim(),
+          emailContact: document.getElementById("e-emailContact").value.trim(),
+        };
+        if (!payload.titre || !payload.entreprise || !payload.description) {
+          window.afficherToast("Titre, entreprise et description sont requis.", "warn");
+          return;
+        }
+        const btn = document.getElementById("btn-save-emploi");
+        btn.classList.add("btn--chargement");
+        btn.disabled = true;
+        try {
+          if (editEmploiId) {
+            await window.API.Emploi.modifier(editEmploiId, payload);
+            window.afficherToast("Offre modifiée !", "succes");
+          } else {
+            await window.API.Emploi.creer(payload);
+            window.afficherToast("Offre ajoutée !", "succes");
+          }
+          fermerModal("modal-add-emploi");
+          editEmploiId = null;
+          await charger();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        } finally {
+          btn.classList.remove("btn--chargement");
+          btn.disabled = false;
+        }
+      }
+
+      async function supprimer(id, titre) {
+        if (!confirm(`Supprimer l'offre "${titre}" ?`)) return;
+        try {
+          await window.API.Emploi.supprimer(id);
+          window.afficherToast("Offre supprimée.", "succes");
+          await charger();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>

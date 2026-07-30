@@ -1,0 +1,542 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion Concours — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien actif"
+            ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
+          >
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a
+          >
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Gestion des Concours</div>
+              <div class="admin-topbar__sous" id="compteur-concours">
+                Chargement…
+              </div>
+            </div>
+            <button
+              onclick="ouvrirAjout()"
+              class="btn btn--primaire"
+            >
+              + Ajouter un concours
+            </button>
+          </div>
+
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              margin-bottom: 20px;
+              flex-wrap: wrap;
+            "
+          >
+            <input
+              type="text"
+              id="rech-concours"
+              placeholder="🔍 Rechercher…"
+              oninput="filtrerConcours()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                width: 220px;
+              "
+            />
+            <select
+              id="fil-statut-concours"
+              onchange="filtrerConcours()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Tous les statuts</option>
+              <option value="ouvert">🔴 Ouvert</option>
+              <option value="à venir">🔵 À venir</option>
+              <option value="fermé">⚫ Fermé</option>
+              <option value="résultats">🏆 Résultats</option>
+            </select>
+          </div>
+
+          <div class="admin-tableau-wrap">
+            <table class="admin-tableau">
+              <thead>
+                <tr>
+                  <th>Titre</th>
+                  <th>Organisme</th>
+                  <th>Catégorie</th>
+                  <th>Statut</th>
+                  <th>Clôture</th>
+                  <th>Accès</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-concours">
+                <tr>
+                  <td
+                    colspan="7"
+                    style="
+                      text-align: center;
+                      padding: 40px;
+                      color: var(--gris-texte);
+                    "
+                  >
+                    Chargement…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal Ajout / Édition -->
+
+    <div class="modal-overlay" id="modal-add-concours">
+      <div class="modal" style="max-width: 640px">
+        <div class="modal__header">
+          <div class="modal__titre" id="modal-concours-titre">
+            <span data-icone="plus" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ajouter un concours
+          </div>
+          <button
+            class="modal__fermer"
+            onclick="fermerModal('modal-add-concours')"
+          >
+            <span data-icone="croix" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+          </button>
+        </div>
+        <div class="modal__corps">
+          <div class="form-groupe">
+            <label class="form-label">Titre <span>*</span></label>
+            <input
+              type="text"
+              id="c-titre"
+              class="form-input"
+              placeholder="Ex: Concours direct ENA 2027"
+            />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Organisme <span>*</span></label>
+              <input
+                type="text"
+                id="c-organisme"
+                class="form-input"
+                placeholder="Ex: Fonction Publique"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Catégorie <span>*</span></label>
+              <input
+                type="text"
+                id="c-categorie"
+                class="form-input"
+                list="liste-categories"
+                placeholder="Ex: Fonction Publique"
+              />
+              <datalist id="liste-categories">
+                <option value="Fonction Publique"></option>
+                <option value="Grandes Écoles"></option>
+                <option value="Sécurité"></option>
+                <option value="Santé"></option>
+                <option value="Travail Social"></option>
+                <option value="Éducation"></option>
+                <option value="Finance"></option>
+              </datalist>
+            </div>
+          </div>
+
+          <div class="form-groupe">
+            <label class="form-label"
+              >Statut <span>*</span>
+              <span style="font-weight: 400; color: var(--gris-texte); font-size: 0.8rem;"
+                >— détermine l'onglet où le concours apparaît sur le site</span
+              ></label
+            >
+            <select id="c-statut" class="form-input">
+              <option value="ouvert">🔴 Ouvert (inscriptions en cours)</option>
+              <option value="à venir">🔵 À venir (pas encore ouvert)</option>
+              <option value="fermé">⚫ Fermé (inscriptions closes)</option>
+              <option value="résultats">🏆 Résultats disponibles</option>
+            </select>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Date d'ouverture</label>
+              <input
+                type="text"
+                id="c-ouverture"
+                class="form-input"
+                placeholder="Ex: 12 mars 2026"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Date de clôture</label>
+              <input
+                type="text"
+                id="c-cloture"
+                class="form-input"
+                placeholder="Ex: 7 avril 2026"
+              />
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Niveau requis</label>
+              <input
+                type="text"
+                id="c-niveau"
+                class="form-input"
+                placeholder="Ex: BAC+3"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Places</label>
+              <input type="number" id="c-places" class="form-input" min="0" />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Frais (FCFA)</label>
+              <input type="number" id="c-frais" class="form-input" min="0" placeholder="0 = gratuit" />
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Accès</label>
+              <select id="c-premium" class="form-input">
+                <option value="false">🆓 Gratuit</option>
+                <option value="true">⭐ Premium</option>
+              </select>
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Couleur de la carte</label>
+              <input type="color" id="c-couleur" class="form-input" value="#1A6B3C" style="height: 42px; padding: 4px;" />
+            </div>
+          </div>
+
+          <div class="form-groupe">
+            <label class="form-label">Conditions d'accès <span style="font-weight: 400; color: var(--gris-texte); font-size: 0.8rem;">(une par ligne)</span></label>
+            <textarea
+              id="c-conditions"
+              class="form-textarea"
+              rows="3"
+              placeholder="Être de nationalité ivoirienne
+Avoir moins de 30 ans
+Être titulaire du diplôme requis"
+            ></textarea>
+          </div>
+
+          <div class="form-groupe">
+            <label class="form-label">Pièces à fournir <span style="font-weight: 400; color: var(--gris-texte); font-size: 0.8rem;">(une par ligne)</span></label>
+            <textarea
+              id="c-pieces"
+              class="form-textarea"
+              rows="3"
+              placeholder="Copie de la CNI
+Extrait de naissance
+Diplôme ou attestation"
+            ></textarea>
+          </div>
+
+          <div class="form-groupe">
+            <label class="form-label">Centres d'examen <span style="font-weight: 400; color: var(--gris-texte); font-size: 0.8rem;">(un par ligne)</span></label>
+            <textarea
+              id="c-centres"
+              class="form-textarea"
+              rows="2"
+              placeholder="Abidjan
+Bouaké
+Yamoussoukro"
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal__pied">
+          <button
+            onclick="fermerModal('modal-add-concours')"
+            class="btn btn--gris"
+          >
+            Annuler
+          </button>
+          <button
+            onclick="sauvegarderConcours()"
+            class="btn btn--primaire"
+            id="btn-save-concours"
+          >
+            <span data-icone="disquette" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sauvegarder
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+
+    <script src="/js/auth.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+      let tousConcoursAdmin = [];
+      let editConcoursId = null;
+
+      const STATUT_BADGE = {
+        ouvert: '<span class="badge" style="background:rgba(220,38,38,0.1);color:#DC2626;font-size:0.7rem;">🔴 Ouvert</span>',
+        "à venir": '<span class="badge" style="background:rgba(10,110,189,0.1);color:#0A6EBD;font-size:0.7rem;">🔵 À venir</span>',
+        fermé: '<span class="badge" style="background:rgba(100,100,100,0.1);color:#666;font-size:0.7rem;">⚫ Fermé</span>',
+        résultats: '<span class="badge" style="background:rgba(245,158,11,0.1);color:#F59E0B;font-size:0.7rem;">🏆 Résultats</span>',
+      };
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estAdmin()) {
+          window.location.href = "/";
+          return;
+        }
+        await charger();
+      });
+
+      async function charger() {
+        try {
+          const data = await window.API.Concours.liste({ limit: 200 });
+          tousConcoursAdmin = data.concours || [];
+          filtrerConcours();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      function filtrerConcours() {
+        const rech = document.getElementById("rech-concours").value.toLowerCase();
+        const statut = document.getElementById("fil-statut-concours").value;
+        const liste = tousConcoursAdmin.filter((c) => {
+          if (rech && !c.titre.toLowerCase().includes(rech) && !c.organisme.toLowerCase().includes(rech)) return false;
+          if (statut && c.statut !== statut) return false;
+          return true;
+        });
+        document.getElementById("compteur-concours").textContent =
+          `${liste.length} / ${tousConcoursAdmin.length} concours`;
+        const tbody = document.getElementById("tbody-concours");
+        if (liste.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = liste
+          .map(
+            (c) => `
+    <tr>
+      <td style="font-weight:700;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.titre}</td>
+      <td style="font-size:0.85rem;">${c.organisme}</td>
+      <td><span class="badge badge--gris" style="font-size:0.7rem;">${c.categorie || "—"}</span></td>
+      <td>${STATUT_BADGE[c.statut] || c.statut}</td>
+      <td style="font-size:0.82rem;">${c.cloture || "—"}</td>
+      <td>${c.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐</span>' : '<span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span>'}</td>
+      <td><div class="admin-tableau__actions">
+        <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${c.id})">✏️</button>
+        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${c.id},'${c.titre.replace(/'/g, "\\'")}')">🗑️</button>
+      </div></td>
+    </tr>`,
+          )
+          .join("");
+      }
+
+      function ouvrirAjout() {
+        editConcoursId = null;
+        document.getElementById("modal-concours-titre").innerHTML =
+          '<span data-icone="plus" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ajouter un concours';
+        document.getElementById("c-titre").value = "";
+        document.getElementById("c-organisme").value = "";
+        document.getElementById("c-categorie").value = "";
+        document.getElementById("c-statut").value = "à venir";
+        document.getElementById("c-ouverture").value = "";
+        document.getElementById("c-cloture").value = "";
+        document.getElementById("c-niveau").value = "";
+        document.getElementById("c-places").value = "";
+        document.getElementById("c-frais").value = "";
+        document.getElementById("c-premium").value = "false";
+        document.getElementById("c-couleur").value = "#1A6B3C";
+        document.getElementById("c-conditions").value = "";
+        document.getElementById("c-pieces").value = "";
+        document.getElementById("c-centres").value = "";
+        ouvrirModal("modal-add-concours");
+      }
+
+      function editer(id) {
+        const c = tousConcoursAdmin.find((x) => x.id === id);
+        if (!c) return;
+        editConcoursId = id;
+        document.getElementById("modal-concours-titre").innerHTML =
+          '<span data-icone="crayon" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Modifier le concours';
+        document.getElementById("c-titre").value = c.titre || "";
+        document.getElementById("c-organisme").value = c.organisme || "";
+        document.getElementById("c-categorie").value = c.categorie || "";
+        document.getElementById("c-statut").value = c.statut || "à venir";
+        document.getElementById("c-ouverture").value = c.ouverture || "";
+        document.getElementById("c-cloture").value = c.cloture || "";
+        document.getElementById("c-niveau").value = c.niveau || "";
+        document.getElementById("c-places").value = c.places || "";
+        document.getElementById("c-frais").value = c.frais || "";
+        document.getElementById("c-premium").value = String(c.premium || false);
+        document.getElementById("c-couleur").value = c.couleur || "#1A6B3C";
+        document.getElementById("c-conditions").value = c.conditions || "";
+        const pieces = Array.isArray(c.pieces) ? c.pieces : [];
+        const centres = Array.isArray(c.centres) ? c.centres : [];
+        document.getElementById("c-pieces").value = pieces.join("\n");
+        document.getElementById("c-centres").value = centres.join("\n");
+        ouvrirModal("modal-add-concours");
+      }
+
+      async function sauvegarderConcours() {
+        const payload = {
+          titre: document.getElementById("c-titre").value.trim(),
+          organisme: document.getElementById("c-organisme").value.trim(),
+          categorie: document.getElementById("c-categorie").value.trim(),
+          statut: document.getElementById("c-statut").value,
+          ouverture: document.getElementById("c-ouverture").value.trim(),
+          cloture: document.getElementById("c-cloture").value.trim(),
+          niveau: document.getElementById("c-niveau").value.trim(),
+          places: document.getElementById("c-places").value
+            ? parseInt(document.getElementById("c-places").value, 10)
+            : null,
+          frais: document.getElementById("c-frais").value
+            ? parseInt(document.getElementById("c-frais").value, 10)
+            : 0,
+          premium: document.getElementById("c-premium").value === "true",
+          couleur: document.getElementById("c-couleur").value,
+          conditions: document.getElementById("c-conditions").value.trim(),
+          pieces: document
+            .getElementById("c-pieces")
+            .value.split("\n")
+            .map((s) => s.trim())
+            .filter(Boolean),
+          centres: document
+            .getElementById("c-centres")
+            .value.split("\n")
+            .map((s) => s.trim())
+            .filter(Boolean),
+        };
+        if (!payload.titre || !payload.organisme || !payload.categorie) {
+          window.afficherToast("Titre, organisme et catégorie sont requis.", "warn");
+          return;
+        }
+        const btn = document.getElementById("btn-save-concours");
+        btn.classList.add("btn--chargement");
+        btn.disabled = true;
+        try {
+          if (editConcoursId) {
+            await window.API.Concours.modifier(editConcoursId, payload);
+            window.afficherToast("Concours modifié !", "succes");
+          } else {
+            await window.API.Concours.creer(payload);
+            window.afficherToast("Concours ajouté !", "succes");
+          }
+          fermerModal("modal-add-concours");
+          editConcoursId = null;
+          await charger();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        } finally {
+          btn.classList.remove("btn--chargement");
+          btn.disabled = false;
+        }
+      }
+
+      async function supprimer(id, titre) {
+        if (!confirm(`Supprimer "${titre}" ?`)) return;
+        try {
+          await window.API.Concours.supprimer(id);
+          window.afficherToast("Concours supprimé.", "succes");
+          await charger();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>
