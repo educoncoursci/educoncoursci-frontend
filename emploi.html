@@ -346,12 +346,23 @@
 
           conteneur.innerHTML = data.offres.map(o => `
             <div class="card-emploi" onclick="voirDetail(${o.id})">
+              ${o.image_url
+                ? `<img src="${o.image_url}" alt="" style="width:100%;height:110px;object-fit:cover;border-radius:10px;margin-bottom:10px;" onerror="this.style.display='none'">`
+                : `<div style="width:100%;height:70px;display:flex;align-items:center;justify-content:center;background:var(--gris-clair);border-radius:10px;margin-bottom:10px;font-size:1.6rem;">💼</div>`
+              }
               <div class="card-emploi__type">${o.type_contrat}</div>
               <div class="card-emploi__titre">${o.titre}</div>
               <div class="card-emploi__entreprise">${o.entreprise}</div>
+              <p style="font-size:0.82rem;color:var(--gris-texte);line-height:1.5;margin:6px 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+                ${(o.description || "").replace(/</g, "&lt;")}
+              </p>
               <div class="card-emploi__meta">
                 <span><span data-icone="institution" data-taille="14"></span> ${o.ville || "Non précisé"}</span>
                 ${o.salaire ? `<span><span data-icone="portefeuille" data-taille="14"></span> ${o.salaire}</span>` : ""}
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                <span style="font-size:0.72rem;color:var(--gris-texte);">${o.created_at ? new Date(o.created_at).toLocaleDateString("fr-FR", {day:"numeric", month:"short"}) : ""}</span>
+                <span style="font-size:0.78rem;font-weight:700;color:var(--vert,#1a8c4a);">Voir l'offre →</span>
               </div>
             </div>
           `).join("");

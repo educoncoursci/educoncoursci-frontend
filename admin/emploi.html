@@ -372,6 +372,15 @@
             </div>
           </div>
           <div class="form-groupe">
+            <label class="form-label">Logo / image de l'offre (URL, optionnel)</label>
+            <input
+              type="url"
+              id="emp-image"
+              class="form-input"
+              placeholder="https://.../logo.png"
+            />
+          </div>
+          <div class="form-groupe">
             <label class="form-label">Statut</label>
             <select id="emp-statut" class="form-input">
               <option value="publié">Publié</option>
@@ -509,6 +518,7 @@
         document.getElementById("emp-date-limite").value = "";
         document.getElementById("emp-email").value = "";
         document.getElementById("emp-lien").value = "";
+        document.getElementById("emp-image").value = "";
         document.getElementById("emp-statut").value = "publié";
         ouvrirModal("modal-add-emploi");
       }
@@ -532,6 +542,7 @@
         document.getElementById("emp-email").value = o.email_contact || "";
         document.getElementById("emp-lien").value = o.lien_externe || "";
         document.getElementById("emp-statut").value = o.statut || "publié";
+        document.getElementById("emp-image").value = o.image_url || "";
         ouvrirModal("modal-add-emploi");
       }
 
@@ -549,6 +560,7 @@
           dateLimite: document.getElementById("emp-date-limite").value.trim(),
           emailContact: document.getElementById("emp-email").value.trim(),
           lienExterne: document.getElementById("emp-lien").value.trim(),
+          imageUrl: document.getElementById("emp-image").value.trim(),
           statut: document.getElementById("emp-statut").value,
         };
         if (!payload.titre || !payload.entreprise || !payload.description) {
