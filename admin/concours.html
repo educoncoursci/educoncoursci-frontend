@@ -57,6 +57,11 @@
           <a href="/admin/concours.html" class="admin-sidebar__lien actif"
             ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
           >
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a
+          >
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
           <a href="/admin/pdfs.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
           >
@@ -80,6 +85,7 @@
             ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
           >
           <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
           <a href="/admin/parametres.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
           >
@@ -241,6 +247,25 @@
               />
             </div>
           </div>
+          <div class="form-groupe">
+            <label class="form-label">Structure organisatrice</label>
+            <select id="conc-structure" class="form-input">
+              <option value="">— Non renseigné —</option>
+            </select>
+            <div style="font-size:0.78rem;color:var(--gris-texte);margin-top:4px;">
+              Géré depuis <a href="/admin/referentiels.html">Référentiels</a>. Optionnel — n'affecte pas le champ Organisme ci-dessus.
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Matières de composition</label>
+              <select id="conc-matieres" class="form-input" multiple size="4"></select>
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Diplômes acceptés</label>
+              <select id="conc-diplomes" class="form-input" multiple size="4"></select>
+            </div>
+          </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
             <div class="form-groupe">
               <label class="form-label">Statut <span>*</span></label>
@@ -272,6 +297,27 @@
               <label class="form-label">Date de clôture</label>
               <input type="date" id="conc-cloture" class="form-input" />
             </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Âge minimum</label>
+              <input type="number" id="conc-age-min" class="form-input" placeholder="Ex: 18" min="0" max="80" />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Âge maximum</label>
+              <input type="number" id="conc-age-max" class="form-input" placeholder="Ex: 35" min="0" max="80" />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Sexe requis</label>
+              <select id="conc-sexe" class="form-input">
+                <option value="tous">Tous</option>
+                <option value="hommes">Hommes uniquement</option>
+                <option value="femmes">Femmes uniquement</option>
+              </select>
+            </div>
+          </div>
+          <div style="font-size:0.78rem;color:var(--gris-texte);margin-top:-6px;margin-bottom:6px;">
+            Ces critères alimentent le <a href="/eligibilite.html" target="_blank">moteur d'éligibilité</a>. Laisse vide si non applicable — un concours sans critère reste ouvert à tous.
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
             <div class="form-groupe">
@@ -341,6 +387,66 @@
               />
             </div>
           </div>
+
+          <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:18px 0;" />
+          <div style="font-weight:700;margin-bottom:10px;">📄 Fiche enrichie <span style="font-weight:400;color:var(--gris-texte);font-size:0.8rem;">(tout est optionnel — les sections vides restent masquées sur la fiche publique)</span></div>
+
+          <div class="form-groupe">
+            <label class="form-label">Historique du concours</label>
+            <textarea
+              id="conc-historique"
+              class="form-textarea"
+              placeholder="Contexte, création, évolutions marquantes du concours…"
+              rows="2"
+            ></textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Salaire</label>
+              <input
+                type="text"
+                id="conc-salaire"
+                class="form-input"
+                placeholder="Ex: Grille indiciaire catégorie B, ~150 000 F/mois"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Adresse (pour la carte)</label>
+              <input
+                type="text"
+                id="conc-adresse"
+                class="form-input"
+                placeholder="Ex: ENA, Cocody, Abidjan"
+              />
+            </div>
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">Débouchés</label>
+            <textarea
+              id="conc-debouches"
+              class="form-textarea"
+              placeholder="Postes/carrières accessibles après ce concours…"
+              rows="2"
+            ></textarea>
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">Communiqués officiels</label>
+            <textarea
+              id="conc-communiques"
+              class="form-textarea"
+              placeholder="Un par ligne — Titre | URL | Date (Date optionnelle). Ex: Report de la date d'épreuve | https://... | 12/03/2026"
+              rows="2"
+            ></textarea>
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">FAQ spécifique à ce concours</label>
+            <textarea
+              id="conc-faq"
+              class="form-textarea"
+              placeholder="Une par ligne — Question | Réponse. Ex: Peut-on composer dans une autre ville ? | Oui, sous réserve de disponibilité du centre."
+              rows="3"
+            ></textarea>
+          </div>
         </div>
         <div class="modal__pied">
           <button
@@ -386,8 +492,39 @@
 
       document.addEventListener("DOMContentLoaded", async () => {
         if (!window.Auth?.protegerPageAdmin()) return;
-        await charger();
+        await Promise.all([charger(), chargerReferentielsPourFormulaire()]);
       });
+
+      let structuresDispo = [];
+      let matieresDispo = [];
+      let diplomesDispo = [];
+
+      async function chargerReferentielsPourFormulaire() {
+        try {
+          const [{ structures }, { matieres }, { diplomes }] = await Promise.all([
+            window.API.Referentiels.structures(),
+            window.API.Referentiels.matieres(),
+            window.API.Referentiels.diplomes(),
+          ]);
+          structuresDispo = structures;
+          matieresDispo = matieres;
+          diplomesDispo = diplomes;
+
+          const selStructure = document.getElementById("conc-structure");
+          selStructure.innerHTML =
+            '<option value="">— Non renseigné —</option>' +
+            structures.map((s) => `<option value="${s.id}">${s.nom}${s.sigle ? ` (${s.sigle})` : ""}</option>`).join("");
+
+          document.getElementById("conc-matieres").innerHTML = matieres
+            .map((m) => `<option value="${m.id}">${m.nom}</option>`).join("");
+
+          document.getElementById("conc-diplomes").innerHTML = diplomes
+            .map((d) => `<option value="${d.id}">${d.nom}</option>`).join("");
+        } catch (err) {
+          // Pas bloquant pour le reste de la page — les champs resteront simplement vides
+          console.error("Erreur chargement référentiels :", err.message);
+        }
+      }
 
       async function charger() {
         try {
@@ -459,10 +596,65 @@
         document.getElementById("conc-centres").value = "";
         document.getElementById("conc-premium").value = "false";
         document.getElementById("conc-couleur").value = "#1A6B3C";
+        document.getElementById("conc-structure").value = "";
+        document.getElementById("conc-age-min").value = "";
+        document.getElementById("conc-age-max").value = "";
+        document.getElementById("conc-sexe").value = "tous";
+        document.getElementById("conc-historique").value = "";
+        document.getElementById("conc-salaire").value = "";
+        document.getElementById("conc-adresse").value = "";
+        document.getElementById("conc-debouches").value = "";
+        document.getElementById("conc-communiques").value = "";
+        document.getElementById("conc-faq").value = "";
+        deselectionnerTout("conc-matieres");
+        deselectionnerTout("conc-diplomes");
         ouvrirModal("modal-add-concours");
       }
 
-      function editer(id) {
+      // ── Lot 7 : encodage/décodage des listes "objets" en texte lisible ──
+      // Format : une entrée par ligne, champs séparés par " | ".
+      function texteVersCommuniques(texte) {
+        return texte
+          .split("\n")
+          .map((l) => l.trim())
+          .filter(Boolean)
+          .map((l) => {
+            const [titre, url, date] = l.split("|").map((s) => (s || "").trim());
+            return { titre: titre || "", url: url || "", date: date || "" };
+          })
+          .filter((c) => c.titre);
+      }
+      function communiquesVersTexte(liste) {
+        if (!Array.isArray(liste)) return "";
+        return liste
+          .map((c) => [c.titre, c.url, c.date].filter(Boolean).join(" | "))
+          .join("\n");
+      }
+      function texteVersFaq(texte) {
+        return texte
+          .split("\n")
+          .map((l) => l.trim())
+          .filter(Boolean)
+          .map((l) => {
+            const [question, ...reste] = l.split("|");
+            return {
+              question: (question || "").trim(),
+              reponse: reste.join("|").trim(),
+            };
+          })
+          .filter((f) => f.question && f.reponse);
+      }
+      function faqVersTexte(liste) {
+        if (!Array.isArray(liste)) return "";
+        return liste.map((f) => `${f.question} | ${f.reponse}`).join("\n");
+      }
+
+      function deselectionnerTout(selectId) {
+        const sel = document.getElementById(selectId);
+        Array.from(sel.options).forEach((o) => (o.selected = false));
+      }
+
+      async function editer(id) {
         const c = tousConcoursAdmin.find((x) => x.id === id);
         if (!c) return;
         editConcId = id;
@@ -496,7 +688,41 @@
           c.premium || false,
         );
         document.getElementById("conc-couleur").value = c.couleur || "#1A6B3C";
+        document.getElementById("conc-structure").value = "";
+        document.getElementById("conc-age-min").value = "";
+        document.getElementById("conc-age-max").value = "";
+        document.getElementById("conc-sexe").value = "tous";
+        document.getElementById("conc-historique").value = c.historique || "";
+        document.getElementById("conc-salaire").value = c.salaire || "";
+        document.getElementById("conc-adresse").value = c.adresse || "";
+        document.getElementById("conc-debouches").value = c.debouches || "";
+        document.getElementById("conc-communiques").value = communiquesVersTexte(c.communiques);
+        document.getElementById("conc-faq").value = faqVersTexte(c.faq);
+        deselectionnerTout("conc-matieres");
+        deselectionnerTout("conc-diplomes");
         ouvrirModal("modal-add-concours");
+
+        // Charge les relations (structure/matières/diplômes) en tâche de fond
+        // sans bloquer l'ouverture du modal — c'est de l'enrichissement, pas
+        // du contenu critique pour éditer les champs de base.
+        try {
+          const { concours: enrichi } = await window.API.Concours.detail(id);
+          if (editConcId !== id) return; // le modal a changé entretemps
+          document.getElementById("conc-structure").value = enrichi.structure_id || "";
+          document.getElementById("conc-age-min").value = enrichi.age_min ?? "";
+          document.getElementById("conc-age-max").value = enrichi.age_max ?? "";
+          document.getElementById("conc-sexe").value = enrichi.sexe || "tous";
+          const idsMatieres = (enrichi.matieres || []).map((m) => String(m.id));
+          const idsDiplomes = (enrichi.diplomes || []).map((d) => String(d.id));
+          Array.from(document.getElementById("conc-matieres").options).forEach(
+            (o) => (o.selected = idsMatieres.includes(o.value)),
+          );
+          Array.from(document.getElementById("conc-diplomes").options).forEach(
+            (o) => (o.selected = idsDiplomes.includes(o.value)),
+          );
+        } catch (err) {
+          console.error("Erreur chargement relations concours :", err.message);
+        }
       }
 
       async function sauvegarderConcours() {
@@ -524,6 +750,20 @@
             .filter(Boolean),
           premium: document.getElementById("conc-premium").value === "true",
           couleur: document.getElementById("conc-couleur").value,
+          structureId: document.getElementById("conc-structure").value
+            ? parseInt(document.getElementById("conc-structure").value)
+            : null,
+          matiereIds: Array.from(document.getElementById("conc-matieres").selectedOptions).map((o) => parseInt(o.value)),
+          diplomeIds: Array.from(document.getElementById("conc-diplomes").selectedOptions).map((o) => parseInt(o.value)),
+          ageMin: document.getElementById("conc-age-min").value ? parseInt(document.getElementById("conc-age-min").value) : null,
+          ageMax: document.getElementById("conc-age-max").value ? parseInt(document.getElementById("conc-age-max").value) : null,
+          sexe: document.getElementById("conc-sexe").value,
+          historique: document.getElementById("conc-historique").value.trim(),
+          salaire: document.getElementById("conc-salaire").value.trim(),
+          debouches: document.getElementById("conc-debouches").value.trim(),
+          adresse: document.getElementById("conc-adresse").value.trim(),
+          communiques: texteVersCommuniques(document.getElementById("conc-communiques").value),
+          faq: texteVersFaq(document.getElementById("conc-faq").value),
         };
         if (!payload.titre || !payload.organisme || !payload.categorie) {
           window.afficherToast(

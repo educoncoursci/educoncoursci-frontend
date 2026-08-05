@@ -5,6 +5,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Examen Blanc — EduConcoursCI</title>
+  <meta name="description" content="Passe des examens blancs en conditions réelles pour évaluer ton niveau avant le jour du concours.">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="EduConcoursCI" />
+    <meta property="og:title" content="Examen Blanc — EduConcoursCI" />
+    <meta property="og:description" content="Passe des examens blancs en conditions réelles pour évaluer ton niveau avant le jour du concours." />
+    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://educoncoursci.netlify.app/simulateur.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Examen Blanc — EduConcoursCI" />
+    <meta name="twitter:description" content="Passe des examens blancs en conditions réelles pour évaluer ton niveau avant le jour du concours." />
+    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -937,6 +948,15 @@
         document.getElementById("res-bonnes").textContent = score;
         document.getElementById("res-mauvaises").textContent = total - score;
         document.getElementById("res-temps").textContent = `${m}:${s}`;
+
+        // Enregistre le résultat pour le suivi de progression (Module 7),
+        // si l'utilisateur est connecté — sans bloquer l'affichage des
+        // résultats en cas d'erreur réseau.
+        if (window.Auth?.estConnecte()) {
+          window.API.QCM.soumettreExamenBlanc(score, total).catch((err) =>
+            console.error("Erreur enregistrement examen blanc :", err.message),
+          );
+        }
 
         // Par matière
         document.getElementById("res-par-matiere").innerHTML = Object.entries(

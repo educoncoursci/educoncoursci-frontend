@@ -57,6 +57,11 @@
           <a href="/admin/concours.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
           >
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a
+          >
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
           <a href="/admin/pdfs.html" class="admin-sidebar__lien actif"
             ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
           >
@@ -80,6 +85,7 @@
             ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
           >
           <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
           <a href="/admin/parametres.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
           >
@@ -97,7 +103,7 @@
               </div>
             </div>
             <button
-              onclick="ouvrirModal('modal-add-pdf')"
+              onclick="ouvrirAjoutPdf()"
               class="btn btn--primaire"
             >
               + Ajouter un PDF
@@ -245,6 +251,22 @@
               </select>
             </div>
             <div class="form-groupe">
+              <label class="form-label">Type de document</label>
+              <select id="pdf-type" class="form-input">
+                <option value="cours">Cours</option>
+                <option value="sujet">Sujet</option>
+                <option value="corrige">Corrigé</option>
+                <option value="fiche">Fiche de révision</option>
+              </select>
+            </div>
+            <div class="form-groupe admin-form__plein">
+              <label class="form-label">Concours concernés (optionnel)</label>
+              <select id="pdf-concours" class="form-input" multiple size="4"></select>
+              <div class="form-hint">
+                Affiché dans "Documents disponibles" sur la fiche de chaque concours sélectionné.
+              </div>
+            </div>
+            <div class="form-groupe">
               <label class="form-label">Nombre de pages</label
               ><input
                 type="number"
@@ -316,8 +338,36 @@
 
       document.addEventListener("DOMContentLoaded", async () => {
         if (!window.Auth?.protegerPageAdmin()) return;
-        await charger();
+        await Promise.all([charger(), chargerConcoursPourFormulaire()]);
       });
+
+      let concoursDispoPourPdf = [];
+      async function chargerConcoursPourFormulaire() {
+        try {
+          const data = await window.API.Concours.liste({ limit: 200 });
+          concoursDispoPourPdf = data.concours || [];
+          document.getElementById("pdf-concours").innerHTML = concoursDispoPourPdf
+            .map((c) => `<option value="${c.id}">${c.titre}</option>`)
+            .join("");
+        } catch (err) {
+          console.error("Erreur chargement concours :", err.message);
+        }
+      }
+
+      function ouvrirAjoutPdf() {
+        editPdfId = null;
+        document.getElementById("modal-pdf-titre").textContent = "+ Ajouter un PDF";
+        document.getElementById("pdf-titre").value = "";
+        document.getElementById("pdf-cat").value = "Général";
+        document.getElementById("pdf-premium").value = "false";
+        document.getElementById("pdf-type").value = "cours";
+        document.getElementById("pdf-pages").value = "";
+        document.getElementById("pdf-taille").value = "";
+        document.getElementById("pdf-url").value = "";
+        document.getElementById("pdf-desc").value = "";
+        Array.from(document.getElementById("pdf-concours").options).forEach((o) => (o.selected = false));
+        ouvrirModal("modal-add-pdf");
+      }
 
       async function charger() {
         try {
@@ -365,7 +415,7 @@
           .join("");
       }
 
-      function editer(id) {
+      async function editer(id) {
         const p = tousPDFs.find((x) => x.id === id);
         if (!p) return;
         editPdfId = id;
@@ -376,11 +426,24 @@
         document.getElementById("pdf-premium").value = String(
           p.premium || false,
         );
+        document.getElementById("pdf-type").value = p.type || "cours";
         document.getElementById("pdf-pages").value = p.pages || "";
         document.getElementById("pdf-taille").value = p.taille || "";
         document.getElementById("pdf-url").value = p.url || "";
         document.getElementById("pdf-desc").value = p.description || "";
+        Array.from(document.getElementById("pdf-concours").options).forEach((o) => (o.selected = false));
         ouvrirModal("modal-add-pdf");
+
+        try {
+          const { pdf: enrichi } = await window.API.PDFs.detail(id);
+          if (editPdfId !== id) return;
+          const ids = (enrichi.concoursIds || []).map(String);
+          Array.from(document.getElementById("pdf-concours").options).forEach(
+            (o) => (o.selected = ids.includes(o.value)),
+          );
+        } catch (err) {
+          console.error("Erreur chargement concours du PDF :", err.message);
+        }
       }
 
       async function sauvegarderPDF() {
@@ -388,10 +451,12 @@
           titre: document.getElementById("pdf-titre").value.trim(),
           categorie: document.getElementById("pdf-cat").value,
           premium: document.getElementById("pdf-premium").value === "true",
+          type: document.getElementById("pdf-type").value,
           pages: parseInt(document.getElementById("pdf-pages").value) || null,
           taille: document.getElementById("pdf-taille").value.trim(),
           url: document.getElementById("pdf-url").value.trim(),
           description: document.getElementById("pdf-desc").value.trim(),
+          concoursIds: Array.from(document.getElementById("pdf-concours").selectedOptions).map((o) => parseInt(o.value)),
         };
         if (!payload.titre || !payload.url) {
           window.afficherToast("Titre et URL requis.", "warn");
@@ -406,9 +471,10 @@
             window.afficherToast("PDF modifié !", "succes");
           } else {
             const fd = new FormData();
-            Object.entries(payload).forEach(
-              ([k, v]) => v !== null && fd.append(k, v),
-            );
+            Object.entries(payload).forEach(([k, v]) => {
+              if (v === null) return;
+              fd.append(k, k === "concoursIds" ? JSON.stringify(v) : v);
+            });
             await window.API.PDFs.uploader(fd);
             window.afficherToast("PDF ajouté !", "succes");
           }

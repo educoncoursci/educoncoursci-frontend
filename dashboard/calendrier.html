@@ -1,0 +1,246 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mon Calendrier — EduConcoursCI</title>
+    <meta name="description" content="Les dates importantes des concours que tu suis, en un coup d'œil.">
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .mini-calendrier {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+      }
+      .mini-calendrier__entete {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-align: center;
+        color: var(--gris-texte);
+        padding-bottom: 6px;
+      }
+      .mini-calendrier__jour {
+        aspect-ratio: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        position: relative;
+      }
+      .mini-calendrier__jour--vide { visibility: hidden; }
+      .mini-calendrier__jour--aujourdhui { background: var(--vert); color: #fff; font-weight: 800; }
+      .mini-calendrier__point {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #d97706;
+        position: absolute;
+        bottom: 4px;
+      }
+    </style>
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="dashboard">
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar__profil">
+            <div class="sidebar__avatar" id="sidebar-avatar">?</div>
+            <div class="sidebar__nom" id="sidebar-nom">—</div>
+            <div class="sidebar__email" id="sidebar-email"></div>
+            <div id="sidebar-badge"></div>
+          </div>
+          <nav class="sidebar__nav">
+            <div class="sidebar__titre">Menu</div>
+            <a href="/dashboard/index.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a>
+            <a href="/dashboard/progression.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a>
+            <a href="/dashboard/calendrier.html" class="sidebar__lien actif"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a>
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
+            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a>
+            <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a>
+            <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+            <a href="/dashboard/profil.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a>
+          </nav>
+          <div class="sidebar__deconnexion">
+            <button onclick="window.Auth?.deconnecter?.()" class="btn btn--outline-vert btn--sm btn--full">Déconnexion</button>
+          </div>
+        </aside>
+
+        <main class="dashboard__contenu">
+          <div class="dashboard__header">
+            <div>
+              <h1><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Mon calendrier</h1>
+              <p style="color: var(--gris-texte); margin: 4px 0 0; font-size: 0.9rem;">
+                Les dates importantes des concours que tu suis
+              </p>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1.3fr;gap:20px;" class="grille-calendrier-perso">
+            <div class="dash-section">
+              <div id="mini-cal-titre" style="font-weight:800;text-align:center;margin-bottom:14px;text-transform:capitalize;"></div>
+              <div class="mini-calendrier" id="mini-calendrier"></div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:14px;font-size:0.78rem;color:var(--gris-texte);">
+                <span class="mini-calendrier__point" style="position:static;"></span> Date importante
+              </div>
+            </div>
+
+            <div class="dash-section">
+              <h3 style="margin-bottom:16px;">📌 Prochaines échéances</h3>
+              <div id="liste-echeances"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      let evenements = []; // { date: Date, titre, type, concoursId }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estConnecte()) {
+          window.location.href = "/auth/login.html";
+          return;
+        }
+        const session = window.Auth.getSession();
+        document.getElementById("sidebar-nom").textContent = session.nom || "";
+        document.getElementById("sidebar-email").textContent = session.email || "";
+        document.getElementById("sidebar-badge").innerHTML = session.premium
+          ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
+          : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
+        if (session.photo_url) {
+          document.getElementById("sidebar-avatar").style.backgroundImage = `url('${session.photo_url}')`;
+          document.getElementById("sidebar-avatar").style.backgroundSize = "cover";
+          document.getElementById("sidebar-avatar").style.backgroundPosition = "center";
+        } else {
+          document.getElementById("sidebar-avatar").textContent = session.nom?.[0]?.toUpperCase() || "?";
+        }
+
+        await chargerEvenements(session.id);
+        afficherMiniCalendrier(new Date());
+        afficherEcheances();
+      });
+
+      async function chargerEvenements(userId) {
+        try {
+          const { favoris } = await window.API.Users.favoris(userId);
+          if (!favoris || favoris.length === 0) {
+            document.getElementById("liste-echeances").innerHTML =
+              `<p style="color:var(--gris-texte);font-size:0.9rem;">Tu ne suis encore aucun concours. <a href="/concours.html">Explore les concours ouverts →</a></p>`;
+            return;
+          }
+
+          const resultats = await Promise.all(
+            favoris.map((id) => window.API.Concours.detail(id).then((r) => r.concours).catch(() => null)),
+          );
+
+          evenements = [];
+          resultats.filter(Boolean).forEach((c) => {
+            if (c.ouverture && !isNaN(new Date(c.ouverture).getTime())) {
+              evenements.push({ date: new Date(c.ouverture), titre: c.titre, type: "Ouverture", concoursId: c.id });
+            }
+            if (c.cloture && !isNaN(new Date(c.cloture).getTime())) {
+              evenements.push({ date: new Date(c.cloture), titre: c.titre, type: "Clôture", concoursId: c.id });
+            }
+          });
+          evenements.sort((a, b) => a.date - b.date);
+        } catch (err) {
+          console.error("Erreur chargement calendrier :", err.message);
+        }
+      }
+
+      function afficherMiniCalendrier(dateRef) {
+        const annee = dateRef.getFullYear();
+        const mois = dateRef.getMonth();
+        const premierJour = new Date(annee, mois, 1);
+        const nbJours = new Date(annee, mois + 1, 0).getDate();
+        // Lundi = 0 ... Dimanche = 6
+        const decalage = (premierJour.getDay() + 6) % 7;
+
+        document.getElementById("mini-cal-titre").textContent =
+          dateRef.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+
+        const joursEvenements = new Set(
+          evenements
+            .filter((e) => e.date.getFullYear() === annee && e.date.getMonth() === mois)
+            .map((e) => e.date.getDate()),
+        );
+
+        const aujourdhui = new Date();
+        const estMoisCourant = aujourdhui.getFullYear() === annee && aujourdhui.getMonth() === mois;
+
+        let html = ["L", "M", "M", "J", "V", "S", "D"]
+          .map((j) => `<div class="mini-calendrier__entete">${j}</div>`).join("");
+
+        for (let i = 0; i < decalage; i++) {
+          html += `<div class="mini-calendrier__jour mini-calendrier__jour--vide"></div>`;
+        }
+        for (let jour = 1; jour <= nbJours; jour++) {
+          const estAuj = estMoisCourant && aujourdhui.getDate() === jour;
+          html += `
+      <div class="mini-calendrier__jour ${estAuj ? "mini-calendrier__jour--aujourdhui" : ""}">
+        ${jour}
+        ${joursEvenements.has(jour) && !estAuj ? '<span class="mini-calendrier__point"></span>' : ""}
+      </div>`;
+        }
+        document.getElementById("mini-calendrier").innerHTML = html;
+      }
+
+      function afficherEcheances() {
+        const zone = document.getElementById("liste-echeances");
+        const futurs = evenements.filter((e) => e.date >= new Date(new Date().setHours(0, 0, 0, 0)));
+
+        if (futurs.length === 0) {
+          zone.innerHTML = evenements.length
+            ? `<p style="color:var(--gris-texte);font-size:0.9rem;">Aucune échéance à venir pour les concours que tu suis.</p>`
+            : zone.innerHTML;
+          return;
+        }
+
+        zone.innerHTML = futurs
+          .slice(0, 15)
+          .map((e) => {
+            const jours = Math.ceil((e.date - new Date()) / 86400000);
+            return `
+      <a href="/concours-detail.html?id=${e.concoursId}" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--gris-bordure);text-decoration:none;color:inherit;">
+        <div>
+          <div style="font-weight:700;font-size:0.9rem;">${e.titre}</div>
+          <div style="font-size:0.78rem;color:var(--gris-texte);">${e.type} — ${e.date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</div>
+        </div>
+        <span class="badge ${jours <= 3 ? "badge--rouge" : "badge--orange"}" style="white-space:nowrap;">${jours >= 0 ? `J-${jours}` : "Passé"}</span>
+      </a>`;
+          })
+          .join("");
+      }
+    </script>
+  </body>
+</html>

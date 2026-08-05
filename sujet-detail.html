@@ -1,0 +1,177 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sujet — Communauté EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .forum-tag {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 2px 10px;
+        border-radius: 10px;
+        margin-right: 6px;
+      }
+      .forum-tag--general  { background: #e0e7ff; color: #3730a3; }
+      .forum-tag--entraide { background: #dcfce7; color: #166534; }
+      .forum-tag--question { background: #fef3c7; color: #92400e; }
+      .forum-tag--actualite{ background: #fee2e2; color: #991b1b; }
+      .message-carte {
+        background: var(--blanc);
+        border-radius: var(--radius-md);
+        padding: 18px 20px;
+        margin-bottom: 12px;
+        box-shadow: var(--ombre-sm);
+      }
+      .message-carte__auteur { font-weight: 700; font-size: 0.9rem; }
+      .message-carte__date { font-size: 0.76rem; color: var(--gris-texte); }
+      .message-carte__contenu { margin-top: 10px; font-size: 0.92rem; line-height: 1.7; white-space: pre-wrap; }
+    </style>
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <main class="container" style="max-width: 760px; padding: 32px 20px 60px;">
+      <a href="/communaute.html" style="font-size:0.85rem;color:var(--gris-texte);text-decoration:none;">← Retour à la communauté</a>
+
+      <div id="zone-sujet" style="margin-top:16px;">
+        <div class="skeleton" style="height: 160px; border-radius: 14px;"></div>
+      </div>
+
+      <h3 id="titre-reponses" style="margin:26px 0 14px;" class="hidden">Réponses</h3>
+      <div id="zone-reponses"></div>
+
+      <div id="zone-repondre" class="message-carte hidden" style="margin-top:16px;">
+        <div class="form-groupe" style="margin-bottom:10px;">
+          <textarea id="reponse-contenu" class="form-textarea" rows="3" placeholder="Écris ta réponse…"></textarea>
+        </div>
+        <button onclick="publierReponse()" class="btn btn--primaire btn--sm" id="btn-repondre">Répondre</button>
+      </div>
+      <div id="zone-connexion-requise" class="hidden" style="text-align:center;margin-top:16px;">
+        <a href="/auth/login.html" class="btn btn--outline-vert">Connecte-toi pour répondre</a>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      const LABELS_CAT = { general: "Général", entraide: "Entraide", question: "Question", actualite: "Actualité" };
+      let sujetId = null;
+
+      function echapperHtml(texte) {
+        const div = document.createElement("div");
+        div.textContent = texte || "";
+        return div.innerHTML;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        sujetId = params.get("id");
+        if (!sujetId) { window.location.href = "/communaute.html"; return; }
+        chargerSujet();
+
+        const session = window.Auth?.getSession();
+        document.getElementById(session ? "zone-repondre" : "zone-connexion-requise").classList.remove("hidden");
+      });
+
+      async function chargerSujet() {
+        try {
+          const { sujet, reponses } = await window.API.Forum.detailSujet(sujetId);
+          document.title = `${sujet.titre} — Communauté EduConcoursCI`;
+
+          const session = window.Auth?.getSession();
+          const peutSupprimer = session && (session.id === sujet.user_id || session.role === "admin");
+          const date = new Date(sujet.created_at).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+
+          document.getElementById("zone-sujet").innerHTML = `
+      <div class="message-carte">
+        <span class="forum-tag forum-tag--${sujet.categorie}">${LABELS_CAT[sujet.categorie] || sujet.categorie}</span>
+        ${sujet.concours_titre ? `<span class="forum-tag" style="background:var(--gris-clair);color:var(--gris-texte);">📌 ${echapperHtml(sujet.concours_titre)}</span>` : ""}
+        <h1 style="font-size:1.4rem;margin:12px 0 8px;">${echapperHtml(sujet.titre)}</h1>
+        <div class="message-carte__auteur">${echapperHtml(sujet.auteur_nom)} <span class="message-carte__date">· ${date} · 👁️ ${sujet.vues} vues</span></div>
+        <div class="message-carte__contenu">${echapperHtml(sujet.contenu)}</div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          ${session && session.id !== sujet.user_id ? `<button onclick="window.location.href='/dashboard/messages.html?avec=${sujet.user_id}'" class="btn btn--gris btn--sm">💌 Message privé</button>` : ""}
+          ${peutSupprimer ? `<button onclick="supprimerSujet()" class="btn btn--gris btn--sm">🗑️ Supprimer</button>` : ""}
+        </div>
+      </div>`;
+
+          if (reponses.length > 0) {
+            document.getElementById("titre-reponses").classList.remove("hidden");
+            document.getElementById("titre-reponses").textContent = `${reponses.length} réponse${reponses.length > 1 ? "s" : ""}`;
+          }
+          document.getElementById("zone-reponses").innerHTML = reponses.map((r) => carteReponse(r, session)).join("");
+        } catch (err) {
+          document.getElementById("zone-sujet").innerHTML = `<p style="color:#dc2626;">Erreur : ${err.message}</p>`;
+        }
+      }
+
+      function carteReponse(r, session) {
+        const date = new Date(r.created_at).toLocaleDateString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+        const peutSupprimer = session && (session.id === r.user_id || session.role === "admin");
+        return `
+      <div class="message-carte">
+        <div class="message-carte__auteur">${echapperHtml(r.auteur_nom)} <span class="message-carte__date">· ${date}</span></div>
+        <div class="message-carte__contenu">${echapperHtml(r.contenu)}</div>
+        ${peutSupprimer ? `<button onclick="supprimerReponse(${r.id})" class="btn btn--gris btn--sm" style="margin-top:8px;font-size:0.75rem;">🗑️ Supprimer</button>` : ""}
+      </div>`;
+      }
+
+      async function publierReponse() {
+        const champ = document.getElementById("reponse-contenu");
+        const contenu = champ.value.trim();
+        if (contenu.length < 2) return;
+
+        const btn = document.getElementById("btn-repondre");
+        btn.disabled = true;
+        try {
+          await window.API.Forum.repondre(sujetId, contenu);
+          champ.value = "";
+          await chargerSujet();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        } finally {
+          btn.disabled = false;
+        }
+      }
+
+      async function supprimerReponse(id) {
+        if (!confirm("Supprimer cette réponse ?")) return;
+        try {
+          await window.API.Forum.supprimerReponse(id);
+          await chargerSujet();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      async function supprimerSujet() {
+        if (!confirm("Supprimer ce sujet et toutes ses réponses ?")) return;
+        try {
+          await window.API.Forum.supprimerSujet(sujetId);
+          window.location.href = "/communaute.html";
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>

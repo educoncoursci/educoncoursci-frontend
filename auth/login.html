@@ -131,6 +131,19 @@
             Inscription gratuite
           </a>
         </p>
+
+        <!-- Étape 2FA (masquée par défaut) -->
+        <div id="zone-2fa" class="hidden">
+          <div id="erreur-2fa" class="form-erreur hidden"></div>
+          <p style="font-size:0.88rem;color:var(--gris-texte);margin-bottom:14px;">
+            🔒 Ce compte est protégé par la 2FA. Entre le code à 6 chiffres de ton application d'authentification, ou l'un de tes codes de récupération.
+          </p>
+          <div class="form-groupe">
+            <input type="text" id="code-2fa" class="form-input" placeholder="123456 ou XXXXX-XXXXX" autocomplete="one-time-code" inputmode="numeric" />
+          </div>
+          <button type="button" id="btn-verifier-2fa" class="btn btn--primaire btn--full" onclick="verifier2FA()">Vérifier</button>
+          <button type="button" class="btn btn--gris btn--full mt-1" onclick="window.location.reload()">← Retour</button>
+        </div>
       </div>
     </div>
 
@@ -144,6 +157,44 @@
         window.location.href = "/dashboard/index.html";
       }
       window.Auth.initFormulaireConnexion();
+
+      let tempToken2FA = null;
+
+      window.on2FARequired = function (tempToken) {
+        tempToken2FA = tempToken;
+        document.getElementById("form-connexion").classList.add("hidden");
+        document.querySelector(".auth-card__oubli")?.classList.add("hidden");
+        document.getElementById("zone-2fa").classList.remove("hidden");
+        document.getElementById("code-2fa").focus();
+      };
+
+      async function verifier2FA() {
+        const saisie = document.getElementById("code-2fa").value.trim();
+        const errDiv = document.getElementById("erreur-2fa");
+        const btn = document.getElementById("btn-verifier-2fa");
+        if (!saisie) return;
+
+        const estCodeRecuperation = saisie.includes("-");
+        errDiv.classList.add("hidden");
+        btn.classList.add("btn--chargement");
+        btn.disabled = true;
+
+        try {
+          await window.Auth.verifierCode2FA(tempToken2FA, estCodeRecuperation
+            ? { codeRecuperation: saisie }
+            : { token: saisie });
+          window.afficherToast("Connexion réussie !", "succes");
+          const params = new URLSearchParams(window.location.search);
+          const retour = params.get("retour") || "/dashboard/index.html";
+          setTimeout(() => window.location.href = retour, 600);
+        } catch (err) {
+          errDiv.textContent = err.message || "Code incorrect.";
+          errDiv.classList.remove("hidden");
+        } finally {
+          btn.classList.remove("btn--chargement");
+          btn.disabled = false;
+        }
+      }
     </script>
   </body>
 </html>

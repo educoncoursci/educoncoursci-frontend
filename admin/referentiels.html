@@ -1,0 +1,383 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Référentiels — Admin EduConcoursCI</title>
+    <meta name="description" content="Gestion des structures, matières et diplômes utilisés par les fiches concours.">
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
+          >
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien actif"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a
+          >
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
+          >
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a
+          >
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Référentiels</div>
+              <div class="admin-topbar__sous">
+                Structures, matières et diplômes utilisés sur les fiches concours
+              </div>
+            </div>
+          </div>
+
+          <!-- Onglets -->
+          <div style="display:flex;gap:8px;margin-bottom:20px;border-bottom:1.5px solid var(--gris-bordure);">
+            <button class="onglet-ref actif" data-onglet="structures" onclick="changerOnglet('structures')" style="padding:10px 18px;border:none;background:none;cursor:pointer;font-weight:700;font-size:0.9rem;">Structures</button>
+            <button class="onglet-ref" data-onglet="matieres" onclick="changerOnglet('matieres')" style="padding:10px 18px;border:none;background:none;cursor:pointer;font-weight:700;font-size:0.9rem;color:var(--gris-texte);">Matières</button>
+            <button class="onglet-ref" data-onglet="diplomes" onclick="changerOnglet('diplomes')" style="padding:10px 18px;border:none;background:none;cursor:pointer;font-weight:700;font-size:0.9rem;color:var(--gris-texte);">Diplômes</button>
+            <button class="onglet-ref" data-onglet="categories" onclick="changerOnglet('categories')" style="padding:10px 18px;border:none;background:none;cursor:pointer;font-weight:700;font-size:0.9rem;color:var(--gris-texte);">Catégories</button>
+          </div>
+
+          <!-- ── STRUCTURES ── -->
+          <div id="panneau-structures">
+            <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+              <input id="struct-nom" placeholder="Nom (ex: École Nationale d'Administration)" style="flex:2;min-width:220px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              <input id="struct-sigle" placeholder="Sigle (ex: ENA)" style="flex:1;min-width:100px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              <input id="struct-ministere" placeholder="Ministère de tutelle" style="flex:2;min-width:180px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              <button class="btn btn--vert btn--sm" onclick="ajouterStructure()">+ Ajouter</button>
+            </div>
+            <div class="admin-tableau-wrap">
+              <table class="admin-tableau">
+                <thead><tr><th>Nom</th><th>Sigle</th><th>Ministère</th><th>Actions</th></tr></thead>
+                <tbody id="tbody-structures"><tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ── MATIÈRES ── -->
+          <div id="panneau-matieres" class="hidden">
+            <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+              <input id="matiere-nom" placeholder="Nom (ex: Culture générale)" style="flex:2;min-width:220px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              <input id="matiere-categorie" placeholder="Catégorie (ex: Général, Technique...)" style="flex:1;min-width:180px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              <button class="btn btn--vert btn--sm" onclick="ajouterMatiere()">+ Ajouter</button>
+            </div>
+            <div class="admin-tableau-wrap">
+              <table class="admin-tableau">
+                <thead><tr><th>Nom</th><th>Catégorie</th><th>Actions</th></tr></thead>
+                <tbody id="tbody-matieres"><tr><td colspan="3" style="text-align:center;padding:30px;color:var(--gris-texte);">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ── DIPLÔMES ── -->
+          <div id="panneau-diplomes" class="hidden">
+            <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+              <input id="diplome-nom" placeholder="Nom (ex: BAC, Licence, Master...)" style="flex:2;min-width:220px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              <input id="diplome-niveau" type="number" placeholder="Niveau (ex: 12 = BAC, 15 = Licence)" style="flex:1;min-width:180px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              <button class="btn btn--vert btn--sm" onclick="ajouterDiplome()">+ Ajouter</button>
+            </div>
+            <div class="admin-tableau-wrap">
+              <table class="admin-tableau">
+                <thead><tr><th>Nom</th><th>Niveau</th><th>Actions</th></tr></thead>
+                <tbody id="tbody-diplomes"><tr><td colspan="3" style="text-align:center;padding:30px;color:var(--gris-texte);">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ── CATÉGORIES ── -->
+          <div id="panneau-categories" class="hidden">
+            <div style="font-size:0.82rem;color:var(--gris-texte);margin-bottom:12px;">
+              Utilisées pour filtrer les concours et sur la page d'accueil. Le champ "Catégorie" existant sur chaque concours n'est pas affecté par cette gestion — c'est un vocabulaire de référence en plus.
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+              <input id="categorie-nom" placeholder="Nom (ex: Fonction Publique)" style="flex:2;min-width:220px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              <button class="btn btn--vert btn--sm" onclick="ajouterCategorie()">+ Ajouter</button>
+            </div>
+            <div class="admin-tableau-wrap">
+              <table class="admin-tableau">
+                <thead><tr><th>Nom</th><th>Actions</th></tr></thead>
+                <tbody id="tbody-categories"><tr><td colspan="2" style="text-align:center;padding:30px;color:var(--gris-texte);">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.protegerPageAdmin()) return;
+        await Promise.all([chargerStructures(), chargerMatieres(), chargerDiplomes(), chargerCategories()]);
+      });
+
+      function changerOnglet(nom) {
+        document.querySelectorAll(".onglet-ref").forEach((b) => {
+          const actif = b.dataset.onglet === nom;
+          b.classList.toggle("actif", actif);
+          b.style.color = actif ? "" : "var(--gris-texte)";
+          b.style.borderBottom = actif ? "2px solid var(--vert)" : "none";
+        });
+        ["structures", "matieres", "diplomes", "categories"].forEach((p) => {
+          document.getElementById(`panneau-${p}`).classList.toggle("hidden", p !== nom);
+        });
+      }
+
+      // ── Structures ──────────────────────────────────────────
+      async function chargerStructures() {
+        try {
+          const { structures } = await window.API.Referentiels.structures();
+          const tbody = document.getElementById("tbody-structures");
+          tbody.innerHTML = structures.length
+            ? structures.map((s) => `
+              <tr>
+                <td style="font-weight:700;">${s.nom}</td>
+                <td>${s.sigle || "—"}</td>
+                <td style="font-size:0.85rem;color:var(--gris-texte);">${s.ministere || "—"}</td>
+                <td><button class="btn btn--gris btn--sm" onclick="supprimerStructure(${s.id})">Supprimer</button></td>
+              </tr>`).join("")
+            : `<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune structure. Ajoute la première ci-dessus.</td></tr>`;
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function ajouterStructure() {
+        const nom = document.getElementById("struct-nom").value.trim();
+        const sigle = document.getElementById("struct-sigle").value.trim();
+        const ministere = document.getElementById("struct-ministere").value.trim();
+        if (!nom) return window.afficherToast("Le nom est requis.", "warn");
+        try {
+          await window.API.Referentiels.creerStructure({ nom, sigle, ministere });
+          document.getElementById("struct-nom").value = "";
+          document.getElementById("struct-sigle").value = "";
+          document.getElementById("struct-ministere").value = "";
+          window.afficherToast("Structure ajoutée.", "succes");
+          await chargerStructures();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function supprimerStructure(id) {
+        if (!confirm("Supprimer cette structure ? Les concours liés perdront ce lien (mais resteront affichés).")) return;
+        try {
+          await window.API.Referentiels.supprimerStructure(id);
+          window.afficherToast("Structure supprimée.", "succes");
+          await chargerStructures();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      // ── Matières ────────────────────────────────────────────
+      async function chargerMatieres() {
+        try {
+          const { matieres } = await window.API.Referentiels.matieres();
+          const tbody = document.getElementById("tbody-matieres");
+          tbody.innerHTML = matieres.length
+            ? matieres.map((m) => `
+              <tr>
+                <td style="font-weight:700;">${m.nom}</td>
+                <td style="font-size:0.85rem;color:var(--gris-texte);">${m.categorie || "—"}</td>
+                <td><button class="btn btn--gris btn--sm" onclick="supprimerMatiere(${m.id})">Supprimer</button></td>
+              </tr>`).join("")
+            : `<tr><td colspan="3" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune matière. Ajoute la première ci-dessus.</td></tr>`;
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function ajouterMatiere() {
+        const nom = document.getElementById("matiere-nom").value.trim();
+        const categorie = document.getElementById("matiere-categorie").value.trim();
+        if (!nom) return window.afficherToast("Le nom est requis.", "warn");
+        try {
+          await window.API.Referentiels.creerMatiere({ nom, categorie });
+          document.getElementById("matiere-nom").value = "";
+          document.getElementById("matiere-categorie").value = "";
+          window.afficherToast("Matière ajoutée.", "succes");
+          await chargerMatieres();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function supprimerMatiere(id) {
+        if (!confirm("Supprimer cette matière ?")) return;
+        try {
+          await window.API.Referentiels.supprimerMatiere(id);
+          window.afficherToast("Matière supprimée.", "succes");
+          await chargerMatieres();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      // ── Diplômes ────────────────────────────────────────────
+      async function chargerDiplomes() {
+        try {
+          const { diplomes } = await window.API.Referentiels.diplomes();
+          const tbody = document.getElementById("tbody-diplomes");
+          tbody.innerHTML = diplomes.length
+            ? diplomes.map((d) => `
+              <tr>
+                <td style="font-weight:700;">${d.nom}</td>
+                <td>${d.niveau ?? "—"}</td>
+                <td><button class="btn btn--gris btn--sm" onclick="supprimerDiplome(${d.id})">Supprimer</button></td>
+              </tr>`).join("")
+            : `<tr><td colspan="3" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun diplôme. Ajoute le premier ci-dessus.</td></tr>`;
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function ajouterDiplome() {
+        const nom = document.getElementById("diplome-nom").value.trim();
+        const niveauVal = document.getElementById("diplome-niveau").value;
+        const niveau = niveauVal ? parseInt(niveauVal) : null;
+        if (!nom) return window.afficherToast("Le nom est requis.", "warn");
+        try {
+          await window.API.Referentiels.creerDiplome({ nom, niveau });
+          document.getElementById("diplome-nom").value = "";
+          document.getElementById("diplome-niveau").value = "";
+          window.afficherToast("Diplôme ajouté.", "succes");
+          await chargerDiplomes();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function supprimerDiplome(id) {
+        if (!confirm("Supprimer ce diplôme ?")) return;
+        try {
+          await window.API.Referentiels.supprimerDiplome(id);
+          window.afficherToast("Diplôme supprimé.", "succes");
+          await chargerDiplomes();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      // ── Catégories ──────────────────────────────────────────
+      async function chargerCategories() {
+        try {
+          const { categories } = await window.API.Referentiels.categories();
+          const tbody = document.getElementById("tbody-categories");
+          tbody.innerHTML = categories.length
+            ? categories.map((c) => `
+              <tr>
+                <td style="font-weight:700;">${c.nom}</td>
+                <td><button class="btn btn--gris btn--sm" onclick="supprimerCategorie(${c.id})">Supprimer</button></td>
+              </tr>`).join("")
+            : `<tr><td colspan="2" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune catégorie. Ajoute la première ci-dessus.</td></tr>`;
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function ajouterCategorie() {
+        const nom = document.getElementById("categorie-nom").value.trim();
+        if (!nom) return window.afficherToast("Le nom est requis.", "warn");
+        try {
+          await window.API.Referentiels.creerCategorie({ nom });
+          document.getElementById("categorie-nom").value = "";
+          window.afficherToast("Catégorie ajoutée.", "succes");
+          await chargerCategories();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function supprimerCategorie(id) {
+        if (!confirm("Supprimer cette catégorie ? Les concours qui l'utilisent garderont leur valeur telle quelle.")) return;
+        try {
+          await window.API.Referentiels.supprimerCategorie(id);
+          window.afficherToast("Catégorie supprimée.", "succes");
+          await chargerCategories();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>

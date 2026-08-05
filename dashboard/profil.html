@@ -42,6 +42,10 @@
             <a href="/dashboard/index.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a
             >
+            <a href="/dashboard/progression.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a
+            >
+            <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
             <a href="/dashboard/mes-scores.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a
             >
@@ -50,6 +54,9 @@
             >
             <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a
+            >
+            <a href="/dashboard/messages.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a
             >
             <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a
@@ -119,6 +126,23 @@
                 ></div>
                 <div id="profil-badge-affich"></div>
               </div>
+            </div>
+
+            <!-- Panneau photo de profil (Lot 6) -->
+            <div id="panneau-photo" class="hidden" style="background: var(--gris-clair); border-radius: var(--radius-md); padding: 16px; margin-bottom: 24px;">
+              <div style="font-weight: 700; font-size: 0.88rem; margin-bottom: 10px;">Changer ma photo de profil</div>
+              <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-bottom: 10px;">
+                <input type="url" id="photo-url" placeholder="https://... (lien d'une image déjà en ligne)" style="padding: 9px 12px; border: 1.5px solid var(--gris-bordure); border-radius: 8px; font-size: 0.85rem;">
+                <button class="btn btn--vert btn--sm" onclick="definirPhotoParUrl()">Utiliser ce lien</button>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <input type="file" id="photo-fichier" accept="image/jpeg,image/png,image/webp" style="font-size: 0.82rem;">
+                <button class="btn btn--outline-vert btn--sm" onclick="uploaderPhotoFichier()">Uploader</button>
+              </div>
+              <div style="font-size: 0.75rem; color: var(--gris-texte); margin-top: 8px;">
+                Le lien externe est recommandé (plus fiable). Format image acceptés pour l'upload : JPG, PNG, WebP — 5 Mo max.
+              </div>
+              <div id="msg-photo" class="hidden" style="margin-top: 8px; font-size: 0.82rem;"></div>
             </div>
 
             <!-- Formulaire infos -->
@@ -200,6 +224,44 @@
             </div>
           </div>
 
+          <!-- 2FA (Lot 16) -->
+          <div class="dash-section" style="margin-bottom: 20px">
+            <div class="dash-section__titre" style="margin-bottom: 8px">
+              <span data-icone="cle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Authentification à deux facteurs (2FA)
+            </div>
+            <p style="font-size: 0.85rem; color: var(--gris-texte); margin-bottom: 16px;">
+              Ajoute une couche de sécurité supplémentaire avec une application comme Google Authenticator ou Authy.
+            </p>
+            <div id="zone-2fa-statut">
+              <div class="skeleton" style="height: 36px; width: 200px; border-radius: 10px;"></div>
+            </div>
+
+            <!-- Étape configuration (masquée par défaut) -->
+            <div id="zone-2fa-setup" class="hidden" style="max-width: 420px; margin-top: 16px;">
+              <p style="font-size: 0.85rem; margin-bottom: 12px;">1. Scanne ce QR code avec ton application :</p>
+              <img id="qrcode-2fa" style="max-width: 200px; border-radius: 10px; border: 1px solid var(--gris-bordure);" />
+              <p style="font-size: 0.78rem; color: var(--gris-texte); margin: 10px 0;">Ou entre ce code manuellement : <code id="secret-2fa" style="background:var(--gris-clair);padding:2px 8px;border-radius:6px;"></code></p>
+              <p style="font-size: 0.85rem; margin: 14px 0 8px;">2. Entre le code à 6 chiffres généré :</p>
+              <input type="text" id="code-confirmer-2fa" class="form-input" placeholder="123456" inputmode="numeric" style="max-width:180px;" />
+              <button onclick="confirmer2FASetup()" class="btn btn--vert btn--sm mt-1">Activer la 2FA</button>
+            </div>
+
+            <!-- Codes de récupération (affichés une seule fois) -->
+            <div id="zone-2fa-codes" class="hidden" style="max-width: 420px; margin-top: 16px; background: #fefce8; border: 1px solid #fde68a; border-radius: 12px; padding: 16px;">
+              <p style="font-weight: 700; font-size: 0.88rem; margin-bottom: 8px;">⚠️ Sauvegarde ces codes de récupération</p>
+              <p style="font-size: 0.8rem; color: var(--gris-texte); margin-bottom: 10px;">Ils ne seront plus jamais affichés. Utilise-en un si tu perds l'accès à ton application.</p>
+              <div id="liste-codes-2fa" style="font-family: monospace; font-size: 0.85rem; line-height: 1.9;"></div>
+              <button onclick="document.getElementById('zone-2fa-codes').classList.add('hidden')" class="btn btn--gris btn--sm mt-1">J'ai bien noté mes codes</button>
+            </div>
+
+            <!-- Désactivation -->
+            <div id="zone-2fa-disable" class="hidden" style="max-width: 420px; margin-top: 16px;">
+              <input type="password" id="mdp-2fa-disable" class="form-input" placeholder="Ton mot de passe" style="margin-bottom: 8px;" />
+              <button onclick="desactiver2FA()" class="btn btn--danger btn--sm">Confirmer la désactivation</button>
+              <button onclick="document.getElementById('zone-2fa-disable').classList.add('hidden')" class="btn btn--gris btn--sm">Annuler</button>
+            </div>
+          </div>
+
           <!-- Zone danger -->
           <div
             class="dash-section"
@@ -262,10 +324,7 @@
           : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
 
         // Profil
-        document.getElementById("profil-avatar").textContent =
-          (session.nom?.[0]?.toUpperCase() || "?") + "\n";
-        document.getElementById("profil-avatar").innerHTML =
-          `${session.nom?.[0]?.toUpperCase() || "?"}<button class="profil-avatar__edit" title="Modifier">✏️</button>`;
+        afficherAvatar(session);
         document.getElementById("profil-nom-affich").textContent =
           session.nom || "";
         document.getElementById("profil-email-affich").textContent =
@@ -278,7 +337,62 @@
         // Pré-remplissage
         document.getElementById("p-nom").value = session.nom || "";
         document.getElementById("p-email").value = session.email || "";
+
+        chargerStatut2FA();
       });
+
+      function afficherAvatar(session) {
+        const initiale = session.nom?.[0]?.toUpperCase() || "?";
+        const avatar = document.getElementById("profil-avatar");
+        if (session.photo_url) {
+          avatar.style.backgroundImage = `url('${session.photo_url}')`;
+          avatar.style.backgroundSize = "cover";
+          avatar.style.backgroundPosition = "center";
+          avatar.textContent = "";
+          avatar.innerHTML = `<button class="profil-avatar__edit" title="Modifier" onclick="event.stopPropagation(); document.getElementById('panneau-photo').classList.toggle('hidden');"><span data-icone="crayon" data-taille="16"></span></button>`;
+        } else {
+          avatar.style.backgroundImage = "";
+          avatar.innerHTML = `${initiale}<button class="profil-avatar__edit" title="Modifier" onclick="event.stopPropagation(); document.getElementById('panneau-photo').classList.toggle('hidden');"><span data-icone="crayon" data-taille="16"></span></button>`;
+        }
+        document.getElementById("sidebar-avatar").style.backgroundImage = session.photo_url ? `url('${session.photo_url}')` : "";
+        if (session.photo_url) {
+          document.getElementById("sidebar-avatar").style.backgroundSize = "cover";
+          document.getElementById("sidebar-avatar").style.backgroundPosition = "center";
+          document.getElementById("sidebar-avatar").textContent = "";
+        }
+      }
+
+      async function definirPhotoParUrl() {
+        const url = document.getElementById("photo-url").value.trim();
+        const msg = document.getElementById("msg-photo");
+        if (!url) return affMsg(msg, "Colle un lien d'image.", "erreur");
+        try {
+          const session = window.Auth.getSession();
+          await window.API.Users.definirPhotoUrl(session.id, url);
+          await window.Auth.rafraichirProfil();
+          afficherAvatar(window.Auth.getSession());
+          affMsg(msg, "Photo mise à jour !", "succes");
+        } catch (err) {
+          affMsg(msg, err.message, "erreur");
+        }
+      }
+
+      async function uploaderPhotoFichier() {
+        const fichier = document.getElementById("photo-fichier").files[0];
+        const msg = document.getElementById("msg-photo");
+        if (!fichier) return affMsg(msg, "Choisis une image.", "erreur");
+        try {
+          const session = window.Auth.getSession();
+          const fd = new FormData();
+          fd.append("photo", fichier);
+          await window.API.Users.uploaderPhoto(session.id, fd);
+          await window.Auth.rafraichirProfil();
+          afficherAvatar(window.Auth.getSession());
+          affMsg(msg, "Photo mise à jour !", "succes");
+        } catch (err) {
+          affMsg(msg, err.message, "erreur");
+        }
+      }
 
       async function sauvegarderProfil() {
         const nom = document.getElementById("p-nom").value.trim();
@@ -289,12 +403,12 @@
           return;
         }
         try {
-          // Mise à jour locale (la route PATCH /users/:id serait appelée ici)
           const session = window.Auth.getSession();
-          const updated = { ...session, nom, email };
-          localStorage.setItem("ecc_user", JSON.stringify(updated));
+          await window.API.Users.modifier(session.id, { nom, email });
+          await window.Auth.rafraichirProfil();
           document.getElementById("sidebar-nom").textContent = nom;
           document.getElementById("profil-nom-affich").textContent = nom;
+          document.getElementById("profil-email-affich").textContent = email;
           affMsg(msg, "Profil mis à jour avec succès !", "succes");
         } catch (err) {
           affMsg(msg, err.message, "erreur");
@@ -350,6 +464,59 @@
         el.textContent = texte;
         el.classList.remove("hidden");
         setTimeout(() => el.classList.add("hidden"), 4000);
+      }
+
+      // ── 2FA (Lot 16) ─────────────────────────────────────────
+      async function chargerStatut2FA() {
+        const zone = document.getElementById("zone-2fa-statut");
+        try {
+          const { user } = await window.API.Auth.me();
+          zone.innerHTML = user.two_factor_enabled
+            ? `<span class="badge badge--vert">✓ 2FA activée</span> <button onclick="document.getElementById('zone-2fa-disable').classList.remove('hidden')" class="btn btn--gris btn--sm" style="margin-left:10px;">Désactiver</button>`
+            : `<button onclick="demarrerSetup2FA()" class="btn btn--vert btn--sm">Activer la 2FA</button>`;
+        } catch (err) {
+          zone.innerHTML = `<p style="color:#dc2626;font-size:0.85rem;">Erreur : ${err.message}</p>`;
+        }
+      }
+
+      async function demarrerSetup2FA() {
+        try {
+          const { qrCodeUrl, secret } = await window.API.Auth.setup2FA();
+          document.getElementById("qrcode-2fa").src = qrCodeUrl;
+          document.getElementById("secret-2fa").textContent = secret;
+          document.getElementById("zone-2fa-setup").classList.remove("hidden");
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      async function confirmer2FASetup() {
+        const token = document.getElementById("code-confirmer-2fa").value.trim();
+        if (!token) return;
+        try {
+          const { codesRecuperation } = await window.API.Auth.confirmer2FA(token);
+          document.getElementById("zone-2fa-setup").classList.add("hidden");
+          document.getElementById("liste-codes-2fa").innerHTML = codesRecuperation.map((c) => `<div>${c}</div>`).join("");
+          document.getElementById("zone-2fa-codes").classList.remove("hidden");
+          window.afficherToast("2FA activée !", "succes");
+          await chargerStatut2FA();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      async function desactiver2FA() {
+        const password = document.getElementById("mdp-2fa-disable").value;
+        if (!password) return window.afficherToast("Mot de passe requis.", "warn");
+        try {
+          await window.API.Auth.desactiver2FA(password);
+          document.getElementById("zone-2fa-disable").classList.add("hidden");
+          document.getElementById("mdp-2fa-disable").value = "";
+          window.afficherToast("2FA désactivée.", "succes");
+          await chargerStatut2FA();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
       }
     </script>
   </body>

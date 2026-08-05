@@ -9,13 +9,16 @@
       name="description"
       content="La plateforme de référence en Côte d'Ivoire : préparation aux concours, générateur de CV et documents par IA, offres d'emploi et assistance sociale — réunis au même endroit."
     />
-    <meta property="og:title" content="EduConcoursCI" />
-    <meta
-      property="og:description"
-      content="Prépare les concours CI avec des QCM, cours et sujets corrigés."
-    />
-    <meta property="og:image" content="/assets/og-image.jpg" />
-    <link rel="icon" href="/assets/favicon.ico" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="EduConcoursCI" />
+    <meta property="og:title" content="EduConcoursCI — Concours, CV, Emploi & Accompagnement en Côte d'Ivoire" />
+    <meta property="og:description" content="La plateforme de référence en Côte d'Ivoire : préparation aux concours, générateur de CV et documents par IA, offres d'emploi et assistance sociale — réunis au même endroit." />
+    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://educoncoursci.netlify.app/index.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EduConcoursCI — Concours, CV, Emploi & Accompagnement en Côte d'Ivoire" />
+    <meta name="twitter:description" content="La plateforme de référence en Côte d'Ivoire : préparation aux concours, générateur de CV et documents par IA, offres d'emploi et assistance sociale — réunis au même endroit." />
+    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />    <link rel="icon" href="/assets/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -27,6 +30,31 @@
     <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
     <link rel="stylesheet" href="/css/flash-info.css" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "EduConcoursCI",
+      "url": "https://educoncoursci.netlify.app",
+      "logo": "https://educoncoursci.netlify.app/assets/logo-icon.png",
+      "description": "Plateforme de préparation aux concours, générateur de CV et documents par IA, offres d'emploi et assistance sociale en Côte d'Ivoire.",
+      "areaServed": "CI",
+      "sameAs": []
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "EduConcoursCI",
+      "url": "https://educoncoursci.netlify.app",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://educoncoursci.netlify.app/concours.html?recherche={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
   <body>
     <!-- ── BANDEAU PREMIUM ───────────────────────────────────────── -->
@@ -38,92 +66,7 @@
 
     <!-- ── NAVBAR ────────────────────────────────────────────────── -->
 
-    <nav class="navbar" id="navbar">
-      <div class="navbar__inner">
-        <a href="/" class="navbar__logo">
-          <div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
-          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span>
-        </a>
-
-                <ul class="navbar__links">
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Concours
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
-              <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
-              <a href="/preparation.html" class="navbar__sous-lien"><span data-icone="diplome" data-taille="16"></span> Préparation</a>
-            </div>
-          </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Ressources
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
-              <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
-              <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
-              <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
-            </div>
-          </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Carrière
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
-              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
-              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
-              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
-            </div>
-          </li>
-          <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
-          <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
-        </ul>
-
-        <div class="navbar__actions" id="navbar-actions">
-          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"
-            >Connexion</a
-          >
-          <a href="/auth/register.html" class="btn btn--primaire btn--sm"
-            >Inscription gratuite</a
-          >
-        </div>
-
-        <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-
-      <div class="navbar__mobile" id="menu-mobile">
-        <a href="/concours.html" class="navbar__link"><span data-icone="institution" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Concours</a>
-        <a href="/examens.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Examens</a>
-        <a href="/preparation.html" class="navbar__link"><span data-icone="quiz" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Préparation</a>
-        <a href="/bibliotheque.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Bibliothèque</a>
-        <a href="/videos.html" class="navbar__link"><span data-icone="video" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Vidéos</a>
-        <a href="/actualites.html" class="navbar__link"><span data-icone="cloche" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Actualités</a>
-        <a href="/boutique.html" class="navbar__link"><span data-icone="etoile" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Premium</a>
-        <hr
-          style="
-            border: none;
-            border-top: 1px solid var(--gris-bordure);
-            margin: 8px 0;
-          "
-        />
-        <a href="/auth/login.html" class="btn btn--outline-vert btn--sm w-full"
-          >Connexion</a
-        >
-        <a
-          href="/auth/register.html"
-          class="btn btn--primaire btn--sm w-full mt-1"
-          >Inscription gratuite</a
-        >
-      </div>
-    </nav>
+    <div id="site-header"></div>
 
         <!-- ── FLASH INFO ──────────────────────────────────────────── -->
     <div class="flash-info">
@@ -252,6 +195,30 @@
         </div>
       </div>
     </section>
+
+    <!-- ── STATISTIQUES NATIONALES ─────────────────────────────────── -->
+
+    <section class="section" style="padding: 40px 0;">
+      <div class="container">
+        <div class="grille-4" id="stats-nationales" style="text-align:center;">
+          <div>
+            <div style="font-size:2.2rem;font-weight:900;color:var(--vert);" id="stat-nb-concours">—</div>
+            <div style="font-size:0.85rem;color:var(--gris-texte);">Concours référencés</div>
+          </div>
+          <div>
+            <div style="font-size:2.2rem;font-weight:900;color:var(--vert);" id="stat-nb-ouverts">—</div>
+            <div style="font-size:0.85rem;color:var(--gris-texte);">Concours ouverts</div>
+          </div>
+          <div>
+            <div style="font-size:2.2rem;font-weight:900;color:var(--vert);" id="stat-nb-utilisateurs">—</div>
+            <div style="font-size:0.85rem;color:var(--gris-texte);">Candidats inscrits</div>
+          </div>
+          <div>
+            <div style="font-size:2.2rem;font-weight:900;color:var(--vert);" id="stat-nb-qcm">—</div>
+            <div style="font-size:0.85rem;color:var(--gris-texte);">QCM disponibles</div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ── CONCOURS EN VEDETTE ────────────────────────────────────── -->
@@ -282,6 +249,36 @@
           <a href="/concours.html" class="btn btn--outline-vert"
             >Voir tous les concours →</a
           >
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CATÉGORIES ─────────────────────────────────────────────── -->
+
+    <section class="section">
+      <div class="container">
+        <div class="section__en-tete">
+          <span class="section__tag"><span data-icone="liste" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>Catégories</span>
+          <h2>Trouve ton domaine</h2>
+          <p>Parcours les concours par grande catégorie.</p>
+        </div>
+        <div class="grille-4" id="categories-accueil" style="gap: 16px;">
+          <a href="/concours.html?categorie=Fonction%20Publique" class="carte-categorie">
+            <span data-icone="institution" data-taille="28"></span>
+            <div>Fonction Publique</div>
+          </a>
+          <a href="/concours.html?categorie=S%C3%A9curit%C3%A9" class="carte-categorie">
+            <span data-icone="cadenas" data-taille="28"></span>
+            <div>Sécurité</div>
+          </a>
+          <a href="/concours.html?categorie=Sant%C3%A9" class="carte-categorie">
+            <span data-icone="coeur" data-taille="28"></span>
+            <div>Santé</div>
+          </a>
+          <a href="/concours.html?categorie=%C3%89ducation" class="carte-categorie">
+            <span data-icone="diplome" data-taille="28"></span>
+            <div>Éducation</div>
+          </a>
         </div>
       </div>
     </section>
@@ -409,7 +406,7 @@
           <span style="display:flex;align-items:center;gap:6px;"><span data-icone="cadenas" data-taille="16"></span>Paiement sécurisé</span>
           <span style="display:flex;align-items:center;gap:6px;"><span data-icone="vagues" data-taille="16"></span>Wave CI</span>
           <span style="display:flex;align-items:center;gap:6px;"><span data-icone="cercleOrange" data-taille="16"></span>Orange Money</span>
-          <span style="display:flex;align-items:center;gap:6px;"><span data-icone="coche" data-taille="16"></span>Activation immédiate</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span data-icone="coche" data-taille="16"></span>Activation sous 24h</span>
         </p>
       </div>
     </section>
@@ -445,67 +442,99 @@
       </div>
     </section>
 
-    <!-- ── FOOTER ─────────────────────────────────────────────────── -->
+    <!-- ── PROCHAINES CLÔTURES (aperçu calendrier) ─────────────────── -->
 
-    <footer class="footer">
+    <section class="section-gris">
       <div class="container">
-        <div class="footer__grille">
-          <div>
-            <div class="footer__logo" style="display:flex;align-items:center;gap:10px;"><img src="/assets/logo-icon.png" alt="EduConcoursCI" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" />EduConcoursCI</div>
-            <p class="footer__desc">
-              La plateforme de référence pour préparer les concours de Côte
-              d'Ivoire. QCM, cours, vidéos, alertes et génération IA de CV.
-            </p>
-            <div class="footer__reseaux">
-              <a href="#" class="footer__reseau" aria-label="Facebook"><span data-icone="facebook" data-taille="20"></span></a>
-              <a href="#" class="footer__reseau" aria-label="Instagram"><span data-icone="instagram" data-taille="20"></span></a>
-              <a href="#" class="footer__reseau" aria-label="WhatsApp"><span data-icone="whatsapp" data-taille="20"></span></a>
-              <a href="#" class="footer__reseau" aria-label="YouTube"><span data-icone="youtube" data-taille="20"></span></a>
+        <div class="section__en-tete">
+          <span class="section__tag"><span data-icone="horloge" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>À ne pas manquer</span>
+          <h2>Prochaines dates de clôture</h2>
+          <p>Les inscriptions se terminent bientôt pour ces concours.</p>
+        </div>
+        <div id="prochaines-clotures">
+          <div class="skeleton" style="height: 60px; border-radius: 10px; margin-bottom: 10px;"></div>
+          <div class="skeleton" style="height: 60px; border-radius: 10px; margin-bottom: 10px;"></div>
+          <div class="skeleton" style="height: 60px; border-radius: 10px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TÉMOIGNAGES ──────────────────────────────────────────────
+         Masquée tant qu'aucun témoignage n'est publié depuis l'admin —
+         jamais de faux témoignages inventés. -->
+
+    <section class="section hidden" id="section-temoignages">
+      <div class="container">
+        <div class="section__en-tete">
+          <span class="section__tag"><span data-icone="coeur" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>Témoignages</span>
+          <h2>Ce qu'en disent nos utilisateurs</h2>
+        </div>
+        <div class="grille-3" id="liste-temoignages"></div>
+      </div>
+    </section>
+
+    <!-- ── FAQ ───────────────────────────────────────────────────── -->
+
+    <section class="section-gris">
+      <div class="container" style="max-width: 780px;">
+        <div class="section__en-tete">
+          <span class="section__tag"><span data-icone="aide" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>FAQ</span>
+          <h2>Questions fréquentes</h2>
+        </div>
+        <div id="liste-faq">
+          <details class="faq-item">
+            <summary>EduConcoursCI est-il gratuit ?</summary>
+            <p>Oui — l'essentiel (fiches concours, alertes, moteur d'éligibilité, une partie des QCM et des cours) est gratuit. L'abonnement Premium débloque les cours complets, les sujets corrigés et un usage illimité des outils IA.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Comment activer mon abonnement Premium ?</summary>
+            <p>Envoie ton paiement via Wave ou Orange Money, puis saisis l'identifiant de transaction sur la page Boutique. Notre équipe vérifie et active ton abonnement sous 24h.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Comment savoir si je suis éligible à un concours ?</summary>
+            <p>Utilise notre <a href="/eligibilite.html">moteur d'éligibilité</a> : indique ton âge, ton sexe et ton diplôme, et on te dit immédiatement quels concours te sont accessibles.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Puis-je recevoir des alertes pour de nouveaux concours ?</summary>
+            <p>Oui, par e-mail et/ou WhatsApp, avec un choix de catégories. Configure tes préférences sur la page <a href="/alertes.html">Alertes</a>.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── NEWSLETTER + APPLICATION ─────────────────────────────────── -->
+
+    <section class="section">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;" class="grille-newsletter-app">
+          <div style="background:var(--vert);border-radius:var(--radius-lg);padding:32px;color:#fff;">
+            <h3 style="margin-bottom:8px;color:#fff;"><span data-icone="email" data-taille="20" style="display:inline-flex;vertical-align:-4px;"></span> Newsletter</h3>
+            <p style="opacity:0.9;margin-bottom:16px;font-size:0.9rem;">Reçois un résumé des nouveaux concours et des actualités importantes.</p>
+            <div id="zone-newsletter">
+              <form onsubmit="event.preventDefault(); sInscrireNewsletter();" style="display:flex;gap:8px;flex-wrap:wrap;">
+                <input type="email" id="newsletter-email" placeholder="ton@email.com" required style="flex:1;min-width:180px;padding:10px 14px;border-radius:10px;border:none;font-size:0.9rem;">
+                <button type="submit" class="btn" style="background:#fff;color:var(--vert);font-weight:700;">S'inscrire</button>
+              </form>
+              <div id="msg-newsletter" class="hidden" style="margin-top:10px;font-size:0.85rem;"></div>
             </div>
           </div>
-          <div>
-            <div class="footer__titre-col">Plateforme</div>
-            <a href="/concours.html" class="footer__lien">Concours</a>
-            <a href="/examens.html" class="footer__lien">Examens</a>
-            <a href="/preparation.html" class="footer__lien">Préparation</a>
-            <a href="/bibliotheque.html" class="footer__lien">Bibliothèque</a>
-            <a href="/videos.html" class="footer__lien">Vidéos</a>
-            <a href="/simulateur.html" class="footer__lien">Examen blanc</a>
-          </div>
-          <div>
-            <div class="footer__titre-col">Services</div>
-            <a href="/cv-generator.html" class="footer__lien"
-              >Générateur CV/LM</a
-            >
-            <a href="/documents-pro.html" class="footer__lien">Documents Pro</a>
-            <a href="/documents-admin.html" class="footer__lien">Documents Admin</a>
-            <a href="/emploi.html" class="footer__lien">Emploi & Stages</a>
-            <a href="/assistance-sociale.html" class="footer__lien">Assistance Sociale</a>
-            <a href="/boutique.html" class="footer__lien">Premium</a>
-            <a href="/alertes.html" class="footer__lien">Alertes e-mail</a>
-            <a href="/actualites.html" class="footer__lien">Actualités</a>
-            <a href="/guide.html" class="footer__lien">Guide d'utilisation</a>
-          </div>
-          <div>
-            <div class="footer__titre-col">Compte</div>
-            <a href="/auth/login.html" class="footer__lien">Connexion</a>
-            <a href="/auth/register.html" class="footer__lien">Inscription</a>
-            <a href="/dashboard/index.html" class="footer__lien">Mon espace</a>
-            <a href="/dashboard/mes-scores.html" class="footer__lien"
-              >Mes scores</a
-            >
-            <a href="/dashboard/paiements.html" class="footer__lien"
-              >Mes paiements</a
-            >
+          <div style="background:var(--blanc);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--ombre-sm);">
+            <h3 style="margin-bottom:8px;"><span data-icone="telephone" data-taille="20" style="display:inline-flex;vertical-align:-4px;"></span> Emporte EduConcoursCI partout</h3>
+            <p style="color:var(--gris-texte);margin-bottom:16px;font-size:0.9rem;">Installe l'application sur ton téléphone pour un accès rapide, même avec une connexion faible.</p>
+            <button class="btn btn--outline-vert btn--full" id="btn-installer-app" onclick="window.installerPWA?.()">
+              <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Installer l'application
+            </button>
+            <p id="msg-pwa-non-dispo" class="hidden" style="font-size:0.78rem;color:var(--gris-texte);margin-top:8px;">
+              Depuis ton navigateur : menu ⋮ → "Ajouter à l'écran d'accueil".
+            </p>
           </div>
         </div>
       </div>
-      <div class="footer__bas">
-        <div class="container">
-          © 2026 EduConcoursCI — Tous droits réservés · Abidjan, Côte d'Ivoire
-        </div>
-      </div>
-    </footer>
+    </section>
+
+    <!-- ── FOOTER ─────────────────────────────────────────────────── -->
+
+    <div id="site-footer"></div>
 
     <!-- ── SCRIPTS ────────────────────────────────────────────────── -->
 
@@ -513,6 +542,7 @@
 
     <script src="/js/auth.js"></script>
 
+    <script src="/js/layout.js"></script>
     <script src="/js/icons.js"></script>
     <script src="/js/recherche.js"></script>
 
@@ -648,7 +678,98 @@
         Impossible de charger les actualités. <a href="/actualites.html" style="color:var(--vert);">Voir les actualités →</a>
       </div>`;
         }
+
+        // ── Statistiques nationales ─────────────────────────────────
+        try {
+          const s = await window.API.Vitrine.stats();
+          document.getElementById("stat-nb-concours").textContent = s.totalConcours ?? "—";
+          document.getElementById("stat-nb-ouverts").textContent = s.concoursOuverts ?? "—";
+          document.getElementById("stat-nb-utilisateurs").textContent = s.totalUtilisateurs ?? "—";
+          document.getElementById("stat-nb-qcm").textContent = s.totalQCM ?? "—";
+        } catch (err) {
+          console.error("Erreur stats publiques :", err.message);
+        }
+
+        // ── Prochaines clôtures (aperçu calendrier) ─────────────────
+        try {
+          const data = await window.API.Concours.liste({ statut: "ouvert", limit: 200 });
+          const avecCloture = (data.concours || [])
+            .filter((c) => c.cloture && !isNaN(new Date(c.cloture).getTime()))
+            .sort((a, b) => new Date(a.cloture) - new Date(b.cloture))
+            .slice(0, 5);
+
+          const zone = document.getElementById("prochaines-clotures");
+          zone.innerHTML = avecCloture.length
+            ? avecCloture.map((c) => {
+                const jours = Math.ceil((new Date(c.cloture) - new Date()) / 86400000);
+                return `
+      <a href="/concours-detail.html?id=${c.id}" style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--blanc);border-radius:var(--radius-md);margin-bottom:10px;text-decoration:none;color:inherit;box-shadow:var(--ombre-sm);">
+        <div>
+          <div style="font-weight:700;font-size:0.9rem;">${c.titre}</div>
+          <div style="font-size:0.8rem;color:var(--gris-texte);">${c.organisme}</div>
+        </div>
+        <span class="badge ${jours <= 3 ? "badge--rouge" : "badge--orange"}">${jours > 0 ? `J-${jours}` : "Dernier jour"}</span>
+      </a>`;
+              }).join("")
+            : `<p style="text-align:center;color:var(--gris-texte);">Aucune date de clôture connue pour le moment.</p>`;
+        } catch (err) {
+          document.getElementById("prochaines-clotures").innerHTML = "";
+          console.error("Erreur prochaines clôtures :", err.message);
+        }
+
+        // ── Témoignages (masqués si aucun n'est publié) ─────────────
+        try {
+          const { temoignages } = await window.API.Vitrine.temoignages();
+          if (temoignages.length > 0) {
+            document.getElementById("liste-temoignages").innerHTML = temoignages
+              .map((t) => `
+      <div class="card" style="padding:22px;">
+        <div style="color:#f59e0b;margin-bottom:10px;">${"★".repeat(t.note)}${"☆".repeat(5 - t.note)}</div>
+        <p style="font-size:0.9rem;font-style:italic;margin-bottom:14px;">"${echapperTexte(t.texte)}"</p>
+        <div style="font-weight:700;font-size:0.88rem;">${echapperTexte(t.nom)}</div>
+        ${t.role ? `<div style="font-size:0.78rem;color:var(--gris-texte);">${echapperTexte(t.role)}</div>` : ""}
+      </div>`).join("");
+            document.getElementById("section-temoignages").classList.remove("hidden");
+          }
+        } catch (err) {
+          console.error("Erreur témoignages :", err.message);
+        }
+
+        // ── Installation PWA ─────────────────────────────────────────
+        let evenementInstallPWA = null;
+        window.addEventListener("beforeinstallprompt", (e) => {
+          e.preventDefault();
+          evenementInstallPWA = e;
+        });
+        window.installerPWA = async () => {
+          if (!evenementInstallPWA) {
+            document.getElementById("msg-pwa-non-dispo").classList.remove("hidden");
+            return;
+          }
+          evenementInstallPWA.prompt();
+          await evenementInstallPWA.userChoice;
+          evenementInstallPWA = null;
+        };
       });
+
+      // ── Newsletter ───────────────────────────────────────────────
+      async function sInscrireNewsletter() {
+        const champ = document.getElementById("newsletter-email");
+        const msg = document.getElementById("msg-newsletter");
+        try {
+          const data = await window.API.Vitrine.inscrireNewsletter(champ.value.trim());
+          msg.textContent = data.dejaInscrit
+            ? "Tu es déjà inscrit à la newsletter."
+            : "✅ Inscription réussie !";
+          msg.style.color = "#fff";
+          msg.classList.remove("hidden");
+          champ.value = "";
+        } catch (err) {
+          msg.textContent = "Erreur : " + err.message;
+          msg.style.color = "#fecaca";
+          msg.classList.remove("hidden");
+        }
+      }
     </script>
   </body>
 </html>

@@ -380,3 +380,14 @@ wrapper.appendChild(btn);
 }
 document.addEventListener("DOMContentLoaded", initTogglePasswords);
 window.initTogglePasswords = initTogglePasswords;
+
+// ════════════════════════════════════════════════════════════
+//  SERVICE WORKER (PWA + notifications push — Lot 11)
+// ════════════════════════════════════════════════════════════
+if ("serviceWorker" in navigator) {
+window.addEventListener("load", () => {
+navigator.serviceWorker.register("/sw.js").catch((err) => {
+console.error("Erreur enregistrement service worker :", err.message);
+});
+});
+}

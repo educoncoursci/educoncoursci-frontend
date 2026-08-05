@@ -9,6 +9,16 @@
       name="description"
       content="Guides pratiques pour tes démarches administratives ivoiriennes : CNI, authentification de diplôme, équivalences BEPC/BAC."
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="EduConcoursCI" />
+    <meta property="og:title" content="Démarches administratives — EduConcoursCI" />
+    <meta property="og:description" content="Guides pratiques pour tes démarches administratives ivoiriennes : CNI, authentification de diplôme, équivalences BEPC/BAC." />
+    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://educoncoursci.netlify.app/demarches.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Démarches administratives — EduConcoursCI" />
+    <meta name="twitter:description" content="Guides pratiques pour tes démarches administratives ivoiriennes : CNI, authentification de diplôme, équivalences BEPC/BAC." />
+    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -112,58 +122,7 @@
     </style>
   </head>
   <body>
-    <nav class="navbar" id="navbar">
-      <div class="navbar__inner">
-        <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
-          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
-        >
-                <ul class="navbar__links">
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Concours
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
-              <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
-              <a href="/preparation.html" class="navbar__sous-lien"><span data-icone="diplome" data-taille="16"></span> Préparation</a>
-            </div>
-          </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Ressources
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
-              <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
-              <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
-              <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
-            </div>
-          </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Carrière
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
-              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
-              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
-              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
-            </div>
-          </li>
-          <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
-          <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
-        </ul>
-
-        <div class="navbar__actions" id="navbar-actions">
-          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm">Connexion</a>
-          <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription</a>
-        </div>
-      </div>
-    </nav>
+    <div id="site-header"></div>
 
     <div class="page-header" style="background: linear-gradient(135deg, #14532d, #1a6b3c)">
       <div class="container">
@@ -216,7 +175,127 @@
         </div>
       </div>
 
-      <!-- Guide 2 : Authentification diplôme -->
+      <!-- Guide 2 : Extrait de naissance -->
+      <div class="demarche-carte">
+        <div class="demarche-entete">
+          <div class="demarche-icone"><span data-icone="document" data-taille="24"></span></div>
+          <div>
+            <div class="demarche-titre">Extrait d'acte de naissance</div>
+            <div class="demarche-sous">Mairie ou Sous-préfecture du lieu de naissance</div>
+          </div>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>À quoi ça sert ?</h3>
+          <p style="font-size:0.9rem; color:#444;">
+            Document d'état civil de base, exigé dans la quasi-totalité des dossiers de concours,
+            d'emploi et de démarches administratives en Côte d'Ivoire. Il existe deux versions :
+            la copie intégrale (informations complètes, y compris sur les parents) et l'extrait
+            simple (informations sur la seule personne concernée).
+          </p>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>Pièces à fournir</h3>
+          <ul class="demarche-liste">
+            <li>Pièce d'identité (CNI, passeport ou attestation d'identité)</li>
+            <li>Une copie de l'extrait de naissance existant si tu en as déjà un</li>
+            <li>À défaut de copie, une fiche de renseignements avec nom, prénoms, date et lieu de naissance</li>
+          </ul>
+        </div>
+
+        <div class="demarche-info">
+          <div><strong>Coût</strong><br>Environ 500 FCFA (frais de timbre, peut varier selon la mairie)</div>
+          <div><strong>Délai</strong><br>Souvent 24 à 48h en pratique ; officiellement jusqu'à 5 jours ouvrés (mairie) ou 10 jours ouvrés (sous-préfecture)</div>
+          <div><strong>Où s'adresser</strong><br>Service état civil de la mairie (ou sous-préfecture) où la naissance a été déclarée</div>
+        </div>
+
+        <div class="demarche-source">
+          Sources : <a href="https://servicepublic.gouv.ci" target="_blank" rel="noopener">Service Public de Côte d'Ivoire</a> ·
+          <a href="https://cotedivoire.eregulations.org" target="_blank" rel="noopener">eRegulations Côte d'Ivoire</a>
+        </div>
+      </div>
+
+      <!-- Guide 3 : Casier judiciaire -->
+      <div class="demarche-carte">
+        <div class="demarche-entete">
+          <div class="demarche-icone"><span data-icone="regle" data-taille="24"></span></div>
+          <div>
+            <div class="demarche-titre">Extrait de casier judiciaire (Bulletin n°3)</div>
+            <div class="demarche-sous">Tribunal de Première Instance — ou en ligne via e-justice.ci</div>
+          </div>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>À quoi ça sert ?</h3>
+          <p style="font-size:0.9rem; color:#444;">
+            Retrace le passé judiciaire d'une personne. Document strictement personnel, exigé pour
+            de nombreux concours administratifs et candidatures d'emploi. Peut désormais être demandé
+            en ligne via la plateforme officielle e-justice.ci, en plus du guichet physique.
+          </p>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>Pièces à fournir</h3>
+          <ul class="demarche-liste">
+            <li>Original de l'extrait de naissance</li>
+            <li>Informations sur la situation matrimoniale, la profession et la ville d'habitation</li>
+          </ul>
+        </div>
+
+        <div class="demarche-info">
+          <div><strong>Coût</strong><br>2 500 FCFA (guichet) — un total incluant les frais de service en ligne peut légèrement varier</div>
+          <div><strong>Délai</strong><br>24h en général au tribunal du lieu de naissance</div>
+          <div><strong>Où s'adresser</strong><br>Tribunal de Première Instance (ou section de tribunal) du lieu de naissance — ou <a href="https://e-justice.ci" target="_blank" rel="noopener">e-justice.ci</a></div>
+        </div>
+
+        <div class="demarche-source">
+          Sources : <a href="https://servicepublic.gouv.ci" target="_blank" rel="noopener">Service Public de Côte d'Ivoire</a> ·
+          <a href="https://e-justice.ci" target="_blank" rel="noopener">e-justice.ci</a>
+        </div>
+      </div>
+
+      <!-- Guide 4 : Certificat de nationalité -->
+      <div class="demarche-carte">
+        <div class="demarche-entete">
+          <div class="demarche-icone"><span data-icone="drapeau" data-taille="24"></span></div>
+          <div>
+            <div class="demarche-titre">Certificat de nationalité ivoirienne</div>
+            <div class="demarche-sous">Tribunal de Première Instance — ou en ligne via e-justice.ci</div>
+          </div>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>À quoi ça sert ?</h3>
+          <p style="font-size:0.9rem; color:#444;">
+            Atteste juridiquement la nationalité ivoirienne. Indispensable pour de nombreux concours,
+            l'obtention d'un passeport ou d'une CNI. Les pièces exactes varient selon le mode
+            d'acquisition de la nationalité (naissance, naturalisation, mariage...).
+          </p>
+        </div>
+
+        <div class="demarche-bloc">
+          <h3>Pièces à fournir (cas le plus courant — ivoirien de naissance)</h3>
+          <ul class="demarche-liste">
+            <li>Imprimé de demande de « Certificat de nationalité ivoirienne » (vendu au kiosque des Greffes)</li>
+            <li>Extrait d'acte de naissance</li>
+            <li>Selon la situation (naturalisation, mariage, filiation...), des pièces complémentaires peuvent être exigées</li>
+          </ul>
+        </div>
+
+        <div class="demarche-info">
+          <div><strong>Coût</strong><br>Environ 2 500 FCFA au Trésor du tribunal, plus ~200 FCFA pour l'imprimé de demande</div>
+          <div><strong>Délai</strong><br>Variable selon le tribunal — la voie en ligne (e-justice.ci) accélère généralement la démarche</div>
+          <div><strong>Où s'adresser</strong><br>Président du Tribunal de Première Instance (ou section de tribunal) — ou <a href="https://e-justice.ci" target="_blank" rel="noopener">e-justice.ci</a></div>
+        </div>
+
+        <div class="demarche-source">
+          Sources : <a href="https://servicepublic.gouv.ci" target="_blank" rel="noopener">Service Public de Côte d'Ivoire</a> ·
+          <a href="https://e-justice.ci" target="_blank" rel="noopener">e-justice.ci</a>
+        </div>
+      </div>
+
+      <!-- Guide 5 : Authentification diplôme -->
       <div class="demarche-carte">
         <div class="demarche-entete">
           <div class="demarche-icone"><span data-icone="diplome" data-taille="24"></span></div>
@@ -261,7 +340,7 @@
         </div>
       </div>
 
-      <!-- Guide 3 : Équivalence CEPE/BEPC/BAC -->
+      <!-- Guide 6 : Équivalence CEPE/BEPC/BAC -->
       <div class="demarche-carte">
         <div class="demarche-entete">
           <div class="demarche-icone"><span data-icone="livre" data-taille="24"></span></div>
@@ -330,35 +409,9 @@
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="footer__grille">
-          <div>
-            <div class="footer__logo"><img src="/assets/logo-icon.png" alt="EduConcoursCI" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" /> EduConcoursCI</div>
-            <p class="footer__desc">Études, CV, lettre de motivation & concours.</p>
-          </div>
-          <div>
-            <div class="footer__titre-col">Navigation</div>
-            <a href="/concours.html" class="footer__lien">Concours</a
-            ><a href="/actualites.html" class="footer__lien">Actualités</a>
-          </div>
-          <div>
-            <div class="footer__titre-col">Ressources</div>
-            <a href="/demarches.html" class="footer__lien">Démarches admin.</a
-            ><a href="/videos.html" class="footer__lien">Vidéos</a>
-          </div>
-          <div>
-            <div class="footer__titre-col">Compte</div>
-            <a href="/auth/login.html" class="footer__lien">Connexion</a
-            ><a href="/auth/register.html" class="footer__lien">Inscription</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer__bas">
-        <div class="container">© 2026 EduConcoursCI</div>
-      </div>
-    </footer>
+    <div id="site-footer"></div>
 
+    <script src="/js/layout.js"></script>
     <script src="/js/icons.js"></script>
     <script src="/js/recherche.js"></script>
     <script src="/js/api.js"></script>

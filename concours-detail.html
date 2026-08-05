@@ -5,6 +5,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Détail Concours — EduConcoursCI</title>
+  <meta name="description" content="Fiche complète d'un concours en Côte d'Ivoire : conditions, dates, documents à fournir, débouchés et préparation associée.">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="EduConcoursCI" />
+    <meta property="og:title" content="Détail Concours — EduConcoursCI" />
+    <meta property="og:description" content="Fiche complète d'un concours en Côte d'Ivoire : conditions, dates, documents à fournir, débouchés et préparation associée." />
+    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://educoncoursci.netlify.app/concours-detail.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Détail Concours — EduConcoursCI" />
+    <meta name="twitter:description" content="Fiche complète d'un concours en Côte d'Ivoire : conditions, dates, documents à fournir, débouchés et préparation associée." />
+    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -70,64 +81,7 @@
     </style>
   </head>
   <body>
-    <nav class="navbar" id="navbar">
-      <div class="navbar__inner">
-        <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
-          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
-        >
-                <ul class="navbar__links">
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Concours
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
-              <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
-              <a href="/preparation.html" class="navbar__sous-lien"><span data-icone="diplome" data-taille="16"></span> Préparation</a>
-            </div>
-          </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Ressources
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
-              <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
-              <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
-              <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
-            </div>
-          </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Carrière
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
-              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
-              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
-              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
-            </div>
-          </li>
-          <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
-          <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
-        </ul>
-        <div class="navbar__actions" id="navbar-actions">
-          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"
-            >Connexion</a
-          >
-          <a href="/auth/register.html" class="btn btn--primaire btn--sm"
-            >Inscription</a
-          >
-        </div>
-        <button class="navbar__hamburger" id="hamburger">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </nav>
+    <div id="site-header"></div>
         <!-- ── FLASH INFO ──────────────────────────────────────────── -->
     <div class="flash-info">
       <div class="flash-info__label">
@@ -248,6 +202,12 @@
                 <div id="detail-infos"></div>
               </div>
 
+              <!-- Structure organisatrice, matières, diplômes (Module 2) -->
+              <div class="detail-card hidden" id="section-referentiels">
+                <h3 style="margin-bottom: 12px"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Organisme, matières & diplômes</h3>
+                <div id="detail-referentiels" style="font-size: 0.92rem; line-height: 1.8;"></div>
+              </div>
+
               <!-- Conditions d'accès -->
               <div class="detail-card" id="section-conditions">
                 <h3 style="margin-bottom: 12px">📌 Conditions d'accès</h3>
@@ -267,6 +227,18 @@
                 <div id="detail-pieces"></div>
               </div>
 
+              <!-- Documents disponibles (Module 6) -->
+              <div class="detail-card hidden" id="section-documents">
+                <h3 style="margin-bottom: 12px"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Documents disponibles</h3>
+                <div id="detail-documents"></div>
+              </div>
+
+              <!-- Cours recommandés (Lot 7 — réutilise les documents type "cours") -->
+              <div class="detail-card hidden" id="section-cours-recommandes">
+                <h3 style="margin-bottom: 12px">🎓 Cours recommandés pour se préparer</h3>
+                <div id="detail-cours-recommandes"></div>
+              </div>
+
               <!-- Centres de dépôt -->
               <div class="detail-card" id="section-centres" class="hidden">
                 <h3 style="margin-bottom: 12px">📍 Centres de dépôt</h3>
@@ -274,6 +246,36 @@
                   id="detail-centres"
                   style="font-size: 0.9rem; line-height: 1.9"
                 ></div>
+              </div>
+
+              <!-- Carte (Lot 7) -->
+              <div class="detail-card hidden" id="section-carte">
+                <h3 style="margin-bottom: 12px">🗺️ Localisation</h3>
+                <div id="detail-carte" style="border-radius:12px;overflow:hidden;"></div>
+              </div>
+
+              <!-- Historique (Lot 7) -->
+              <div class="detail-card hidden" id="section-historique">
+                <h3 style="margin-bottom: 12px">📜 Historique du concours</h3>
+                <div id="detail-historique" style="font-size:0.92rem;line-height:1.8;"></div>
+              </div>
+
+              <!-- Salaire / débouchés (Lot 7) -->
+              <div class="detail-card hidden" id="section-carriere">
+                <h3 style="margin-bottom: 12px">💼 Salaire & débouchés</h3>
+                <div id="detail-carriere" style="font-size:0.92rem;line-height:1.8;"></div>
+              </div>
+
+              <!-- Communiqués officiels (Lot 7) -->
+              <div class="detail-card hidden" id="section-communiques">
+                <h3 style="margin-bottom: 12px">📢 Communiqués officiels</h3>
+                <div id="detail-communiques"></div>
+              </div>
+
+              <!-- FAQ spécifique (Lot 7) -->
+              <div class="detail-card hidden" id="section-faq-concours">
+                <h3 style="margin-bottom: 12px">❓ Questions fréquentes</h3>
+                <div id="detail-faq-concours"></div>
               </div>
             </div>
 
@@ -352,8 +354,18 @@
                   >
                     <span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Préparer ce concours →
                   </a>
+                  <a
+                    href="#"
+                    id="lien-assistant-ia"
+                    class="btn btn--outline-vert btn--full btn--sm mt-1"
+                  >
+                    🤖 Poser une question à l'assistant IA
+                  </a>
                 </div>
               </div>
+
+              <!-- Suivi de candidature (Lot 8) -->
+              <div class="detail-card mt-2 hidden" id="carte-suivi"></div>
 
               <!-- Partage -->
               <div class="detail-card mt-2" style="text-align: center">
@@ -411,38 +423,11 @@
             >
           </div>
         </div>
-      </div>
     </main>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="footer__grille">
-          <div>
-            <div class="footer__logo"><img src="/assets/logo-icon.png" alt="EduConcoursCI" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" /> EduConcoursCI</div>
-            <p class="footer__desc">Préparation aux concours CI.</p>
-          </div>
-          <div>
-            <div class="footer__titre-col">Navigation</div>
-            <a href="/concours.html" class="footer__lien">Concours</a
-            ><a href="/preparation.html" class="footer__lien">Préparation</a>
-          </div>
-          <div>
-            <div class="footer__titre-col">Services</div>
-            <a href="/boutique.html" class="footer__lien">Premium</a
-            ><a href="/alertes.html" class="footer__lien">Alertes</a>
-          </div>
-          <div>
-            <div class="footer__titre-col">Compte</div>
-            <a href="/auth/login.html" class="footer__lien">Connexion</a
-            ><a href="/auth/register.html" class="footer__lien">Inscription</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer__bas">
-        <div class="container">© 2026 EduConcoursCI</div>
-      </div>
-    </footer>
+    <div id="site-footer"></div>
 
+    <script src="/js/layout.js"></script>
     <script src="/js/icons.js"></script>
     <script src="/js/recherche.js"></script>
     <script src="/js/api.js"></script>
@@ -468,13 +453,196 @@
           const data = await window.API.Concours.detail(id);
           concoursActuel = data.concours;
           afficherDetail(concoursActuel);
+          chargerDocumentsDisponibles(concoursActuel.id);
+          injecterSchemaOrg(concoursActuel);
           chargerSimilaires(concoursActuel.categorie, id);
+          chargerCarteSuivi(concoursActuel.id);
         } catch (err) {
           if (err.message.includes("Premium")) {
             afficherPremiumRequis();
           } else {
             afficherErreur();
           }
+        }
+      }
+
+      const TYPE_LABELS = { cours: "📘 Cours", sujet: "📄 Sujet", corrige: "✅ Corrigé", fiche: "📝 Fiche de révision" };
+
+      async function chargerDocumentsDisponibles(concoursId) {
+        try {
+          const data = await window.API.PDFs.liste({ concoursId, limit: 50 });
+          const pdfs = data.pdfs || [];
+          if (pdfs.length === 0) return;
+
+          document.getElementById("detail-documents").innerHTML = pdfs
+            .map((p) => {
+              const verrouille = p.verrouille;
+              return `
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
+      <div style="min-width:0;">
+        <div style="font-weight:700;font-size:0.88rem;">${verrouille ? "🔒 " : ""}${p.titre}</div>
+        <div style="font-size:0.78rem;color:var(--gris-texte);">${TYPE_LABELS[p.type] || p.type || ""} ${p.matiere ? "· " + p.matiere : ""}</div>
+      </div>
+      ${
+        verrouille
+          ? `<a href="/boutique.html" class="btn btn--gris btn--sm" style="white-space:nowrap;">⭐ Premium</a>`
+          : `<button class="btn btn--vert btn--sm" onclick="window.API.PDFs.telecharger(${p.id})" style="white-space:nowrap;">⬇ Voir</button>`
+      }
+    </div>`;
+            })
+            .join("");
+          document.getElementById("section-documents").classList.remove("hidden");
+
+          // Cours recommandés (Lot 7) — réutilise les mêmes documents,
+          // filtrés sur le type "cours", pour ne pas dupliquer l'appel API.
+          const cours = pdfs.filter((p) => p.type === "cours");
+          if (cours.length > 0) {
+            document.getElementById("detail-cours-recommandes").innerHTML = cours
+              .map((p) => {
+                const verrouille = p.verrouille;
+                return `
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
+      <div style="min-width:0;">
+        <div style="font-weight:700;font-size:0.88rem;">${verrouille ? "🔒 " : ""}📘 ${p.titre}</div>
+        <div style="font-size:0.78rem;color:var(--gris-texte);">${p.matiere ? p.matiere : "Cours de préparation"}</div>
+      </div>
+      ${
+        verrouille
+          ? `<a href="/boutique.html" class="btn btn--gris btn--sm" style="white-space:nowrap;">⭐ Premium</a>`
+          : `<button class="btn btn--vert btn--sm" onclick="window.API.PDFs.telecharger(${p.id})" style="white-space:nowrap;">📖 Étudier</button>`
+      }
+    </div>`;
+              })
+              .join("");
+            document.getElementById("section-cours-recommandes").classList.remove("hidden");
+          }
+        } catch (err) {
+          console.error("Erreur chargement documents du concours :", err.message);
+        }
+      }
+
+      // ── Lot 7 : historique, salaire/débouchés, carte, communiqués, FAQ ──
+      function afficherFicheEnrichie(c) {
+        if (c.historique) {
+          document.getElementById("detail-historique").innerHTML = c.historique
+            .split("\n")
+            .filter(Boolean)
+            .map((l) => `<p style="margin-bottom:8px;">${l}</p>`)
+            .join("");
+          document.getElementById("section-historique").classList.remove("hidden");
+        }
+
+        if (c.salaire || c.debouches) {
+          let html = "";
+          if (c.salaire) html += `<p style="margin-bottom:10px;"><strong>💰 Salaire :</strong> ${c.salaire}</p>`;
+          if (c.debouches) {
+            html += `<div><strong>🚀 Débouchés :</strong></div>` +
+              c.debouches.split("\n").filter(Boolean).map((l) => `<p style="margin:6px 0 0;">• ${l}</p>`).join("");
+          }
+          document.getElementById("detail-carriere").innerHTML = html;
+          document.getElementById("section-carriere").classList.remove("hidden");
+        }
+
+        if (c.adresse) {
+          document.getElementById("detail-carte").innerHTML = `
+            <iframe
+              src="https://maps.google.com/maps?q=${encodeURIComponent(c.adresse)}&output=embed"
+              width="100%" height="260" style="border:0;display:block;"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              title="Localisation — ${c.titre}"
+            ></iframe>
+            <div style="font-size:0.8rem;color:var(--gris-texte);padding:8px 2px 0;">📍 ${c.adresse}</div>`;
+          document.getElementById("section-carte").classList.remove("hidden");
+        }
+
+        const communiques = Array.isArray(c.communiques) ? c.communiques : [];
+        if (communiques.length > 0) {
+          document.getElementById("detail-communiques").innerHTML = communiques
+            .map(
+              (com) => `
+    <div style="padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
+      <div style="font-weight:700;font-size:0.9rem;">${com.titre}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:4px;">
+        <span style="font-size:0.78rem;color:var(--gris-texte);">${com.date || ""}</span>
+        ${com.url ? `<a href="${com.url}" target="_blank" rel="noopener" class="btn btn--gris btn--sm">Consulter →</a>` : ""}
+      </div>
+    </div>`,
+            )
+            .join("");
+          document.getElementById("section-communiques").classList.remove("hidden");
+        }
+
+        const faq = Array.isArray(c.faq) ? c.faq : [];
+        if (faq.length > 0) {
+          document.getElementById("detail-faq-concours").innerHTML = faq
+            .map(
+              (f) => `
+    <details style="padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
+      <summary style="font-weight:700;font-size:0.9rem;cursor:pointer;">${f.question}</summary>
+      <p style="margin-top:8px;font-size:0.88rem;color:var(--gris-texte);line-height:1.7;">${f.reponse}</p>
+    </details>`,
+            )
+            .join("");
+          document.getElementById("section-faq-concours").classList.remove("hidden");
+        }
+      }
+
+      function injecterSchemaOrg(c) {
+        // Met à jour le titre de l'onglet et la meta description pour ce concours précis
+        document.title = `${c.titre} — EduConcoursCI`;
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+          metaDesc.setAttribute(
+            "content",
+            `${c.titre} (${c.organisme}) — conditions, dates, documents à fournir et préparation sur EduConcoursCI.`,
+          );
+        }
+
+        // Schema.org — type Event : un concours a des dates précises
+        // (ouverture/clôture), ce qui correspond bien à ce type structuré.
+        const donnees = {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: c.titre,
+          description: c.conditions || `${c.titre} — ${c.organisme}`,
+          organizer: { "@type": "Organization", name: c.organisme },
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+          eventStatus:
+            c.statut === "fermé"
+              ? "https://schema.org/EventCancelled"
+              : "https://schema.org/EventScheduled",
+        };
+        if (c.ouverture) donnees.startDate = c.ouverture;
+        if (c.cloture) donnees.endDate = c.cloture;
+
+        let script = document.getElementById("schema-concours");
+        if (!script) {
+          script = document.createElement("script");
+          script.type = "application/ld+json";
+          script.id = "schema-concours";
+          document.head.appendChild(script);
+        }
+        script.textContent = JSON.stringify(donnees);
+
+        // Schema.org FAQPage (Lot 7) — seulement si une FAQ spécifique existe
+        const faq = Array.isArray(c.faq) ? c.faq : [];
+        if (faq.length > 0) {
+          let scriptFaq = document.getElementById("schema-faq-concours");
+          if (!scriptFaq) {
+            scriptFaq = document.createElement("script");
+            scriptFaq.type = "application/ld+json";
+            scriptFaq.id = "schema-faq-concours";
+            document.head.appendChild(scriptFaq);
+          }
+          scriptFaq.textContent = JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((f) => ({
+              "@type": "Question",
+              name: f.question,
+              acceptedAnswer: { "@type": "Answer", text: f.reponse },
+            })),
+          });
         }
       }
 
@@ -529,6 +697,39 @@
           )
           .join("");
 
+        // Structure organisatrice / matières / diplômes (Module 2)
+        const morceaux = [];
+        if (c.structure) {
+          morceaux.push(`
+            <div style="margin-bottom:14px;">
+              <div style="font-weight:700;">${c.structure.nom}${c.structure.sigle ? ` (${c.structure.sigle})` : ""}</div>
+              ${c.structure.ministere ? `<div style="font-size:0.85rem;color:var(--gris-texte);">${c.structure.ministere}</div>` : ""}
+              ${c.structure.description ? `<div style="margin-top:6px;">${c.structure.description}</div>` : ""}
+            </div>`);
+        }
+        if (Array.isArray(c.matieres) && c.matieres.length > 0) {
+          morceaux.push(`
+            <div style="margin-bottom:10px;">
+              <div style="font-weight:700;font-size:0.85rem;margin-bottom:6px;">Matières de composition</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                ${c.matieres.map((m) => `<span class="badge badge--violet" style="font-size:0.78rem;">${m.nom}</span>`).join("")}
+              </div>
+            </div>`);
+        }
+        if (Array.isArray(c.diplomes) && c.diplomes.length > 0) {
+          morceaux.push(`
+            <div>
+              <div style="font-weight:700;font-size:0.85rem;margin-bottom:6px;">Diplômes acceptés</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                ${c.diplomes.map((d) => `<span class="badge badge--vert" style="font-size:0.78rem;">${d.nom}</span>`).join("")}
+              </div>
+            </div>`);
+        }
+        if (morceaux.length > 0) {
+          document.getElementById("detail-referentiels").innerHTML = morceaux.join("");
+          document.getElementById("section-referentiels").classList.remove("hidden");
+        }
+
         // Conditions
         if (c.conditions) {
           document.getElementById("detail-conditions").innerHTML = c.conditions
@@ -562,6 +763,13 @@
             .join("");
         } else {
           document.getElementById("section-centres").style.display = "none";
+        }
+
+        afficherFicheEnrichie(c);
+
+        const lienIA = document.getElementById("lien-assistant-ia");
+        if (lienIA) {
+          lienIA.href = `/assistant-concours.html?concoursId=${c.id}&titre=${encodeURIComponent(c.titre)}`;
         }
 
         // CTA
@@ -606,6 +814,81 @@
             .join("");
         } catch {
           document.getElementById("concours-similaires").innerHTML = "";
+        }
+      }
+
+      // ── Lot 8 : carte "Suivi de candidature" ──────────────────────
+      const LABELS_ETAPE_SUIVI = {
+        enregistre: "1️⃣ Enregistré",
+        dossier_soumis: "2️⃣ Dossier soumis",
+        dossier_valide: "3️⃣ Dossier validé",
+        convoque: "4️⃣ Convoqué",
+        compose: "5️⃣ A composé",
+        admis: "🏆 Admis",
+        non_admis: "⚫ Non admis",
+      };
+      const ETAPES_ORDRE_SUIVI = ["enregistre", "dossier_soumis", "dossier_valide", "convoque", "compose", "admis"];
+
+      async function chargerCarteSuivi(concoursId) {
+        const session = window.Auth?.getSession();
+        const carte = document.getElementById("carte-suivi");
+        if (!session) {
+          // Non connecté : on propose quand même de démarrer, ça redirige vers le login
+          carte.innerHTML = `
+    <div style="font-weight:700;margin-bottom:10px;">📋 Suivi de candidature</div>
+    <p style="font-size:0.85rem;color:var(--gris-texte);margin-bottom:12px;">Connecte-toi pour suivre l'avancement de ta candidature (dossier, convocation, résultats…).</p>
+    <a href="/auth/login.html" class="btn btn--outline-vert btn--full btn--sm">Se connecter pour suivre</a>`;
+          carte.classList.remove("hidden");
+          return;
+        }
+        try {
+          const data = await window.API.CandidaturesConcours.mesCandidatures();
+          const suivi = (data.candidatures || []).find((c) => c.concours_id === concoursId);
+          afficherCarteSuivi(suivi, concoursId);
+        } catch (err) {
+          console.error("Erreur chargement suivi candidature :", err.message);
+        }
+      }
+
+      function afficherCarteSuivi(suivi, concoursId) {
+        const carte = document.getElementById("carte-suivi");
+        if (!suivi) {
+          carte.innerHTML = `
+    <div style="font-weight:700;margin-bottom:10px;">📋 Suivi de candidature</div>
+    <p style="font-size:0.85rem;color:var(--gris-texte);margin-bottom:12px;">Garde une trace de l'avancement de ta candidature à ce concours.</p>
+    <button class="btn btn--outline-vert btn--full btn--sm" onclick="demarrerSuivi(${concoursId})">🚀 Suivre ma candidature</button>`;
+        } else {
+          const options = ETAPES_ORDRE_SUIVI.map(
+            (e) => `<option value="${e}" ${suivi.statut === e ? "selected" : ""}>${LABELS_ETAPE_SUIVI[e]}</option>`,
+          ).join("");
+          carte.innerHTML = `
+    <div style="font-weight:700;margin-bottom:10px;">📋 Ton suivi de candidature</div>
+    <select id="detail-suivi-select" class="form-input mb-2">${options}</select>
+    <button class="btn btn--vert btn--full btn--sm" onclick="mettreAJourSuiviDetail(${suivi.id})">Mettre à jour l'étape</button>
+    <div style="font-size:0.78rem;color:var(--gris-texte);margin-top:10px;text-align:center;">
+      <a href="/dashboard/mes-concours.html">Voir tous mes suivis →</a>
+    </div>`;
+        }
+        carte.classList.remove("hidden");
+      }
+
+      async function demarrerSuivi(concoursId) {
+        try {
+          await window.API.CandidaturesConcours.demarrer(concoursId);
+          window.afficherToast("Suivi démarré — pense à le mettre à jour au fil de ta candidature.", "succes");
+          chargerCarteSuivi(concoursId);
+        } catch (err) {
+          window.afficherToast("Erreur lors du démarrage du suivi.", "erreur");
+        }
+      }
+
+      async function mettreAJourSuiviDetail(id) {
+        const statut = document.getElementById("detail-suivi-select").value;
+        try {
+          await window.API.CandidaturesConcours.avancer(id, statut);
+          window.afficherToast("Suivi mis à jour !", "succes");
+        } catch (err) {
+          window.afficherToast("Erreur lors de la mise à jour.", "erreur");
         }
       }
 

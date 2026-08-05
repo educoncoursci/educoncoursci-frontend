@@ -1,0 +1,278 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketplace — Admin EduConcoursCI</title>
+    <meta name="description" content="Gestion des partenaires et des offres de la marketplace.">
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" style="background: #0a1628; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div class="navbar__logo-icon" style="background: rgba(255, 255, 255, 0.1)"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button onclick="window.Auth?.deconnecter?.()" class="btn btn--gris btn--sm">Déconnexion</button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a>
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a>
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a>
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a>
+          <a href="/admin/videos.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a>
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a>
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a>
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a>
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a>
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a>
+          <a href="/" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a>
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Marketplace</div>
+              <div class="admin-topbar__sous">Partenaires et offres (cours particuliers, formations, packs, matériel)</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-bottom:18px;">
+            <button id="onglet-partenaires" class="btn btn--vert btn--sm" onclick="changerOnglet('partenaires')">Partenaires</button>
+            <button id="onglet-offres" class="btn btn--gris btn--sm" onclick="changerOnglet('offres')">Offres</button>
+          </div>
+
+          <!-- ── Partenaires ─────────────────────────────────── -->
+          <div id="zone-partenaires">
+            <div class="dash-section" style="margin-bottom: 20px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+                <input id="part-nom" placeholder="Nom du partenaire" style="padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+                <input id="part-email" placeholder="Email de contact" style="padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+                <input id="part-telephone" placeholder="Téléphone" style="padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+                <input id="part-site" placeholder="Site web (optionnel)" style="padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              </div>
+              <textarea id="part-description" placeholder="Description du partenaire" rows="2" style="width:100%;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;margin-bottom:12px;"></textarea>
+              <button class="btn btn--vert btn--sm" onclick="ajouterPartenaire()">+ Ajouter le partenaire</button>
+            </div>
+            <div class="admin-tableau-wrap">
+              <table class="admin-tableau">
+                <thead><tr><th>Nom</th><th>Contact</th><th>Statut</th><th>Actions</th></tr></thead>
+                <tbody id="tbody-partenaires"><tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ── Offres ──────────────────────────────────────── -->
+          <div id="zone-offres" class="hidden">
+            <div class="dash-section" style="margin-bottom: 20px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+                <select id="offre-partenaire" style="padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+                  <option value="">— Choisir un partenaire —</option>
+                </select>
+                <select id="offre-categorie" style="padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+                  <option value="cours_particuliers">Cours particuliers</option>
+                  <option value="formation">Formation</option>
+                  <option value="pack_preparation">Pack de préparation</option>
+                  <option value="materiel">Matériel</option>
+                  <option value="autre">Autre</option>
+                </select>
+                <input id="offre-titre" placeholder="Titre de l'offre" style="padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+                <div style="display:flex;gap:8px;">
+                  <input id="offre-prix" type="number" placeholder="Prix (F CFA)" style="flex:1;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+                  <input id="offre-prix-unite" placeholder="/mois, /session…" value="forfait" style="flex:1;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+                </div>
+              </div>
+              <textarea id="offre-description" placeholder="Description de l'offre" rows="2" style="width:100%;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;margin-bottom:12px;"></textarea>
+              <button class="btn btn--vert btn--sm" onclick="ajouterOffre()">+ Ajouter l'offre</button>
+            </div>
+            <div class="admin-tableau-wrap">
+              <table class="admin-tableau">
+                <thead><tr><th>Offre</th><th>Partenaire</th><th>Prix</th><th>Statut</th><th>Actions</th></tr></thead>
+                <tbody id="tbody-offres"><tr><td colspan="5" style="text-align:center;padding:30px;color:var(--gris-texte);">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      const LABELS_CAT_OFFRE = {
+        cours_particuliers: "Cours particuliers", formation: "Formation",
+        pack_preparation: "Pack préparation", materiel: "Matériel", autre: "Autre",
+      };
+      let partenairesCache = [];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.protegerPageAdmin()) return;
+        await chargerPartenaires();
+      });
+
+      function changerOnglet(onglet) {
+        document.getElementById("zone-partenaires").classList.toggle("hidden", onglet !== "partenaires");
+        document.getElementById("zone-offres").classList.toggle("hidden", onglet !== "offres");
+        document.getElementById("onglet-partenaires").className = `btn btn--sm ${onglet === "partenaires" ? "btn--vert" : "btn--gris"}`;
+        document.getElementById("onglet-offres").className = `btn btn--sm ${onglet === "offres" ? "btn--vert" : "btn--gris"}`;
+        if (onglet === "offres") chargerOffres();
+      }
+
+      // ── Partenaires ────────────────────────────────────────
+      async function chargerPartenaires() {
+        try {
+          const data = await apiCall("/admin/partenaires");
+          partenairesCache = data.partenaires;
+
+          document.getElementById("offre-partenaire").innerHTML =
+            `<option value="">— Choisir un partenaire —</option>` +
+            partenairesCache.map((p) => `<option value="${p.id}">${p.nom}</option>`).join("");
+
+          const tbody = document.getElementById("tbody-partenaires");
+          tbody.innerHTML = partenairesCache.length
+            ? partenairesCache.map((p) => `
+              <tr>
+                <td style="font-weight:700;">${p.nom}</td>
+                <td style="font-size:0.82rem;">${p.email || ""}${p.telephone ? `<br>${p.telephone}` : ""}</td>
+                <td><button class="badge ${p.statut === "actif" ? "badge--vert" : "badge--gris"}" style="border:none;cursor:pointer;" onclick="basculerStatutPartenaire(${p.id}, '${p.statut}')">${p.statut === "actif" ? "✓ Actif" : "Inactif"}</button></td>
+                <td><button class="btn btn--gris btn--sm" onclick="supprimerPartenaire(${p.id})">Supprimer</button></td>
+              </tr>`).join("")
+            : `<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun partenaire. Ajoute-en un ci-dessus.</td></tr>`;
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function ajouterPartenaire() {
+        const nom = document.getElementById("part-nom").value.trim();
+        const email = document.getElementById("part-email").value.trim();
+        const telephone = document.getElementById("part-telephone").value.trim();
+        const siteWeb = document.getElementById("part-site").value.trim();
+        const description = document.getElementById("part-description").value.trim();
+        if (!nom) return window.afficherToast("Le nom est requis.", "warn");
+        try {
+          await apiCall("/admin/partenaires", { method: "POST", body: JSON.stringify({ nom, email, telephone, siteWeb, description }) });
+          ["part-nom", "part-email", "part-telephone", "part-site", "part-description"].forEach((id) => document.getElementById(id).value = "");
+          window.afficherToast("Partenaire ajouté.", "succes");
+          await chargerPartenaires();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function basculerStatutPartenaire(id, statutActuel) {
+        try {
+          await apiCall(`/admin/partenaires/${id}`, { method: "PUT", body: JSON.stringify({ statut: statutActuel === "actif" ? "inactif" : "actif" }) });
+          await chargerPartenaires();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function supprimerPartenaire(id) {
+        if (!confirm("Supprimer ce partenaire ? Toutes ses offres seront supprimées aussi.")) return;
+        try {
+          await apiCall(`/admin/partenaires/${id}`, { method: "DELETE" });
+          window.afficherToast("Partenaire supprimé.", "succes");
+          await chargerPartenaires();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      // ── Offres ─────────────────────────────────────────────
+      async function chargerOffres() {
+        try {
+          const data = await apiCall("/admin/marketplace/offres");
+          const tbody = document.getElementById("tbody-offres");
+          tbody.innerHTML = data.offres.length
+            ? data.offres.map((o) => `
+              <tr>
+                <td style="font-weight:700;">${o.titre}<div style="font-size:0.75rem;color:var(--gris-texte);font-weight:400;">${LABELS_CAT_OFFRE[o.categorie] || o.categorie}</div></td>
+                <td style="font-size:0.85rem;">${o.partenaire_nom}</td>
+                <td style="font-size:0.85rem;">${o.prix ? `${o.prix.toLocaleString("fr-FR")} F ${o.prix_unite}` : "—"}</td>
+                <td>
+                  <select onchange="changerStatutOffre(${o.id}, this.value)" style="font-size:0.78rem;padding:4px 8px;border-radius:8px;border:1.5px solid var(--gris-bordure);">
+                    <option value="en_attente" ${o.statut === "en_attente" ? "selected" : ""}>En attente</option>
+                    <option value="publiee" ${o.statut === "publiee" ? "selected" : ""}>Publiée</option>
+                    <option value="rejetee" ${o.statut === "rejetee" ? "selected" : ""}>Rejetée</option>
+                  </select>
+                </td>
+                <td><button class="btn btn--gris btn--sm" onclick="supprimerOffre(${o.id})">Supprimer</button></td>
+              </tr>`).join("")
+            : `<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune offre. Ajoute-en une ci-dessus (un partenaire doit exister au préalable).</td></tr>`;
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function ajouterOffre() {
+        const partenaireId = document.getElementById("offre-partenaire").value;
+        const categorie = document.getElementById("offre-categorie").value;
+        const titre = document.getElementById("offre-titre").value.trim();
+        const prix = document.getElementById("offre-prix").value;
+        const prixUnite = document.getElementById("offre-prix-unite").value.trim();
+        const description = document.getElementById("offre-description").value.trim();
+
+        if (!partenaireId) return window.afficherToast("Choisis un partenaire.", "warn");
+        if (!titre || !description) return window.afficherToast("Titre et description requis.", "warn");
+
+        try {
+          await apiCall("/admin/marketplace/offres", {
+            method: "POST",
+            body: JSON.stringify({ partenaireId, categorie, titre, description, prix: prix ? parseInt(prix, 10) : null, prixUnite }),
+          });
+          ["offre-titre", "offre-prix", "offre-description"].forEach((id) => document.getElementById(id).value = "");
+          window.afficherToast("Offre ajoutée (en attente de publication).", "succes");
+          await chargerOffres();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function changerStatutOffre(id, statut) {
+        try {
+          await apiCall(`/admin/marketplace/offres/${id}`, { method: "PUT", body: JSON.stringify({ statut }) });
+          window.afficherToast("Statut mis à jour.", "succes");
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function supprimerOffre(id) {
+        if (!confirm("Supprimer cette offre ?")) return;
+        try {
+          await apiCall(`/admin/marketplace/offres/${id}`, { method: "DELETE" });
+          window.afficherToast("Offre supprimée.", "succes");
+          await chargerOffres();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>

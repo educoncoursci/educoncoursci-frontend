@@ -5,6 +5,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QCM — EduConcoursCI</title>
+  <meta name="description" content="Entraîne-toi avec des QCM chronométrés et corrigés par IA pour réussir les concours et examens en Côte d'Ivoire.">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="EduConcoursCI" />
+    <meta property="og:title" content="QCM — EduConcoursCI" />
+    <meta property="og:description" content="Entraîne-toi avec des QCM chronométrés et corrigés par IA pour réussir les concours et examens en Côte d'Ivoire." />
+    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://educoncoursci.netlify.app/quiz.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="QCM — EduConcoursCI" />
+    <meta name="twitter:description" content="Entraîne-toi avec des QCM chronométrés et corrigés par IA pour réussir les concours et examens en Côte d'Ivoire." />
+    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -118,17 +129,7 @@
     </style>
   </head>
   <body style="padding-top: var(--navbar-h)">
-    <nav class="navbar" id="navbar">
-      <div class="navbar__inner">
-        <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
-          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
-        >
-        <div class="navbar__actions" id="navbar-actions">
-          <a href="/preparation.html" class="btn btn--gris btn--sm">← Retour</a>
-        </div>
-      </div>
-    </nav>
+    <div id="site-header"></div>
 
     <div class="quiz-container">
       <!-- SKELETON -->
@@ -352,6 +353,7 @@
       </div>
     </div>
 
+    <script src="/js/layout.js"></script>
     <script src="/js/icons.js"></script>
     <script src="/js/recherche.js"></script>
     <script src="/js/api.js"></script>

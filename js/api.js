@@ -99,6 +99,31 @@ body: JSON.stringify({ email }),
 });
 },
 
+async verifierLogin2FA(tempToken, { token, codeRecuperation }) {
+return apiCall("/auth/2fa/verify-login", {
+method: "POST",
+body: JSON.stringify({ tempToken, token, codeRecuperation }),
+});
+},
+
+async setup2FA() {
+return apiCall("/auth/2fa/setup", { method: "POST" });
+},
+
+async confirmer2FA(token) {
+return apiCall("/auth/2fa/confirm", {
+method: "POST",
+body: JSON.stringify({ token }),
+});
+},
+
+async desactiver2FA(password) {
+return apiCall("/auth/2fa/disable", {
+method: "POST",
+body: JSON.stringify({ password }),
+});
+},
+
 async resetPassword(token, password) {
 return apiCall("/auth/reset-password", {
 method: "POST",
@@ -287,6 +312,13 @@ body: JSON.stringify({ reponses }),
 });
 },
 
+async soumettreExamenBlanc(score, total) {
+return apiCall(`/qcm/examen-blanc/score`, {
+method: "POST",
+body: JSON.stringify({ score, total }),
+});
+},
+
 async creer(data) {
 return apiCall("/qcm", { method: "POST", body: JSON.stringify(data) });
 },
@@ -303,6 +335,204 @@ return apiCall(`/qcm/${id}`, { method: "DELETE" });
 // ════════════════════════════════════════════════════════════
 //  PAIEMENT
 // ════════════════════════════════════════════════════════════
+
+const Vitrine = {
+async stats() {
+return apiCall("/vitrine/stats");
+},
+async inscrireNewsletter(email) {
+return apiCall("/vitrine/newsletter", {
+method: "POST",
+body: JSON.stringify({ email }),
+});
+},
+async temoignages() {
+return apiCall("/vitrine/temoignages");
+},
+};
+
+const Progression = {
+async monTableauDeBord() {
+return apiCall("/progression");
+},
+async classement() {
+return apiCall("/progression/classement");
+},
+async certificatBadge(badgeId) {
+const token = getToken();
+const response = await fetch(`${API_URL}/progression/certificat/badge/${badgeId}`, {
+headers: { Authorization: `Bearer ${token}` },
+});
+if (!response.ok) {
+  const err = await response.json();
+  throw new Error(err.error || "Erreur génération du certificat");
+}
+const blob = await response.blob();
+const url  = URL.createObjectURL(blob);
+const a    = document.createElement("a");
+a.href     = url;
+a.download = `certificat-${badgeId}.pdf`;
+a.click();
+URL.revokeObjectURL(url);
+},
+async certificatExamen(scoreId) {
+const token = getToken();
+const response = await fetch(`${API_URL}/progression/certificat/examen/${scoreId}`, {
+headers: { Authorization: `Bearer ${token}` },
+});
+if (!response.ok) {
+  const err = await response.json();
+  throw new Error(err.error || "Erreur génération du certificat");
+}
+const blob = await response.blob();
+const url  = URL.createObjectURL(blob);
+const a    = document.createElement("a");
+a.href     = url;
+a.download = `certificat-examen-${scoreId}.pdf`;
+a.click();
+URL.revokeObjectURL(url);
+},
+};
+
+const CandidaturesConcours = {
+async mesCandidatures() {
+return apiCall("/candidatures-concours");
+},
+async demarrer(concoursId) {
+return apiCall("/candidatures-concours", {
+method: "POST",
+body: JSON.stringify({ concoursId }),
+});
+},
+async avancer(id, statut, notes) {
+return apiCall(`/candidatures-concours/${id}`, {
+method: "PATCH",
+body: JSON.stringify({ statut, notes }),
+});
+},
+async supprimer(id) {
+return apiCall(`/candidatures-concours/${id}`, { method: "DELETE" });
+},
+};
+
+const Users = {
+async scores(id) {
+return apiCall(`/users/${id}/scores`);
+},
+async modifier(id, donnees) {
+return apiCall(`/users/${id}`, { method: "PATCH", body: JSON.stringify(donnees) });
+},
+async favoris(id) {
+return apiCall(`/users/${id}/favoris`);
+},
+async definirFavoris(id, favoris) {
+return apiCall(`/users/${id}/favoris`, {
+method: "PATCH",
+body: JSON.stringify({ favoris }),
+});
+},
+async definirPhotoUrl(id, photoUrl) {
+return apiCall(`/users/${id}/photo`, {
+method: "PATCH",
+body: JSON.stringify({ photoUrl }),
+});
+},
+async uploaderPhoto(id, formData) {
+const token = getToken();
+const response = await fetch(`${API_URL}/users/${id}/photo/upload`, {
+method: "POST",
+headers: { Authorization: `Bearer ${token}` }, // pas Content-Type (multipart)
+body: formData,
+});
+const data = await response.json();
+if (!response.ok) throw new Error(data.error || "Erreur upload");
+return data;
+},
+};
+
+const Alertes = {
+async mesPreferences() {
+return apiCall("/alertes/preferences");
+},
+async definirPreferences({ canalEmail, canalWhatsapp, whatsappNumero, canalSms, smsNumero, canalPush, categories }) {
+return apiCall("/alertes/preferences", {
+method: "PUT",
+body: JSON.stringify({ canalEmail, canalWhatsapp, whatsappNumero, canalSms, smsNumero, canalPush, categories }),
+});
+},
+};
+
+const Push = {
+async vapidKey() {
+return apiCall("/push/vapid-key");
+},
+async subscribe(subscription) {
+return apiCall("/push/subscribe", {
+method: "POST",
+body: JSON.stringify({ subscription }),
+});
+},
+async unsubscribe(endpoint) {
+return apiCall("/push/unsubscribe", {
+method: "POST",
+body: JSON.stringify({ endpoint }),
+});
+},
+};
+
+const Eligibilite = {
+async verifier({ age, sexe, diplomeId }) {
+return apiCall("/eligibilite", {
+method: "POST",
+body: JSON.stringify({ age, sexe, diplomeId }),
+});
+},
+};
+
+const Referentiels = {
+async structures() {
+return apiCall("/referentiels/structures");
+},
+async creerStructure(donnees) {
+return apiCall("/referentiels/structures", { method: "POST", body: JSON.stringify(donnees) });
+},
+async modifierStructure(id, donnees) {
+return apiCall(`/referentiels/structures/${id}`, { method: "PATCH", body: JSON.stringify(donnees) });
+},
+async supprimerStructure(id) {
+return apiCall(`/referentiels/structures/${id}`, { method: "DELETE" });
+},
+
+async matieres() {
+return apiCall("/referentiels/matieres");
+},
+async creerMatiere(donnees) {
+return apiCall("/referentiels/matieres", { method: "POST", body: JSON.stringify(donnees) });
+},
+async supprimerMatiere(id) {
+return apiCall(`/referentiels/matieres/${id}`, { method: "DELETE" });
+},
+
+async categories() {
+return apiCall("/referentiels/categories");
+},
+async creerCategorie(donnees) {
+return apiCall("/referentiels/categories", { method: "POST", body: JSON.stringify(donnees) });
+},
+async supprimerCategorie(id) {
+return apiCall(`/referentiels/categories/${id}`, { method: "DELETE" });
+},
+
+async diplomes() {
+return apiCall("/referentiels/diplomes");
+},
+async creerDiplome(donnees) {
+return apiCall("/referentiels/diplomes", { method: "POST", body: JSON.stringify(donnees) });
+},
+async supprimerDiplome(id) {
+return apiCall(`/referentiels/diplomes/${id}`, { method: "DELETE" });
+},
+};
 
 const Paiement = {
 async plans(plan = null) {
@@ -321,10 +551,25 @@ async historique() {
 return apiCall("/payment/history");
 },
 
+async initierCinetPay(plan) {
+return apiCall("/payment/cinetpay/initier", {
+method: "POST",
+body: JSON.stringify({ plan }),
+});
+},
+
 // Admin
 async toutesTransactions(params = {}) {
 const qs = new URLSearchParams(params).toString();
 return apiCall(`/payment/all${qs ? "?" + qs : ""}`);
+},
+
+async validerTransaction(id) {
+return apiCall(`/payment/valider/${id}`, { method: "POST" });
+},
+
+async rejeterTransaction(id) {
+return apiCall(`/payment/rejeter/${id}`, { method: "POST" });
 },
 
 async resilier(userId) {
@@ -410,6 +655,86 @@ async demanderAssistant(message, historique = []) {
 return apiCall("/assistance-sociale/assistant", {
 method: "POST",
 body: JSON.stringify({ message, historique }),
+});
+},
+};
+
+const Marketplace = {
+async offres(params = {}) {
+const qs = new URLSearchParams(params).toString();
+return apiCall(`/marketplace/offres${qs ? "?" + qs : ""}`);
+},
+async detail(id) {
+return apiCall(`/marketplace/offres/${id}`);
+},
+async contacter(id, data) {
+return apiCall(`/marketplace/offres/${id}/contact`, {
+method: "POST",
+body: JSON.stringify(data),
+});
+},
+};
+
+const Messages = {
+async conversations() {
+return apiCall("/messages/conversations");
+},
+async demarrer(destinataireId) {
+return apiCall("/messages/conversations", {
+method: "POST",
+body: JSON.stringify({ destinataireId }),
+});
+},
+async detail(conversationId) {
+return apiCall(`/messages/conversations/${conversationId}`);
+},
+async envoyer(conversationId, contenu) {
+return apiCall(`/messages/conversations/${conversationId}/messages`, {
+method: "POST",
+body: JSON.stringify({ contenu }),
+});
+},
+async nonLus() {
+return apiCall("/messages/non-lus");
+},
+};
+
+const Forum = {
+async sujets(params = {}) {
+const qs = new URLSearchParams(params).toString();
+return apiCall(`/forum/sujets${qs ? "?" + qs : ""}`);
+},
+async detailSujet(id) {
+return apiCall(`/forum/sujets/${id}`);
+},
+async creerSujet(data) {
+return apiCall("/forum/sujets", { method: "POST", body: JSON.stringify(data) });
+},
+async supprimerSujet(id) {
+return apiCall(`/forum/sujets/${id}`, { method: "DELETE" });
+},
+async epinglerSujet(id, epingle) {
+return apiCall(`/forum/sujets/${id}/epingler`, {
+method: "PATCH",
+body: JSON.stringify({ epingle }),
+});
+},
+async repondre(sujetId, contenu) {
+return apiCall(`/forum/sujets/${sujetId}/reponses`, {
+method: "POST",
+body: JSON.stringify({ contenu }),
+});
+},
+async supprimerReponse(id) {
+return apiCall(`/forum/reponses/${id}`, { method: "DELETE" });
+},
+};
+
+const AssistantConcours = {
+async demander(message, historique = [], concoursId = null) {
+return apiCall("/assistant-concours", {
+method: "POST",
+body: JSON.stringify({ message, historique, concoursId }),
 });
 },
 };
@@ -766,6 +1091,27 @@ async envoyerRappels() {
 return apiCall("/admin/notifs/rappels", { method: "POST" });
 },
 
+async fileWhatsapp() {
+return apiCall("/admin/notifs/whatsapp-file");
+},
+
+async fileSms() {
+return apiCall("/admin/notifs/sms-file");
+},
+
+async marquerSmsEnvoye(id) {
+return apiCall(`/admin/notifs/sms-file/${id}`, { method: "PATCH" });
+},
+
+async journal(params = {}) {
+const qs = new URLSearchParams(params).toString();
+return apiCall(`/admin/journal${qs ? "?" + qs : ""}`);
+},
+
+async marquerWhatsappEnvoye(id) {
+return apiCall(`/admin/notifs/whatsapp-file/${id}`, { method: "PATCH" });
+},
+
 async historiqueNotifs() {
 return apiCall("/admin/notifs/history");
 },
@@ -786,6 +1132,6 @@ return false;
 
 // ── Exporte tout en global (utilisable dans les pages HTML) ──
 window.API = {
-Auth, Concours, PDFs, Videos, QCM, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites,
+Auth, Concours, PDFs, Videos, QCM, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites, Referentiels, Eligibilite, Alertes, Users, Progression, Vitrine, CandidaturesConcours, AssistantConcours, Push, Forum, Marketplace, Messages,
 verifierBackend, getToken,
 };

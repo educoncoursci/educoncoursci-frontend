@@ -42,6 +42,10 @@
             <a href="/dashboard/index.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a
             >
+            <a href="/dashboard/progression.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a
+            >
+            <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
             <a href="/dashboard/mes-scores.html" class="sidebar__lien actif"
               ><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a
             >
@@ -50,6 +54,9 @@
             >
             <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a
+            >
+            <a href="/dashboard/messages.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a
             >
             <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a
@@ -177,8 +184,14 @@
         const session = window.Auth.getSession();
 
         // Sidebar
-        document.getElementById("sidebar-avatar").textContent =
-          session.nom?.[0]?.toUpperCase() || "?";
+        if (session.photo_url) {
+          document.getElementById("sidebar-avatar").style.backgroundImage = `url('${session.photo_url}')`;
+          document.getElementById("sidebar-avatar").style.backgroundSize = "cover";
+          document.getElementById("sidebar-avatar").style.backgroundPosition = "center";
+          document.getElementById("sidebar-avatar").textContent = "";
+        } else {
+          document.getElementById("sidebar-avatar").textContent = session.nom?.[0]?.toUpperCase() || "?";
+        }
         document.getElementById("sidebar-nom").textContent = session.nom || "";
         document.getElementById("sidebar-email").textContent =
           session.email || "";
@@ -186,7 +199,13 @@
           ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
           : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
 
-        const scores = JSON.parse(session.scores_json || "[]");
+        let scores = [];
+        try {
+          const data = await window.API.Users.scores(session.id);
+          scores = data.scores || [];
+        } catch (err) {
+          window.afficherToast("Erreur de chargement de tes scores : " + err.message, "erreur");
+        }
 
         if (scores.length === 0) {
           document.getElementById("historique-scores").innerHTML = `
@@ -277,14 +296,23 @@
         </div>
         <div class="score-item__info">
           <div class="score-item__titre">${sc.qcmTitre || "QCM"}</div>
-          <div class="score-item__meta">${sc.score || 0}/${sc.total || 0} bonnes réponses · ${sc.date || ""}</div>
+          <div class="score-item__meta">${sc.score || 0}/${sc.total || 0} bonnes réponses · ${sc.date ? new Date(sc.date).toLocaleDateString("fr-FR") : ""}</div>
           <div style="margin-top:4px;"><span class="badge badge--gris" style="font-size:0.72rem;">${mention}</span></div>
         </div>
         <a href="/preparation.html" style="font-size:0.82rem;color:var(--vert);font-weight:700;white-space:nowrap;">Recommencer →</a>
+        ${sc.qcm_id === null && p >= 50 ? `<button onclick="telechargerCertificatExamen(${sc.id})" class="btn btn--gris btn--sm" style="white-space:nowrap;">🏅 Certificat</button>` : ""}
       </div>`;
           })
           .join("");
       });
+
+      async function telechargerCertificatExamen(scoreId) {
+        try {
+          await window.API.Progression.certificatExamen(scoreId);
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur lors du téléchargement du certificat.", "erreur");
+        }
+      }
     </script>
   </body>
 </html>

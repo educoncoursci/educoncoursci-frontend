@@ -1,0 +1,281 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendrier national des concours — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Toutes les dates d'ouverture et de clôture des concours de la fonction publique et des grandes écoles de Côte d'Ivoire, sur un seul calendrier."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .calnat {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 24px;
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .calnat { grid-template-columns: 1fr; }
+      }
+      .calnat__entete {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+      .calnat__nav-btn {
+        background: var(--blanc);
+        border: 1px solid var(--gris-bordure);
+        border-radius: 10px;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .calnat__nav-btn:hover { background: var(--gris-clair); }
+      .calnat__titre-mois {
+        font-weight: 800;
+        font-size: 1.05rem;
+        text-transform: capitalize;
+      }
+      .calnat__grille {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 6px;
+      }
+      .calnat__entete-jour {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-align: center;
+        color: var(--gris-texte);
+        padding-bottom: 6px;
+      }
+      .calnat__jour {
+        aspect-ratio: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        font-size: 0.82rem;
+        position: relative;
+        cursor: default;
+        background: var(--blanc);
+        border: 1px solid transparent;
+      }
+      .calnat__jour--vide { visibility: hidden; }
+      .calnat__jour--aujourdhui { border-color: var(--vert); font-weight: 800; }
+      .calnat__jour--evenement { cursor: pointer; }
+      .calnat__jour--evenement:hover { border-color: var(--vert); }
+      .calnat__jour--selectionne { background: var(--vert); color: #fff; }
+      .calnat__points { display: flex; gap: 2px; position: absolute; bottom: 5px; }
+      .calnat__point { width: 5px; height: 5px; border-radius: 50%; }
+      .calnat__point--ouverture { background: var(--vert); }
+      .calnat__point--cloture { background: #dc2626; }
+      .calnat__jour--selectionne .calnat__point { background: #fff; }
+    </style>
+  </head>
+  <body style="background: var(--gris-clair)">
+    <div id="site-header"></div>
+
+    <main class="container" style="max-width: 1100px; padding: 32px 20px 60px;">
+      <div style="text-align: center; margin-bottom: 28px;">
+        <h1>🗓️ Calendrier national des concours</h1>
+        <p style="color: var(--gris-texte);">
+          Toutes les dates d'ouverture et de clôture des concours en cours ou à venir, en un coup d'œil.
+        </p>
+        <div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:0.8rem;color:var(--gris-texte);">
+          <span><span class="calnat__point calnat__point--ouverture" style="display:inline-block;position:static;margin-right:4px;"></span>Ouverture</span>
+          <span><span class="calnat__point calnat__point--cloture" style="display:inline-block;position:static;margin-right:4px;"></span>Clôture</span>
+        </div>
+      </div>
+
+      <div class="calnat">
+        <div class="dash-section">
+          <div class="calnat__entete">
+            <button class="calnat__nav-btn" onclick="changerMois(-1)">←</button>
+            <div class="calnat__titre-mois" id="calnat-titre-mois"></div>
+            <button class="calnat__nav-btn" onclick="changerMois(1)">→</button>
+          </div>
+          <div class="calnat__grille" id="calnat-grille"></div>
+        </div>
+
+        <div class="dash-section">
+          <h3 id="calnat-titre-liste" style="margin-bottom:14px;">📌 Prochaines échéances</h3>
+          <div id="calnat-liste">
+            <div class="skeleton" style="height: 60px; border-radius: 10px; margin-bottom: 10px;"></div>
+            <div class="skeleton" style="height: 60px; border-radius: 10px; margin-bottom: 10px;"></div>
+            <div class="skeleton" style="height: 60px; border-radius: 10px;"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      let mesEvenements = []; // { date: Date, titre, type, concoursId, organisme }
+      let moisAffiche = new Date();
+      let jourSelectionne = null;
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        await chargerEvenements();
+        rendreCalendrier();
+        afficherEcheancesAVenir();
+      });
+
+      async function chargerEvenements() {
+        try {
+          const data = await window.API.Concours.liste({ limit: 300 });
+          const liste = (data.concours || []).filter(
+            (c) => c.statut === "ouvert" || c.statut === "à venir",
+          );
+
+          mesEvenements = [];
+          liste.forEach((c) => {
+            if (c.ouverture && !isNaN(new Date(c.ouverture).getTime())) {
+              mesEvenements.push({
+                date: new Date(c.ouverture), titre: c.titre, type: "Ouverture",
+                concoursId: c.id, organisme: c.organisme,
+              });
+            }
+            if (c.cloture && !isNaN(new Date(c.cloture).getTime())) {
+              mesEvenements.push({
+                date: new Date(c.cloture), titre: c.titre, type: "Clôture",
+                concoursId: c.id, organisme: c.organisme,
+              });
+            }
+          });
+          mesEvenements.sort((a, b) => a.date - b.date);
+        } catch (err) {
+          console.error("Erreur chargement calendrier national :", err.message);
+          document.getElementById("calnat-liste").innerHTML =
+            `<p style="color:#dc2626;">Erreur de chargement du calendrier.</p>`;
+        }
+      }
+
+      function changerMois(delta) {
+        moisAffiche = new Date(moisAffiche.getFullYear(), moisAffiche.getMonth() + delta, 1);
+        jourSelectionne = null;
+        rendreCalendrier();
+        afficherEcheancesAVenir();
+      }
+
+      function rendreCalendrier() {
+        const annee = moisAffiche.getFullYear();
+        const mois = moisAffiche.getMonth();
+        const premierJour = new Date(annee, mois, 1);
+        const nbJours = new Date(annee, mois + 1, 0).getDate();
+        const decalage = (premierJour.getDay() + 6) % 7; // Lundi = 0
+
+        document.getElementById("calnat-titre-mois").textContent =
+          moisAffiche.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+
+        const evenementsParJour = {};
+        mesEvenements
+          .filter((e) => e.date.getFullYear() === annee && e.date.getMonth() === mois)
+          .forEach((e) => {
+            const j = e.date.getDate();
+            if (!evenementsParJour[j]) evenementsParJour[j] = [];
+            evenementsParJour[j].push(e);
+          });
+
+        const aujourdhui = new Date();
+        const estMoisCourant = aujourdhui.getFullYear() === annee && aujourdhui.getMonth() === mois;
+
+        let html = ["L", "M", "M", "J", "V", "S", "D"]
+          .map((j) => `<div class="calnat__entete-jour">${j}</div>`).join("");
+
+        for (let i = 0; i < decalage; i++) {
+          html += `<div class="calnat__jour calnat__jour--vide"></div>`;
+        }
+
+        for (let jour = 1; jour <= nbJours; jour++) {
+          const estAuj = estMoisCourant && aujourdhui.getDate() === jour;
+          const evts = evenementsParJour[jour] || [];
+          const aOuverture = evts.some((e) => e.type === "Ouverture");
+          const aCloture = evts.some((e) => e.type === "Clôture");
+          const estSelectionne = jourSelectionne === jour;
+          const classes = [
+            "calnat__jour",
+            estAuj ? "calnat__jour--aujourdhui" : "",
+            evts.length ? "calnat__jour--evenement" : "",
+            estSelectionne ? "calnat__jour--selectionne" : "",
+          ].join(" ");
+          html += `
+      <div class="${classes}" ${evts.length ? `onclick="selectionnerJour(${jour})"` : ""}>
+        ${jour}
+        ${evts.length ? `<div class="calnat__points">${aOuverture ? '<span class="calnat__point calnat__point--ouverture"></span>' : ""}${aCloture ? '<span class="calnat__point calnat__point--cloture"></span>' : ""}</div>` : ""}
+      </div>`;
+        }
+        document.getElementById("calnat-grille").innerHTML = html;
+      }
+
+      function selectionnerJour(jour) {
+        jourSelectionne = jourSelectionne === jour ? null : jour;
+        rendreCalendrier();
+        if (jourSelectionne) {
+          afficherEvenementsDuJour(jourSelectionne);
+        } else {
+          afficherEcheancesAVenir();
+        }
+      }
+
+      function ligneEvenement(e) {
+        const jours = Math.ceil((e.date - new Date()) / 86400000);
+        return `
+      <a href="/concours-detail.html?id=${e.concoursId}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--gris-bordure);text-decoration:none;color:inherit;">
+        <div style="min-width:0;">
+          <div style="font-weight:700;font-size:0.9rem;">${e.titre}</div>
+          <div style="font-size:0.78rem;color:var(--gris-texte);">🏢 ${e.organisme} · ${e.type} — ${e.date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</div>
+        </div>
+        <span class="badge ${e.type === "Clôture" ? "badge--rouge" : "badge--vert"}" style="white-space:nowrap;">${jours >= 0 ? `J-${jours}` : "Passé"}</span>
+      </a>`;
+      }
+
+      function afficherEvenementsDuJour(jour) {
+        const annee = moisAffiche.getFullYear();
+        const mois = moisAffiche.getMonth();
+        const evts = mesEvenements.filter(
+          (e) => e.date.getFullYear() === annee && e.date.getMonth() === mois && e.date.getDate() === jour,
+        );
+        document.getElementById("calnat-titre-liste").textContent =
+          `📌 ${jour} ${moisAffiche.toLocaleDateString("fr-FR", { month: "long" })}`;
+        document.getElementById("calnat-liste").innerHTML =
+          evts.map(ligneEvenement).join("") ||
+          `<p style="color:var(--gris-texte);font-size:0.9rem;">Aucun événement ce jour-là.</p>`;
+      }
+
+      function afficherEcheancesAVenir() {
+        document.getElementById("calnat-titre-liste").textContent = "📌 Prochaines échéances";
+        const futurs = mesEvenements.filter((e) => e.date >= new Date(new Date().setHours(0, 0, 0, 0)));
+        const zone = document.getElementById("calnat-liste");
+        if (futurs.length === 0) {
+          zone.innerHTML = `<p style="color:var(--gris-texte);font-size:0.9rem;">Aucune échéance à venir pour le moment.</p>`;
+          return;
+        }
+        zone.innerHTML = futurs.slice(0, 20).map(ligneEvenement).join("");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assistant IA Concours — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Pose tes questions sur les concours de la Fonction Publique et des grandes écoles de Côte d'Ivoire à l'assistant IA d'EduConcoursCI."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .chat-conteneur {
+        background: var(--blanc);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--ombre-sm);
+        display: flex;
+        flex-direction: column;
+        height: 560px;
+      }
+      .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+      .chat-message {
+        margin-bottom: 14px;
+        max-width: 85%;
+        line-height: 1.6;
+      }
+      .chat-message--user {
+        margin-left: auto;
+        background: var(--vert);
+        color: #fff;
+        padding: 10px 14px;
+        border-radius: 14px 14px 4px 14px;
+      }
+      .chat-message--assistant {
+        background: var(--gris-clair);
+        padding: 10px 14px;
+        border-radius: 14px 14px 14px 4px;
+        white-space: pre-line;
+      }
+      .chat-alerte {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 14px;
+        font-size: 0.85rem;
+      }
+      .chat-input-zone {
+        display: flex;
+        gap: 10px;
+        padding: 14px;
+        border-top: 1px solid var(--gris-bordure);
+      }
+      .chat-input-zone input {
+        flex: 1;
+      }
+      .chat-suggestion {
+        background: var(--gris-clair);
+        border: none;
+        border-radius: 20px;
+        padding: 6px 14px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        margin: 0 6px 8px 0;
+      }
+      .chat-suggestion:hover {
+        background: var(--vert);
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <main class="container" style="max-width: 760px; padding: 32px 20px 60px;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1>🤖 Assistant IA Concours</h1>
+        <p style="color: var(--gris-texte);">
+          Pose tes questions sur les conditions, épreuves, pièces à fournir ou la
+          méthode de révision pour un concours ivoirien.
+        </p>
+      </div>
+
+      <div id="zone-contexte-concours" class="hidden" style="background:var(--blanc);border-radius:var(--radius-md);padding:12px 16px;margin-bottom:14px;box-shadow:var(--ombre-sm);font-size:0.85rem;"></div>
+
+      <div id="zone-suggestions" style="margin-bottom:14px;"></div>
+
+      <div class="chat-conteneur">
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-message chat-message--assistant">
+            Bonjour ! Je suis l'assistant IA d'EduConcoursCI. Pose-moi une question sur un concours (conditions, épreuves, pièces à fournir, méthode de révision…). Je ne peux garantir aucune admission — pour les infos officielles, vérifie toujours la fiche du concours ou la source du ministère organisateur.
+          </div>
+        </div>
+        <div class="chat-input-zone">
+          <input type="text" id="chat-input" class="form-input" placeholder="Écris ta question…" onkeydown="if(event.key==='Enter') envoyerMessage()" />
+          <button onclick="envoyerMessage()" class="btn btn--primaire" id="btn-chat-envoyer">Envoyer</button>
+        </div>
+      </div>
+
+      <p style="font-size:0.78rem;color:var(--gris-texte);text-align:center;margin-top:14px;">
+        ⭐ <span id="mention-quota">Réponses limitées par jour pour les comptes gratuits — illimité en Premium.</span>
+      </p>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      let historiqueChat = [];
+      let concoursIdActuel = null;
+      let concoursTitreActuel = null;
+
+      const SUGGESTIONS = [
+        "Quelles pièces fournir pour un concours de la fonction publique ?",
+        "Comment bien réviser en 1 mois ?",
+        "Quelle différence entre concours direct et professionnel ?",
+      ];
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        concoursIdActuel = params.get("concoursId");
+        concoursTitreActuel = params.get("titre");
+
+        if (concoursIdActuel && concoursTitreActuel) {
+          const zone = document.getElementById("zone-contexte-concours");
+          zone.innerHTML = `📌 Question à propos de : <strong>${decodeURIComponent(concoursTitreActuel)}</strong> <a href="/assistant-concours.html" style="float:right;">✕</a>`;
+          zone.classList.remove("hidden");
+        }
+
+        document.getElementById("zone-suggestions").innerHTML = SUGGESTIONS
+          .map((s) => `<button class="chat-suggestion" onclick="poserSuggestion(this)">${s}</button>`)
+          .join("");
+
+        if (!window.Auth?.estConnecte()) {
+          document.getElementById("mention-quota").textContent =
+            "Connecte-toi pour discuter avec l'assistant.";
+        }
+      });
+
+      function poserSuggestion(btn) {
+        document.getElementById("chat-input").value = btn.textContent;
+        envoyerMessage();
+      }
+
+      async function envoyerMessage() {
+        if (!window.Auth?.estConnecte()) {
+          window.location.href = "/auth/login.html";
+          return;
+        }
+
+        const input = document.getElementById("chat-input");
+        const message = input.value.trim();
+        if (!message) return;
+
+        const messagesDiv = document.getElementById("chat-messages");
+        messagesDiv.innerHTML += `<div class="chat-message chat-message--user">${message}</div>`;
+        input.value = "";
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        const btn = document.getElementById("btn-chat-envoyer");
+        btn.disabled = true;
+
+        try {
+          const res = await window.API.AssistantConcours.demander(message, historiqueChat, concoursIdActuel);
+
+          let htmlAlerte = "";
+          if (res.alerteFraude) {
+            htmlAlerte = `
+              <div class="chat-alerte">
+                ⚠️ Rappel : aucun intermédiaire ne peut garantir la réussite à un concours. En cas de sollicitation suspecte, contacte le numéro vert anti-fraude de la Fonction Publique : <strong>1364</strong>.
+              </div>`;
+          }
+
+          messagesDiv.innerHTML += htmlAlerte + `<div class="chat-message chat-message--assistant">${res.reponse}</div>`;
+          messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+          historiqueChat.push({ role: "user", contenu: message });
+          historiqueChat.push({ role: "assistant", contenu: res.reponse });
+        } catch (err) {
+          messagesDiv.innerHTML += `<div class="chat-message chat-message--assistant" style="color:#dc2626;">${err.message || "impossible de répondre pour le moment."}</div>`;
+        } finally {
+          btn.disabled = false;
+        }
+      }
+    </script>
+  </body>
+</html>

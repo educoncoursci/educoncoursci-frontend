@@ -1,0 +1,160 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Témoignages — Admin EduConcoursCI</title>
+    <meta name="description" content="Gestion des témoignages affichés sur la page d'accueil.">
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" style="background: #0a1628; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div class="navbar__logo-icon" style="background: rgba(255, 255, 255, 0.1)"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button onclick="window.Auth?.deconnecter?.()" class="btn btn--gris btn--sm">Déconnexion</button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a>
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a>
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a>
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a>
+          <a href="/admin/videos.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a>
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a>
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a>
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a>
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a>
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a>
+          <a href="/" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a>
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Témoignages</div>
+              <div class="admin-topbar__sous">Affichés sur la page d'accueil — n'ajoute que de vrais retours d'utilisateurs</div>
+            </div>
+          </div>
+
+          <div class="dash-section" style="margin-bottom: 20px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+              <input id="tem-nom" placeholder="Nom de la personne" style="padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              <input id="tem-role" placeholder="Rôle / contexte (ex: Candidat ENA 2026)" style="padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+            </div>
+            <textarea id="tem-texte" placeholder="Texte du témoignage" rows="3" style="width:100%;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;margin-bottom:12px;"></textarea>
+            <div style="display:flex;gap:14px;align-items:center;">
+              <label style="font-size:0.85rem;">Note :
+                <select id="tem-note" style="padding:6px 10px;border-radius:8px;border:1.5px solid var(--gris-bordure);">
+                  <option value="5">5 ★</option>
+                  <option value="4">4 ★</option>
+                  <option value="3">3 ★</option>
+                </select>
+              </label>
+              <button class="btn btn--vert btn--sm" onclick="ajouterTemoignage()">+ Ajouter</button>
+            </div>
+          </div>
+
+          <div class="admin-tableau-wrap">
+            <table class="admin-tableau">
+              <thead><tr><th>Nom</th><th>Texte</th><th>Statut</th><th>Actions</th></tr></thead>
+              <tbody id="tbody-temoignages"><tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Chargement…</td></tr></tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.protegerPageAdmin()) return;
+        await charger();
+      });
+
+      async function charger() {
+        try {
+          const data = await apiCall("/vitrine/temoignages/tous");
+          const tbody = document.getElementById("tbody-temoignages");
+          tbody.innerHTML = data.temoignages.length
+            ? data.temoignages.map((t) => `
+              <tr>
+                <td style="font-weight:700;">${t.nom}${t.role ? `<div style="font-size:0.78rem;color:var(--gris-texte);font-weight:400;">${t.role}</div>` : ""}</td>
+                <td style="max-width:320px;font-size:0.85rem;">${t.texte}</td>
+                <td>
+                  <button class="badge ${t.statut === "publié" ? "badge--vert" : "badge--gris"}" style="border:none;cursor:pointer;" onclick="basculerStatut(${t.id}, '${t.statut}')">${t.statut === "publié" ? "✓ Publié" : "Brouillon"}</button>
+                </td>
+                <td><button class="btn btn--gris btn--sm" onclick="supprimerTemoignage(${t.id})">Supprimer</button></td>
+              </tr>`).join("")
+            : `<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun témoignage. Ajoute le premier ci-dessus.</td></tr>`;
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function ajouterTemoignage() {
+        const nom = document.getElementById("tem-nom").value.trim();
+        const role = document.getElementById("tem-role").value.trim();
+        const texte = document.getElementById("tem-texte").value.trim();
+        const note = parseInt(document.getElementById("tem-note").value);
+        if (!nom || !texte) return window.afficherToast("Nom et texte requis.", "warn");
+        try {
+          await apiCall("/vitrine/temoignages", { method: "POST", body: JSON.stringify({ nom, role, texte, note, statut: "publié" }) });
+          document.getElementById("tem-nom").value = "";
+          document.getElementById("tem-role").value = "";
+          document.getElementById("tem-texte").value = "";
+          window.afficherToast("Témoignage ajouté.", "succes");
+          await charger();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function basculerStatut(id, statutActuel) {
+        const nouveauStatut = statutActuel === "publié" ? "brouillon" : "publié";
+        try {
+          await apiCall(`/vitrine/temoignages/${id}`, { method: "PATCH", body: JSON.stringify({ statut: nouveauStatut }) });
+          await charger();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function supprimerTemoignage(id) {
+        if (!confirm("Supprimer ce témoignage ?")) return;
+        try {
+          await apiCall(`/vitrine/temoignages/${id}`, { method: "DELETE" });
+          window.afficherToast("Témoignage supprimé.", "succes");
+          await charger();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>

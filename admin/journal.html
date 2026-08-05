@@ -1,0 +1,135 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Journal d'activité — Admin EduConcoursCI</title>
+    <meta name="description" content="Historique des actions effectuées par les administrateurs sur la plateforme.">
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" style="background: #0a1628; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div class="navbar__logo-icon" style="background: rgba(255, 255, 255, 0.1)"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button onclick="window.Auth?.deconnecter?.()" class="btn btn--gris btn--sm">Déconnexion</button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a>
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a>
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a>
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a>
+          <a href="/admin/videos.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a>
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a>
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a>
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a>
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a>
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a>
+          <a href="/" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a>
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Journal d'activité</div>
+              <div class="admin-topbar__sous" id="compteur-journal">Chargement…</div>
+            </div>
+            <button onclick="charger()" class="btn btn--outline-vert btn--sm">Actualiser</button>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+            <select id="filtre-action" onchange="charger()" style="padding:9px 12px;border:1.5px solid var(--gris-bordure);border-radius:10px;font-size:0.85rem;">
+              <option value="">Toutes les actions</option>
+              <option value="création">Créations</option>
+              <option value="modification">Modifications</option>
+              <option value="suppression">Suppressions</option>
+              <option value="validation">Validations</option>
+              <option value="rejet">Rejets</option>
+            </select>
+            <select id="filtre-cible" onchange="charger()" style="padding:9px 12px;border:1.5px solid var(--gris-bordure);border-radius:10px;font-size:0.85rem;">
+              <option value="">Tous les types</option>
+              <option value="concours">Concours</option>
+              <option value="utilisateur">Utilisateurs</option>
+              <option value="transaction">Paiements</option>
+              <option value="structure">Structures</option>
+              <option value="matiere">Matières</option>
+              <option value="diplome">Diplômes</option>
+              <option value="categorie">Catégories</option>
+            </select>
+          </div>
+
+          <div class="admin-tableau-wrap">
+            <table class="admin-tableau">
+              <thead><tr><th>Date</th><th>Admin</th><th>Action</th><th>Cible</th><th>Détails</th></tr></thead>
+              <tbody id="tbody-journal"><tr><td colspan="5" style="text-align:center;padding:30px;color:var(--gris-texte);">Chargement…</td></tr></tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.protegerPageAdmin()) return;
+        await charger();
+      });
+
+      const BADGE_ACTION = {
+        "création": "badge--vert",
+        "modification": "badge--orange",
+        "suppression": "badge--rouge",
+        "validation": "badge--vert",
+        "rejet": "badge--rouge",
+      };
+
+      async function charger() {
+        const action = document.getElementById("filtre-action").value;
+        const cibleType = document.getElementById("filtre-cible").value;
+        try {
+          const data = await window.API.Admin.journal({ action, cibleType, limit: 100 });
+          document.getElementById("compteur-journal").textContent = `${data.total} action(s) enregistrée(s) au total`;
+          const tbody = document.getElementById("tbody-journal");
+          tbody.innerHTML = data.entrees.length
+            ? data.entrees.map((e) => `
+              <tr>
+                <td style="font-size:0.82rem;color:var(--gris-texte);white-space:nowrap;">${new Date(e.created_at).toLocaleString("fr-FR")}</td>
+                <td style="font-weight:700;font-size:0.85rem;">${e.user_nom || "—"}</td>
+                <td><span class="badge ${BADGE_ACTION[e.action] || "badge--gris"}" style="font-size:0.75rem;">${e.action}</span></td>
+                <td style="font-size:0.85rem;">${e.cible_type || "—"}${e.cible_id ? ` #${e.cible_id}` : ""}</td>
+                <td style="font-size:0.82rem;color:var(--gris-texte);max-width:320px;">${e.details || ""}</td>
+              </tr>`).join("")
+            : `<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune activité enregistrée pour ces filtres.</td></tr>`;
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>

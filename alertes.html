@@ -5,6 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alertes Concours — EduConcoursCI</title>
+  <meta name="description" content="Reçois des alertes personnalisées sur les concours en Côte d'Ivoire : ouvertures, dates limites et résultats, directement par email.">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="EduConcoursCI" />
+    <meta property="og:title" content="Alertes Concours — EduConcoursCI" />
+    <meta property="og:description" content="Reçois des alertes personnalisées sur les concours en Côte d'Ivoire : ouvertures, dates limites et résultats, directement par email." />
+    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://educoncoursci.netlify.app/alertes.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Alertes Concours — EduConcoursCI" />
+    <meta name="twitter:description" content="Reçois des alertes personnalisées sur les concours en Côte d'Ivoire : ouvertures, dates limites et résultats, directement par email." />
+    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
   <link rel="icon" href="/assets/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -15,55 +26,7 @@
 </head>
 <body>
 
-<nav class="navbar" id="navbar">
-  <div class="navbar__inner">
-    <a href="/" class="navbar__logo"><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div><span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a>
-            <ul class="navbar__links">
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Concours
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
-              <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
-              <a href="/preparation.html" class="navbar__sous-lien"><span data-icone="diplome" data-taille="16"></span> Préparation</a>
-            </div>
-          </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Ressources
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
-              <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
-              <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
-              <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
-            </div>
-          </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Carrière
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
-              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
-              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
-              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
-            </div>
-          </li>
-          <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
-          <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
-        </ul>
-    <div class="navbar__actions" id="navbar-actions">
-      <a href="/auth/login.html"    class="btn btn--outline-vert btn--sm">Connexion</a>
-      <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription</a>
-    </div>
-    <button class="navbar__hamburger" id="hamburger"><span></span><span></span><span></span></button>
-  </div>
-</nav>
+<div id="site-header"></div>
 
 <div class="page-header main-content" style="background:linear-gradient(135deg,#0F3D22,#1A6B3C);">
   <div class="container">
@@ -101,19 +64,74 @@
     <!-- Si connecté -->
     <div id="zone-connecte" class="hidden">
       <div style="text-align:center;margin-bottom:24px;">
-        <div style="font-size:3rem;margin-bottom:8px;"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
-        <h2 style="margin-bottom:6px;">Tu es déjà inscrit aux alertes !</h2>
-        <p style="color:var(--gris-texte);">Les alertes sont envoyées à <strong id="email-connecte"></strong></p>
+        <div style="font-size:3rem;margin-bottom:8px;"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+        <h2 style="margin-bottom:6px;">Tes préférences d'alertes</h2>
+        <p style="color:var(--gris-texte);">Connecté en tant que <strong id="email-connecte"></strong></p>
       </div>
-      <div style="background:var(--gris-clair);border-radius:var(--radius-md);padding:16px;margin-bottom:20px;">
-        <div style="font-weight:700;margin-bottom:10px;">Tu recevras des alertes pour :</div>
-        <div id="liste-alertes-actives">
-          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:0.9rem;"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Nouveaux concours</div>
-          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:0.9rem;"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Rappels de clôture</div>
-          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:0.9rem;"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Actualités importantes</div>
+
+      <div id="msg-prefs" class="hidden" style="margin-bottom:16px;"></div>
+
+      <div class="form-groupe">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="pref-canal-email" style="accent-color:var(--vert);">
+          <span data-icone="email" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
+          Recevoir les alertes par e-mail
+        </label>
+      </div>
+
+      <div class="form-groupe">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="pref-canal-whatsapp" style="accent-color:var(--vert);" onchange="document.getElementById('pref-zone-whatsapp').classList.toggle('hidden', !this.checked)">
+          <span data-icone="whatsapp" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
+          Recevoir les alertes par WhatsApp
+        </label>
+        <div id="pref-zone-whatsapp" class="hidden" style="margin-top:10px;">
+          <input type="tel" id="pref-whatsapp-numero" class="form-input" placeholder="Ex: +2250700000000">
         </div>
       </div>
-      <a href="/concours.html" class="btn btn--primaire btn--full"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Voir les concours ouverts →</a>
+
+      <div class="form-groupe">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="pref-canal-sms" style="accent-color:var(--vert);" onchange="document.getElementById('pref-zone-sms').classList.toggle('hidden', !this.checked)">
+          <span data-icone="telephone" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
+          Recevoir les alertes par SMS
+        </label>
+        <div id="pref-zone-sms" class="hidden" style="margin-top:10px;">
+          <input type="tel" id="pref-sms-numero" class="form-input" placeholder="Ex: +2250700000000">
+        </div>
+      </div>
+
+      <div class="form-groupe">
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+          <span style="display:flex;align-items:center;gap:8px;">
+            <span data-icone="cloche" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
+            Notifications push sur cet appareil
+          </span>
+          <button type="button" id="btn-push-toggle" class="btn btn--gris btn--sm" onclick="basculerPush()">Activer</button>
+        </label>
+        <div id="msg-push" class="hidden" style="font-size:0.78rem;margin-top:6px;"></div>
+      </div>
+
+      <div class="form-groupe">
+        <label class="form-label">Catégories suivies</label>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;" id="pref-cats">
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;" class="cat-label"><input type="checkbox" value="Fonction Publique" style="accent-color:var(--vert);">Fonction Publique</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;" class="cat-label"><input type="checkbox" value="Grandes Écoles" style="accent-color:var(--vert);">Grandes Écoles</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;" class="cat-label"><input type="checkbox" value="Sécurité" style="accent-color:var(--vert);">Sécurité</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;" class="cat-label"><input type="checkbox" value="Santé" style="accent-color:var(--vert);">Santé</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;" class="cat-label"><input type="checkbox" value="Travail Social" style="accent-color:var(--vert);">Travail Social</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;" class="cat-label"><input type="checkbox" value="Éducation" style="accent-color:var(--vert);">Éducation</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;" class="cat-label"><input type="checkbox" value="Finance" style="accent-color:var(--vert);">Finance</label>
+          <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;" class="cat-label"><input type="checkbox" value="Tous" style="accent-color:var(--vert);">Tous</label>
+        </div>
+        <div style="font-size:0.78rem;color:var(--gris-texte);margin-top:6px;">Aucune catégorie cochée = toutes les catégories.</div>
+      </div>
+
+      <button onclick="enregistrerPreferences()" id="btn-prefs" class="btn btn--primaire btn--full btn--lg" style="margin-top:8px;">
+        <span data-icone="disquette" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Enregistrer mes préférences
+      </button>
+
+      <a href="/concours.html" class="btn btn--gris btn--full" style="margin-top:10px;"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Voir les concours ouverts →</a>
     </div>
 
     <!-- Si non connecté -->
@@ -133,7 +151,7 @@
 
       <div class="form-groupe">
         <label class="form-label">Catégories qui t'intéressent</label>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;" id="cats-alerte">
           <label style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--gris-bordure);border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" class="cat-label">
             <input type="checkbox" value="Fonction Publique" style="accent-color:var(--vert);">Fonction Publique
           </label>
@@ -161,6 +179,17 @@
         </div>
       </div>
 
+      <div class="form-groupe">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="whatsapp-active" style="accent-color:var(--vert);" onchange="document.getElementById('zone-whatsapp-numero').classList.toggle('hidden', !this.checked)">
+          <span data-icone="whatsapp" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
+          Recevoir aussi les alertes par WhatsApp
+        </label>
+        <div id="zone-whatsapp-numero" class="hidden" style="margin-top:10px;">
+          <input type="tel" id="whatsapp-numero" class="form-input" placeholder="Ex: +2250700000000">
+        </div>
+      </div>
+
       <button onclick="sInscrireAlertes()" id="btn-alertes" class="btn btn--primaire btn--full btn--lg" style="margin-top:8px;">
         <span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Activer mes alertes gratuitement
       </button>
@@ -176,19 +205,10 @@
   </div>
 </main>
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer__grille">
-      <div><div class="footer__logo"><img src="/assets/logo-icon.png" alt="EduConcoursCI" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" /> EduConcoursCI</div><p class="footer__desc">Alertes concours CI gratuites par e-mail.</p></div>
-      <div><div class="footer__titre-col">Navigation</div><a href="/concours.html" class="footer__lien">Concours</a><a href="/actualites.html" class="footer__lien">Actualités</a></div>
-      <div><div class="footer__titre-col">Services</div><a href="/boutique.html" class="footer__lien">Premium</a><a href="/preparation.html" class="footer__lien">Préparation</a></div>
-      <div><div class="footer__titre-col">Compte</div><a href="/auth/login.html" class="footer__lien">Connexion</a><a href="/auth/register.html" class="footer__lien">Inscription</a></div>
-    </div>
-  </div>
-  <div class="footer__bas"><div class="container">© 2026 EduConcoursCI</div></div>
-</footer>
+<div id="site-footer"></div>
 
-<script src="/js/icons.js"></script>
+<script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
     <script src="/js/recherche.js"></script>
     <script src="/js/api.js"></script>
 
@@ -197,14 +217,157 @@
 <script src="/js/main.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const session = window.Auth?.getSession();
   if (session) {
     document.getElementById("zone-non-connecte").classList.add("hidden");
     document.getElementById("zone-connecte").classList.remove("hidden");
     document.getElementById("email-connecte").textContent = session.email;
+    await chargerMesPreferences();
   }
 });
+
+async function chargerMesPreferences() {
+  try {
+    const { preferences } = await window.API.Alertes.mesPreferences();
+    document.getElementById("pref-canal-email").checked = preferences.canal_email !== false;
+    document.getElementById("pref-canal-whatsapp").checked = !!preferences.canal_whatsapp;
+    document.getElementById("pref-zone-whatsapp").classList.toggle("hidden", !preferences.canal_whatsapp);
+    document.getElementById("pref-whatsapp-numero").value = preferences.whatsapp_numero || "";
+    document.getElementById("pref-canal-sms").checked = !!preferences.canal_sms;
+    document.getElementById("pref-zone-sms").classList.toggle("hidden", !preferences.canal_sms);
+    document.getElementById("pref-sms-numero").value = preferences.sms_numero || "";
+    const cats = Array.isArray(preferences.categories) ? preferences.categories : [];
+    document.querySelectorAll("#pref-cats input[type=checkbox]").forEach((cb) => {
+      cb.checked = cats.includes(cb.value);
+    });
+    await rafraichirEtatPush();
+  } catch (err) {
+    console.error("Erreur chargement préférences :", err.message);
+  }
+}
+
+// ── Notifications Push (Lot 11) ────────────────────────────────
+function urlBase64VersUint8Array(base64String) {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const rawData = window.atob(base64);
+  return Uint8Array.from([...rawData].map((c) => c.charCodeAt(0)));
+}
+
+async function abonnementPushActuel() {
+  if (!("serviceWorker" in navigator) || !("PushManager" in window)) return null;
+  const registration = await navigator.serviceWorker.ready.catch(() => null);
+  if (!registration) return null;
+  return registration.pushManager.getSubscription();
+}
+
+async function rafraichirEtatPush() {
+  const btn = document.getElementById("btn-push-toggle");
+  if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
+    btn.textContent = "Non supporté sur cet appareil";
+    btn.disabled = true;
+    return;
+  }
+  const abonnement = await abonnementPushActuel();
+  btn.textContent = abonnement ? "✅ Activées — désactiver" : "Activer";
+}
+
+async function basculerPush() {
+  const btn = document.getElementById("btn-push-toggle");
+  const msg = document.getElementById("msg-push");
+  btn.disabled = true;
+
+  try {
+    const abonnementExistant = await abonnementPushActuel();
+
+    if (abonnementExistant) {
+      await window.API.Push.unsubscribe(abonnementExistant.endpoint);
+      await abonnementExistant.unsubscribe();
+      msg.className = "";
+      msg.textContent = "Notifications push désactivées sur cet appareil.";
+      msg.classList.remove("hidden");
+    } else {
+      const permission = await Notification.requestPermission();
+      if (permission !== "granted") {
+        msg.className = "";
+        msg.style.color = "#dc2626";
+        msg.textContent = "Autorisation refusée. Active les notifications dans les réglages du navigateur pour activer ce canal.";
+        msg.classList.remove("hidden");
+        return;
+      }
+      const { publicKey } = await window.API.Push.vapidKey();
+      const registration = await navigator.serviceWorker.ready;
+      const abonnement = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64VersUint8Array(publicKey),
+      });
+      await window.API.Push.subscribe(abonnement.toJSON());
+      msg.className = "";
+      msg.style.color = "var(--vert)";
+      msg.textContent = "✅ Notifications push activées sur cet appareil.";
+      msg.classList.remove("hidden");
+    }
+  } catch (err) {
+    msg.className = "";
+    msg.style.color = "#dc2626";
+    msg.textContent = err.message || "Impossible de modifier les notifications push pour le moment.";
+    msg.classList.remove("hidden");
+  } finally {
+    btn.disabled = false;
+    await rafraichirEtatPush();
+  }
+}
+
+async function enregistrerPreferences() {
+  const btn = document.getElementById("btn-prefs");
+  const msg = document.getElementById("msg-prefs");
+  const canalWhatsapp = document.getElementById("pref-canal-whatsapp").checked;
+  const whatsappNumero = document.getElementById("pref-whatsapp-numero").value.trim();
+  const canalSms = document.getElementById("pref-canal-sms").checked;
+  const smsNumero = document.getElementById("pref-sms-numero").value.trim();
+
+  if (canalWhatsapp && !whatsappNumero) {
+    msg.className = "alerte alerte--erreur";
+    msg.textContent = "Indique ton numéro WhatsApp pour activer ce canal.";
+    msg.classList.remove("hidden");
+    return;
+  }
+  if (canalSms && !smsNumero) {
+    msg.className = "alerte alerte--erreur";
+    msg.textContent = "Indique ton numéro pour activer les alertes SMS.";
+    msg.classList.remove("hidden");
+    return;
+  }
+
+  const categories = Array.from(
+    document.querySelectorAll("#pref-cats input[type=checkbox]:checked"),
+  ).map((cb) => cb.value);
+
+  btn.classList.add("btn--chargement");
+  btn.disabled = true;
+
+  try {
+    await window.API.Alertes.definirPreferences({
+      canalEmail: document.getElementById("pref-canal-email").checked,
+      canalWhatsapp,
+      whatsappNumero: canalWhatsapp ? whatsappNumero : null,
+      canalSms,
+      smsNumero: canalSms ? smsNumero : null,
+      categories,
+    });
+    msg.className = "alerte alerte--succes";
+    msg.textContent = "✅ Préférences enregistrées.";
+    msg.classList.remove("hidden");
+  } catch (err) {
+    msg.className = "alerte alerte--erreur";
+    msg.textContent = err.message;
+    msg.classList.remove("hidden");
+  } finally {
+    btn.classList.remove("btn--chargement");
+    btn.disabled = false;
+  }
+}
 
 async function sInscrireAlertes() {
   const email = document.getElementById("email-alerte").value.trim();
@@ -217,15 +380,39 @@ async function sInscrireAlertes() {
     msg.classList.remove("hidden"); return;
   }
 
+  const canalWhatsapp = document.getElementById("whatsapp-active").checked;
+  const whatsappNumero = document.getElementById("whatsapp-numero").value.trim();
+  if (canalWhatsapp && !whatsappNumero) {
+    msg.className = "alerte alerte--erreur";
+    msg.textContent = "Indique ton numéro WhatsApp ou décoche cette option.";
+    msg.classList.remove("hidden"); return;
+  }
+
+  const categories = Array.from(
+    document.querySelectorAll("#cats-alerte input[type=checkbox]:checked"),
+  ).map((cb) => cb.value);
+
   btn.classList.add("btn--chargement"); btn.disabled = true;
 
-  // Crée le compte et active les alertes
+  // Crée le compte, puis enregistre réellement les préférences choisies
+  // (catégories + canaux) — avant ce module, ces cases à cocher n'étaient
+  // pas prises en compte : seul un compte "attrape-tout" était créé.
   try {
-    await window.API.Auth.register("Utilisateur Alertes", email, Math.random().toString(36).slice(2)+"Aa1!");
+    await window.Auth.inscrire("Utilisateur Alertes", email, Math.random().toString(36).slice(2)+"Aa1!");
+    await window.API.Alertes.definirPreferences({
+      canalEmail: true,
+      canalWhatsapp,
+      whatsappNumero: canalWhatsapp ? whatsappNumero : null,
+      categories,
+    });
     msg.className = "alerte alerte--succes";
-    msg.textContent = "✅ Inscription réussie ! Tu vas recevoir un e-mail de confirmation. Connecte-toi pour personnaliser tes préférences.";
+    msg.textContent = "✅ Alertes activées avec tes préférences ! Un e-mail de confirmation arrive.";
     msg.classList.remove("hidden");
     document.getElementById("btn-alertes").textContent = "✅ Alertes activées !";
+    document.getElementById("zone-non-connecte").classList.add("hidden");
+    document.getElementById("zone-connecte").classList.remove("hidden");
+    document.getElementById("email-connecte").textContent = email;
+    await chargerMesPreferences();
   } catch (err) {
     if (err.message.includes("existe déjà")) {
       msg.className = "alerte alerte--info";

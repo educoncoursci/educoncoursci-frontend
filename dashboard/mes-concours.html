@@ -42,6 +42,10 @@
             <a href="/dashboard/index.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a
             >
+            <a href="/dashboard/progression.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a
+            >
+            <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
             <a href="/dashboard/mes-scores.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a
             >
@@ -50,6 +54,9 @@
             >
             <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a
+            >
+            <a href="/dashboard/messages.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a
             >
             <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
               ><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a
@@ -136,6 +143,24 @@
             >
               🔴 Ouverts
             </button>
+            <button
+              id="tab-suivi"
+              onclick="changerTab('suivi')"
+              style="
+                padding: 10px 20px;
+                border: none;
+                background: transparent;
+                font-weight: 700;
+                font-size: 0.9rem;
+                cursor: pointer;
+                border-bottom: 3px solid transparent;
+                color: var(--gris-texte);
+                margin-bottom: -2px;
+                font-family: inherit;
+              "
+            >
+              📋 Suivi de candidature
+            </button>
           </div>
 
           <!-- Favoris -->
@@ -169,6 +194,16 @@
               ></div>
             </div>
           </div>
+
+          <!-- Suivi de candidature (Lot 8) -->
+          <div id="zone-suivi" class="hidden">
+            <div id="liste-suivi">
+              <div
+                class="skeleton"
+                style="height: 120px; border-radius: 14px; margin-bottom: 10px"
+              ></div>
+            </div>
+          </div>
         </main>
       </div>
     </div>
@@ -183,6 +218,7 @@
 
     <script>
       let tabActif = "favoris";
+      let suiviCharge = false;
 
       document.addEventListener("DOMContentLoaded", async () => {
         if (!window.Auth?.estConnecte()) {
@@ -190,8 +226,14 @@
           return;
         }
         const session = window.Auth.getSession();
-        document.getElementById("sidebar-avatar").textContent =
-          session.nom?.[0]?.toUpperCase() || "?";
+        if (session.photo_url) {
+          document.getElementById("sidebar-avatar").style.backgroundImage = `url('${session.photo_url}')`;
+          document.getElementById("sidebar-avatar").style.backgroundSize = "cover";
+          document.getElementById("sidebar-avatar").style.backgroundPosition = "center";
+          document.getElementById("sidebar-avatar").textContent = "";
+        } else {
+          document.getElementById("sidebar-avatar").textContent = session.nom?.[0]?.toUpperCase() || "?";
+        }
         document.getElementById("sidebar-nom").textContent = session.nom || "";
         document.getElementById("sidebar-email").textContent =
           session.email || "";
@@ -210,16 +252,22 @@
         document
           .getElementById("zone-ouverts")
           .classList.toggle("hidden", tab !== "ouverts");
-        const tabFav = document.getElementById("tab-favoris");
-        const tabOuv = document.getElementById("tab-ouverts");
-        tabFav.style.borderBottomColor =
-          tab === "favoris" ? "var(--vert)" : "transparent";
-        tabFav.style.color =
-          tab === "favoris" ? "var(--vert)" : "var(--gris-texte)";
-        tabOuv.style.borderBottomColor =
-          tab === "ouverts" ? "var(--vert)" : "transparent";
-        tabOuv.style.color =
-          tab === "ouverts" ? "var(--vert)" : "var(--gris-texte)";
+        document
+          .getElementById("zone-suivi")
+          .classList.toggle("hidden", tab !== "suivi");
+        [
+          ["tab-favoris", "favoris"],
+          ["tab-ouverts", "ouverts"],
+          ["tab-suivi", "suivi"],
+        ].forEach(([elId, val]) => {
+          const el = document.getElementById(elId);
+          el.style.borderBottomColor = tab === val ? "var(--vert)" : "transparent";
+          el.style.color = tab === val ? "var(--vert)" : "var(--gris-texte)";
+        });
+        if (tab === "suivi" && !suiviCharge) {
+          suiviCharge = true;
+          chargerSuivi();
+        }
       }
 
       async function chargerFavoris() {
@@ -281,6 +329,80 @@
         ${avecSuppr ? `<button onclick="retirerFavori(${c.id},this)" class="btn btn--gris btn--sm" title="Retirer des favoris">♥ Retirer</button>` : ""}
       </div>
     </div>`;
+      }
+
+      const LABELS_ETAPE = {
+        enregistre: "1️⃣ Enregistré",
+        dossier_soumis: "2️⃣ Dossier soumis",
+        dossier_valide: "3️⃣ Dossier validé",
+        convoque: "4️⃣ Convoqué",
+        compose: "5️⃣ A composé",
+        admis: "🏆 Admis",
+        non_admis: "⚫ Non admis",
+      };
+      const ETAPES_ORDRE = ["enregistre", "dossier_soumis", "dossier_valide", "convoque", "compose", "admis"];
+
+      async function chargerSuivi() {
+        const div = document.getElementById("liste-suivi");
+        try {
+          const data = await window.API.CandidaturesConcours.mesCandidatures();
+          const suivis = data.candidatures || [];
+          if (suivis.length === 0) {
+            div.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state__icone">📋</div>
+        <div class="empty-state__titre">Aucun suivi de candidature démarré</div>
+        <p class="empty-state__texte">Depuis la fiche d'un concours, clique sur "Suivre ma candidature" pour commencer à suivre tes étapes (dossier, convocation, résultats…).</p>
+        <a href="/concours.html" class="btn btn--primaire btn--sm">Explorer les concours</a>
+      </div>`;
+            return;
+          }
+          div.innerHTML = suivis.map(cardSuivi).join("");
+        } catch {
+          div.innerHTML = `<div style="color:var(--gris-texte);padding:20px;">Erreur de chargement.</div>`;
+        }
+      }
+
+      function cardSuivi(s) {
+        const options = ETAPES_ORDRE.map(
+          (e) => `<option value="${e}" ${s.statut === e ? "selected" : ""}>${LABELS_ETAPE[e]}</option>`,
+        ).join("");
+        return `
+    <div style="background:var(--blanc);border-radius:var(--radius-lg);border-left:5px solid ${s.couleur || "var(--vert)"};padding:16px 20px;margin-bottom:12px;box-shadow:var(--ombre-sm);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <div style="font-weight:800;font-size:0.95rem;margin-bottom:4px;">${s.titre}</div>
+          <div style="font-size:0.8rem;color:var(--gris-texte);">🏢 ${s.organisme} · ⏰ ${s.cloture || "—"}</div>
+        </div>
+        <a href="/concours-detail.html?id=${s.concours_id}" class="btn btn--gris btn--sm">Voir la fiche →</a>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap;">
+        <select id="suivi-select-${s.id}" class="form-input" style="max-width:220px;">${options}</select>
+        <button class="btn btn--vert btn--sm" onclick="mettreAJourEtape(${s.id})">Mettre à jour</button>
+        <button class="btn btn--gris btn--sm" onclick="abandonnerSuivi(${s.id})" title="Abandonner ce suivi">✕ Abandonner</button>
+      </div>
+    </div>`;
+      }
+
+      async function mettreAJourEtape(id) {
+        const statut = document.getElementById(`suivi-select-${id}`).value;
+        try {
+          await window.API.CandidaturesConcours.avancer(id, statut);
+          window.afficherToast?.("Suivi mis à jour.", "succes");
+          chargerSuivi();
+        } catch {
+          window.afficherToast?.("Erreur lors de la mise à jour.", "erreur");
+        }
+      }
+
+      async function abandonnerSuivi(id) {
+        if (!confirm("Abandonner le suivi de ce concours ?")) return;
+        try {
+          await window.API.CandidaturesConcours.supprimer(id);
+          chargerSuivi();
+        } catch {
+          window.afficherToast?.("Erreur lors de la suppression.", "erreur");
+        }
       }
 
       function retirerFavori(id, btn) {

@@ -1,0 +1,233 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketplace — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Cours particuliers, formations, packs de préparation et matériel proposés par nos partenaires pour réussir ton concours."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .mk-filtres { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+      .mk-filtre {
+        background: var(--blanc); border: 1px solid var(--gris-bordure);
+        border-radius: 20px; padding: 6px 16px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+      }
+      .mk-filtre--actif { background: var(--vert); color: #fff; border-color: var(--vert); }
+      .mk-grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+      .mk-carte {
+        background: var(--blanc); border-radius: var(--radius-lg); box-shadow: var(--ombre-sm);
+        padding: 18px 20px; display: flex; flex-direction: column;
+      }
+      .mk-tag { display:inline-block; font-size:0.7rem; font-weight:700; padding:2px 10px; border-radius:10px; background:var(--gris-clair); color:var(--gris-texte); margin-bottom:8px; align-self:flex-start; }
+    </style>
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <main class="container" style="max-width: 1000px; padding: 32px 20px 60px;">
+      <div style="text-align:center;margin-bottom:24px;">
+        <h1>🛍️ Marketplace</h1>
+        <p style="color:var(--gris-texte);">
+          Cours particuliers, formations et packs de préparation proposés par nos partenaires.
+        </p>
+        <p style="font-size:0.78rem;color:var(--gris-texte);margin-top:6px;">
+          EduConcoursCI met en relation — la prestation et le paiement se font directement avec le partenaire.
+        </p>
+      </div>
+
+      <div class="mk-filtres" id="mk-filtres">
+        <button class="mk-filtre mk-filtre--actif" data-cat="" onclick="filtrerCategorie('', this)">Toutes les offres</button>
+        <button class="mk-filtre" data-cat="cours_particuliers" onclick="filtrerCategorie('cours_particuliers', this)">Cours particuliers</button>
+        <button class="mk-filtre" data-cat="formation" onclick="filtrerCategorie('formation', this)">Formations</button>
+        <button class="mk-filtre" data-cat="pack_preparation" onclick="filtrerCategorie('pack_preparation', this)">Packs de préparation</button>
+        <button class="mk-filtre" data-cat="materiel" onclick="filtrerCategorie('materiel', this)">Matériel</button>
+      </div>
+
+      <div class="mk-grille" id="mk-grille">
+        <div class="skeleton" style="height: 180px; border-radius: 14px;"></div>
+        <div class="skeleton" style="height: 180px; border-radius: 14px;"></div>
+        <div class="skeleton" style="height: 180px; border-radius: 14px;"></div>
+      </div>
+
+      <div id="pagination-mk" style="display:flex;justify-content:center;gap:10px;margin-top:24px;"></div>
+    </main>
+
+    <!-- Modal détail + contact -->
+    <div id="modal-offre" class="modal hidden">
+      <div class="modal__contenu">
+        <div class="modal__header">
+          <h3 id="offre-modal-titre">Offre</h3>
+          <button onclick="fermerModal('modal-offre')" class="modal__fermer">✕</button>
+        </div>
+        <div class="modal__corps">
+          <div id="offre-modal-corps"></div>
+          <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:18px 0;">
+          <div id="msg-contact" class="hidden" style="margin-bottom:12px;"></div>
+          <div id="zone-form-contact">
+            <p style="font-weight:700;margin-bottom:10px;">📩 Demander à être contacté</p>
+            <div class="form-groupe"><input id="contact-nom" class="form-input" placeholder="Ton nom"></div>
+            <div class="form-groupe"><input id="contact-email" type="email" class="form-input" placeholder="Ton email"></div>
+            <div class="form-groupe"><input id="contact-telephone" class="form-input" placeholder="Ton téléphone (optionnel)"></div>
+            <div class="form-groupe"><textarea id="contact-message" class="form-textarea" rows="2" placeholder="Ta question (optionnel)"></textarea></div>
+            <button onclick="envoyerContact()" class="btn btn--primaire btn--full" id="btn-contact">Envoyer la demande</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="site-footer"></div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      const LABELS_CAT = {
+        cours_particuliers: "Cours particuliers", formation: "Formation",
+        pack_preparation: "Pack préparation", materiel: "Matériel", autre: "Autre",
+      };
+      let categorieActive = "";
+      let pageActuelle = 1;
+      let offreActuelle = null;
+
+      function echapperHtml(texte) {
+        const div = document.createElement("div");
+        div.textContent = texte || "";
+        return div.innerHTML;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => chargerOffres());
+
+      function filtrerCategorie(cat, btn) {
+        categorieActive = cat;
+        pageActuelle = 1;
+        document.querySelectorAll(".mk-filtre").forEach((b) => b.classList.remove("mk-filtre--actif"));
+        btn.classList.add("mk-filtre--actif");
+        chargerOffres();
+      }
+
+      async function chargerOffres() {
+        const grille = document.getElementById("mk-grille");
+        try {
+          const params = { page: pageActuelle };
+          if (categorieActive) params.categorie = categorieActive;
+          const data = await window.API.Marketplace.offres(params);
+
+          if (data.offres.length === 0) {
+            grille.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1;">
+        <div class="empty-state__icone">🛍️</div>
+        <div class="empty-state__titre">Aucune offre pour l'instant</div>
+        <p class="empty-state__texte">Reviens bientôt — nos partenaires ajoutent régulièrement de nouvelles offres.</p>
+      </div>`;
+            document.getElementById("pagination-mk").innerHTML = "";
+            return;
+          }
+
+          grille.innerHTML = data.offres.map(carteOffre).join("");
+          afficherPagination(data.page, data.totalPages);
+        } catch (err) {
+          grille.innerHTML = `<p style="color:#dc2626;grid-column:1/-1;">Erreur : ${err.message}</p>`;
+        }
+      }
+
+      function carteOffre(o) {
+        return `
+    <div class="mk-carte">
+      <span class="mk-tag">${LABELS_CAT[o.categorie] || o.categorie}</span>
+      <div style="font-weight:800;font-size:1rem;margin-bottom:6px;">${echapperHtml(o.titre)}</div>
+      <div style="font-size:0.82rem;color:var(--gris-texte);margin-bottom:10px;flex:1;">${echapperHtml((o.description || "").slice(0, 110))}${(o.description || "").length > 110 ? "…" : ""}</div>
+      <div style="font-size:0.78rem;color:var(--gris-texte);margin-bottom:10px;">Par <strong>${echapperHtml(o.partenaire_nom)}</strong></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:800;color:var(--vert);">${o.prix ? `${o.prix.toLocaleString("fr-FR")} F ${echapperHtml(o.prix_unite)}` : "Sur devis"}</span>
+        <button class="btn btn--primaire btn--sm" onclick="ouvrirOffre(${o.id})">Découvrir</button>
+      </div>
+    </div>`;
+      }
+
+      function afficherPagination(page, totalPages) {
+        const div = document.getElementById("pagination-mk");
+        if (totalPages <= 1) { div.innerHTML = ""; return; }
+        div.innerHTML = `
+      ${page > 1 ? `<button class="btn btn--gris btn--sm" onclick="allerPage(${page - 1})">← Précédent</button>` : ""}
+      <span style="align-self:center;font-size:0.85rem;color:var(--gris-texte);">Page ${page} / ${totalPages}</span>
+      ${page < totalPages ? `<button class="btn btn--gris btn--sm" onclick="allerPage(${page + 1})">Suivant →</button>` : ""}`;
+      }
+
+      function allerPage(p) {
+        pageActuelle = p;
+        chargerOffres();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      async function ouvrirOffre(id) {
+        try {
+          const { offre } = await window.API.Marketplace.detail(id);
+          offreActuelle = offre;
+          document.getElementById("offre-modal-titre").textContent = offre.titre;
+          document.getElementById("offre-modal-corps").innerHTML = `
+      <span class="mk-tag">${LABELS_CAT[offre.categorie] || offre.categorie}</span>
+      <p style="font-size:0.9rem;line-height:1.7;margin:10px 0;">${echapperHtml(offre.description)}</p>
+      <p style="font-size:0.85rem;color:var(--gris-texte);">Proposé par <strong>${echapperHtml(offre.partenaire_nom)}</strong></p>
+      <p style="font-weight:800;color:var(--vert);font-size:1.1rem;margin-top:8px;">${offre.prix ? `${offre.prix.toLocaleString("fr-FR")} F ${echapperHtml(offre.prix_unite)}` : "Sur devis"}</p>
+      ${offre.lien_externe ? `<a href="${offre.lien_externe}" target="_blank" rel="noopener" class="btn btn--gris btn--sm" style="margin-top:6px;">🔗 Voir plus de détails</a>` : ""}`;
+
+          const session = window.Auth?.getSession();
+          document.getElementById("contact-nom").value = session?.nom || "";
+          document.getElementById("contact-email").value = session?.email || "";
+          document.getElementById("msg-contact").classList.add("hidden");
+          document.getElementById("zone-form-contact").classList.remove("hidden");
+          ouvrirModal("modal-offre");
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      async function envoyerContact() {
+        const nom = document.getElementById("contact-nom").value.trim();
+        const email = document.getElementById("contact-email").value.trim();
+        const telephone = document.getElementById("contact-telephone").value.trim();
+        const message = document.getElementById("contact-message").value.trim();
+        const msg = document.getElementById("msg-contact");
+        const btn = document.getElementById("btn-contact");
+
+        if (!nom || !email) {
+          msg.className = "alerte alerte--erreur";
+          msg.textContent = "Nom et email sont requis.";
+          msg.classList.remove("hidden");
+          return;
+        }
+
+        btn.disabled = true;
+        try {
+          const res = await window.API.Marketplace.contacter(offreActuelle.id, { nom, email, telephone, message });
+          document.getElementById("zone-form-contact").classList.add("hidden");
+          msg.className = "alerte alerte--succes";
+          msg.textContent = res.message;
+          msg.classList.remove("hidden");
+        } catch (err) {
+          msg.className = "alerte alerte--erreur";
+          msg.textContent = err.message;
+          msg.classList.remove("hidden");
+        } finally {
+          btn.disabled = false;
+        }
+      }
+    </script>
+  </body>
+</html>

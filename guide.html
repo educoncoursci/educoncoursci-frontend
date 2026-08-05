@@ -5,6 +5,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guide d'utilisation — EduConcoursCI</title>
+  <meta name="description" content="Découvre comment utiliser EduConcoursCI : préparation aux concours, générateur de CV, offres d'emploi et assistance sociale.">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="EduConcoursCI" />
+    <meta property="og:title" content="Guide d'utilisation — EduConcoursCI" />
+    <meta property="og:description" content="Découvre comment utiliser EduConcoursCI : préparation aux concours, générateur de CV, offres d'emploi et assistance sociale." />
+    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://educoncoursci.netlify.app/guide.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Guide d'utilisation — EduConcoursCI" />
+    <meta name="twitter:description" content="Découvre comment utiliser EduConcoursCI : préparation aux concours, générateur de CV, offres d'emploi et assistance sociale." />
+    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -73,62 +84,7 @@
     </style>
   </head>
   <body>
-    <nav class="navbar" id="navbar">
-      <div class="navbar__inner">
-        <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
-          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
-        >
-                <ul class="navbar__links">
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Concours
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
-              <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
-              <a href="/preparation.html" class="navbar__sous-lien"><span data-icone="diplome" data-taille="16"></span> Préparation</a>
-            </div>
-          </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Ressources
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
-              <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
-              <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
-              <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
-            </div>
-          </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Carrière
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
-              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
-              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
-              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
-            </div>
-          </li>
-          <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
-          <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
-        </ul>
-
-        <div class="navbar__actions" id="navbar-actions">
-          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm"
-            >Connexion</a
-          >
-          <a href="/auth/register.html" class="btn btn--primaire btn--sm"
-            >Inscription</a
-          >
-        </div>
-      </div>
-    </nav>
+    <div id="site-header"></div>
         <!-- ── FLASH INFO ──────────────────────────────────────────── -->
     <div class="flash-info">
       <div class="flash-info__label">
@@ -497,35 +453,9 @@
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="footer__grille">
-          <div>
-            <div class="footer__logo"><img src="/assets/logo-icon.png" alt="EduConcoursCI" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" /> EduConcoursCI</div>
-            <p class="footer__desc">Guide complet de la plateforme.</p>
-          </div>
-          <div>
-            <div class="footer__titre-col">Navigation</div>
-            <a href="/concours.html" class="footer__lien">Concours</a
-            ><a href="/preparation.html" class="footer__lien">Préparation</a>
-          </div>
-          <div>
-            <div class="footer__titre-col">Services</div>
-            <a href="/boutique.html" class="footer__lien">Premium</a
-            ><a href="/alertes.html" class="footer__lien">Alertes</a>
-          </div>
-          <div>
-            <div class="footer__titre-col">Compte</div>
-            <a href="/auth/login.html" class="footer__lien">Connexion</a
-            ><a href="/auth/register.html" class="footer__lien">Inscription</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer__bas">
-        <div class="container">© 2026 EduConcoursCI</div>
-      </div>
-    </footer>
+    <div id="site-footer"></div>
 
+    <script src="/js/layout.js"></script>
     <script src="/js/icons.js"></script>
     <script src="/js/recherche.js"></script>
     <script src="/js/api.js"></script>

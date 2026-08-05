@@ -1,0 +1,281 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ma Progression — EduConcoursCI</title>
+    <meta name="description" content="Suis ta préparation : score moyen par matière, examens blancs réalisés, concours suivis et recommandations personnalisées.">
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
+          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="dashboard">
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar__profil">
+            <div class="sidebar__avatar" id="sidebar-avatar">?</div>
+            <div class="sidebar__nom" id="sidebar-nom">—</div>
+            <div class="sidebar__email" id="sidebar-email"></div>
+            <div id="sidebar-badge"></div>
+          </div>
+          <nav class="sidebar__nav">
+            <div class="sidebar__titre">Menu</div>
+            <a href="/dashboard/index.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a
+            >
+            <a href="/dashboard/progression.html" class="sidebar__lien actif"
+              ><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a
+            >
+            <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a
+            >
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a
+            >
+            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a
+            >
+            <a href="/dashboard/messages.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a
+            >
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a
+            >
+            <a href="/dashboard/paiements.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
+            >
+            <a href="/dashboard/profil.html" class="sidebar__lien"
+              ><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a
+            >
+          </nav>
+          <div class="sidebar__deconnexion">
+            <button
+              onclick="window.Auth?.deconnecter?.()"
+              class="btn btn--outline-vert btn--sm btn--full"
+            >
+              Déconnexion
+            </button>
+          </div>
+        </aside>
+
+        <main class="dashboard__contenu">
+          <div class="dashboard__header">
+            <div>
+              <h1><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ma progression</h1>
+              <p style="color: var(--gris-texte); margin: 4px 0 0; font-size: 0.9rem;">
+                Ta préparation en un coup d'œil
+              </p>
+            </div>
+          </div>
+
+          <div id="zone-vide" class="hidden">
+            <div class="empty-state">
+              <div class="empty-state__icone">📊</div>
+              <div class="empty-state__titre">Pas encore assez de données</div>
+              <p class="empty-state__texte">Fais quelques QCM ou un examen blanc pour voir ta progression ici.</p>
+              <a href="/preparation.html" class="btn btn--primaire">Commencer un QCM →</a>
+            </div>
+          </div>
+
+          <div id="zone-contenu">
+            <!-- Stats globales -->
+            <div class="dash-stats" style="margin-bottom: 24px">
+              <div class="stat-card">
+                <div>
+                  <div class="stat-card__label">Niveau estimé</div>
+                  <div class="stat-card__valeur" id="stat-niveau" style="font-size:1rem;">—</div>
+                </div>
+                <div class="stat-card__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+              </div>
+              <div class="stat-card stat-card--bleu">
+                <div>
+                  <div class="stat-card__label">Concours suivis</div>
+                  <div class="stat-card__valeur" id="stat-concours">—</div>
+                </div>
+                <div class="stat-card__icone" style="background: rgba(10, 110, 189, 0.1)"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+              </div>
+              <div class="stat-card stat-card--orange">
+                <div>
+                  <div class="stat-card__label">Examens blancs réalisés</div>
+                  <div class="stat-card__valeur" id="stat-examens">—</div>
+                </div>
+                <div class="stat-card__icone" style="background: rgba(217, 119, 6, 0.1)"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+              </div>
+              <div class="stat-card stat-card--violet">
+                <div>
+                  <div class="stat-card__label">Documents consultés</div>
+                  <div class="stat-card__valeur" id="stat-documents">—</div>
+                </div>
+                <div class="stat-card__icone" style="background: rgba(124, 58, 237, 0.1)"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:20px;" class="grille-progression">
+              <!-- Score par matière -->
+              <div class="dash-section">
+                <h3 style="margin-bottom:16px;"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Score moyen par matière</h3>
+                <div id="liste-matieres"></div>
+              </div>
+
+              <!-- Recommandations -->
+              <div class="dash-section">
+                <h3 style="margin-bottom:16px;"><span data-icone="etoile" data-taille="18" style="display:inline-flex;vertical-align:-3px;color:var(--vert);"></span> Recommandations pour toi</h3>
+                <div id="liste-recommandations"></div>
+              </div>
+            </div>
+
+            <!-- Badges -->
+            <div class="dash-section" style="margin-top:20px;">
+              <h3 style="margin-bottom:16px;">🏅 Mes badges</h3>
+              <div id="liste-badges" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;"></div>
+            </div>
+
+            <!-- Concours suivis -->
+            <div class="dash-section" style="margin-top:20px;">
+              <h3 style="margin-bottom:16px;"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Concours que tu suis</h3>
+              <div id="liste-concours-suivis"></div>
+            </div>
+
+            <div style="text-align:center;margin-top:20px;">
+              <a href="/classement.html" class="btn btn--outline-vert">🏆 Voir le classement général →</a>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estConnecte()) {
+          window.location.href = "/auth/login.html";
+          return;
+        }
+        const session = window.Auth.getSession();
+
+        if (session.photo_url) {
+          document.getElementById("sidebar-avatar").style.backgroundImage = `url('${session.photo_url}')`;
+          document.getElementById("sidebar-avatar").style.backgroundSize = "cover";
+          document.getElementById("sidebar-avatar").style.backgroundPosition = "center";
+          document.getElementById("sidebar-avatar").textContent = "";
+        } else {
+          document.getElementById("sidebar-avatar").textContent = session.nom?.[0]?.toUpperCase() || "?";
+        }
+        document.getElementById("sidebar-nom").textContent = session.nom || "";
+        document.getElementById("sidebar-email").textContent = session.email || "";
+        document.getElementById("sidebar-badge").innerHTML = session.premium
+          ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
+          : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
+
+        try {
+          const data = await window.API.Progression.monTableauDeBord();
+          afficherProgression(data);
+        } catch (err) {
+          window.afficherToast("Erreur de chargement : " + err.message, "erreur");
+        }
+      });
+
+      function afficherProgression(d) {
+        const aucuneDonnee =
+          d.totalTentativesQcm === 0 &&
+          d.examensBlancsRealises === 0 &&
+          d.concoursSuivis.length === 0 &&
+          d.documentsConsultes === 0;
+
+        if (aucuneDonnee) {
+          document.getElementById("zone-vide").classList.remove("hidden");
+          document.getElementById("zone-contenu").classList.add("hidden");
+          return;
+        }
+
+        document.getElementById("stat-niveau").textContent = d.niveauGlobal || "Pas encore de QCM fait";
+        document.getElementById("stat-concours").textContent = d.concoursSuivis.length;
+        document.getElementById("stat-examens").textContent = d.examensBlancsRealises;
+        document.getElementById("stat-documents").textContent = d.documentsConsultes;
+
+        // Score par matière
+        document.getElementById("liste-matieres").innerHTML = d.statsParMatiere.length
+          ? d.statsParMatiere.map((m) => {
+              const c = m.moyenne >= 75 ? "var(--vert)" : m.moyenne >= 50 ? "var(--orange)" : "var(--rouge)";
+              return `
+      <div style="margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-weight:700;font-size:0.9rem;">${m.matiere}</span>
+          <span style="font-size:0.85rem;color:${c};font-weight:700;">${m.moyenne}% <span style="color:var(--gris-texte);font-weight:400;">(${m.tentatives} tentative${m.tentatives > 1 ? "s" : ""})</span></span>
+        </div>
+        <div class="progression"><div class="progression__barre" style="width:${m.moyenne}%;background:${c};"></div></div>
+      </div>`;
+            }).join("")
+          : `<p style="color:var(--gris-texte);font-size:0.88rem;">Fais quelques QCM pour voir ton niveau par matière.</p>`;
+
+        // Recommandations
+        document.getElementById("liste-recommandations").innerHTML = d.recommandations.length
+          ? d.recommandations.map((r) => `
+      <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
+        <span data-icone="attention" data-taille="18" style="display:inline-flex;vertical-align:-3px;color:#d97706;flex-shrink:0;"></span>
+        <div>
+          <div style="font-size:0.88rem;">${r.message}</div>
+          <a href="/quiz.html" style="font-size:0.8rem;color:var(--vert);font-weight:700;">Voir les QCM →</a>
+        </div>
+      </div>`).join("")
+          : `<p style="color:var(--gris-texte);font-size:0.88rem;">${d.statsParMatiere.length ? "Pas de point faible détecté — continue comme ça ! 🎉" : "Fais quelques QCM pour recevoir des recommandations personnalisées."}</p>`;
+
+        // Badges
+        document.getElementById("liste-badges").innerHTML = (d.badges || [])
+          .map((b) => `
+      <div style="text-align:center;padding:16px 10px;border-radius:var(--radius-md);background:${b.debloque ? "rgba(26,107,60,0.08)" : "var(--gris-clair)"};opacity:${b.debloque ? 1 : 0.45};">
+        <div style="font-size:2rem;margin-bottom:6px;">${b.icone}</div>
+        <div style="font-weight:700;font-size:0.82rem;">${b.nom}</div>
+        <div style="font-size:0.72rem;color:var(--gris-texte);margin-top:2px;">${b.description}</div>
+        ${b.debloque ? `<button onclick="telechargerCertificatBadge('${b.id}')" class="btn btn--gris btn--sm" style="margin-top:8px;font-size:0.7rem;padding:4px 10px;">🏅 Certificat</button>` : ""}
+      </div>`).join("");
+
+        // Concours suivis
+        document.getElementById("liste-concours-suivis").innerHTML = d.concoursSuivis.length
+          ? d.concoursSuivis.map((c) => `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
+        <div>
+          <a href="/concours-detail.html?id=${c.id}" style="font-weight:700;font-size:0.9rem;text-decoration:none;color:inherit;">${c.titre}</a>
+          <div style="font-size:0.78rem;color:var(--gris-texte);">Clôture : ${c.cloture || "—"}</div>
+        </div>
+        <span class="badge ${c.statut === "ouvert" ? "badge--vert" : "badge--gris"}" style="font-size:0.75rem;">${c.statut}</span>
+      </div>`).join("")
+          : `<p style="color:var(--gris-texte);font-size:0.88rem;">Tu ne suis encore aucun concours — ajoute-en depuis leur fiche détail.</p>`;
+      }
+
+      async function telechargerCertificatBadge(badgeId) {
+        try {
+          await window.API.Progression.certificatBadge(badgeId);
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur lors du téléchargement du certificat.", "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>

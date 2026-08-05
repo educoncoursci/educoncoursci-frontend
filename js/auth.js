@@ -106,6 +106,16 @@ return data;
 
 async function connecter(email, password) {
 const data = await window.API.Auth.login(email, password);
+// Si la 2FA est activée sur ce compte, le backend ne renvoie pas encore
+// de session — juste un tempToken à vérifier via l'étape 2 (voir
+// verifierCode2FA ci-dessous). La page de login gère l'affichage.
+if (data.requires2FA) return data;
+sauvegarderSession(data.token, data.user);
+return data;
+}
+
+async function verifierCode2FA(tempToken, { token, codeRecuperation }) {
+const data = await window.API.Auth.verifierLogin2FA(tempToken, { token, codeRecuperation });
 sauvegarderSession(data.token, data.user);
 return data;
 }
@@ -247,7 +257,15 @@ btn.classList.add("btn--chargement");
 btn.disabled = true;
 
 try {
-  await connecter(email, password);
+  const data = await connecter(email, password);
+
+  if (data.requires2FA) {
+    if (typeof window.on2FARequired === "function") {
+      window.on2FARequired(data.tempToken);
+    }
+    return;
+  }
+
   afficherToast("Connexion réussie !", "succes");
 
   // Un ?retour= vers /admin/ n'est honoré que si ce compte est
@@ -273,7 +291,7 @@ try {
 
 // ── Exporte en global ─────────────────────────────────────────
 window.Auth = {
-inscrire, connecter, deconnecter, rafraichirProfil,
+inscrire, connecter, verifierCode2FA, deconnecter, rafraichirProfil,
 getSession, getToken, estConnecte, estPremium, estAdmin,
 protegerPage, protegerPageAdmin, protegerPagePremium,
 mettreAJourNavbar,

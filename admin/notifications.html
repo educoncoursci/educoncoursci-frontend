@@ -57,6 +57,11 @@
           <a href="/admin/concours.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
           >
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a
+          >
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
           <a href="/admin/pdfs.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
           >
@@ -80,6 +85,7 @@
             ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
           >
           <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
           <a href="/" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a
           >
@@ -202,8 +208,11 @@
                       margin-bottom: 16px;
                     "
                   >
-                    Envoie automatiquement des rappels aux utilisateurs pour les
-                    concours dont la clôture approche (J-7, J-3, J-1).
+                    Ces rappels partent désormais <strong>automatiquement tous les jours à 8h</strong>
+                    pour les concours dont la clôture approche (J-7, J-3, J-1),
+                    en respectant les préférences de chaque utilisateur (email/WhatsApp,
+                    catégories). Le bouton ci-dessous reste utile pour un envoi immédiat
+                    ponctuel (les doublons sont automatiquement évités).
                   </p>
                   <div
                     id="rappels-result"
@@ -217,6 +226,53 @@
                   >
                     ⏰ Lancer les rappels maintenant
                   </button>
+                </div>
+              </div>
+
+              <!-- File d'attente WhatsApp (Module 4) -->
+              <div class="admin-card" style="margin-top: 20px">
+                <div class="admin-card__header">
+                  <div class="admin-card__titre"><span data-icone="whatsapp" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> File d'attente WhatsApp</div>
+                  <button
+                    onclick="chargerFileWhatsapp()"
+                    style="font-size: 0.82rem; color: var(--vert); background: none; border: none; cursor: pointer; font-weight: 700;"
+                  >
+                    Actualiser
+                  </button>
+                </div>
+                <div class="admin-card__corps">
+                  <p style="font-size: 0.85rem; color: var(--gris-texte); margin-bottom: 14px;">
+                    Tant qu'aucune API WhatsApp Business officielle n'est configurée
+                    (voir <code>.env</code>), les messages atterrissent ici pour un
+                    envoi manuel via WhatsApp Web/Business. Marque-les comme envoyés
+                    une fois fait.
+                  </p>
+                  <div id="liste-whatsapp-file">
+                    <div class="chargement"><div class="spinner"></div></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- File d'attente SMS (Lot 11) -->
+              <div class="admin-card" style="margin-top: 20px">
+                <div class="admin-card__header">
+                  <div class="admin-card__titre"><span data-icone="telephone" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> File d'attente SMS</div>
+                  <button
+                    onclick="chargerFileSms()"
+                    style="font-size: 0.82rem; color: var(--vert); background: none; border: none; cursor: pointer; font-weight: 700;"
+                  >
+                    Actualiser
+                  </button>
+                </div>
+                <div class="admin-card__corps">
+                  <p style="font-size: 0.85rem; color: var(--gris-texte); margin-bottom: 14px;">
+                    Tant qu'aucune passerelle SMS officielle n'est configurée
+                    (voir <code>.env</code>), les messages atterrissent ici pour un
+                    envoi manuel. Marque-les comme envoyés une fois fait.
+                  </p>
+                  <div id="liste-sms-file">
+                    <div class="chargement"><div class="spinner"></div></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -337,6 +393,68 @@
         } finally {
           btn.classList.remove("btn--chargement");
           btn.disabled = false;
+        }
+      }
+
+            async function chargerFileWhatsapp() {
+        const div = document.getElementById("liste-whatsapp-file");
+        try {
+          const { envois } = await window.API.Admin.fileWhatsapp();
+          div.innerHTML = envois.length
+            ? envois.map((e) => `
+              <div style="border:1px solid var(--gris-bordure);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;">
+                  <div>
+                    <div style="font-weight:700;font-size:0.88rem;">${e.numero}</div>
+                    <div style="font-size:0.82rem;color:var(--gris-texte);margin-top:4px;white-space:pre-wrap;">${e.message}</div>
+                  </div>
+                  <button class="btn btn--vert btn--sm" onclick="marquerWhatsappEnvoye(${e.id})" style="white-space:nowrap;">✓ Envoyé</button>
+                </div>
+              </div>`).join("")
+            : `<p style="color:var(--gris-texte);font-size:0.88rem;text-align:center;padding:20px 0;">File vide — rien à envoyer manuellement pour l'instant.</p>`;
+        } catch (err) {
+          div.innerHTML = `<p style="color:#dc2626;font-size:0.85rem;">Erreur : ${err.message}</p>`;
+        }
+      }
+
+      async function marquerWhatsappEnvoye(id) {
+        try {
+          await window.API.Admin.marquerWhatsappEnvoye(id);
+          window.afficherToast("Marqué comme envoyé.", "succes");
+          await chargerFileWhatsapp();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function chargerFileSms() {
+        const div = document.getElementById("liste-sms-file");
+        try {
+          const { envois } = await window.API.Admin.fileSms();
+          div.innerHTML = envois.length
+            ? envois.map((e) => `
+              <div style="border:1px solid var(--gris-bordure);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;">
+                  <div>
+                    <div style="font-weight:700;font-size:0.88rem;">${e.numero}</div>
+                    <div style="font-size:0.82rem;color:var(--gris-texte);margin-top:4px;white-space:pre-wrap;">${e.message}</div>
+                  </div>
+                  <button class="btn btn--vert btn--sm" onclick="marquerSmsEnvoye(${e.id})" style="white-space:nowrap;">✓ Envoyé</button>
+                </div>
+              </div>`).join("")
+            : `<p style="color:var(--gris-texte);font-size:0.88rem;text-align:center;padding:20px 0;">File vide — rien à envoyer manuellement pour l'instant.</p>`;
+        } catch (err) {
+          div.innerHTML = `<p style="color:#dc2626;font-size:0.85rem;">Erreur : ${err.message}</p>`;
+        }
+      }
+
+      async function marquerSmsEnvoye(id) {
+        try {
+          await window.API.Admin.marquerSmsEnvoye(id);
+          window.afficherToast("Marqué comme envoyé.", "succes");
+          await chargerFileSms();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
         }
       }
 

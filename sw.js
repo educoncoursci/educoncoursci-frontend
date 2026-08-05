@@ -83,3 +83,35 @@ return caches.match("/index.html");
 self.addEventListener("message", event => {
 if (event.data?.action === "skipWaiting") self.skipWaiting();
 });
+
+// ── Notifications Push (Lot 11) ───────────────────────────────
+self.addEventListener("push", event => {
+let data = { titre: "EduConcoursCI", message: "Nouvelle notification.", url: "/" };
+try {
+if (event.data) data = { ...data, ...event.data.json() };
+} catch {
+// Corps non-JSON — on garde le message par défaut
+}
+
+event.waitUntil(
+self.registration.showNotification(data.titre, {
+body: data.message,
+icon: "/assets/favicon.ico",
+badge: "/assets/favicon.ico",
+data: { url: data.url || "/" },
+})
+);
+});
+
+// ── Clic sur une notification → ouvre/focus la page ciblée ────
+self.addEventListener("notificationclick", event => {
+event.notification.close();
+const url = event.notification.data?.url || "/";
+event.waitUntil(
+self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(clientsArr => {
+const existant = clientsArr.find(c => c.url.includes(url));
+if (existant) return existant.focus();
+return self.clients.openWindow(url);
+})
+);
+});
