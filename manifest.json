@@ -22,13 +22,5 @@
     }
   ],
   "categories": ["education", "productivity"],
-  "lang": "fr",
-  "screenshots": [
-    {
-      "src": "/assets/screenshot-mobile.jpg",
-      "sizes": "390x844",
-      "type": "image/jpeg",
-      "form_factor": "narrow"
-    }
-  ]
+  "lang": "fr"
 }

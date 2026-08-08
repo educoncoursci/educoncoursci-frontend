@@ -1,0 +1,106 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concours en cours en Côte d'Ivoire — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Tous les concours actuellement ouverts en Côte d'Ivoire : fonction publique, grandes écoles, ministères. Dates, conditions, pièces à fournir — mis à jour automatiquement."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <div id="site-header"></div>
+
+    <main class="container" style="max-width: 1100px; padding: 32px 20px 60px;">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <span class="badge" style="background:var(--rouge)18;color:var(--rouge);border:1px solid var(--rouge)33;font-size:0.85rem;padding:6px 16px;">🔴 Inscriptions ouvertes maintenant</span>
+        <h1 style="margin-top:12px;">Concours en cours en Côte d'Ivoire</h1>
+        <p style="color: var(--gris-texte);">
+          Uniquement les concours dont les inscriptions sont actuellement ouvertes. Un concours quitte automatiquement cette page dès que sa clôture est passée.
+        </p>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap;">
+        <a href="/concours-en-cours.html" class="btn btn--primaire btn--sm">🔴 En cours</a>
+        <a href="/concours-a-venir.html" class="btn btn--gris btn--sm">🔵 À venir</a>
+        <a href="/concours-termines.html" class="btn btn--gris btn--sm">⚫ Terminés</a>
+      </div>
+
+      <div id="liste-concours" class="concours-grille">
+        <div class="skeleton" style="height: 180px; border-radius: 14px;"></div>
+        <div class="skeleton" style="height: 180px; border-radius: 14px;"></div>
+        <div class="skeleton" style="height: 180px; border-radius: 14px;"></div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const div = document.getElementById("liste-concours");
+        try {
+          const data = await window.API.Concours.liste({ statut: "ouvert", limit: 500 });
+          const concours = data.concours || [];
+
+          if (concours.length === 0) {
+            div.className = "";
+            div.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state__icone">🔴</div>
+        <div class="empty-state__titre">Aucun concours ouvert pour le moment</div>
+        <p class="empty-state__texte">Consulte les <a href="/concours-a-venir.html">concours à venir</a> pour ne rien manquer, ou active les alertes pour être notifié dès l'ouverture d'un nouveau concours.</p>
+      </div>`;
+            return;
+          }
+
+          div.innerHTML = concours.map(carteConcours).join("");
+        } catch (err) {
+          div.innerHTML = `<p style="color:#dc2626;grid-column:1/-1;">Erreur de chargement : ${err.message}</p>`;
+        }
+      });
+
+      function carteConcours(c) {
+        const couleur = c.couleur || "var(--vert)";
+        return `
+    <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:${couleur};text-decoration:none;">
+      <div class="card-concours__en-tete">
+        <div class="card-concours__meta">
+          <span class="badge" style="background:${couleur}18;color:${couleur};border:1px solid ${couleur}33;">${c.categorie}</span>
+          <span class="badge" style="background:var(--rouge)18;color:var(--rouge);border:1px solid var(--rouge)33;">🔴 Ouvert</span>
+        </div>
+        <div class="card-concours__titre">${c.titre}</div>
+        <div class="card-concours__infos mt-1">
+          <span class="card-concours__info">🏢 ${c.organisme}</span>
+          <span class="card-concours__info">🎓 ${c.niveau || "—"}</span>
+          <span class="card-concours__info">👥 ${c.places ? c.places + " places" : "—"}</span>
+          <span class="card-concours__info">💰 ${c.frais ? c.frais.toLocaleString("fr-CI") + " FCFA" : "Gratuit"}</span>
+        </div>
+      </div>
+      <div class="card-concours__pied">
+        <span class="card-concours__cloture">⏰ Clôture : ${c.cloture || "—"}</span>
+        <span style="font-size:0.82rem;color:${couleur};font-weight:700;">Voir les détails →</span>
+      </div>
+    </a>`;
+      }
+    </script>
+  </body>
+</html>

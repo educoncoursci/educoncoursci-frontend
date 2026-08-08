@@ -153,15 +153,19 @@
 
           mesEvenements = [];
           liste.forEach((c) => {
-            if (c.ouverture && !isNaN(new Date(c.ouverture).getTime())) {
+            // date_ouverture/date_cloture sont les vraies colonnes DATE
+            // (ISO) ; c.ouverture/c.cloture sont désormais du texte
+            // formaté en français ("15 janvier 2026"), non parsable par
+            // new Date() — on garde ce texte uniquement pour l'affichage.
+            if (c.date_ouverture && !isNaN(new Date(c.date_ouverture).getTime())) {
               mesEvenements.push({
-                date: new Date(c.ouverture), titre: c.titre, type: "Ouverture",
+                date: new Date(c.date_ouverture), titre: c.titre, type: "Ouverture",
                 concoursId: c.id, organisme: c.organisme,
               });
             }
-            if (c.cloture && !isNaN(new Date(c.cloture).getTime())) {
+            if (c.date_cloture && !isNaN(new Date(c.date_cloture).getTime())) {
               mesEvenements.push({
-                date: new Date(c.cloture), titre: c.titre, type: "Clôture",
+                date: new Date(c.date_cloture), titre: c.titre, type: "Clôture",
                 concoursId: c.id, organisme: c.organisme,
               });
             }

@@ -1,0 +1,151 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concours terminés en Côte d'Ivoire — Archives — EduConcoursCI</title>
+    <meta
+      name="description"
+      content="Archives des concours clôturés en Côte d'Ivoire, classées par année : anciens sujets, communiqués et résultats lorsqu'ils sont disponibles."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <div id="site-header"></div>
+
+    <main class="container" style="max-width: 1100px; padding: 32px 20px 60px;">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <span class="badge" style="background:var(--gris-clair);color:var(--gris-texte);border:1px solid var(--gris-bordure);font-size:0.85rem;padding:6px 16px;">⚫ Archives</span>
+        <h1 style="margin-top:12px;">Concours terminés en Côte d'Ivoire</h1>
+        <p style="color: var(--gris-texte);">
+          Historique des concours clôturés, classés par année — anciens sujets, communiqués et résultats quand ils sont disponibles.
+        </p>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap;">
+        <a href="/concours-en-cours.html" class="btn btn--gris btn--sm">🔴 En cours</a>
+        <a href="/concours-a-venir.html" class="btn btn--gris btn--sm">🔵 À venir</a>
+        <a href="/concours-termines.html" class="btn btn--primaire btn--sm">⚫ Terminés</a>
+      </div>
+
+      <div id="filtre-annees" style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;"></div>
+
+      <div id="liste-par-annee">
+        <div class="skeleton" style="height: 180px; border-radius: 14px; margin-bottom: 20px;"></div>
+        <div class="skeleton" style="height: 180px; border-radius: 14px;"></div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      let concoursParAnnee = {};
+      let anneeActive = "";
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        const div = document.getElementById("liste-par-annee");
+        try {
+          // Inclut aussi les concours au statut "résultats" (résultats
+          // publiés par un admin) : ce sont des concours clôturés eux
+          // aussi, ils doivent rester visibles dans les archives plutôt
+          // que disparaître du site public une fois les résultats sortis.
+          const [dataFermes, dataResultats] = await Promise.all([
+            window.API.Concours.liste({ statut: "fermé", limit: 500 }),
+            window.API.Concours.liste({ statut: "résultats", limit: 500 }),
+          ]);
+          const concours = [...(dataFermes.concours || []), ...(dataResultats.concours || [])];
+
+          if (concours.length === 0) {
+            div.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state__icone">⚫</div>
+        <div class="empty-state__titre">Aucune archive pour le moment</div>
+        <p class="empty-state__texte">Les concours clôturés apparaîtront ici automatiquement.</p>
+      </div>`;
+            return;
+          }
+
+          // Regroupe par année de clôture (ou d'ouverture si clôture
+          // absente). date_cloture/date_ouverture sont les vraies colonnes
+          // DATE (ISO) ; on ne retombe sur le texte français cloture/
+          // ouverture que si aucune des deux n'est disponible — new Date()
+          // sur ce texte échouerait de toute façon (géré par isNaN
+          // ci-dessous, au pire on affiche "Année inconnue").
+          concoursParAnnee = {};
+          concours.forEach((c) => {
+            const dateRef = c.date_cloture || c.date_ouverture || c.cloture || c.ouverture;
+            const annee = dateRef ? new Date(dateRef).getFullYear() : "Année inconnue";
+            const cle = isNaN(annee) ? "Année inconnue" : annee;
+            if (!concoursParAnnee[cle]) concoursParAnnee[cle] = [];
+            concoursParAnnee[cle].push(c);
+          });
+
+          const annees = Object.keys(concoursParAnnee).sort((a, b) => b - a);
+          anneeActive = annees[0];
+
+          document.getElementById("filtre-annees").innerHTML = annees
+            .map((a) => `<button class="btn btn--sm ${a === anneeActive ? "btn--primaire" : "btn--gris"}" onclick="filtrerAnnee('${a}', this)">${a} (${concoursParAnnee[a].length})</button>`)
+            .join("");
+
+          afficherAnnee(anneeActive);
+        } catch (err) {
+          div.innerHTML = `<p style="color:#dc2626;">Erreur de chargement : ${err.message}</p>`;
+        }
+      });
+
+      function filtrerAnnee(annee, btn) {
+        anneeActive = annee;
+        document.querySelectorAll("#filtre-annees button").forEach((b) => b.className = "btn btn--sm btn--gris");
+        btn.className = "btn btn--sm btn--primaire";
+        afficherAnnee(annee);
+      }
+
+      function afficherAnnee(annee) {
+        const div = document.getElementById("liste-par-annee");
+        const liste = concoursParAnnee[annee] || [];
+        div.innerHTML = `<div class="concours-grille">${liste.map(carteConcours).join("")}</div>`;
+      }
+
+      function carteConcours(c) {
+        const estResultats = c.statut === "résultats";
+        return `
+    <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:var(--gris-texte);text-decoration:none;opacity:0.85;">
+      <div class="card-concours__en-tete">
+        <div class="card-concours__meta">
+          <span class="badge" style="background:var(--gris-clair);color:var(--gris-texte);">${c.categorie}</span>
+          ${estResultats
+            ? '<span class="badge" style="background:var(--vert)18;color:var(--vert);border:1px solid var(--vert)33;">🏆 Résultats publiés</span>'
+            : '<span class="badge" style="background:var(--gris-clair);color:var(--gris-texte);">⚫ Clôturé</span>'}
+        </div>
+        <div class="card-concours__titre">${c.titre}</div>
+        <div class="card-concours__infos mt-1">
+          <span class="card-concours__info">🏢 ${c.organisme}</span>
+          <span class="card-concours__info">🎓 ${c.niveau || "—"}</span>
+        </div>
+      </div>
+      <div class="card-concours__pied">
+        <span class="card-concours__cloture">📅 Clôturé le ${c.cloture || "—"}</span>
+        <span style="font-size:0.82rem;color:${estResultats ? "var(--vert)" : "var(--gris-texte)"};font-weight:700;">${estResultats ? "Voir les résultats →" : "Voir l'archive →"}</span>
+      </div>
+    </a>`;
+      }
+    </script>
+  </body>
+</html>

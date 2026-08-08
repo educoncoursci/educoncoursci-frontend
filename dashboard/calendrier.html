@@ -165,11 +165,14 @@
 
           evenements = [];
           resultats.filter(Boolean).forEach((c) => {
-            if (c.ouverture && !isNaN(new Date(c.ouverture).getTime())) {
-              evenements.push({ date: new Date(c.ouverture), titre: c.titre, type: "Ouverture", concoursId: c.id });
+            // date_ouverture/date_cloture (ISO) priment sur c.ouverture/
+            // c.cloture, désormais du texte formaté en français non
+            // parsable par new Date().
+            if (c.date_ouverture && !isNaN(new Date(c.date_ouverture).getTime())) {
+              evenements.push({ date: new Date(c.date_ouverture), titre: c.titre, type: "Ouverture", concoursId: c.id });
             }
-            if (c.cloture && !isNaN(new Date(c.cloture).getTime())) {
-              evenements.push({ date: new Date(c.cloture), titre: c.titre, type: "Clôture", concoursId: c.id });
+            if (c.date_cloture && !isNaN(new Date(c.date_cloture).getTime())) {
+              evenements.push({ date: new Date(c.date_cloture), titre: c.titre, type: "Clôture", concoursId: c.id });
             }
           });
           evenements.sort((a, b) => a.date - b.date);

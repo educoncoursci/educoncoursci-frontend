@@ -693,15 +693,19 @@
         // ── Prochaines clôtures (aperçu calendrier) ─────────────────
         try {
           const data = await window.API.Concours.liste({ statut: "ouvert", limit: 200 });
+          // date_cloture est la vraie colonne DATE (ISO) ; c.cloture est
+          // désormais du texte formaté en français ("15 janvier 2026"),
+          // que `new Date()` ne parse pas correctement — on l'utilise
+          // seulement pour l'affichage, pas pour les calculs.
           const avecCloture = (data.concours || [])
-            .filter((c) => c.cloture && !isNaN(new Date(c.cloture).getTime()))
-            .sort((a, b) => new Date(a.cloture) - new Date(b.cloture))
+            .filter((c) => c.date_cloture && !isNaN(new Date(c.date_cloture).getTime()))
+            .sort((a, b) => new Date(a.date_cloture) - new Date(b.date_cloture))
             .slice(0, 5);
 
           const zone = document.getElementById("prochaines-clotures");
           zone.innerHTML = avecCloture.length
             ? avecCloture.map((c) => {
-                const jours = Math.ceil((new Date(c.cloture) - new Date()) / 86400000);
+                const jours = Math.ceil((new Date(c.date_cloture) - new Date()) / 86400000);
                 return `
       <a href="/concours-detail.html?id=${c.id}" style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--blanc);border-radius:var(--radius-md);margin-bottom:10px;text-decoration:none;color:inherit;box-shadow:var(--ombre-sm);">
         <div>

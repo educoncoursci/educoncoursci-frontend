@@ -34,6 +34,9 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
             </button>
             <div class="navbar__sous-menu">
               <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
+              <a href="/concours-en-cours.html" class="navbar__sous-lien">🔴 Concours en cours</a>
+              <a href="/concours-a-venir.html" class="navbar__sous-lien">🔵 Concours à venir</a>
+              <a href="/concours-termines.html" class="navbar__sous-lien">⚫ Concours terminés</a>
               <a href="/calendrier.html" class="navbar__sous-lien"><span data-icone="horloge" data-taille="16"></span> Calendrier</a>
               <a href="/eligibilite.html" class="navbar__sous-lien"><span data-icone="coche" data-taille="16"></span> Suis-je éligible ?</a>
               <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
@@ -88,6 +91,9 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
 
       <div class="navbar__mobile" id="menu-mobile">
         <a href="/concours.html" class="navbar__link"><span data-icone="institution" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Concours</a>
+        <a href="/concours-en-cours.html" class="navbar__link" style="padding-left:40px;">🔴 En cours</a>
+        <a href="/concours-a-venir.html" class="navbar__link" style="padding-left:40px;">🔵 À venir</a>
+        <a href="/concours-termines.html" class="navbar__link" style="padding-left:40px;">⚫ Terminés</a>
         <a href="/calendrier.html" class="navbar__link"><span data-icone="horloge" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Calendrier</a>
         <a href="/eligibilite.html" class="navbar__link"><span data-icone="coche" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Suis-je éligible ?</a>
         <a href="/examens.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Examens</a>

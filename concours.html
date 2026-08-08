@@ -227,6 +227,34 @@
 
     <main style="padding: 36px 0 60px">
       <div class="container">
+        <!-- MOTEUR "CHERCHER PAR DIPLÔME" -->
+        <div class="card" style="padding:20px 22px;margin-bottom:20px;">
+          <div style="font-weight:800;font-size:1rem;margin-bottom:12px;">
+            🎯 Trouve les concours accessibles avec ton diplôme
+          </div>
+          <div id="niveaux-rapides" style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn--outline-vert btn--sm" onclick="filtrerParNiveauRapide('CEPE')">CEPE</button>
+            <button class="btn btn--outline-vert btn--sm" onclick="filtrerParNiveauRapide('BEPC')">BEPC</button>
+            <button class="btn btn--outline-vert btn--sm" onclick="filtrerParNiveauRapide('BAC')">BAC</button>
+            <button class="btn btn--outline-vert btn--sm" onclick="filtrerParNiveauRapide('BAC+2')">BAC+2</button>
+            <button class="btn btn--outline-vert btn--sm" onclick="filtrerParNiveauRapide('Licence')">Licence</button>
+          </div>
+        </div>
+
+        <!-- RACCOURCIS VERS LES PAGES DÉDIÉES — chacune a sa propre URL
+             indexable (meilleur pour le SEO qu'un système d'onglets JS) et
+             sa logique déjà en place : /concours-en-cours.html,
+             /concours-a-venir.html (compte à rebours J-X),
+             /concours-termines.html (archives classées par année). Cette
+             page-ci reste le hub de recherche avancée avec tous les
+             filtres ; le filtre "Statut" de la sidebar permet de la
+             restreindre sans changer de page si besoin. -->
+        <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+          <a href="/concours-en-cours.html" class="btn btn--gris btn--sm">🔴 En cours</a>
+          <a href="/concours-a-venir.html" class="btn btn--gris btn--sm">🔵 À venir</a>
+          <a href="/concours-termines.html" class="btn btn--gris btn--sm">⚫ Terminés (archives par année)</a>
+        </div>
+
         <div class="concours-layout">
           <!-- SIDEBAR FILTRES -->
           <aside class="concours-sidebar">
@@ -598,6 +626,14 @@
         appliquerFiltres();
       });
 
+      // ── Sélection rapide par niveau de diplôme ──────────────────────
+      function filtrerParNiveauRapide(niveau) {
+        const radio = document.querySelector(`input[name="niveau"][value="${niveau}"]`);
+        if (radio) radio.checked = true;
+        appliquerFiltres();
+        document.querySelector(".concours-main")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
       // ── Charge tous les concours ──────────────────────────────────
       async function chargerConcours() {
         try {
@@ -657,6 +693,7 @@
           .trim();
         const statut =
           document.querySelector('input[name="statut"]:checked')?.value || "";
+
         const categorie =
           document.querySelector('input[name="categorie"]:checked')?.value ||
           "";
@@ -689,6 +726,15 @@
             return (a.cloture || "").localeCompare(b.cloture || "");
           if (tri === "frais-asc") return (a.frais || 0) - (b.frais || 0);
           if (tri === "frais-desc") return (b.frais || 0) - (a.frais || 0);
+          // Vue "Terminés" : classement par année décroissante par défaut
+          // (les plus récents en premier), à partir de la vraie date de
+          // clôture — le badge année sur chaque card reste cohérent avec
+          // l'ordre d'affichage.
+          if (statut === "fermé" && tri === "recent") {
+            const anneeA = a.date_cloture ? new Date(a.date_cloture).getFullYear() : 0;
+            const anneeB = b.date_cloture ? new Date(b.date_cloture).getFullYear() : 0;
+            if (anneeA !== anneeB) return anneeB - anneeA;
+          }
           return b.id - a.id;
         });
 
@@ -747,6 +793,13 @@
         const couleur = c.couleur || "var(--vert)";
         const emoji = STATUT_EMOJI[c.statut] || "📋";
         const couleurStatut = STATUT_COULEUR[c.statut] || "var(--gris-texte)";
+        // Vue "Terminés" classée par année : date_cloture est une vraie
+        // colonne DATE (contrairement à c.cloture, du texte formaté FR),
+        // c'est elle qui donne l'année de façon fiable.
+        const annee = c.date_cloture ? new Date(c.date_cloture).getFullYear() : null;
+        const badgeAnnee = c.statut === "fermé" && annee
+          ? `<span class="badge" style="background:#f0f0f0;color:var(--gris-texte);border:1px solid var(--gris-bordure);">📅 ${annee}</span>`
+          : "";
 
         return `
     <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:${couleur};text-decoration:none;">
@@ -754,6 +807,7 @@
         <div class="card-concours__meta">
           <span class="badge" style="background:${couleur}18;color:${couleur};border:1px solid ${couleur}33;">${c.categorie}</span>
           <span class="badge" style="background:${couleurStatut}18;color:${couleurStatut};border:1px solid ${couleurStatut}33;">${emoji} ${c.statut}</span>
+          ${badgeAnnee}
           ${c.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--gratuit">🆓 Gratuit</span>'}
         </div>
         <div class="card-concours__titre">${c.titre}</div>

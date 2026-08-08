@@ -102,12 +102,53 @@
                 Chargement…
               </div>
             </div>
-            <button
-              onclick="ouvrirAjout()"
-              class="btn btn--primaire"
-            >
-              + Ajouter un concours
-            </button>
+            <div style="display:flex;gap:10px;">
+              <button onclick="filtrerVerification()" class="btn btn--gris" id="btn-a-verifier">
+                ⚠️ Dates à vérifier <span id="badge-a-verifier" class="hidden badge badge--orange" style="margin-left:4px;">0</span>
+              </button>
+              <button onclick="ouvrirModalSources()" class="btn btn--gris" id="btn-suggestions">
+                🔎 Sources & Suggestions <span id="badge-suggestions" class="hidden badge badge--rouge" style="margin-left:4px;">0</span>
+              </button>
+              <button
+                onclick="ouvrirAjout()"
+                class="btn btn--primaire"
+              >
+                + Ajouter un concours
+              </button>
+            </div>
+          </div>
+
+          <!-- Modal Sources & Suggestions (Lot 18) -->
+          <div id="modal-sources" class="modal hidden">
+            <div class="modal__contenu" style="max-width:640px;">
+              <div class="modal__header">
+                <h3>🔎 Détection automatique de concours</h3>
+                <button onclick="fermerModal('modal-sources')" class="modal__fermer">✕</button>
+              </div>
+              <div class="modal__corps">
+                <div style="display:flex;gap:8px;margin-bottom:16px;">
+                  <button id="onglet-suggestions" class="btn btn--vert btn--sm" onclick="changerOngletSources('suggestions')">À valider</button>
+                  <button id="onglet-sources" class="btn btn--gris btn--sm" onclick="changerOngletSources('sources')">Sources RSS</button>
+                  <button onclick="declencherDetectionManuelle()" class="btn btn--gris btn--sm" style="margin-left:auto;">⟳ Détecter maintenant</button>
+                </div>
+
+                <div id="zone-suggestions">
+                  <p style="font-size:0.82rem;color:var(--gris-texte);margin-bottom:12px;">
+                    Concours potentiels détectés dans les flux d'actualités. Rien n'est jamais publié automatiquement — vérifie et complète les infos avant d'approuver.
+                  </p>
+                  <div id="liste-suggestions"><p style="text-align:center;color:var(--gris-texte);padding:20px;">Chargement…</p></div>
+                </div>
+
+                <div id="zone-sources" class="hidden">
+                  <div style="display:flex;gap:8px;margin-bottom:14px;">
+                    <input id="source-nom" placeholder="Nom (ex: Ministère Fonction Publique)" class="form-input" style="flex:1;">
+                    <input id="source-url" placeholder="URL du flux RSS" class="form-input" style="flex:1;">
+                    <button onclick="ajouterSource()" class="btn btn--vert btn--sm">+ Ajouter</button>
+                  </div>
+                  <div id="liste-sources"><p style="text-align:center;color:var(--gris-texte);padding:20px;">Chargement…</p></div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div
@@ -165,6 +206,21 @@
               <option value="">Tous les accès</option>
               <option value="false">🆓 Gratuits</option>
               <option value="true">⭐ Premium</option>
+            </select>
+            <select
+              id="fil-verif-conc"
+              onchange="filtrerConcours()"
+              style="
+                padding: 10px 14px;
+                border: 1.5px solid var(--gris-bordure);
+                border-radius: var(--radius-md);
+                font-size: 0.88rem;
+                outline: none;
+                background: var(--blanc);
+              "
+            >
+              <option value="">Dates : tout afficher</option>
+              <option value="false">⚠️ À vérifier seulement</option>
             </select>
           </div>
 
@@ -297,6 +353,18 @@
               <label class="form-label">Date de clôture</label>
               <input type="date" id="conc-cloture" class="form-input" />
             </div>
+          </div>
+          <div class="form-groupe" style="margin-top:-6px;">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;">
+              <input type="checkbox" id="conc-statut-auto" checked style="accent-color:var(--vert);" />
+              🔄 Statut recalculé automatiquement chaque nuit selon ces dates (recommandé — décoche uniquement pour un cas particulier, ex : report géré manuellement)
+            </label>
+          </div>
+          <div class="form-groupe" style="margin-top:-6px;">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.85rem;">
+              <input type="checkbox" id="conc-date-verifiee" checked style="accent-color:var(--vert);" />
+              ✅ Dates vérifiées contre un communiqué officiel (décoche si ce sont des dates indicatives à confirmer)
+            </label>
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px">
             <div class="form-groupe">
@@ -530,6 +598,7 @@
         try {
           const data = await window.API.Concours.liste({ limit: 500 });
           tousConcoursAdmin = data.concours || [];
+          mettreAJourBadgeAVerifier();
           filtrerConcours();
         } catch (err) {
           window.afficherToast("Erreur : " + err.message, "erreur");
@@ -540,6 +609,7 @@
         const rech = document.getElementById("rech-conc").value.toLowerCase();
         const statut = document.getElementById("fil-statut-conc").value;
         const acc = document.getElementById("fil-acc-conc").value;
+        const verif = document.getElementById("fil-verif-conc").value;
         const liste = tousConcoursAdmin.filter((c) => {
           if (
             rech &&
@@ -549,6 +619,7 @@
             return false;
           if (statut && c.statut !== statut) return false;
           if (acc !== "" && String(c.premium) !== acc) return false;
+          if (verif === "false" && c.date_verifiee !== false) return false;
           return true;
         });
         document.getElementById("compteur-conc").textContent =
@@ -566,7 +637,10 @@
       <td style="font-size:0.85rem;">${c.organisme || "—"}</td>
       <td><span class="badge badge--violet" style="font-size:0.7rem;">${c.categorie || "—"}</span></td>
       <td style="font-size:0.82rem;">${STATUT_EMOJI_ADMIN[c.statut] || "📋"} ${STATUT_LABEL_ADMIN[c.statut] || c.statut || "—"}</td>
-      <td style="font-size:0.82rem;">${c.cloture || "—"}</td>
+      <td style="font-size:0.82rem;">
+        ${c.cloture || "—"}
+        ${c.date_verifiee === false ? '<span title="Date indicative — à vérifier contre un communiqué officiel" style="color:var(--orange);cursor:help;margin-left:4px;">⚠️</span>' : ""}
+      </td>
       <td style="font-size:0.85rem;">${c.places || "—"}</td>
       <td>${c.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐</span>' : '<span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span>'}</td>
       <td><div class="admin-tableau__actions">
@@ -578,6 +652,26 @@
           .join("");
       }
 
+      // ── Badge et raccourci "Dates à vérifier" ────────────────────
+      function mettreAJourBadgeAVerifier() {
+        const nb = tousConcoursAdmin.filter((c) => c.date_verifiee === false).length;
+        const badge = document.getElementById("badge-a-verifier");
+        if (nb > 0) {
+          badge.textContent = nb;
+          badge.classList.remove("hidden");
+        } else {
+          badge.classList.add("hidden");
+        }
+      }
+
+      // Bascule le filtre "À vérifier seulement" en un clic depuis le
+      // bouton d'en-tête, sans avoir à ouvrir le menu déroulant.
+      function filtrerVerification() {
+        const select = document.getElementById("fil-verif-conc");
+        select.value = select.value === "false" ? "" : "false";
+        filtrerConcours();
+      }
+
       function ouvrirAjout() {
         editConcId = null;
         document.getElementById("modal-conc-titre").innerHTML =
@@ -586,6 +680,8 @@
         document.getElementById("conc-organisme").value = "";
         document.getElementById("conc-categorie").value = "";
         document.getElementById("conc-statut").value = "ouvert";
+        document.getElementById("conc-statut-auto").checked = true;
+        document.getElementById("conc-date-verifiee").checked = true;
         document.getElementById("conc-niveau").value = "";
         document.getElementById("conc-ouverture").value = "";
         document.getElementById("conc-cloture").value = "";
@@ -664,12 +760,18 @@
         document.getElementById("conc-organisme").value = c.organisme || "";
         document.getElementById("conc-categorie").value = c.categorie || "";
         document.getElementById("conc-statut").value = c.statut || "ouvert";
+        document.getElementById("conc-statut-auto").checked = c.statut_auto !== false;
+        document.getElementById("conc-date-verifiee").checked = c.date_verifiee !== false;
         document.getElementById("conc-niveau").value = c.niveau || "";
-        document.getElementById("conc-ouverture").value = c.ouverture
-          ? String(c.ouverture).slice(0, 10)
+        // c.ouverture/c.cloture sont maintenant du texte formaté en
+        // français ("15 janvier 2026", généré par formaterDateFr() côté
+        // modèle) — inutilisable tel quel dans un <input type="date">.
+        // On préfilit depuis les vraies colonnes date_ouverture/date_cloture.
+        document.getElementById("conc-ouverture").value = c.date_ouverture
+          ? String(c.date_ouverture).slice(0, 10)
           : "";
-        document.getElementById("conc-cloture").value = c.cloture
-          ? String(c.cloture).slice(0, 10)
+        document.getElementById("conc-cloture").value = c.date_cloture
+          ? String(c.date_cloture).slice(0, 10)
           : "";
         document.getElementById("conc-frais").value = c.frais || "";
         document.getElementById("conc-places").value = c.places || "";
@@ -734,6 +836,10 @@
           niveau: document.getElementById("conc-niveau").value,
           ouverture: document.getElementById("conc-ouverture").value || null,
           cloture: document.getElementById("conc-cloture").value || null,
+          dateOuverture: document.getElementById("conc-ouverture").value || null,
+          dateCloture: document.getElementById("conc-cloture").value || null,
+          statutAuto: document.getElementById("conc-statut-auto").checked,
+          dateVerifiee: document.getElementById("conc-date-verifiee").checked,
           frais: parseInt(document.getElementById("conc-frais").value) || 0,
           places:
             parseInt(document.getElementById("conc-places").value) || null,
@@ -776,7 +882,14 @@
         btn.classList.add("btn--chargement");
         btn.disabled = true;
         try {
-          if (editConcId) {
+          if (suggestionEnApprobation) {
+            await apiCall(`/admin/concours-suggestions/${suggestionEnApprobation}/approuver`, {
+              method: "POST",
+              body: JSON.stringify(payload),
+            });
+            window.afficherToast("Concours publié à partir de la suggestion !", "succes");
+            suggestionEnApprobation = null;
+          } else if (editConcId) {
             await window.API.Concours.modifier(editConcId, payload);
             window.afficherToast("Concours modifié !", "succes");
           } else {
@@ -791,6 +904,145 @@
         } finally {
           btn.classList.remove("btn--chargement");
           btn.disabled = false;
+        }
+      }
+
+      // ── Lot 18 : Sources & Suggestions ──────────────────────
+      let suggestionEnApprobation = null;
+
+      document.addEventListener("DOMContentLoaded", chargerCompteurSuggestions);
+
+      async function chargerCompteurSuggestions() {
+        try {
+          const { total } = await apiCall("/admin/concours-suggestions");
+          const badge = document.getElementById("badge-suggestions");
+          if (total > 0) {
+            badge.textContent = total;
+            badge.classList.remove("hidden");
+          } else {
+            badge.classList.add("hidden");
+          }
+        } catch {
+          // silencieux — pas bloquant pour le reste de la page
+        }
+      }
+
+      function ouvrirModalSources() {
+        ouvrirModal("modal-sources");
+        changerOngletSources("suggestions");
+      }
+
+      function changerOngletSources(onglet) {
+        document.getElementById("zone-suggestions").classList.toggle("hidden", onglet !== "suggestions");
+        document.getElementById("zone-sources").classList.toggle("hidden", onglet !== "sources");
+        document.getElementById("onglet-suggestions").className = `btn btn--sm ${onglet === "suggestions" ? "btn--vert" : "btn--gris"}`;
+        document.getElementById("onglet-sources").className = `btn btn--sm ${onglet === "sources" ? "btn--vert" : "btn--gris"}`;
+        if (onglet === "suggestions") chargerSuggestions();
+        else chargerSourcesRSS();
+      }
+
+      async function chargerSuggestions() {
+        const div = document.getElementById("liste-suggestions");
+        try {
+          const { suggestions } = await apiCall("/admin/concours-suggestions");
+          div.innerHTML = suggestions.length
+            ? suggestions.map((s) => `
+              <div style="border:1px solid var(--gris-bordure);border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+                <div style="font-weight:700;font-size:0.88rem;">${s.titre}</div>
+                <div style="font-size:0.78rem;color:var(--gris-texte);margin:4px 0 8px;">${s.extrait || ""}</div>
+                <div style="font-size:0.75rem;color:var(--gris-texte);margin-bottom:8px;">📡 ${s.source_nom || "?"} ${s.lien ? `· <a href="${s.lien}" target="_blank" rel="noopener">Voir l'article ↗</a>` : ""}</div>
+                <div style="display:flex;gap:8px;">
+                  <button class="btn btn--vert btn--sm" onclick="approuverSuggestion(${s.id}, '${s.titre.replace(/'/g, "\\'")}')">✓ Approuver / compléter</button>
+                  <button class="btn btn--gris btn--sm" onclick="rejeterSuggestion(${s.id})">✕ Rejeter</button>
+                </div>
+              </div>`).join("")
+            : `<p style="text-align:center;color:var(--gris-texte);padding:20px;">Aucune suggestion en attente.</p>`;
+        } catch (err) {
+          div.innerHTML = `<p style="color:#dc2626;">Erreur : ${err.message}</p>`;
+        }
+      }
+
+      function approuverSuggestion(id, titre) {
+        suggestionEnApprobation = id;
+        fermerModal("modal-sources");
+        ouvrirAjout();
+        document.getElementById("conc-titre").value = titre;
+        window.afficherToast("Complète les informations manquantes puis enregistre pour publier ce concours.", "info");
+      }
+
+      async function rejeterSuggestion(id) {
+        try {
+          await apiCall(`/admin/concours-suggestions/${id}/rejeter`, { method: "POST" });
+          await chargerSuggestions();
+          await chargerCompteurSuggestions();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      async function declencherDetectionManuelle() {
+        try {
+          const { message } = await apiCall("/admin/concours-sources/detecter", { method: "POST" });
+          window.afficherToast(message, "succes");
+          await chargerSuggestions();
+          await chargerCompteurSuggestions();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      async function chargerSourcesRSS() {
+        const div = document.getElementById("liste-sources");
+        try {
+          const { sources } = await apiCall("/admin/concours-sources");
+          div.innerHTML = sources.length
+            ? sources.map((s) => `
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
+                <div>
+                  <div style="font-weight:700;font-size:0.85rem;">${s.nom}</div>
+                  <div style="font-size:0.75rem;color:var(--gris-texte);">${s.url}</div>
+                </div>
+                <div style="display:flex;gap:6px;">
+                  <button class="badge ${s.actif ? "badge--vert" : "badge--gris"}" style="border:none;cursor:pointer;" onclick="basculerSourceRSS(${s.id}, ${s.actif})">${s.actif ? "Active" : "Inactive"}</button>
+                  <button class="btn btn--gris btn--sm" onclick="supprimerSourceRSS(${s.id})">🗑️</button>
+                </div>
+              </div>`).join("")
+            : `<p style="text-align:center;color:var(--gris-texte);padding:20px;">Aucune source configurée — les sources par défaut sont utilisées en attendant.</p>`;
+        } catch (err) {
+          div.innerHTML = `<p style="color:#dc2626;">Erreur : ${err.message}</p>`;
+        }
+      }
+
+      async function ajouterSource() {
+        const nom = document.getElementById("source-nom").value.trim();
+        const url = document.getElementById("source-url").value.trim();
+        if (!nom || !url) return window.afficherToast("Nom et URL requis.", "warn");
+        try {
+          await apiCall("/admin/concours-sources", { method: "POST", body: JSON.stringify({ nom, url }) });
+          document.getElementById("source-nom").value = "";
+          document.getElementById("source-url").value = "";
+          await chargerSourcesRSS();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      async function basculerSourceRSS(id, actifActuel) {
+        try {
+          await apiCall(`/admin/concours-sources/${id}`, { method: "PATCH", body: JSON.stringify({ actif: !actifActuel }) });
+          await chargerSourcesRSS();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+        }
+      }
+
+      async function supprimerSourceRSS(id) {
+        if (!confirm("Supprimer cette source ?")) return;
+        try {
+          await apiCall(`/admin/concours-sources/${id}`, { method: "DELETE" });
+          await chargerSourcesRSS();
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
         }
       }
 

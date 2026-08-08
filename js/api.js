@@ -171,6 +171,47 @@ return apiCall(`/concours/${id}`, { method: "DELETE" });
 };
 
 // ════════════════════════════════════════════════════════════
+//  Concours — Sources RSS & file de validation (Lot 18)
+//  Détection automatique de nouveaux concours : le scraper dépose
+//  des suggestions, un admin les approuve ou les rejette ici.
+// ════════════════════════════════════════════════════════════
+const ConcoursSources = {
+async liste() {
+return apiCall("/admin/concours-sources");
+},
+async ajouter(nom, url) {
+return apiCall("/admin/concours-sources", {
+method: "POST",
+body: JSON.stringify({ nom, url }),
+});
+},
+async basculer(id, actif) {
+return apiCall(`/admin/concours-sources/${id}`, {
+method: "PATCH",
+body: JSON.stringify({ actif }),
+});
+},
+async supprimer(id) {
+return apiCall(`/admin/concours-sources/${id}`, { method: "DELETE" });
+},
+async declencherDetection() {
+return apiCall("/admin/concours-sources/detecter", { method: "POST" });
+},
+async suggestions() {
+return apiCall("/admin/concours-suggestions");
+},
+async approuverSuggestion(id, data) {
+return apiCall(`/admin/concours-suggestions/${id}/approuver`, {
+method: "POST",
+body: JSON.stringify(data),
+});
+},
+async rejeterSuggestion(id) {
+return apiCall(`/admin/concours-suggestions/${id}/rejeter`, { method: "POST" });
+},
+};
+
+// ════════════════════════════════════════════════════════════
 //  PDFs
 // ════════════════════════════════════════════════════════════
 
@@ -1132,6 +1173,6 @@ return false;
 
 // ── Exporte tout en global (utilisable dans les pages HTML) ──
 window.API = {
-Auth, Concours, PDFs, Videos, QCM, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites, Referentiels, Eligibilite, Alertes, Users, Progression, Vitrine, CandidaturesConcours, AssistantConcours, Push, Forum, Marketplace, Messages,
+Auth, Concours, ConcoursSources, PDFs, Videos, QCM, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites, Referentiels, Eligibilite, Alertes, Users, Progression, Vitrine, CandidaturesConcours, AssistantConcours, Push, Forum, Marketplace, Messages,
 verifierBackend, getToken,
 };

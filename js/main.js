@@ -296,9 +296,23 @@ initSidebarMobile();
 initModals();
 initTooltips();
 
-// Met à jour la navbar selon la session
+// Met à jour la navbar selon la session (valeurs en cache, affichage immédiat)
 if (window.Auth?.mettreAJourNavbar) {
 window.Auth.mettreAJourNavbar();
+}
+
+// Revérifie le profil auprès du serveur en arrière-plan, silencieusement.
+// Sans ça, un changement de rôle (ex: promotion admin) ou de statut
+// Premium fait en base pendant que l'utilisateur est déjà connecté ne
+// se reflète jamais dans le navigateur tant qu'il ne se déconnecte pas
+// manuellement — le token/localStorage restent figés sur leur état au
+// moment de la connexion. Ici, dès qu'une page se charge, on relit
+// l'état réel et on met à jour l'affichage (bouton Admin, badge
+// Premium) si besoin, sans bloquer le rendu initial de la page.
+if (window.Auth?.estConnecte?.() && window.Auth?.rafraichirProfil) {
+window.Auth.rafraichirProfil().then(() => {
+if (window.Auth?.mettreAJourNavbar) window.Auth.mettreAJourNavbar();
+});
 }
 
 // Affiche le bandeau premium si pertinent

@@ -301,7 +301,19 @@
                     font-size: 0.88rem;
                     color: var(--rouge);
                     font-weight: 700;
+                    margin-bottom: 8px;
+                  "
+                ></div>
+                <div
+                  id="cta-countdown"
+                  class="hidden"
+                  style="
+                    font-size: 0.95rem;
+                    font-weight: 800;
                     margin-bottom: 16px;
+                    padding: 8px 14px;
+                    border-radius: 999px;
+                    display: inline-block;
                   "
                 ></div>
                 <div
@@ -591,11 +603,48 @@
         // Met à jour le titre de l'onglet et la meta description pour ce concours précis
         document.title = `${c.titre} — EduConcoursCI`;
         const metaDesc = document.querySelector('meta[name="description"]');
+        const descriptionConcours = `${c.titre} (${c.organisme}) — conditions, dates, documents à fournir et préparation sur EduConcoursCI.`;
         if (metaDesc) {
-          metaDesc.setAttribute(
-            "content",
-            `${c.titre} (${c.organisme}) — conditions, dates, documents à fournir et préparation sur EduConcoursCI.`,
-          );
+          metaDesc.setAttribute("content", descriptionConcours);
+        }
+
+        // og:title/og:description pilotent l'aperçu affiché quand ce lien
+        // est partagé (WhatsApp, Facebook...) — sans cette mise à jour,
+        // tout partage affiche le titre générique "Détail Concours" au
+        // lieu du nom réel du concours, ce qui nuit fortement au partage
+        // organique (canal de diffusion clé pour ce type de contenu).
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.setAttribute("content", `${c.titre} — EduConcoursCI`);
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) ogDesc.setAttribute("content", descriptionConcours);
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute("content", `https://educoncoursci.netlify.app/concours-detail.html?id=${c.id}`);
+        const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+        if (twitterTitle) twitterTitle.setAttribute("content", `${c.titre} — EduConcoursCI`);
+        const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+        if (twitterDesc) twitterDesc.setAttribute("content", descriptionConcours);
+
+        // Image de partage par catégorie — un vrai visuel plutôt que
+        // l'image générique du site pour toute catégorie reconnue.
+        // (Facebook/Twitter n'affichent pas le SVG dans og:image, donc
+        // ces visuels sont de vrais JPEG pré-générés une fois, pas
+        // rendus à la volée.) Catégorie inconnue (ex: nouvelle
+        // catégorie ajoutée via le scraper) → repli silencieux sur
+        // l'image générique déjà en place.
+        const imageParCategorie = {
+          "Administration": "administration.jpg",
+          "Enseignement": "enseignement.jpg",
+          "Fonction publique": "fonction-publique.jpg",
+          "Santé & Social": "sante-social.jpg",
+          "Sécurité & Défense": "securite-defense.jpg",
+        };
+        const nomImage = imageParCategorie[c.categorie];
+        if (nomImage) {
+          const urlImage = `https://educoncoursci.netlify.app/assets/og-categories/${nomImage}`;
+          const ogImage = document.querySelector('meta[property="og:image"]');
+          if (ogImage) ogImage.setAttribute("content", urlImage);
+          const twitterImage = document.querySelector('meta[name="twitter:image"]');
+          if (twitterImage) twitterImage.setAttribute("content", urlImage);
         }
 
         // Schema.org — type Event : un concours a des dates précises
@@ -612,8 +661,12 @@
               ? "https://schema.org/EventCancelled"
               : "https://schema.org/EventScheduled",
         };
-        if (c.ouverture) donnees.startDate = c.ouverture;
-        if (c.cloture) donnees.endDate = c.cloture;
+        // Schema.org exige un format de date ISO 8601 (YYYY-MM-DD) pour
+        // startDate/endDate — c.ouverture/c.cloture sont maintenant du
+        // texte formaté en français ("15 janvier 2026"), donc invalides
+        // ici. On utilise les vraies colonnes date_ouverture/date_cloture.
+        if (c.date_ouverture) donnees.startDate = String(c.date_ouverture).slice(0, 10);
+        if (c.date_cloture) donnees.endDate = String(c.date_cloture).slice(0, 10);
 
         let script = document.getElementById("schema-concours");
         if (!script) {
@@ -644,6 +697,47 @@
             })),
           });
         }
+      }
+
+      // ── Compte à rebours sur la fiche détail ────────────────────
+      // Concours "ouvert" : compte à rebours vers date_cloture (urgence
+      // à s'inscrire). Concours "à venir" : compte à rebours vers
+      // date_ouverture (annonce de quand candidater sera possible).
+      // date_ouverture/date_cloture sont les vraies colonnes DATE (ISO) ;
+      // le texte ouverture/cloture (français) n'est pas parsable par
+      // new Date() et sert uniquement à l'affichage ailleurs sur la page.
+      function afficherCompteARebours(c) {
+        const zone = document.getElementById("cta-countdown");
+        if (!zone) return;
+
+        let dateCible = null;
+        let libelle = "";
+        if (c.statut === "ouvert" && c.date_cloture) {
+          dateCible = new Date(c.date_cloture);
+          libelle = "avant la clôture";
+        } else if (c.statut === "à venir" && c.date_ouverture) {
+          dateCible = new Date(c.date_ouverture);
+          libelle = "avant l'ouverture";
+        }
+
+        if (!dateCible || isNaN(dateCible.getTime())) {
+          zone.classList.add("hidden");
+          return;
+        }
+
+        const jours = Math.ceil((dateCible - new Date()) / 86400000);
+        if (jours < 0) {
+          zone.classList.add("hidden");
+          return;
+        }
+
+        const urgent = c.statut === "ouvert" && jours <= 3;
+        zone.style.background = urgent ? "var(--rouge)18" : "var(--vert)18";
+        zone.style.color = urgent ? "var(--rouge)" : "var(--vert)";
+        zone.textContent = jours === 0
+          ? "⏳ Dernier jour !"
+          : `⏳ Plus que ${jours} jour${jours > 1 ? "s" : ""} ${libelle}`;
+        zone.classList.remove("hidden");
       }
 
       function afficherDetail(c) {
@@ -777,6 +871,7 @@
         document.getElementById("cta-cloture").textContent = c.cloture
           ? `⏰ Date limite : ${c.cloture}`
           : "";
+        afficherCompteARebours(c);
         document.getElementById("cta-frais").textContent = c.frais
           ? `${c.frais.toLocaleString("fr-CI")} FCFA`
           : "Gratuit";
