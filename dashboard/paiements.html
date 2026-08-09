@@ -142,6 +142,26 @@
         }
         const session = window.Auth.getSession();
 
+        // Retour depuis un paiement Wave (API) ou CinetPay — voir
+        // WAVE_SUCCESS_URL/WAVE_ERROR_URL et CINETPAY_RETURN_URL, qui
+        // ramènent ici avec ce paramètre après la tentative de
+        // paiement. Le webhook a déjà traité la transaction en
+        // arrière-plan (ou la traitera dans les secondes qui suivent) —
+        // ce message est purement informatif pour l'utilisateur, il ne
+        // déclenche aucune activation lui-même.
+        const paramsUrl = new URLSearchParams(window.location.search);
+        const statutRetour = paramsUrl.get("statut");
+        if (statutRetour === "succes") {
+          window.afficherToast("Paiement reçu ! Ton Premium sera activé dans quelques instants — actualise la page si besoin.", "succes");
+        } else if (statutRetour === "echec") {
+          window.afficherToast("Le paiement n'a pas abouti. Tu peux réessayer depuis la page Paiement.", "erreur");
+        }
+        // Nettoie l'URL pour éviter que le message ne réapparaisse à
+        // chaque rechargement de la page.
+        if (statutRetour) {
+          window.history.replaceState({}, "", window.location.pathname);
+        }
+
         if (session.photo_url) {
           document.getElementById("sidebar-avatar").style.backgroundImage = `url('${session.photo_url}')`;
           document.getElementById("sidebar-avatar").style.backgroundSize = "cover";

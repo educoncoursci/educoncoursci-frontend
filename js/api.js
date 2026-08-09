@@ -31,7 +31,17 @@ headers: headersAuth(),
 ...options,
 });
 
-const data = await response.json();
+// Le serveur peut répondre avec du contenu non-JSON en cas d'erreur
+// inattendue (page d'erreur HTML de Railway, timeout, mauvaise
+// configuration) — sans ce garde-fou, un .json() qui échoue masque
+// la vraie cause derrière une erreur de parsing cryptique.
+let data;
+try {
+  data = await response.json();
+} catch {
+  console.error(`[API] Réponse non-JSON de ${endpoint} (statut ${response.status})`);
+  throw new Error(`Réponse invalide du serveur (statut ${response.status}). Vérifie que le backend est bien démarré.`);
+}
 
 // Token expiré → déconnexion automatique
 if (response.status === 401) {
@@ -44,14 +54,20 @@ if (response.status === 401) {
 }
 
 if (!response.ok) {
+  console.error(`[API] Erreur ${response.status} sur ${endpoint} :`, data.error || data);
   throw new Error(data.error || `Erreur ${response.status}`);
 }
 
 return data;
 
 } catch (err) {
-// Erreur réseau (backend inaccessible)
+// Erreur réseau (backend inaccessible, CORS bloqué, DNS...) — le
+// message générique du navigateur ("Failed to fetch") ne dit jamais
+// pourquoi ; on logue l'erreur brute en plus pour que la vraie cause
+// (souvent visible juste au-dessus dans la console, ex: une ligne
+// "blocked by CORS policy") reste repérable facilement.
 if (err.name === "TypeError" && err.message.includes("fetch")) {
+console.error(`[API] Impossible de contacter ${API_URL}${endpoint} — vérifie que le backend est démarré et que CORS l'autorise. Détail :`, err.message);
 throw new Error("Impossible de contacter le serveur. Vérifie ta connexion.");
 }
 throw err;
@@ -594,6 +610,13 @@ return apiCall("/payment/history");
 
 async initierCinetPay(plan) {
 return apiCall("/payment/cinetpay/initier", {
+method: "POST",
+body: JSON.stringify({ plan }),
+});
+},
+
+async initierWave(plan) {
+return apiCall("/payment/wave/initier", {
 method: "POST",
 body: JSON.stringify({ plan }),
 });

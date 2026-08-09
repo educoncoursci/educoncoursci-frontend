@@ -181,6 +181,11 @@
                   <span data-icone="aide" data-taille="20" style="display:inline-flex;"></span>
                   <div style="font-weight: 800; font-size: 1.05rem;">Comment se déroule le paiement ?</div>
                 </div>
+                <img
+                  src="/assets/paiement/moyens-paiement.jpeg"
+                  alt="Moyens de paiement acceptés : Orange Money, Wave, MTN Mobile Money, Moov Money"
+                  style="width:100%; max-width:520px; display:block; margin:0 auto 16px; border-radius:10px;"
+                />
                 <p style="font-size: 0.9rem; color: var(--gris-texte); line-height: 1.7; margin-bottom: 12px;">
                   Ton paiement est traité en toute simplicité, directement depuis ton téléphone,
                   via <strong>Wave</strong>, <strong>Orange Money</strong>, <strong>MTN Money</strong>
@@ -372,6 +377,13 @@
                   <div id="radio-moov" style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--gris-bordure);"></div>
                 </div>
 
+                <div id="zone-wave-api" class="hidden" style="margin-top:14px;padding-top:14px;border-top:1px dashed var(--gris-bordure);">
+                  <button onclick="payerAvecWaveApi()" id="btn-wave-api" class="btn btn--full btn--lg" style="background:#1DC8E0;color:#fff;">
+                    🌊 Payer avec Wave (montant automatique)
+                  </button>
+                  <p style="font-size:0.76rem;color:var(--gris-texte);text-align:center;margin-top:8px;">Tu arrives dans Wave avec le montant déjà rempli — active ton Premium automatiquement.</p>
+                </div>
+
                 <div id="zone-cinetpay" class="hidden" style="margin-top:14px;padding-top:14px;border-top:1px dashed var(--gris-bordure);">
                   <button onclick="payerAvecCinetPay()" id="btn-cinetpay" class="btn btn--full btn--lg" style="background:#0a2540;color:#fff;">
                     💳 Payer en ligne (carte bancaire) avec CinetPay
@@ -436,7 +448,7 @@
                 </p>
 
                 <!-- Exemple SMS -->
-                <div class="ussd-box" id="exemple-sms">Réf: 123456789012</div>
+                <div class="ussd-box" id="exemple-sms">Réf: T_5L7D2SFHD3VMTIPJ</div>
 
                 <div style="margin-bottom: 14px">
                   <label
@@ -451,7 +463,7 @@
                   <input
                     type="text"
                     id="input-tx-id"
-                    placeholder="Ex: 123456789012 ou 987654321"
+                    placeholder="Ex: T_5L7D2SFHD3VMTIPJ ou 987654321"
                     style="
                       width: 100%;
                       padding: 14px 16px;
@@ -812,6 +824,9 @@
         window.API.Paiement.plans(label)
           .then((data) => {
             instructionsData = data.instructions || null;
+            if (data.waveApiDisponible) {
+              document.getElementById("zone-wave-api").classList.remove("hidden");
+            }
             if (data.cinetpayDisponible) {
               document.getElementById("zone-cinetpay").classList.remove("hidden");
             }
@@ -867,7 +882,7 @@
         // paiement lui-même ; il ne remplace pas la vérification.
         if (infos.modePaiement === "lien" && infos.lienPaiement) {
           saisie.classList.remove("hidden");
-          document.getElementById("exemple-sms").textContent = `Réf: ${infos.format_exemple || "123456789012"}`;
+          document.getElementById("exemple-sms").textContent = `Réf: ${infos.format_exemple || "T_5L7D2SFHD3VMTIPJ"}`;
           document.getElementById("instructions-contenu").innerHTML = `
       <div style="background:${cfg.couleur}14;border:1px solid ${cfg.couleur}30;border-radius:14px;padding:18px;margin-bottom:14px;text-align:center;">
         <div style="font-size:0.82rem;color:var(--gris-texte);margin-bottom:6px;">Montant à payer</div>
@@ -912,6 +927,24 @@
       )
       .join("")}
   `;
+      }
+
+      async function payerAvecWaveApi() {
+        if (!planSelectionne) {
+          window.afficherToast("Choisis d'abord un plan.", "warn");
+          return;
+        }
+        const btn = document.getElementById("btn-wave-api");
+        btn.disabled = true;
+        btn.textContent = "⏳ Redirection en cours…";
+        try {
+          const { paymentUrl } = await window.API.Paiement.initierWave(planSelectionne.label);
+          window.location.href = paymentUrl;
+        } catch (err) {
+          window.afficherToast(err.message, "erreur");
+          btn.disabled = false;
+          btn.textContent = "🌊 Payer avec Wave (montant automatique)";
+        }
       }
 
       async function payerAvecCinetPay() {
