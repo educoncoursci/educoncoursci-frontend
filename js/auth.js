@@ -152,13 +152,45 @@ return getSession();
 
 function mettreAJourNavbar() {
 const user = getSession();
-const zone = document.querySelector(".navbar__actions");
+// Deux zones à synchroniser : la barre desktop (.navbar__actions,
+// toujours dans le DOM, visible aussi en mobile en haut de page) ET
+// le menu déroulant mobile (#navbar-mobile-actions, dans le panneau
+// hamburger). Avant ce correctif, seule la première était mise à
+// jour : un utilisateur connecté voyait donc son badge en haut MAIS
+// gardait "Connexion / Inscription" codés en dur dès qu'il ouvrait
+// le menu mobile, la session réelle n'étant jamais reflétée là.
+const zoneDesktop = document.querySelector(".navbar__actions");
+const zoneMobile  = document.getElementById("navbar-mobile-actions");
+if (!zoneDesktop && !zoneMobile) return;
+
+let html;
+if (user) {
+html = `<a href="/dashboard/index.html" class="btn btn--outline-vert btn--sm"> 👤 ${user.nom.split(" ")[0]} ${user.premium ? '<span class="badge-premium">⭐ Premium</span>' : ""} </a> ${estAdmin() ?`<a href="/admin/index.html" class="btn btn--bleu btn--sm">⚙️ Admin</a>`: ""} <button onclick="deconnecter()" class="btn btn--gris btn--sm">Déconnexion</button>`;
+} else {
+html = `<a href="/auth/login.html"    class="btn btn--outline-vert btn--sm">Connexion</a> <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription gratuite</a>`;
+}
+
+if (zoneDesktop) zoneDesktop.innerHTML = html;
+if (zoneMobile)  zoneMobile.innerHTML  = html;
+
+mettreAJourHeroAccueil(user);
+}
+
+// ── Boutons d'accueil ("Créer mon compte gratuit" / "Voir les
+//    concours") : sur la page d'accueil (#hero-actions), ce bloc
+//    était du HTML statique jamais mis à jour selon la session —
+//    contrairement à la navbar, un utilisateur connecté continuait
+//    donc de voir "Créer mon compte gratuit" au lieu d'un accès
+//    direct à son tableau de bord. #hero-actions n'existe que sur
+//    index.html : la fonction ne fait rien sur les autres pages.
+function mettreAJourHeroAccueil(user) {
+const zone = document.getElementById("hero-actions");
 if (!zone) return;
 
 if (user) {
-zone.innerHTML = `<a href="/dashboard/index.html" class="btn btn--outline-vert btn--sm"> 👤 ${user.nom.split(" ")[0]} ${user.premium ? '<span class="badge-premium">⭐ Premium</span>' : ""} </a> ${estAdmin() ?`<a href="/admin/index.html" class="btn btn--bleu btn--sm">⚙️ Admin</a>`: ""} <button onclick="deconnecter()" class="btn btn--gris btn--sm">Déconnexion</button>`;
+zone.innerHTML = `<a href="/dashboard/index.html" class="btn btn--primaire btn--lg">Accéder à mon tableau de bord →</a> <a href="/concours.html" class="btn btn--outline-blanc btn--lg">Voir les concours</a>`;
 } else {
-zone.innerHTML = `<a href="/auth/login.html"    class="btn btn--outline-vert btn--sm">Connexion</a> <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription gratuite</a>`;
+zone.innerHTML = `<a href="/auth/register.html" class="btn btn--primaire btn--lg">Créer mon compte gratuit →</a> <a href="/concours.html" class="btn btn--outline-blanc btn--lg">Voir les concours</a>`;
 }
 }
 

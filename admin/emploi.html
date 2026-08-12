@@ -101,7 +101,6 @@
               <div class="admin-topbar__sous" id="compteur-emp">
                 Chargement…
               </div>
-              <div class="admin-topbar__sous" id="repartition-emp" style="font-size:0.82rem;color:var(--gris-texte);margin-top:2px;"></div>
             </div>
             <div style="display: flex; gap: 10px">
               <button
@@ -469,18 +468,6 @@
         });
         document.getElementById("compteur-emp").textContent =
           `${liste.length} / ${toutesOffresAdmin.length} offres`;
-        // Répartition par statut — clarifie explicitement combien
-        // d'offres sont réellement visibles côté public (seul le
-        // statut "publié" apparaît sur /emploi.html) par rapport au
-        // total géré depuis l'admin.
-        const nbPublie = toutesOffresAdmin.filter((o) => o.statut === "publié").length;
-        const nbFerme = toutesOffresAdmin.filter((o) => o.statut === "fermé").length;
-        const nbBrouillon = toutesOffresAdmin.filter((o) => o.statut === "brouillon").length;
-        const zoneRepartition = document.getElementById("repartition-emp");
-        if (zoneRepartition) {
-          zoneRepartition.textContent =
-            `🌍 ${nbPublie} visible(s) au public · ⚫ ${nbFerme} fermée(s) · 📝 ${nbBrouillon} brouillon(s)`;
-        }
         const tbody = document.getElementById("tbody-emp");
         if (liste.length === 0) {
           tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;

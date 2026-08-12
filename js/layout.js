@@ -113,14 +113,16 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
             margin: 8px 0;
           "
         />
-        <a href="/auth/login.html" class="btn btn--outline-vert btn--sm w-full"
-          >Connexion</a
-        >
-        <a
-          href="/auth/register.html"
-          class="btn btn--primaire btn--sm w-full mt-1"
-          >Inscription gratuite</a
-        >
+        <div id="navbar-mobile-actions">
+          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm w-full"
+            >Connexion</a
+          >
+          <a
+            href="/auth/register.html"
+            class="btn btn--primaire btn--sm w-full mt-1"
+            >Inscription gratuite</a
+          >
+        </div>
       </div>
     </nav>`;
 

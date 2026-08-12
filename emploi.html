@@ -277,6 +277,12 @@
       <div id="offres-conteneur" class="offres-grille">
         <div style="grid-column: 1/-1; text-align:center; color: var(--gris-texte); padding: 40px;">Chargement des offres…</div>
       </div>
+
+      <div style="text-align:center; margin-top:24px;">
+        <button id="btn-charger-plus" onclick="chargerPlusOffres()" class="btn btn--outline-vert hidden">
+          Charger plus d'offres
+        </button>
+      </div>
     </main>
 
     <!-- Modal détail offre -->
@@ -295,38 +301,15 @@
     <script src="/js/main.js"></script>
     <script>
       let offreCourante = null;
+      const TAILLE_PAGE = 50;
+      let offresFiltresCourants = {};
+      let offresChargees = 0;
+      let offresTotal = 0;
 
       document.addEventListener("DOMContentLoaded", chargerOffres);
 
-      async function chargerOffres() {
-        const conteneur = document.getElementById("offres-conteneur");
-        conteneur.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color: var(--gris-texte); padding: 40px;">Chargement…</div>`;
-
-        try {
-          const params = {};
-          const type = document.getElementById("filtre-type").value;
-          const ville = document.getElementById("filtre-ville").value.trim();
-          const secteur = document.getElementById("filtre-secteur").value.trim();
-          const recherche = document.getElementById("filtre-recherche").value.trim();
-          if (type) params.typeContrat = type;
-          if (ville) params.ville = ville;
-          if (secteur) params.secteur = secteur;
-          if (recherche) params.recherche = recherche;
-
-          const data = await window.API.Emploi.liste(params);
-          document.getElementById("total-offres").textContent = `${data.total} offre(s) disponible(s)`;
-
-          if (data.total === 0) {
-            conteneur.innerHTML = `
-              <div style="grid-column: 1/-1;" class="empty-state">
-                <div class="empty-state__icone">💼</div>
-                <div class="empty-state__titre">Aucune offre ne correspond à ta recherche</div>
-                <div class="empty-state__texte">Essaie d'élargir tes critères, ou crée une alerte pour être notifié.</div>
-              </div>`;
-            return;
-          }
-
-          conteneur.innerHTML = data.offres.map(o => `
+      function construireCarteOffre(o) {
+        return `
             <div class="card-emploi" onclick="voirDetail(${o.id})">
               ${o.image_url
                 ? `<img src="${o.image_url}" alt="" style="width:100%;height:110px;object-fit:cover;border-radius:10px;margin-bottom:10px;" onerror="this.style.display='none'">`
@@ -347,9 +330,84 @@
                 <span style="font-size:0.78rem;font-weight:700;color:var(--vert,#1a8c4a);">Voir l'offre →</span>
               </div>
             </div>
-          `).join("");
+          `;
+      }
+
+      // Lit les filtres actuellement saisis dans le formulaire
+      function lireFiltres() {
+        const params = {};
+        const type = document.getElementById("filtre-type").value;
+        const ville = document.getElementById("filtre-ville").value.trim();
+        const secteur = document.getElementById("filtre-secteur").value.trim();
+        const recherche = document.getElementById("filtre-recherche").value.trim();
+        if (type) params.typeContrat = type;
+        if (ville) params.ville = ville;
+        if (secteur) params.secteur = secteur;
+        if (recherche) params.recherche = recherche;
+        return params;
+      }
+
+      // Chargement initial (ou relance après changement de filtre) :
+      // repart de zéro (offset 0).
+      async function chargerOffres() {
+        const conteneur = document.getElementById("offres-conteneur");
+        const btnPlus = document.getElementById("btn-charger-plus");
+        conteneur.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color: var(--gris-texte); padding: 40px;">Chargement…</div>`;
+        btnPlus.classList.add("hidden");
+
+        offresFiltresCourants = lireFiltres();
+        offresChargees = 0;
+        offresTotal = 0;
+
+        try {
+          const data = await window.API.Emploi.liste({ ...offresFiltresCourants, limit: TAILLE_PAGE, offset: 0 });
+          offresTotal = data.total;
+          document.getElementById("total-offres").textContent = `${data.total} offre(s) disponible(s)`;
+
+          if (data.total === 0) {
+            conteneur.innerHTML = `
+              <div style="grid-column: 1/-1;" class="empty-state">
+                <div class="empty-state__icone">💼</div>
+                <div class="empty-state__titre">Aucune offre ne correspond à ta recherche</div>
+                <div class="empty-state__texte">Essaie d'élargir tes critères, ou crée une alerte pour être notifié.</div>
+              </div>`;
+            return;
+          }
+
+          conteneur.innerHTML = data.offres.map(construireCarteOffre).join("");
+          offresChargees = data.offres.length;
+
+          // "hasMore" renvoyé par l'API si des offres restent au-delà de
+          // cette page (voir emploiController.js) — le bouton n'apparaît
+          // que si toutes les offres disponibles ne sont pas déjà affichées.
+          if (data.hasMore) btnPlus.classList.remove("hidden");
         } catch (err) {
           conteneur.innerHTML = `<div style="grid-column: 1/-1; color:#dc2626; text-align:center; padding:40px;">Erreur de chargement des offres.</div>`;
+        }
+      }
+
+      // Charge la page suivante et l'ajoute à la suite, sans tout recharger.
+      async function chargerPlusOffres() {
+        const conteneur = document.getElementById("offres-conteneur");
+        const btnPlus = document.getElementById("btn-charger-plus");
+        btnPlus.disabled = true;
+        btnPlus.textContent = "Chargement…";
+
+        try {
+          const data = await window.API.Emploi.liste({
+            ...offresFiltresCourants,
+            limit: TAILLE_PAGE,
+            offset: offresChargees,
+          });
+          conteneur.insertAdjacentHTML("beforeend", data.offres.map(construireCarteOffre).join(""));
+          offresChargees += data.offres.length;
+
+          if (!data.hasMore) btnPlus.classList.add("hidden");
+        } catch (err) {
+          window.afficherToast("Erreur lors du chargement des offres suivantes.", "erreur");
+        } finally {
+          btnPlus.disabled = false;
+          btnPlus.textContent = "Charger plus d'offres";
         }
       }
 
