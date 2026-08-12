@@ -287,6 +287,21 @@ if (bandeau) bandeau.classList.remove("hidden");
 }
 
 // ════════════════════════════════════════════════════════════
+//  BOUTON HERO "Créer mon compte gratuit" (page d'accueil)
+// ════════════════════════════════════════════════════════════
+// Ce bouton est codé en dur dans index.html (pas dans la navbar
+// injectée par layout.js), donc mettreAJourNavbar() ne le touche
+// jamais — il restait affiché même une fois connecté. On le masque
+// ici explicitement selon l'état réel de la session. N'affecte que
+// les pages qui ont cet id (actuellement seule index.html) — les
+// autres pages sans #hero-cta-principal ne sont pas concernées.
+function mettreAJourHeroCTA() {
+const bouton = document.getElementById("hero-cta-principal");
+if (!bouton) return;
+bouton.classList.toggle("hidden", !!window.Auth?.estConnecte?.());
+}
+
+// ════════════════════════════════════════════════════════════
 //  INITIALISATION AU CHARGEMENT
 // ════════════════════════════════════════════════════════════
 
@@ -300,6 +315,7 @@ initTooltips();
 if (window.Auth?.mettreAJourNavbar) {
 window.Auth.mettreAJourNavbar();
 }
+mettreAJourHeroCTA();
 
 // Revérifie le profil auprès du serveur en arrière-plan, silencieusement.
 // Sans ça, un changement de rôle (ex: promotion admin) ou de statut
@@ -312,6 +328,7 @@ window.Auth.mettreAJourNavbar();
 if (window.Auth?.estConnecte?.() && window.Auth?.rafraichirProfil) {
 window.Auth.rafraichirProfil().then(() => {
 if (window.Auth?.mettreAJourNavbar) window.Auth.mettreAJourNavbar();
+mettreAJourHeroCTA();
 });
 }
 
