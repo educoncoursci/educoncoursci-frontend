@@ -753,16 +753,22 @@
         };
 
         // En-tête
+        const logoHeader = c.structure?.logo_url
+          ? `<img src="${c.structure.logo_url}" alt="Logo ${c.organisme}" style="width:64px;height:64px;border-radius:12px;object-fit:contain;background:#fff;border:1px solid var(--gris-bordure);padding:6px;flex-shrink:0;" onerror="this.remove()">`
+          : "";
         document.getElementById("detail-header").innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
-      <div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-          <span class="badge badge--vert">${c.categorie}</span>
-          <span class="badge badge--rouge">${STATUT_EMOJI[c.statut] || "📋"} ${c.statut}</span>
-          ${c.premium ? '<span class="badge badge--premium">⭐ Contenu Premium</span>' : '<span class="badge badge--gratuit">🆓 Accès gratuit</span>'}
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        ${logoHeader}
+        <div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+            <span class="badge badge--vert">${c.categorie}</span>
+            <span class="badge badge--rouge">${STATUT_EMOJI[c.statut] || "📋"} ${c.statut}</span>
+            ${c.premium ? '<span class="badge badge--premium">⭐ Contenu Premium</span>' : '<span class="badge badge--gratuit">🆓 Accès gratuit</span>'}
+          </div>
+          <h1 style="font-size:1.6rem;margin-bottom:6px;">${c.titre}</h1>
+          <p style="color:var(--gris-texte);font-size:1rem;">🏢 ${c.organisme}</p>
         </div>
-        <h1 style="font-size:1.6rem;margin-bottom:6px;">${c.titre}</h1>
-        <p style="color:var(--gris-texte);font-size:1rem;">🏢 ${c.organisme}</p>
       </div>
       <div style="text-align:right;">
         <div style="font-size:2rem;font-weight:900;color:var(--vert);">${c.frais ? c.frais.toLocaleString("fr-CI") + " F" : "Gratuit"}</div>
@@ -795,10 +801,13 @@
         const morceaux = [];
         if (c.structure) {
           morceaux.push(`
-            <div style="margin-bottom:14px;">
-              <div style="font-weight:700;">${c.structure.nom}${c.structure.sigle ? ` (${c.structure.sigle})` : ""}</div>
-              ${c.structure.ministere ? `<div style="font-size:0.85rem;color:var(--gris-texte);">${c.structure.ministere}</div>` : ""}
-              ${c.structure.description ? `<div style="margin-top:6px;">${c.structure.description}</div>` : ""}
+            <div style="margin-bottom:14px;display:flex;gap:12px;align-items:flex-start;">
+              ${c.structure.logo_url ? `<img src="${c.structure.logo_url}" alt="Logo ${c.structure.nom}" style="width:48px;height:48px;border-radius:10px;object-fit:contain;background:#fff;border:1px solid var(--gris-bordure);padding:4px;flex-shrink:0;" onerror="this.remove()">` : ""}
+              <div>
+                <div style="font-weight:700;">${c.structure.nom}${c.structure.sigle ? ` (${c.structure.sigle})` : ""}</div>
+                ${c.structure.ministere ? `<div style="font-size:0.85rem;color:var(--gris-texte);">${c.structure.ministere}</div>` : ""}
+                ${c.structure.description ? `<div style="margin-top:6px;">${c.structure.description}</div>` : ""}
+              </div>
             </div>`);
         }
         if (Array.isArray(c.matieres) && c.matieres.length > 0) {

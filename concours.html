@@ -801,6 +801,19 @@
           ? `<span class="badge" style="background:#f0f0f0;color:var(--gris-texte);border:1px solid var(--gris-bordure);">📅 ${annee}</span>`
           : "";
 
+        // Logo officiel de l'organisme (structures.logo_url, remonté par
+        // Concours.findAll via LEFT JOIN structures). Absent pour les
+        // concours non liés à une structure ou sans logo renseigné —
+        // dans ce cas on garde exactement l'apparence précédente (pas
+        // d'image, juste le badge coloré + emoji 🏢), donc aucune carte
+        // existante n'est dégradée par cet ajout.
+        const ligneTitre = c.structure_logo_url
+          ? `<div class="card-concours__titre-ligne">
+               <img src="${c.structure_logo_url}" alt="Logo ${c.organisme}" class="card-concours__logo" loading="lazy" onerror="this.remove()">
+               <div class="card-concours__titre">${c.titre}</div>
+             </div>`
+          : `<div class="card-concours__titre">${c.titre}</div>`;
+
         return `
     <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:${couleur};text-decoration:none;">
       <div class="card-concours__en-tete">
@@ -810,7 +823,7 @@
           ${badgeAnnee}
           ${c.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--gratuit">🆓 Gratuit</span>'}
         </div>
-        <div class="card-concours__titre">${c.titre}</div>
+        ${ligneTitre}
         <div class="card-concours__infos mt-1">
           <span class="card-concours__info">🏢 ${c.organisme}</span>
           <span class="card-concours__info">🎓 ${c.niveau || "—"}</span>
