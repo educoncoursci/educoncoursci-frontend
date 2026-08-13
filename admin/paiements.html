@@ -290,10 +290,10 @@
       <td style="font-size:0.85rem;">${t.moyen?.includes("Wave") ? "🌊" : t.moyen?.includes("Orange") ? "🟠" : t.moyen?.includes("MTN") ? "🟡" : t.moyen?.includes("Moov") ? "🔵" : t.moyen?.includes("CinetPay") ? "💳" : "💰"} ${t.moyen || "—"}</td>
       <td style="font-weight:900;font-size:0.95rem;">${Number(t.montant || 0).toLocaleString("fr-CI")} F</td>
       <td style="font-size:0.8rem;color:var(--gris-texte);">${t.date ? new Date(t.date).toLocaleDateString("fr-FR") : "—"}</td>
-      <td><span class="badge ${t.statut === "validé" ? "badge--vert" : t.statut === "en attente" ? "badge--orange" : "badge--rouge"}">${t.statut === "validé" ? "✓ Validé" : t.statut === "en attente" ? "⏳ En attente" : "✗ Échoué"}</span></td>
+      <td><span class="badge ${t.statut === "validé" ? "badge--vert" : t.statut === "en attente" ? "badge--orange" : t.statut === "à vérifier" ? "badge--violet" : "badge--rouge"}">${t.statut === "validé" ? "✓ Validé" : t.statut === "en attente" ? "⏳ En attente" : t.statut === "à vérifier" ? "⚠️ Montant à vérifier" : "✗ Échoué"}</span></td>
       <td>
         ${
-          t.statut === "en attente"
+          t.statut === "en attente" || t.statut === "à vérifier"
             ? `<div style="display:flex;gap:6px;">
                  <button class="btn btn--vert btn--sm" onclick="validerTx(${t.id})">Valider</button>
                  <button class="btn btn--gris btn--sm" onclick="rejeterTx(${t.id})">Rejeter</button>

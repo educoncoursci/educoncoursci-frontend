@@ -20,8 +20,17 @@ localStorage.setItem(CLE_USER, JSON.stringify(user));
 function getSession() {
 try {
 const user = localStorage.getItem(CLE_USER);
-return user ? JSON.parse(user) : null;
-} catch { return null; }
+if (!user || user === "undefined" || user === "null") return null;
+return JSON.parse(user);
+} catch {
+// Session locale corrompue (ex: ancienne valeur "undefined" écrite par
+// une version antérieure du code) — on la purge immédiatement plutôt
+// que de renvoyer null indéfiniment à chaque appel : sans ce nettoyage,
+// un utilisateur resterait bloqué avec un token valide mais un profil
+// introuvable jusqu'à ce qu'il se déconnecte manuellement.
+localStorage.removeItem(CLE_USER);
+return null;
+}
 }
 
 function getToken() {
@@ -137,6 +146,17 @@ window.location.href = "/";
 async function rafraichirProfil() {
 try {
 const data = await window.API.Auth.me();
+// Garde-fou : ne jamais persister une session avec un `user` manquant
+// ou invalide (réponse serveur malformée, proxy/CDN qui intercepte la
+// requête, etc.). Sans ce contrôle, `sauvegarderSession(token, undefined)`
+// écrit littéralement la chaîne "undefined" dans localStorage — un état
+// corrompu que `getSession()` ne peut plus reparser (JSON.parse échoue),
+// ce qui déconnecte silencieusement l'utilisateur au rechargement suivant
+// alors que son token reste valide et qu'il n'a rien demandé.
+if (!data || !data.user || typeof data.user !== "object") {
+console.warn("Profil non rafraîchi : réponse serveur inattendue, session locale conservée telle quelle.");
+return getSession();
+}
 const token = getToken();
 sauvegarderSession(token, data.user);
 return data.user;

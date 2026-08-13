@@ -119,12 +119,13 @@
               <input id="struct-nom" placeholder="Nom (ex: École Nationale d'Administration)" style="flex:2;min-width:220px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
               <input id="struct-sigle" placeholder="Sigle (ex: ENA)" style="flex:1;min-width:100px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
               <input id="struct-ministere" placeholder="Ministère de tutelle" style="flex:2;min-width:180px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
+              <input id="struct-logo" placeholder="URL du logo (ex: /assets/concours-logos/ena.jpeg)" style="flex:2;min-width:220px;padding:10px 14px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.88rem;">
               <button class="btn btn--vert btn--sm" onclick="ajouterStructure()">+ Ajouter</button>
             </div>
             <div class="admin-tableau-wrap">
               <table class="admin-tableau">
-                <thead><tr><th>Nom</th><th>Sigle</th><th>Ministère</th><th>Actions</th></tr></thead>
-                <tbody id="tbody-structures"><tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Chargement…</td></tr></tbody>
+                <thead><tr><th>Logo</th><th>Nom</th><th>Sigle</th><th>Ministère</th><th>Actions</th></tr></thead>
+                <tbody id="tbody-structures"><tr><td colspan="5" style="text-align:center;padding:30px;color:var(--gris-texte);">Chargement…</td></tr></tbody>
               </table>
             </div>
           </div>
@@ -203,19 +204,68 @@
       }
 
       // ── Structures ──────────────────────────────────────────
+      let structuresCache = []; // conservé pour préremplir l'édition inline sans nouvel appel réseau
+
       async function chargerStructures() {
         try {
           const { structures } = await window.API.Referentiels.structures();
+          structuresCache = structures;
           const tbody = document.getElementById("tbody-structures");
           tbody.innerHTML = structures.length
-            ? structures.map((s) => `
-              <tr>
+            ? structures.map((s) => ligneStructure(s)).join("")
+            : `<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune structure. Ajoute la première ci-dessus.</td></tr>`;
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      function ligneStructure(s) {
+        const logo = s.logo_url
+          ? `<img src="${s.logo_url}" alt="Logo ${s.nom}" style="width:36px;height:36px;border-radius:8px;object-fit:contain;background:#fff;border:1px solid var(--gris-bordure);padding:3px;" onerror="this.style.display='none'">`
+          : `<span style="color:var(--gris-texte);font-size:0.78rem;">—</span>`;
+        return `
+              <tr id="ligne-structure-${s.id}">
+                <td>${logo}</td>
                 <td style="font-weight:700;">${s.nom}</td>
                 <td>${s.sigle || "—"}</td>
                 <td style="font-size:0.85rem;color:var(--gris-texte);">${s.ministere || "—"}</td>
-                <td><button class="btn btn--gris btn--sm" onclick="supprimerStructure(${s.id})">Supprimer</button></td>
-              </tr>`).join("")
-            : `<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune structure. Ajoute la première ci-dessus.</td></tr>`;
+                <td style="display:flex;gap:6px;">
+                  <button class="btn btn--outline-vert btn--sm" onclick="editerStructure(${s.id})">Modifier</button>
+                  <button class="btn btn--gris btn--sm" onclick="supprimerStructure(${s.id})">Supprimer</button>
+                </td>
+              </tr>`;
+      }
+
+      // Transforme la ligne en formulaire d'édition inline (nom, sigle,
+      // ministère, logo) — c'est ici que l'admin peut ajouter/corriger le
+      // logo d'une structure déjà existante, créée avant ce champ.
+      function editerStructure(id) {
+        const s = structuresCache.find((x) => x.id === id);
+        if (!s) return;
+        const ligne = document.getElementById(`ligne-structure-${id}`);
+        ligne.innerHTML = `
+                <td colspan="5" style="padding:12px 8px;">
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                    <input id="edit-nom-${id}" value="${(s.nom || "").replace(/"/g,'&quot;')}" placeholder="Nom" style="flex:2;min-width:180px;padding:8px 10px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.85rem;">
+                    <input id="edit-sigle-${id}" value="${(s.sigle || "").replace(/"/g,'&quot;')}" placeholder="Sigle" style="flex:1;min-width:80px;padding:8px 10px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.85rem;">
+                    <input id="edit-ministere-${id}" value="${(s.ministere || "").replace(/"/g,'&quot;')}" placeholder="Ministère" style="flex:2;min-width:160px;padding:8px 10px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.85rem;">
+                    <input id="edit-logo-${id}" value="${(s.logo_url || "").replace(/"/g,'&quot;')}" placeholder="URL du logo" style="flex:2;min-width:200px;padding:8px 10px;border:1.5px solid var(--gris-bordure);border-radius:var(--radius-md);font-size:0.85rem;">
+                    <button class="btn btn--vert btn--sm" onclick="enregistrerStructure(${id})">Enregistrer</button>
+                    <button class="btn btn--gris btn--sm" onclick="chargerStructures()">Annuler</button>
+                  </div>
+                </td>`;
+      }
+
+      async function enregistrerStructure(id) {
+        const nom = document.getElementById(`edit-nom-${id}`).value.trim();
+        const sigle = document.getElementById(`edit-sigle-${id}`).value.trim();
+        const ministere = document.getElementById(`edit-ministere-${id}`).value.trim();
+        const logoUrl = document.getElementById(`edit-logo-${id}`).value.trim();
+        if (!nom) return window.afficherToast("Le nom est requis.", "warn");
+        try {
+          await window.API.Referentiels.modifierStructure(id, { nom, sigle, ministere, logoUrl });
+          window.afficherToast("Structure mise à jour.", "succes");
+          await chargerStructures();
         } catch (err) {
           window.afficherToast("Erreur : " + err.message, "erreur");
         }
@@ -225,12 +275,14 @@
         const nom = document.getElementById("struct-nom").value.trim();
         const sigle = document.getElementById("struct-sigle").value.trim();
         const ministere = document.getElementById("struct-ministere").value.trim();
+        const logoUrl = document.getElementById("struct-logo").value.trim();
         if (!nom) return window.afficherToast("Le nom est requis.", "warn");
         try {
-          await window.API.Referentiels.creerStructure({ nom, sigle, ministere });
+          await window.API.Referentiels.creerStructure({ nom, sigle, ministere, logoUrl });
           document.getElementById("struct-nom").value = "";
           document.getElementById("struct-sigle").value = "";
           document.getElementById("struct-ministere").value = "";
+          document.getElementById("struct-logo").value = "";
           window.afficherToast("Structure ajoutée.", "succes");
           await chargerStructures();
         } catch (err) {

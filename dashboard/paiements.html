@@ -252,7 +252,7 @@
         </div>
         <div style="text-align:right;">
           <div class="paiement-item__montant">${(t.montant || 0).toLocaleString("fr-CI")} FCFA</div>
-          <span class="badge ${t.statut === "validé" ? "badge--vert" : "badge--rouge"}">${t.statut === "validé" ? "✓ Validé" : "✗ Échoué"}</span>
+          <span class="badge ${t.statut === "validé" ? "badge--vert" : t.statut === "en attente" ? "badge--orange" : t.statut === "à vérifier" ? "badge--violet" : "badge--rouge"}">${t.statut === "validé" ? "✓ Validé" : t.statut === "en attente" ? "⏳ En attente de vérification" : t.statut === "à vérifier" ? "⏳ En cours de vérification" : "✗ Échoué"}</span>
         </div>
       </div>`,
             )

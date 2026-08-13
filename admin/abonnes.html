@@ -278,15 +278,26 @@
       }
 
       async function activerPremium(id) {
+        const formulesValides = ["1 Mois", "3 Mois", "12 Mois"];
         const plan = prompt(
-          "Plan à activer ? (1 Mois / 3 Mois / 12 Mois)",
+          `Plan à activer ? Formules disponibles : ${formulesValides.join(" / ")}`,
           "1 Mois",
         );
         if (!plan) return;
+        if (!formulesValides.includes(plan.trim())) {
+          window.afficherToast(
+            `Formule invalide. Utilise exactement l'une de : ${formulesValides.join(", ")}.`,
+            "erreur",
+          );
+          return;
+        }
         try {
+          // La durée réelle (30/90/365 jours) est calculée côté serveur
+          // à partir de la formule choisie — jamais devinée ici, pour
+          // rester cohérent avec ce qu'un paiement réel attribuerait.
           await window.API.Admin.updateUser(id, {
             premium: true,
-            premium_plan: plan,
+            premium_plan: plan.trim(),
           });
           window.afficherToast("Premium activé.", "succes");
           await chargerUsers();

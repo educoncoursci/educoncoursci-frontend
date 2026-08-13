@@ -204,6 +204,25 @@
   align-items: center;
   justify-content: space-between;
 }
+.card-concours__logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--gris-bordure);
+  padding: 4px;
+  flex-shrink: 0;
+}
+.card-concours__titre-ligne {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.card-concours__titre-ligne .card-concours__titre {
+  margin-bottom: 0;
+}
 .card-concours__cloture {
   font-size: 0.8rem;
   color: var(--rouge);
