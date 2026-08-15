@@ -313,6 +313,16 @@
         }
       }
 
+      // Libellé affiché à l'utilisateur, distinct de la valeur technique
+      // stockée en base — cohérent avec concours.html / concours-detail.html.
+      const STATUT_LABEL_DASH = {
+        ouvert: "🔴 Ouvert",
+        "à venir": "🔵 À venir",
+        fermé: "⚫ Terminé",
+        résultats: "🏆 Résultats disponibles",
+        "information non confirmée": "❔ Information non confirmée",
+      };
+
       function cardConcoursDash(c, avecSuppr) {
         // Deux sources alimentent cette carte avec des formes différentes :
         // Concours.detail() renvoie une structure imbriquée (c.structure.logo_url),
@@ -329,7 +339,7 @@
         <div style="flex:1;min-width:150px;">
         <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
           <span class="badge badge--vert" style="font-size:0.72rem;">${c.categorie}</span>
-          <span class="badge badge--rouge" style="font-size:0.72rem;">${c.statut === "ouvert" ? "🔴 Ouvert" : "📋 " + c.statut}</span>
+          <span class="badge badge--rouge" style="font-size:0.72rem;">${STATUT_LABEL_DASH[c.statut] || "📋 " + c.statut}</span>
         </div>
         <div style="font-weight:800;font-size:0.95rem;margin-bottom:4px;">${c.titre}</div>
         <div style="font-size:0.8rem;color:var(--gris-texte);">🏢 ${c.organisme} · ⏰ ${c.cloture || "—"} · 💰 ${c.frais ? c.frais.toLocaleString("fr-CI") + " FCFA" : "Gratuit"}</div>

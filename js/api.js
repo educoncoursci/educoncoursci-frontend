@@ -865,6 +865,14 @@ return apiCall(`/emploi/${id}/candidatures`);
 async actualiser() {
 return apiCall("/emploi/actualiser", { method: "POST" });
 },
+
+async stats() {
+return apiCall("/emploi/stats");
+},
+
+async sources() {
+return apiCall("/emploi/sources");
+},
 };
 
 const Search = {

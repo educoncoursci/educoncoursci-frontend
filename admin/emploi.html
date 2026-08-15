@@ -129,11 +129,47 @@
             "
           >
             💡 Les offres marquées <strong>Auto</strong> proviennent d'un flux
-            externe agrégé automatiquement. Les offres <strong>Manuel</strong>
-            sont saisies ici. Configure la variable d'environnement
-            <code>EMPLOI_FLUX_URLS</code> côté backend pour activer
-            l'agrégation (voir <code>.env.example</code>).
+            externe ou de Google Custom Search, agrégées automatiquement.
+            Les offres <strong>Manuel</strong> sont saisies ici. Configure
+            <code>EMPLOI_FLUX_URLS</code> et/ou
+            <code>GOOGLE_SEARCH_API_KEY</code> + <code>GOOGLE_SEARCH_CX</code>
+            côté backend pour activer l'agrégation (voir
+            <code>.env.example</code>).
           </div>
+
+          <!-- Tableau de bord d'agrégation (point 13 du cahier des charges) -->
+          <div id="stats-emp-grille" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px;">
+            <div class="card" style="padding:14px 16px;">
+              <div style="font-size:0.72rem;color:var(--gris-texte);text-transform:uppercase;font-weight:700;">Total offres</div>
+              <div id="stat-total" style="font-size:1.6rem;font-weight:800;">—</div>
+            </div>
+            <div class="card" style="padding:14px 16px;">
+              <div style="font-size:0.72rem;color:var(--gris-texte);text-transform:uppercase;font-weight:700;">Actives</div>
+              <div id="stat-actives" style="font-size:1.6rem;font-weight:800;color:#16a34a;">—</div>
+            </div>
+            <div class="card" style="padding:14px 16px;">
+              <div style="font-size:0.72rem;color:var(--gris-texte);text-transform:uppercase;font-weight:700;">Expirées</div>
+              <div id="stat-expirees" style="font-size:1.6rem;font-weight:800;color:#dc2626;">—</div>
+            </div>
+            <div class="card" style="padding:14px 16px;">
+              <div style="font-size:0.72rem;color:var(--gris-texte);text-transform:uppercase;font-weight:700;">Récupérées (24h)</div>
+              <div id="stat-24h" style="font-size:1.6rem;font-weight:800;color:#0369a1;">—</div>
+            </div>
+            <div class="card" style="padding:14px 16px;">
+              <div style="font-size:0.72rem;color:var(--gris-texte);text-transform:uppercase;font-weight:700;">Dernière synchro</div>
+              <div id="stat-derniere-synchro" style="font-size:0.95rem;font-weight:700;">—</div>
+            </div>
+          </div>
+
+          <div id="zone-erreurs-synchro" class="card hidden" style="padding:14px 16px;margin-bottom:20px;border-left:3px solid #dc2626;">
+            <div style="font-weight:800;font-size:0.88rem;margin-bottom:8px;color:#dc2626;">⚠️ Dernières erreurs de synchronisation</div>
+            <div id="liste-erreurs-synchro" style="font-size:0.8rem;color:var(--gris-texte);"></div>
+          </div>
+
+          <details class="card" style="padding:14px 16px;margin-bottom:20px;">
+            <summary style="cursor:pointer;font-weight:800;font-size:0.88rem;">📊 Répartition par source</summary>
+            <div id="repartition-sources" style="margin-top:10px;font-size:0.85rem;"></div>
+          </details>
 
           <div
             style="
@@ -219,7 +255,9 @@
                   <th>Entreprise</th>
                   <th>Type</th>
                   <th>Ville</th>
-                  <th>Statut</th>
+                  <th>Date limite</th>
+                  <th>Statut réel</th>
+                  <th>Source</th>
                   <th>Origine</th>
                   <th>Actions</th>
                 </tr>
@@ -227,7 +265,7 @@
               <tbody id="tbody-emp">
                 <tr>
                   <td
-                    colspan="7"
+                    colspan="9"
                     style="
                       text-align: center;
                       padding: 40px;
@@ -292,6 +330,26 @@
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
             <div class="form-groupe">
+              <label class="form-label">Type d'opportunité</label>
+              <select id="emp-opportunite" class="form-input">
+                <option value="emploi">Emploi</option>
+                <option value="stage">Stage</option>
+                <option value="alternance">Alternance</option>
+                <option value="freelance">Freelance</option>
+              </select>
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Niveau d'études</label>
+              <input
+                type="text"
+                id="emp-niveau"
+                class="form-input"
+                placeholder="Ex: Bac+3 / Licence"
+              />
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
               <label class="form-label">Ville</label>
               <input
                 type="text"
@@ -301,12 +359,32 @@
               />
             </div>
             <div class="form-groupe">
+              <label class="form-label">Région</label>
+              <input
+                type="text"
+                id="emp-region"
+                class="form-input"
+                placeholder="Ex: District Autonome d'Abidjan"
+              />
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
               <label class="form-label">Secteur</label>
               <input
                 type="text"
                 id="emp-secteur"
                 class="form-input"
                 placeholder="Ex: Télécoms, Banque, BTP…"
+              />
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Source</label>
+              <input
+                type="text"
+                id="emp-source"
+                class="form-input"
+                placeholder="Ex: EduConcoursCI (laisser vide si saisie interne)"
               />
             </div>
           </div>
@@ -426,17 +504,20 @@
 
       document.addEventListener("DOMContentLoaded", async () => {
         if (!window.Auth?.protegerPageAdmin()) return;
-        await charger();
+        await Promise.all([charger(), chargerStats()]);
       });
 
       async function charger() {
         try {
-          // Le backend ne montre que les offres "publié" si statut absent :
-          // on récupère donc chaque statut séparément pour l'admin.
+          // Le backend ne montre que les offres "publié" et non expirées
+          // si aucun filtre n'est précisé : l'admin doit au contraire TOUT
+          // voir (y compris fermées/brouillons/expirées, d'où le calcul
+          // "Statut réel" affiché dans le tableau) — inclureExpirees:true
+          // et un statut explicite pour chaque catégorie.
           const [publiees, fermees, brouillons] = await Promise.all([
-            window.API.Emploi.liste({ limit: 500, statut: "publié" }),
-            window.API.Emploi.liste({ limit: 500, statut: "fermé" }),
-            window.API.Emploi.liste({ limit: 500, statut: "brouillon" }),
+            window.API.Emploi.liste({ limit: 500, statut: "publié", inclureExpirees: true }),
+            window.API.Emploi.liste({ limit: 500, statut: "fermé", inclureExpirees: true }),
+            window.API.Emploi.liste({ limit: 500, statut: "brouillon", inclureExpirees: true }),
           ]);
           toutesOffresAdmin = [
             ...(publiees.offres || []),
@@ -446,6 +527,43 @@
           filtrerOffres();
         } catch (err) {
           window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function chargerStats() {
+        try {
+          const s = await window.API.Emploi.stats();
+          document.getElementById("stat-total").textContent = s.total ?? "—";
+          document.getElementById("stat-actives").textContent = s.actives ?? "—";
+          document.getElementById("stat-expirees").textContent = s.expirees ?? "—";
+          document.getElementById("stat-24h").textContent = s.recuperees24h ?? "—";
+          document.getElementById("stat-derniere-synchro").textContent = s.derniereSynchro
+            ? new Date(s.derniereSynchro).toLocaleString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })
+            : "Jamais";
+
+          const zoneErreurs = document.getElementById("zone-erreurs-synchro");
+          const listeErreurs = document.getElementById("liste-erreurs-synchro");
+          if (s.dernieresErreurs && s.dernieresErreurs.length) {
+            zoneErreurs.classList.remove("hidden");
+            listeErreurs.innerHTML = s.dernieresErreurs.map((e) => `
+              <div style="padding:6px 0;border-bottom:1px solid var(--gris-bordure);">
+                <strong>${e.source_nom}</strong> — ${e.message_erreur || "Erreur inconnue"}
+                <span style="color:var(--gris-texte);"> · ${new Date(e.created_at).toLocaleString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span>
+              </div>`).join("");
+          } else {
+            zoneErreurs.classList.add("hidden");
+          }
+
+          const repartition = document.getElementById("repartition-sources");
+          repartition.innerHTML = (s.parSource && s.parSource.length)
+            ? s.parSource.map((r) => `
+                <div style="display:flex;justify-content:space-between;padding:4px 0;">
+                  <span>${r.source_nom}</span><strong>${r.total}</strong>
+                </div>`).join("")
+            : `<div style="color:var(--gris-texte);">Aucune offre agrégée automatiquement pour l'instant.</div>`;
+        } catch (err) {
+          // Non bloquant : le reste de la page admin doit continuer à fonctionner
+          console.warn("Erreur chargement stats emploi :", err.message);
         }
       }
 
@@ -470,25 +588,36 @@
           `${liste.length} / ${toutesOffresAdmin.length} offres`;
         const tbody = document.getElementById("tbody-emp");
         if (liste.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
           return;
         }
         tbody.innerHTML = liste
-          .map(
-            (o) => `
+          .map((o) => {
+            // "Statut réel" = statut manuel (fermé/brouillon) OU expiration
+            // calculée depuis date_limite_date — voir models/Emploi.js.
+            // C'est ce badge, pas la seule colonne `statut`, qui reflète
+            // fidèlement ce que voit (ou ne voit plus) un visiteur.
+            const estExpiree = o.expiree === true || o.expiree === "t";
+            let statutReel = `<span class="badge" style="font-size:0.7rem;background:#dcfce7;color:#166534;">Actif</span>`;
+            if (o.statut === "fermé") statutReel = `<span class="badge" style="font-size:0.7rem;background:#f1f5f9;color:#475569;">Fermé</span>`;
+            else if (o.statut === "brouillon") statutReel = `<span class="badge" style="font-size:0.7rem;background:#fef3c7;color:#92400e;">Brouillon</span>`;
+            else if (estExpiree) statutReel = `<span class="badge" style="font-size:0.7rem;background:#fee2e2;color:#991b1b;">Expiré</span>`;
+            return `
     <tr>
       <td style="font-weight:700;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${o.titre}</td>
       <td style="font-size:0.85rem;">${o.entreprise || "—"}</td>
       <td><span class="badge badge--violet" style="font-size:0.7rem;">${o.type_contrat}</span></td>
       <td style="font-size:0.82rem;">${o.ville || "—"}</td>
-      <td style="font-size:0.82rem;">${o.statut}</td>
+      <td style="font-size:0.78rem;">${o.date_limite || "—"}</td>
+      <td>${statutReel}</td>
+      <td style="font-size:0.78rem;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${o.source_nom || "EduConcoursCI"}</td>
       <td>${o.origine === "auto" ? '<span class="badge" style="font-size:0.7rem;background:#e0f2fe;color:#0369a1;">⟳ Auto</span>' : '<span class="badge" style="font-size:0.7rem;background:#f1f5f9;color:#475569;">Manuel</span>'}</td>
       <td><div class="admin-tableau__actions">
         <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${o.id})">✏️</button>
         <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${o.id},'${(o.titre || "").replace(/'/g, "\\'")}')">🗑️</button>
       </div></td>
-    </tr>`,
-          )
+    </tr>`;
+          })
           .join("");
       }
 
@@ -499,7 +628,7 @@
         try {
           const res = await window.API.Emploi.actualiser();
           window.afficherToast(res.message, "succes");
-          await charger();
+          await Promise.all([charger(), chargerStats()]);
         } catch (err) {
           window.afficherToast(err.message, "erreur");
         } finally {
@@ -515,8 +644,12 @@
         document.getElementById("emp-titre").value = "";
         document.getElementById("emp-entreprise").value = "";
         document.getElementById("emp-type").value = "CDI";
+        document.getElementById("emp-opportunite").value = "emploi";
+        document.getElementById("emp-niveau").value = "";
         document.getElementById("emp-ville").value = "Abidjan";
+        document.getElementById("emp-region").value = "";
         document.getElementById("emp-secteur").value = "";
+        document.getElementById("emp-source").value = "";
         document.getElementById("emp-description").value = "";
         document.getElementById("emp-profil").value = "";
         document.getElementById("emp-salaire").value = "";
@@ -538,8 +671,12 @@
         document.getElementById("emp-titre").value = o.titre || "";
         document.getElementById("emp-entreprise").value = o.entreprise || "";
         document.getElementById("emp-type").value = o.type_contrat || "CDI";
+        document.getElementById("emp-opportunite").value = o.type_opportunite || "emploi";
+        document.getElementById("emp-niveau").value = o.niveau_etudes || "";
         document.getElementById("emp-ville").value = o.ville || "Abidjan";
+        document.getElementById("emp-region").value = o.region || "";
         document.getElementById("emp-secteur").value = o.secteur || "";
+        document.getElementById("emp-source").value = o.source_nom || "";
         document.getElementById("emp-description").value = o.description || "";
         document.getElementById("emp-profil").value = o.profil_recherche || "";
         document.getElementById("emp-salaire").value = o.salaire || "";
@@ -557,8 +694,12 @@
           titre: document.getElementById("emp-titre").value.trim(),
           entreprise: document.getElementById("emp-entreprise").value.trim(),
           typeContrat: document.getElementById("emp-type").value,
+          typeOpportunite: document.getElementById("emp-opportunite").value,
+          niveauEtudes: document.getElementById("emp-niveau").value.trim(),
           ville: document.getElementById("emp-ville").value.trim() || "Abidjan",
+          region: document.getElementById("emp-region").value.trim(),
           secteur: document.getElementById("emp-secteur").value.trim(),
+          sourceNom: document.getElementById("emp-source").value.trim(),
           description: document.getElementById("emp-description").value.trim(),
           profilRecherche: document.getElementById("emp-profil").value.trim(),
           salaire: document.getElementById("emp-salaire").value.trim(),
@@ -589,7 +730,7 @@
           }
           fermerModal("modal-add-emploi");
           editOffreId = null;
-          await charger();
+          await Promise.all([charger(), chargerStats()]);
         } catch (err) {
           window.afficherToast(err.message, "erreur");
         } finally {

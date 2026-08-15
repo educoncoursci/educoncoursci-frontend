@@ -190,6 +190,7 @@
               <option value="à venir">🔵 À venir</option>
               <option value="fermé">⚫ Fermé</option>
               <option value="résultats">🏆 Résultats publiés</option>
+              <option value="information non confirmée">❔ Information non confirmée</option>
             </select>
             <select
               id="fil-acc-conc"
@@ -330,6 +331,7 @@
                 <option value="à venir">🔵 À venir</option>
                 <option value="fermé">⚫ Fermé</option>
                 <option value="résultats">🏆 Résultats publiés</option>
+                <option value="information non confirmée">❔ Information non confirmée</option>
               </select>
             </div>
             <div class="form-groupe">
@@ -394,9 +396,16 @@
                 type="number"
                 id="conc-frais"
                 class="form-input"
-                placeholder="0"
+                placeholder="Laisser vide si montant inconnu/variable"
                 min="0"
               />
+              <label style="display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--gris-texte);margin-top:6px;cursor:pointer;">
+                <input type="checkbox" id="conc-frais-raz" style="accent-color:var(--vert);" />
+                Remettre ce montant à "inconnu" (efface un montant déjà enregistré)
+              </label>
+              <div style="font-size:0.78rem;color:var(--gris-texte);margin-top:4px;">
+                0 = gratuit confirmé. Vide = montant inconnu ou variable (utilise le détail ci-dessous).
+              </div>
             </div>
             <div class="form-groupe">
               <label class="form-label">Places disponibles</label>
@@ -407,6 +416,18 @@
                 placeholder="Ex: 600"
                 min="0"
               />
+            </div>
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">Détail des frais (facultatif)</label>
+            <textarea
+              id="conc-frais-detail"
+              class="form-textarea"
+              placeholder="Ex : Frais de visite médicale : 33 000 FCFA&#10;Frais d'inscription : 12 500 FCFA&#10;Total obligatoire : 45 500 FCFA"
+              rows="3"
+            ></textarea>
+            <div style="font-size:0.78rem;color:var(--gris-texte);margin-top:4px;">
+              Décomposition affichée sur la fiche détail du concours. Une ligne par poste de frais. N'indique jamais un montant estimé — laisse vide si non confirmé officiellement.
             </div>
           </div>
           <div class="form-groupe">
@@ -556,6 +577,7 @@
         "à venir": "À venir",
         fermé: "Fermé",
         résultats: "Résultats publiés",
+        "information non confirmée": "Information non confirmée",
       };
 
       document.addEventListener("DOMContentLoaded", async () => {
@@ -682,10 +704,12 @@
         document.getElementById("conc-statut").value = "ouvert";
         document.getElementById("conc-statut-auto").checked = true;
         document.getElementById("conc-date-verifiee").checked = true;
+        document.getElementById("conc-frais").value = "";
+        document.getElementById("conc-frais-raz").checked = false;
+        document.getElementById("conc-frais-detail").value = "";
         document.getElementById("conc-niveau").value = "";
         document.getElementById("conc-ouverture").value = "";
         document.getElementById("conc-cloture").value = "";
-        document.getElementById("conc-frais").value = "";
         document.getElementById("conc-places").value = "";
         document.getElementById("conc-conditions").value = "";
         document.getElementById("conc-pieces").value = "";
@@ -773,7 +797,9 @@
         document.getElementById("conc-cloture").value = c.date_cloture
           ? String(c.date_cloture).slice(0, 10)
           : "";
-        document.getElementById("conc-frais").value = c.frais || "";
+        document.getElementById("conc-frais").value = c.frais != null ? c.frais : "";
+        document.getElementById("conc-frais-raz").checked = false;
+        document.getElementById("conc-frais-detail").value = c.frais_detail || "";
         document.getElementById("conc-places").value = c.places || "";
         document.getElementById("conc-conditions").value = c.conditions || "";
         document.getElementById("conc-pieces").value = Array.isArray(
@@ -840,7 +866,16 @@
           dateCloture: document.getElementById("conc-cloture").value || null,
           statutAuto: document.getElementById("conc-statut-auto").checked,
           dateVerifiee: document.getElementById("conc-date-verifiee").checked,
-          frais: parseInt(document.getElementById("conc-frais").value) || 0,
+          // Champ vide = montant inconnu/variable → null (distinct de 0 =
+          // gratuit confirmé). Avant ce correctif, `parseInt("") || 0`
+          // envoyait TOUJOURS 0 pour un champ vide, rendant impossible
+          // de créer un concours dont les frais ne sont pas encore
+          // confirmés sans afficher à tort "Gratuit".
+          frais: document.getElementById("conc-frais").value === ""
+            ? null
+            : parseInt(document.getElementById("conc-frais").value),
+          razFrais: document.getElementById("conc-frais-raz").checked,
+          fraisDetail: document.getElementById("conc-frais-detail").value.trim() || null,
           places:
             parseInt(document.getElementById("conc-places").value) || null,
           conditions: document.getElementById("conc-conditions").value.trim(),
