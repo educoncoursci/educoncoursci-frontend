@@ -128,6 +128,89 @@
         height: 32px;
         cursor: pointer;
       }
+
+      /* ── Bandeau des deux options (Option 1 / Option 2) ──────── */
+      .option-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 8px;
+      }
+      .option-eyebrow--vert {
+        background: rgba(26, 107, 60, 0.1);
+        color: var(--vert);
+      }
+      .option-eyebrow--bleu {
+        background: rgba(10, 92, 158, 0.1);
+        color: var(--bleu);
+      }
+      .option-titre {
+        font-family: var(--font-titre);
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin: 0 0 4px;
+      }
+      .option-sous-titre {
+        color: var(--gris-texte);
+        font-size: 0.88rem;
+        margin: 0 0 18px;
+        max-width: 640px;
+      }
+      .sources-grille {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 12px;
+      }
+      .source-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: var(--blanc);
+        border: 1px solid var(--gris-bordure);
+        border-radius: var(--radius-md);
+        padding: 14px 16px;
+        text-decoration: none;
+        transition: border-color 0.15s ease, transform 0.15s ease;
+      }
+      .source-card:hover {
+        border-color: var(--bleu);
+        transform: translateY(-2px);
+      }
+      .source-card__nom {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--texte);
+      }
+      .source-card__desc {
+        font-size: 0.76rem;
+        color: var(--gris-texte);
+        margin-top: 2px;
+      }
+      .source-card__fleche {
+        color: var(--bleu);
+        font-weight: 700;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+      .section-option2 {
+        background: rgba(10, 92, 158, 0.04);
+        border: 1px solid rgba(10, 92, 158, 0.15);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        margin: 36px 0 32px;
+      }
+      @media (max-width: 640px) {
+        .sources-grille {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
   </head>
   <body>
@@ -235,26 +318,33 @@
 
     <main class="container" style="max-width: 1000px; padding: 32px 20px 60px;">
 
-      <!-- Autres plateformes d'emploi en Côte d'Ivoire — liens directs
-           vers les sites de référence, en complément des offres
-           publiées directement sur EduConcoursCI ci-dessous. Chaque
-           lien ouvre le site externe dans un nouvel onglet. -->
-      <div class="card" style="padding:18px 20px;margin-bottom:20px;">
-        <div style="font-weight:800;font-size:0.95rem;margin-bottom:12px;">
-          🔗 Élargis ta recherche sur d'autres plateformes ivoiriennes
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a href="https://emploi.educarriere.ci" target="_blank" rel="noopener" class="btn btn--outline-vert btn--sm">Educarriere</a>
-          <a href="https://www.rmo-jobcenter.com" target="_blank" rel="noopener" class="btn btn--outline-vert btn--sm">RMO Emploi</a>
-          <a href="https://novojob.com/cote-d-ivoire" target="_blank" rel="noopener" class="btn btn--outline-vert btn--sm">Novojob</a>
-          <a href="https://jobmejobs.com" target="_blank" rel="noopener" class="btn btn--outline-vert btn--sm">JobMe</a>
-          <a href="https://ci.trabajo.org" target="_blank" rel="noopener" class="btn btn--outline-vert btn--sm">Trabajo</a>
-          <a href="https://fr.indeed.com/jobs?l=C%C3%B4te+d%27Ivoire" target="_blank" rel="noopener" class="btn btn--outline-vert btn--sm">Indeed</a>
-          <a href="https://agenceemploijeunes.ci" target="_blank" rel="noopener" class="btn btn--outline-vert btn--sm">Agence Emploi Jeunes</a>
-        </div>
+      <!-- Bandeau d'intro : explique en une phrase qu'il y a 2 façons de
+           chercher un emploi sur cette page, avant même de voir laquelle
+           des deux sections commence. -->
+      <div style="text-align:center; margin-bottom:28px;">
+        <p style="color: var(--gris-texte); font-size: 0.92rem; max-width: 620px; margin: 0 auto;">
+          Deux façons de chercher un emploi ici : consulte directement les offres
+          regroupées ci-dessous, ou accède en un clic aux sites d'emploi partenaires
+          pour voir toutes leurs offres à jour.
+        </p>
       </div>
 
+      <div class="option-eyebrow option-eyebrow--vert">💼 Option 1</div>
+      <h2 class="option-titre">Offres regroupées sur EduConcoursCI</h2>
+      <p class="option-sous-titre">
+        Les offres ci-dessous sont automatiquement récupérées et mises à jour depuis
+        plusieurs sites d'emploi ivoiriens. Filtre-les selon tes critères.
+      </p>
+
       <div class="filtres-bar">
+        <input type="text" id="filtre-recherche" class="form-input" placeholder="Mot-clé, poste, entreprise…" />
+        <select id="filtre-opportunite" class="form-input">
+          <option value="">Emploi ou stage : tous</option>
+          <option value="emploi">Emploi</option>
+          <option value="stage">Stage</option>
+          <option value="alternance">Alternance</option>
+          <option value="freelance">Freelance</option>
+        </select>
         <select id="filtre-type" class="form-input">
           <option value="">Tous les types de contrat</option>
           <option value="CDI">CDI</option>
@@ -263,9 +353,31 @@
           <option value="Freelance">Freelance</option>
           <option value="Alternance">Alternance</option>
         </select>
-        <input type="text" id="filtre-ville" class="form-input" placeholder="Ville (ex: Abidjan)" />
+        <select id="filtre-ville" class="form-input">
+          <option value="">Toutes les villes</option>
+          <option value="Abidjan">Abidjan</option>
+          <option value="Yamoussoukro">Yamoussoukro</option>
+          <option value="Bouaké">Bouaké</option>
+          <option value="Daloa">Daloa</option>
+          <option value="San-Pédro">San-Pédro</option>
+          <option value="Korhogo">Korhogo</option>
+          <option value="Man">Man</option>
+          <option value="Gagnoa">Gagnoa</option>
+          <option value="Abengourou">Abengourou</option>
+          <option value="Divo">Divo</option>
+        </select>
+        <input type="text" id="filtre-region" class="form-input" placeholder="Région" />
         <input type="text" id="filtre-secteur" class="form-input" placeholder="Secteur (ex: Banque, BTP…)" />
-        <input type="text" id="filtre-recherche" class="form-input" placeholder="Mot-clé, entreprise…" />
+        <input type="text" id="filtre-niveau" class="form-input" placeholder="Niveau d'études (ex: Bac+3)" />
+        <input type="text" id="filtre-experience" class="form-input" placeholder="Expérience (ex: 2 ans)" />
+        <select id="filtre-source" class="form-input">
+          <option value="">Toutes les sources</option>
+        </select>
+        <select id="filtre-tri" class="form-input">
+          <option value="recent">Plus récentes</option>
+          <option value="ancien">Plus anciennes</option>
+          <option value="pertinence">Pertinence</option>
+        </select>
         <button onclick="chargerOffres()" class="btn btn--primaire btn--sm">Filtrer</button>
       </div>
 
@@ -282,6 +394,81 @@
         <button id="btn-charger-plus" onclick="chargerPlusOffres()" class="btn btn--outline-vert hidden">
           Charger plus d'offres
         </button>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════
+           OPTION 2 — Accès direct aux sites d'emploi partenaires.
+           Chaque lien pointe vers la page GÉNÉRALE des offres du site
+           (jamais une offre précise) : l'utilisateur y retrouve donc
+           TOUTES les offres du site, y compris celles que notre
+           agrégateur (Option 1 ci-dessus) n'aurait pas encore
+           récupérées ou mises à jour. URLs vérifiées individuellement
+           (pas de lien deviné) — voir vérification jointe à cette
+           livraison pour le détail.
+           ══════════════════════════════════════════════════════════ -->
+      <div class="section-option2">
+        <div class="option-eyebrow option-eyebrow--bleu">🔗 Option 2</div>
+        <h2 class="option-titre">Accès direct aux sites d'emploi</h2>
+        <p class="option-sous-titre">
+          Toutes les offres ne remontent pas toujours instantanément dans la liste
+          ci-dessus. Pour être sûr de ne rien manquer, consulte directement la page
+          d'offres de chaque site partenaire — mise à jour en temps réel par le site
+          lui-même.
+        </p>
+        <div class="sources-grille">
+          <a href="https://www.jobivoire.ci/job" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">Jobivoire</div><div class="source-card__desc">Offres à Abidjan et partout en CI</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://www.emploi.ci" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">Emploi.ci</div><div class="source-card__desc">Recrutement, tous secteurs</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://annonces.abidjan.net/emplois" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">Abidjan.net Emplois</div><div class="source-card__desc">Petites annonces d'emploi</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://projobivoire.com/jobs/" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">Projobivoire</div><div class="source-card__desc">Offres mises à jour quotidiennement</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://emploi.educarriere.ci/nos-offres" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">Educarriere</div><div class="source-card__desc">Emploi, stages et concours</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://agenceemploijeunes.ci/offres-emploi" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">Agence Emploi Jeunes</div><div class="source-card__desc">Plateforme publique, gratuite</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://www.rmo-jobcenter.com/fr/cote-d-ivoire/offres-emploi.html" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">RMO Emploi</div><div class="source-card__desc">Cabinet de recrutement</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://www.novojob.com/cote-d-ivoire/offres-d-emploi" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">Novojob</div><div class="source-card__desc">Offres en Côte d'Ivoire</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://jobmejobs.com" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">JobMe</div><div class="source-card__desc">Plateforme emploi régionale</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://ci.trabajo.org" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">Trabajo</div><div class="source-card__desc">Recherche d'emploi en CI</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://fr.indeed.com/jobs?l=C%C3%B4te+d%27Ivoire" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">Indeed</div><div class="source-card__desc">Toutes offres, Côte d'Ivoire</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://www.linkedin.com/jobs/search?location=C%C3%B4te%20d%27Ivoire" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">LinkedIn Jobs</div><div class="source-card__desc">Réseau professionnel</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+          <a href="https://www.google.com/search?q=emploi+C%C3%B4te+d%27Ivoire&ibp=htl;jobs" target="_blank" rel="noopener" class="source-card">
+            <div><div class="source-card__nom">Google Jobs</div><div class="source-card__desc">Recherche d'offres via Google</div></div>
+            <span class="source-card__fleche">→</span>
+          </a>
+        </div>
       </div>
     </main>
 
@@ -309,13 +496,22 @@
       document.addEventListener("DOMContentLoaded", chargerOffres);
 
       function construireCarteOffre(o) {
+        // Source affichée clairement sur chaque carte (point 9/10 du
+        // cahier des charges) : une offre agrégée automatiquement a
+        // toujours source_nom renseigné ; une offre saisie à la main
+        // sur EduConcoursCI n'en a pas (source = "EduConcoursCI").
+        const source = o.source_nom || "EduConcoursCI";
+        const estNouvelle = o.nouvelle === true || o.nouvelle === "t";
         return `
             <div class="card-emploi" onclick="voirDetail(${o.id})">
               ${o.image_url
                 ? `<img src="${o.image_url}" alt="" style="width:100%;height:110px;object-fit:cover;border-radius:10px;margin-bottom:10px;" onerror="this.style.display='none'">`
                 : `<div style="width:100%;height:70px;display:flex;align-items:center;justify-content:center;background:var(--gris-clair);border-radius:10px;margin-bottom:10px;font-size:1.6rem;">💼</div>`
               }
-              <div class="card-emploi__type">${o.type_contrat}</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px;">
+                <div class="card-emploi__type" style="margin-bottom:0;">${o.type_contrat}</div>
+                ${estNouvelle ? `<span style="font-size:0.65rem;font-weight:800;text-transform:uppercase;padding:3px 8px;border-radius:20px;background:#fef3c7;color:#92400e;">🆕 Nouveau</span>` : ""}
+              </div>
               <div class="card-emploi__titre">${o.titre}</div>
               <div class="card-emploi__entreprise">${o.entreprise}</div>
               <p style="font-size:0.82rem;color:var(--gris-texte);line-height:1.5;margin:6px 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
@@ -324,10 +520,14 @@
               <div class="card-emploi__meta">
                 <span><span data-icone="institution" data-taille="14"></span> ${o.ville || "Non précisé"}</span>
                 ${o.salaire ? `<span><span data-icone="portefeuille" data-taille="14"></span> ${o.salaire}</span>` : ""}
+                ${o.date_limite ? `<span>⏳ Jusqu'au ${o.date_limite}</span>` : ""}
               </div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-                <span style="font-size:0.72rem;color:var(--gris-texte);">${o.created_at ? new Date(o.created_at).toLocaleDateString("fr-FR", {day:"numeric", month:"short"}) : ""}</span>
-                <span style="font-size:0.78rem;font-weight:700;color:var(--vert,#1a8c4a);">Voir l'offre →</span>
+                <span style="font-size:0.72rem;color:var(--gris-texte);">
+                  <span style="font-weight:700;">Source :</span> ${source}
+                  · ${o.created_at ? new Date(o.created_at).toLocaleDateString("fr-FR", {day:"numeric", month:"short"}) : ""}
+                </span>
+                <span style="font-size:0.78rem;font-weight:700;color:var(--vert,#1a8c4a);">${o.lien_externe ? "Voir l'offre →" : "Postuler →"}</span>
               </div>
             </div>
           `;
@@ -336,16 +536,46 @@
       // Lit les filtres actuellement saisis dans le formulaire
       function lireFiltres() {
         const params = {};
+        const opportunite = document.getElementById("filtre-opportunite").value;
         const type = document.getElementById("filtre-type").value;
-        const ville = document.getElementById("filtre-ville").value.trim();
+        const ville = document.getElementById("filtre-ville").value;
+        const region = document.getElementById("filtre-region").value.trim();
         const secteur = document.getElementById("filtre-secteur").value.trim();
+        const niveau = document.getElementById("filtre-niveau").value.trim();
+        const experience = document.getElementById("filtre-experience").value.trim();
+        const source = document.getElementById("filtre-source").value;
+        const tri = document.getElementById("filtre-tri").value;
         const recherche = document.getElementById("filtre-recherche").value.trim();
+        if (opportunite) params.typeOpportunite = opportunite;
         if (type) params.typeContrat = type;
         if (ville) params.ville = ville;
+        if (region) params.region = region;
         if (secteur) params.secteur = secteur;
+        if (niveau) params.niveauEtudes = niveau;
+        if (experience) params.experience = experience;
+        if (source) params.source = source;
+        if (tri) params.tri = tri;
         if (recherche) params.recherche = recherche;
         return params;
       }
+
+      // Remplit le filtre "Source" à partir des sources déjà agrégées
+      async function chargerSourcesDisponibles() {
+        try {
+          const { sources } = await window.API.Emploi.sources();
+          const select = document.getElementById("filtre-source");
+          sources.forEach((s) => {
+            const option = document.createElement("option");
+            option.value = s;
+            option.textContent = s;
+            select.appendChild(option);
+          });
+        } catch (err) {
+          // Non bloquant : le filtre reste juste limité à "Toutes les sources"
+          console.warn("Impossible de charger la liste des sources :", err.message);
+        }
+      }
+      document.addEventListener("DOMContentLoaded", chargerSourcesDisponibles);
 
       // Chargement initial (ou relance après changement de filtre) :
       // repart de zéro (offset 0).
@@ -422,14 +652,19 @@
           offreCourante = data.offre;
           const o = offreCourante;
 
+          const source = o.source_nom || "EduConcoursCI";
           contenu.innerHTML = `
-            <div class="card-emploi__type">${o.type_contrat}</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
+              <div class="card-emploi__type" style="margin-bottom:0;">${o.type_contrat}</div>
+              <span style="font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--gris-clair);color:var(--gris-texte);">Source : ${source}</span>
+            </div>
             <h2 style="margin: 10px 0 4px;">${o.titre}</h2>
-            <p style="color: var(--gris-texte); margin-bottom: 16px;">${o.entreprise} · ${o.ville || ""}</p>
+            <p style="color: var(--gris-texte); margin-bottom: 16px;">${o.entreprise} · ${o.ville || ""}${o.region ? ` (${o.region})` : ""}</p>
 
             ${o.salaire ? `<p><strong>Rémunération :</strong> ${o.salaire}</p>` : ""}
+            ${o.niveau_etudes ? `<p><strong>Niveau d'études :</strong> ${o.niveau_etudes}</p>` : ""}
             ${o.experience ? `<p><strong>Expérience requise :</strong> ${o.experience}</p>` : ""}
-            ${o.date_limite ? `<p><strong>Date limite :</strong> ${o.date_limite}</p>` : ""}
+            ${o.date_limite ? `<p><strong>Date limite :</strong> ${o.date_limite}${o.expiree ? ' <span style="color:#dc2626;font-weight:700;">(expirée)</span>' : ""}</p>` : ""}
 
             <h3 style="margin-top:20px; font-size:1rem;">Description du poste</h3>
             <p style="white-space:pre-wrap; font-size:0.9rem; line-height:1.6;">${o.description}</p>

@@ -1055,6 +1055,21 @@
         document.querySelectorAll(".modele-carte").forEach((carte) => {
           carte.classList.toggle("selectionne", carte.dataset.modeleId === id);
         });
+
+        // Avertit immédiatement si le modèle choisi est premium et que le
+        // compte ne l'est pas — avant, l'utilisateur ne le découvrait
+        // qu'au moment de l'export final (après avoir rempli tout son
+        // CV), ce qui est frustrant. La sélection reste possible (pour
+        // prévisualiser), seul l'export est réellement bloqué côté
+        // serveur — ce message informe simplement plus tôt.
+        const modele = Object.values(modelesCatalogue).flat().find((m) => m.id === id);
+        const session = window.Auth?.getSession?.();
+        if (modele?.premium && !session?.premium) {
+          window.afficherToast(
+            `"${modele.nom}" est un modèle Premium — l'export sera bloqué tant que ton compte n'est pas Premium.`,
+            "info",
+          );
+        }
       }
 
       // ── Onglets ───────────────────────────────────────────────────

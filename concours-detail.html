@@ -534,6 +534,19 @@
       }
 
       // ── Lot 7 : historique, salaire/débouchés, carte, communiqués, FAQ ──
+      // Affichage honnête des frais : distingue "gratuit confirmé"
+      // (c.frais === 0) de "montant inconnu ou variable selon la
+      // filière" (c.frais absent mais c.frais_detail renseigné, ex.
+      // INSFS où le total varie de 43 500 à 48 500 FCFA selon la
+      // filière choisie). Avant ce correctif, un frais absent tombait
+      // silencieusement sur "Gratuit" par défaut — trompeur.
+      function fraisAffiche(c) {
+        if (c.frais === 0) return "Gratuit";
+        if (c.frais) return c.frais.toLocaleString("fr-CI") + " FCFA";
+        if (c.frais_detail) return "Variable — voir détail ci-dessous";
+        return "Non communiqué officiellement";
+      }
+
       function afficherFicheEnrichie(c) {
         if (c.historique) {
           document.getElementById("detail-historique").innerHTML = c.historique
@@ -750,6 +763,14 @@
           "à venir": "🔵",
           fermé: "⚫",
           résultats: "🏆",
+          "information non confirmée": "❔",
+        };
+        const STATUT_LABEL = {
+          ouvert: "Ouvert",
+          "à venir": "À venir",
+          fermé: "Terminé",
+          résultats: "Résultats disponibles",
+          "information non confirmée": "Information non confirmée",
         };
 
         // En-tête
@@ -763,7 +784,7 @@
         <div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
             <span class="badge badge--vert">${c.categorie}</span>
-            <span class="badge badge--rouge">${STATUT_EMOJI[c.statut] || "📋"} ${c.statut}</span>
+            <span class="badge badge--rouge">${STATUT_EMOJI[c.statut] || "📋"} ${STATUT_LABEL[c.statut] || c.statut}</span>
             ${c.premium ? '<span class="badge badge--premium">⭐ Contenu Premium</span>' : '<span class="badge badge--gratuit">🆓 Accès gratuit</span>'}
           </div>
           <h1 style="font-size:1.6rem;margin-bottom:6px;">${c.titre}</h1>
@@ -771,7 +792,7 @@
         </div>
       </div>
       <div style="text-align:right;">
-        <div style="font-size:2rem;font-weight:900;color:var(--vert);">${c.frais ? c.frais.toLocaleString("fr-CI") + " F" : "Gratuit"}</div>
+        <div style="font-size:2rem;font-weight:900;color:var(--vert);">${fraisAffiche(c)}</div>
         <div style="font-size:0.8rem;color:var(--gris-texte);">Frais de dossier</div>
       </div>
     </div>`;
@@ -786,9 +807,9 @@
           ["⏰ Clôture", c.cloture || "—"],
           [
             "💰 Frais",
-            c.frais ? `${c.frais.toLocaleString("fr-CI")} FCFA` : "Gratuit",
+            fraisAffiche(c),
           ],
-          ["📊 Statut", `${STATUT_EMOJI[c.statut] || ""} ${c.statut}`],
+          ["📊 Statut", `${STATUT_EMOJI[c.statut] || ""} ${STATUT_LABEL[c.statut] || c.statut}`],
         ];
         document.getElementById("detail-infos").innerHTML = infos
           .map(
@@ -840,8 +861,21 @@
             .filter(Boolean)
             .map((l) => `<p style="margin-bottom:6px;">• ${l}</p>`)
             .join("");
-        } else {
+        } else if (!c.frais_detail) {
+          // Rien à afficher dans cette section (ni conditions, ni détail
+          // de frais) — on la masque. Si frais_detail existe malgré tout,
+          // on la laisse visible pour ne pas cacher cette info.
           document.getElementById("section-conditions").style.display = "none";
+        }
+
+        // Décomposition des frais (visite médicale, inscription, etc.)
+        // — affichée uniquement quand renseignée, sous les conditions.
+        if (c.frais_detail) {
+          document.getElementById("section-conditions").style.display = "";
+          const blocFrais = document.createElement("div");
+          blocFrais.style.cssText = "margin-top:14px;padding:12px 14px;background:#fff8ee;border:1px solid #f5e0b8;border-radius:10px;";
+          blocFrais.innerHTML = `<div style="font-weight:700;font-size:0.85rem;margin-bottom:6px;">💰 Détail des frais</div><div style="font-size:0.88rem;white-space:pre-line;">${c.frais_detail}</div>`;
+          document.getElementById("detail-conditions").appendChild(blocFrais);
         }
 
         // Pièces
@@ -881,9 +915,7 @@
           ? `⏰ Date limite : ${c.cloture}`
           : "";
         afficherCompteARebours(c);
-        document.getElementById("cta-frais").textContent = c.frais
-          ? `${c.frais.toLocaleString("fr-CI")} FCFA`
-          : "Gratuit";
+        document.getElementById("cta-frais").textContent = fraisAffiche(c);
 
         // Favori
         mettreAJourBtnFavori();
