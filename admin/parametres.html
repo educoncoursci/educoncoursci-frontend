@@ -277,10 +277,10 @@
         </div>
       </div>
       <div>
-        <div style="font-size:0.82rem;font-weight:700;color:var(--gris-texte);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Backend (Railway)</div>
+        <div style="font-size:0.82rem;font-weight:700;color:var(--gris-texte);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Backend</div>
         <div class="env-row" style="border:none;padding:6px 0;">
           <div class="env-key" style="min-width:120px;">URL API</div>
-          <div id="railway-url" style="font-size:0.85rem;word-break:break-all;">—</div>
+          <div id="backend-url" style="font-size:0.85rem;word-break:break-all;">—</div>
         </div>
         <div class="env-row" style="padding:6px 0;">
           <div class="env-key" style="min-width:120px;">Framework</div>
@@ -288,7 +288,7 @@
         </div>
         <div class="env-row" style="padding:6px 0;border:none;">
           <div class="env-key" style="min-width:120px;">Base de données</div>
-          <div style="font-size:0.85rem;">PostgreSQL (Railway managed)</div>
+          <div style="font-size:0.85rem;">PostgreSQL</div>
         </div>
       </div>
     </div>
@@ -322,8 +322,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // URL dynamiques
   document.getElementById("netlify-url").textContent = window.location.origin;
-  const apiUrl = window.API ? window.API.toString() : "—";
-  document.getElementById("railway-url").textContent = window.location.origin.replace("netlify.app","railway.app") + "/api";
+  document.getElementById("backend-url").textContent = window.API_URL || "—";
 
   // Infos admin
   document.getElementById("admin-info").innerHTML = `

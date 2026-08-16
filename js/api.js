@@ -4,10 +4,14 @@
 //  Utilise le token JWT stocké en localStorage.
 // ============================================================
 
-// URL de base du backend (Railway en prod, localhost en dev)
+// URL de base du backend (Render en prod, localhost en dev)
 const API_URL = window.location.hostname === "localhost"
 ? "http://localhost:3000/api"
-: "https://educoncoursci-backend-production.up.railway.app/api";
+: "https://educoncoursci-backend.onrender.com/api";
+
+// Exposée globalement pour que d'autres pages (ex: admin/parametres.html)
+// puissent l'afficher sans deviner/reconstruire l'URL elles-mêmes.
+window.API_URL = API_URL;
 
 // ── Récupère le token JWT stocké ─────────────────────────────
 function getToken() {
