@@ -3,7 +3,7 @@
 //  Cache statique + stratégie network-first pour l'API
 // ============================================================
 
-const CACHE_NOM     = "educoncoursci-v1";
+const CACHE_NOM     = "educoncoursci-v2";
 const CACHE_STATIQUE = [
 "/",
 "/index.html",
