@@ -183,15 +183,56 @@ const zoneDesktop = document.querySelector(".navbar__actions");
 const zoneMobile  = document.getElementById("navbar-mobile-actions");
 if (!zoneDesktop && !zoneMobile) return;
 
-let html;
+let htmlDesktop, htmlMobile;
 if (user) {
-html = `<a href="/dashboard/index.html" class="btn btn--outline-vert btn--sm"> 👤 ${user.nom.split(" ")[0]} ${user.premium ? '<span class="badge-premium">⭐ Premium</span>' : ""} </a> ${estAdmin() ?`<a href="/admin/index.html" class="btn btn--bleu btn--sm">⚙️ Admin</a>`: ""} <button onclick="deconnecter()" class="btn btn--gris btn--sm">Déconnexion</button>`;
+const prenom = user.nom.split(" ")[0];
+const badgePremium = user.premium ? '<span class="badge-premium">⭐</span>' : "";
+const lienAdmin = estAdmin()
+  ? '<a href="/admin/index.html" class="navbar__sous-lien">⚙️ Administration</a>'
+  : "";
+
+// Desktop : UN SEUL bouton compact (menu déroulant), quel que soit
+// l'état (simple utilisateur, premium, admin) — avant ce correctif,
+// jusqu'à 3 boutons séparés ("👤 Nom", "⚙️ Admin", "Déconnexion")
+// s'accumulaient côte à côte dans la barre, ce qui la surchargeait
+// et pouvait la désaligner selon la largeur d'écran. Réutilise le
+// même mécanisme d'ouverture/fermeture que les menus "Concours"/
+// "Ressources" (.navbar__groupe), pour un rendu cohérent avec le
+// reste de la navbar plutôt qu'un style ad hoc.
+htmlDesktop = `<div class="navbar__groupe navbar__groupe--compte">
+  <button class="navbar__groupe-btn navbar__compte-btn">
+    <span class="navbar__avatar">👤</span> ${prenom} ${badgePremium}
+    <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="navbar__sous-menu navbar__sous-menu--droite">
+    <a href="/dashboard/index.html" class="navbar__sous-lien">🏠 Tableau de bord</a>
+    ${lienAdmin}
+    <a href="#" onclick="deconnecter(); return false;" class="navbar__sous-lien navbar__sous-lien--danger">🚪 Déconnexion</a>
+  </div>
+</div>`;
+
+// Mobile : liste à plat (pas de menu déroulant flottant dans le
+// panneau hamburger, qui est déjà une liste verticale) — cohérent
+// avec le reste du menu mobile.
+htmlMobile = `<div style="padding:8px 12px;font-weight:700;font-size:0.9rem;">👤 ${prenom} ${badgePremium}</div>
+  <a href="/dashboard/index.html" class="btn btn--outline-vert btn--sm w-full">🏠 Tableau de bord</a>
+  ${estAdmin() ? '<a href="/admin/index.html" class="btn btn--bleu btn--sm w-full mt-1">⚙️ Administration</a>' : ""}
+  <button onclick="deconnecter()" class="btn btn--gris btn--sm w-full mt-1">🚪 Déconnexion</button>`;
 } else {
-html = `<a href="/auth/login.html"    class="btn btn--outline-vert btn--sm">Connexion</a> <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription gratuite</a>`;
+htmlDesktop = htmlMobile = `<a href="/auth/login.html"    class="btn btn--outline-vert btn--sm">Connexion</a> <a href="/auth/register.html" class="btn btn--primaire btn--sm">Inscription gratuite</a>`;
 }
 
-if (zoneDesktop) zoneDesktop.innerHTML = html;
-if (zoneMobile)  zoneMobile.innerHTML  = html;
+if (zoneDesktop) zoneDesktop.innerHTML = htmlDesktop;
+if (zoneMobile)  zoneMobile.innerHTML  = htmlMobile;
+
+// Le bouton du menu déroulant "Compte" est injecté APRÈS l'attache
+// initiale des écouteurs de clic sur les .navbar__groupe existants
+// (voir initNavbar() dans main.js, qui ne s'exécute qu'une fois au
+// chargement de la page). Sans ce ré-attachement explicite, cliquer
+// sur "👤 Prénom" n'ouvrirait jamais son sous-menu, puisque main.js
+// ne l'aurait jamais vu exister. window.reattacherMenusNavbar est
+// exposé par main.js justement pour ce cas.
+if (window.reattacherMenusNavbar) window.reattacherMenusNavbar();
 
 mettreAJourHeroAccueil(user);
 }

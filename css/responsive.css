@@ -49,9 +49,34 @@
   .navbar__links {
     gap: 2px;
   }
-  .navbar__link {
+  .navbar__link,
+  .navbar__groupe-btn {
     padding: 7px 10px;
     font-size: 0.85rem;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PETIT ORDINATEUR PORTABLE — max-width: 1280px
+   Palier intermédiaire entre desktop large et tablette : sur les
+   écrans 13" classiques (souvent 1366px, mais la fenêtre du
+   navigateur elle-même peut être plus étroite), la navbar complète
+   (logo + 5 liens/groupes + bouton compte) est la zone la plus
+   susceptible de se sentir à l'étroit — un peu plus de compacité
+   ici évite tout risque de débordement avant même d'atteindre le
+   basculement en menu hamburger à 768px.
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1280px) and (min-width: 769px) {
+  .navbar__inner {
+    padding: 0 var(--gap-md);
+  }
+  .navbar__link,
+  .navbar__groupe-btn {
+    padding: 8px 9px;
+    font-size: 0.85rem;
+  }
+  .navbar__compte-btn {
+    padding: 6px 10px 6px 6px;
   }
 }
 
@@ -73,13 +98,13 @@
   .navbar__hamburger {
     display: flex;
   }
-
-  .navbar__actions .btn {
-    padding: 8px 14px;
-    font-size: 0.82rem;
-  }
-  .navbar__actions .btn--lg {
-    padding: 8px 14px;
+  /* La barre d'actions du haut (Connexion/Inscription, ou le menu
+     "Compte") est redondante sur mobile : elle est déjà proposée
+     dans le panneau hamburger (#navbar-mobile-actions), qui a plus
+     de place pour l'afficher clairement. La garder ici en plus du
+     hamburger créait une barre du haut encombrée sur petit écran. */
+  .navbar__actions {
+    display: none;
   }
 
   .navbar__logo {

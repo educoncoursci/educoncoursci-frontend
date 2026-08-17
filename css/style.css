@@ -309,6 +309,44 @@ p {
   gap: var(--gap-sm);
 }
 
+/* ── Menu déroulant "Compte" (utilisateur connecté) ──────────
+   Réutilise .navbar__groupe / .navbar__groupe-btn / .navbar__sous-menu
+   (mêmes composants que "Concours"/"Ressources"/"Carrière") pour un
+   rendu cohérent, avec juste les ajustements propres à ce bouton :
+   fond distinct pour bien le repérer comme l'espace personnel, et
+   sous-menu aligné à DROITE (--droite) puisque c'est le dernier
+   élément de la barre — un sous-menu aligné à gauche comme les
+   autres déborderait hors de l'écran. */
+.navbar__compte-btn {
+  background: var(--gris-clair);
+  padding: 6px 14px 6px 8px;
+}
+.navbar__compte-btn:hover {
+  background: var(--gris-bordure);
+}
+.navbar__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--vert);
+  color: var(--blanc);
+  font-size: 0.85rem;
+}
+.navbar__sous-menu--droite {
+  left: auto;
+  right: 0;
+}
+.navbar__sous-lien--danger {
+  color: var(--rouge, #dc2626);
+}
+.navbar__sous-lien--danger:hover {
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--rouge, #dc2626);
+}
+
 .navbar__hamburger {
   display: none;
   flex-direction: column;
@@ -422,6 +460,28 @@ p {
   gap: var(--gap-md);
   flex-wrap: wrap;
   margin-bottom: 48px;
+}
+/* Fond blanc pour les deux boutons du hero ("Accéder à mon tableau
+   de bord" / "Créer mon compte gratuit" et "Voir les concours"),
+   quel que soit leur état de connexion — volontairement scopé à
+   .hero__actions .btn et non aux classes .btn--primaire /
+   .btn--outline-blanc elles-mêmes, qui sont réutilisées partout
+   ailleurs sur le site (boutons d'inscription, de validation de
+   formulaires...) et ne doivent pas changer d'apparence globalement.
+   Effet hover : légère élévation + ombre douce + accentuation de la
+   couleur du texte, plutôt qu'un remplissage de couleur uni qui
+   ferait disparaître le fond blanc demandé au survol. */
+.hero__actions .btn {
+  background: var(--blanc);
+  color: var(--vert);
+  border-color: var(--blanc);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+.hero__actions .btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  border-color: #7ee8a2;
+  color: #0f4d28;
 }
 
 .hero__stats {

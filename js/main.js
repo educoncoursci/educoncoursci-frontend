@@ -78,23 +78,36 @@ menuMobile.querySelectorAll("a").forEach(lien => {
 }
 
 // Sous-menus déroulants de la navbar (groupes de fonctionnalités)
-document.querySelectorAll(".navbar__groupe").forEach(groupe => {
-  const bouton = groupe.querySelector(".navbar__groupe-btn");
-  if (!bouton) return;
-
-  bouton.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const etaitOuvert = groupe.classList.contains("ouvert");
-    // Ferme tous les autres groupes avant d'ouvrir celui-ci
-    document.querySelectorAll(".navbar__groupe.ouvert").forEach(g => g.classList.remove("ouvert"));
-    if (!etaitOuvert) groupe.classList.add("ouvert");
-  });
-});
-
-// Ferme tous les sous-menus au clic en dehors de la navbar
-document.addEventListener("click", () => {
+// Délégation d'événement sur `document` plutôt qu'un addEventListener
+// par élément : les groupes statiques (Concours, Ressources, Carrière)
+// existent déjà au chargement, mais le menu "Compte" (👤 Prénom) est
+// injecté dynamiquement plus tard par auth.js selon l'état de
+// connexion — un binding direct par élément, exécuté une seule fois
+// ici, ne l'aurait jamais vu et son clic n'aurait donc jamais rien
+// ouvert. La délégation fonctionne pour n'importe quel groupe présent
+// au moment du clic, statique ou injecté après coup.
+function attacherMenusNavbar() {
+document.addEventListener("click", (e) => {
+const bouton = e.target.closest(".navbar__groupe-btn");
+if (bouton) {
+  e.stopPropagation();
+  const groupe = bouton.closest(".navbar__groupe");
+  const etaitOuvert = groupe.classList.contains("ouvert");
   document.querySelectorAll(".navbar__groupe.ouvert").forEach(g => g.classList.remove("ouvert"));
+  if (!etaitOuvert) groupe.classList.add("ouvert");
+  return;
+}
+// Clic en dehors de tout groupe → ferme tous les sous-menus ouverts
+document.querySelectorAll(".navbar__groupe.ouvert").forEach(g => g.classList.remove("ouvert"));
 });
+}
+attacherMenusNavbar();
+// Exposée pour qu'auth.js puisse la ré-invoquer après avoir injecté le
+// menu "Compte" — en pratique inutile désormais grâce à la délégation
+// (un seul appel suffit pour tous les groupes, présents ou futurs),
+// mais gardée pour ne rien supposer côté auth.js et rester robuste si
+// cette fonction change un jour de stratégie.
+window.reattacherMenusNavbar = () => {};
 
 // Marque le lien actif selon la page courante
 const chemin = window.location.pathname;
