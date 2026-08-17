@@ -577,6 +577,7 @@
     <script src="/js/auth.js"></script>
 
     <script src="/js/main.js"></script>
+    <script src="/js/concours-cartes.js"></script>
 
     <script>
       // ── État de la page ───────────────────────────────────────────
@@ -584,33 +585,6 @@
       let concoursFiltres = [];
       let pageActuelle = 1;
       const PAR_PAGE = 9;
-
-      // Couleurs par statut
-      const STATUT_COULEUR = {
-        ouvert: "var(--rouge)",
-        "à venir": "var(--bleu)",
-        fermé: "var(--gris-texte)",
-        résultats: "var(--orange)",
-        "information non confirmée": "#9333ea",
-      };
-      const STATUT_EMOJI = {
-        ouvert: "🔴",
-        "à venir": "🔵",
-        fermé: "⚫",
-        résultats: "🏆",
-        "information non confirmée": "❔",
-      };
-      // Libellé affiché à l'utilisateur, distinct de la valeur technique
-      // stockée en base (dont dépend concoursStatutScheduler.js pour
-      // recalculer automatiquement le statut à partir des dates réelles).
-      // "fermé" → "Terminé" à l'affichage uniquement.
-      const STATUT_LABEL = {
-        ouvert: "Ouvert",
-        "à venir": "À venir",
-        fermé: "Terminé",
-        résultats: "Résultats disponibles",
-        "information non confirmée": "Information non confirmée",
-      };
 
       // ── Chargement initial ────────────────────────────────────────
       document.addEventListener("DOMContentLoaded", async () => {
@@ -795,76 +769,17 @@
         </div>
       </div>`;
         } else {
-          conteneur.innerHTML = page.map((c) => cardConcours(c)).join("");
+          conteneur.innerHTML = page.map((c) => window.construireCarteConcours(c)).join("");
         }
 
         afficherPagination();
       }
 
       // ── Génère le HTML d'une card concours ───────────────────────
-      // Affichage honnête des frais : distingue "gratuit confirmé"
-      // (c.frais === 0, une valeur explicitement vérifiée) de "montant
-      // inconnu ou variable selon la filière" (c.frais absent). Avant
-      // ce correctif, un frais absent tombait silencieusement sur
-      // "Gratuit" par défaut (`c.frais ? ... : "Gratuit"`) — trompeur
-      // pour un concours dont les frais varient réellement (ex. INSFS,
-      // entre 43 500 et 48 500 FCFA selon la filière) mais n'ont pas
-      // de montant fixe unique à afficher.
-      function fraisAffiche(c) {
-        if (c.frais === 0) return "Gratuit";
-        if (c.frais) return c.frais.toLocaleString("fr-CI") + " FCFA";
-        if (c.frais_detail) return "Variable — voir détail";
-        return "Non communiqué";
-      }
-
-      function cardConcours(c) {
-        const couleur = c.couleur || "var(--vert)";
-        const emoji = STATUT_EMOJI[c.statut] || "📋";
-        const couleurStatut = STATUT_COULEUR[c.statut] || "var(--gris-texte)";
-        // Vue "Terminés" classée par année : date_cloture est une vraie
-        // colonne DATE (contrairement à c.cloture, du texte formaté FR),
-        // c'est elle qui donne l'année de façon fiable.
-        const annee = c.date_cloture ? new Date(c.date_cloture).getFullYear() : null;
-        const badgeAnnee = c.statut === "fermé" && annee
-          ? `<span class="badge" style="background:#f0f0f0;color:var(--gris-texte);border:1px solid var(--gris-bordure);">📅 ${annee}</span>`
-          : "";
-
-        // Logo officiel de l'organisme (structures.logo_url, remonté par
-        // Concours.findAll via LEFT JOIN structures). Absent pour les
-        // concours non liés à une structure ou sans logo renseigné —
-        // dans ce cas on garde exactement l'apparence précédente (pas
-        // d'image, juste le badge coloré + emoji 🏢), donc aucune carte
-        // existante n'est dégradée par cet ajout.
-        const ligneTitre = c.structure_logo_url
-          ? `<div class="card-concours__titre-ligne">
-               <img src="${c.structure_logo_url}" alt="Logo ${c.organisme}" class="card-concours__logo" loading="lazy" onerror="this.remove()">
-               <div class="card-concours__titre">${c.titre}</div>
-             </div>`
-          : `<div class="card-concours__titre">${c.titre}</div>`;
-
-        return `
-    <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:${couleur};text-decoration:none;">
-      <div class="card-concours__en-tete">
-        <div class="card-concours__meta">
-          <span class="badge" style="background:${couleur}18;color:${couleur};border:1px solid ${couleur}33;">${c.categorie}</span>
-          <span class="badge" style="background:${couleurStatut}18;color:${couleurStatut};border:1px solid ${couleurStatut}33;">${emoji} ${STATUT_LABEL[c.statut] || c.statut}</span>
-          ${badgeAnnee}
-          ${c.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--gratuit">🆓 Gratuit</span>'}
-        </div>
-        ${ligneTitre}
-        <div class="card-concours__infos mt-1">
-          <span class="card-concours__info">🏢 ${c.organisme}</span>
-          <span class="card-concours__info">🎓 ${c.niveau || "—"}</span>
-          <span class="card-concours__info">👥 ${c.places ? c.places + " places" : "—"}</span>
-          <span class="card-concours__info">💰 ${fraisAffiche(c)}</span>
-        </div>
-      </div>
-      <div class="card-concours__pied">
-        <span class="card-concours__cloture">⏰ ${c.cloture || "—"}</span>
-        <span style="font-size:0.82rem;color:${couleur};font-weight:700;">Voir →</span>
-      </div>
-    </a>`;
-      }
+      // Déléguée à js/concours-cartes.js (window.construireCarteConcours),
+      // partagée avec index.html, concours-en-cours.html et
+      // concours-a-venir.html pour éviter que ces 4 pages divergent
+      // avec le temps.
 
       // ── Pagination ────────────────────────────────────────────────
       function afficherPagination() {

@@ -3,7 +3,15 @@
 //  Cache statique + stratégie network-first pour l'API
 // ============================================================
 
-const CACHE_NOM     = "educoncoursci-v2";
+const CACHE_NOM     = "educoncoursci-v2"; // ⚠️ Incrémente ce numéro (v3, v4…) à
+// chaque déploiement qui touche un fichier de CACHE_STATIQUE (surtout
+// js/api.js) — c'est ce qui force le Service Worker à jeter l'ancien
+// cache et retélécharger les fichiers à jour. Sans ça, un visiteur
+// qui a déjà visité le site continue de recevoir indéfiniment les
+// anciennes versions mises en cache, même après un Ctrl+F5, car le
+// Service Worker sert en "cache-first" (voir le fetch handler
+// plus bas) et ne revérifie jamais le serveur tant que le nom du
+// cache ne change pas.
 const CACHE_STATIQUE = [
 "/",
 "/index.html",

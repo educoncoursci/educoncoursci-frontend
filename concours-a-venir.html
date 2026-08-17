@@ -53,6 +53,7 @@
     <script src="/js/api.js"></script>
     <script src="/js/auth.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/concours-cartes.js"></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
@@ -72,7 +73,13 @@
             return;
           }
 
-          div.innerHTML = concours.map(carteConcours).join("");
+          div.innerHTML = concours.map((c) => {
+            const jours = joursRestants(c.date_ouverture || c.ouverture);
+            const badgeExtra = jours !== null
+              ? `<span class="badge" style="background:var(--gris-clair);color:var(--gris-texte);">⏳ J-${jours}</span>`
+              : "";
+            return window.construireCarteConcours(c, { badgeExtra });
+          }).join("");
         } catch (err) {
           div.innerHTML = `<p style="color:#dc2626;grid-column:1/-1;">Erreur de chargement : ${err.message}</p>`;
         }
@@ -84,31 +91,6 @@
         if (isNaN(cible.getTime())) return null;
         const diff = Math.ceil((cible - new Date()) / 86400000);
         return diff >= 0 ? diff : null;
-      }
-
-      function carteConcours(c) {
-        const couleur = c.couleur || "var(--vert)";
-        const jours = joursRestants(c.date_ouverture || c.ouverture);
-        return `
-    <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:${couleur};text-decoration:none;">
-      <div class="card-concours__en-tete">
-        <div class="card-concours__meta">
-          <span class="badge" style="background:${couleur}18;color:${couleur};border:1px solid ${couleur}33;">${c.categorie}</span>
-          <span class="badge" style="background:var(--bleu)18;color:var(--bleu);border:1px solid var(--bleu)33;">🔵 À venir</span>
-          ${jours !== null ? `<span class="badge" style="background:var(--gris-clair);color:var(--gris-texte);">⏳ J-${jours}</span>` : ""}
-        </div>
-        <div class="card-concours__titre">${c.titre}</div>
-        <div class="card-concours__infos mt-1">
-          <span class="card-concours__info">🏢 ${c.organisme}</span>
-          <span class="card-concours__info">🎓 ${c.niveau || "—"}</span>
-          <span class="card-concours__info">👥 ${c.places ? c.places + " places" : "—"}</span>
-        </div>
-      </div>
-      <div class="card-concours__pied">
-        <span class="card-concours__cloture">📅 Ouverture prévue : ${c.ouverture || "à préciser"}</span>
-        <span style="font-size:0.82rem;color:${couleur};font-weight:700;">Voir les détails →</span>
-      </div>
-    </a>`;
       }
     </script>
   </body>

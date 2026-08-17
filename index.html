@@ -225,30 +225,14 @@
 
     <section class="section-gris">
       <div class="container">
-        <div class="section__en-tete">
-          <span class="section__tag"><span data-icone="institution" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>Concours ouverts</span>
-          <h2>Concours actuellement ouverts</h2>
-          <p>Les inscriptions sont en cours — ne rate pas les dates limites.</p>
-        </div>
-        <div class="grille-3" id="concours-vedette">
-          <!-- Chargé dynamiquement -->
-          <div
-            class="skeleton"
-            style="height: 200px; border-radius: 16px"
-          ></div>
-          <div
-            class="skeleton"
-            style="height: 200px; border-radius: 16px"
-          ></div>
-          <div
-            class="skeleton"
-            style="height: 200px; border-radius: 16px"
-          ></div>
-        </div>
-        <div class="text-center mt-3">
-          <a href="/concours.html" class="btn btn--outline-vert"
-            >Voir tous les concours →</a
-          >
+        <div style="max-width:720px;margin:0 auto;text-align:center;background:var(--blanc);border-radius:var(--radius-lg);padding:48px 32px;box-shadow:var(--ombre-sm);">
+          <div style="font-size:2.5rem;margin-bottom:12px;">🎓</div>
+          <h2 style="margin-bottom:10px;">Concours, examens et opportunités</h2>
+          <p style="color:var(--gris-texte);margin-bottom:28px;">
+            Retrouve tous les concours en cours, à venir et terminés en Côte d'Ivoire,
+            avec toutes les informations dont tu as besoin pour candidater.
+          </p>
+          <a href="/concours.html" class="btn btn--primaire btn--lg">Voir tous les concours →</a>
         </div>
       </div>
     </section>
@@ -550,52 +534,6 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        // ── Concours ouverts ──────────────────────────────────────
-        const conteneurConcours = document.getElementById("concours-vedette");
-        try {
-          const data = await window.API.Concours.ouverts();
-          const liste = data.concours?.slice(0, 3) || [];
-
-          if (liste.length === 0) {
-            conteneurConcours.innerHTML = `
-        <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gris-texte);">
-          Aucun concours ouvert pour le moment. <a href="/concours.html" style="color:var(--vert);">Voir tous les concours →</a>
-        </div>`;
-          } else {
-            conteneurConcours.innerHTML = liste
-              .map(
-                (c) => `
-        <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:${c.couleur || "var(--vert)"};">
-          <div class="card-concours__en-tete">
-            <div class="card-concours__meta">
-              <span class="badge badge--vert">${c.categorie}</span>
-              <span class="badge badge--rouge">Ouvert</span>
-              ${c.premium ? '<span class="badge badge--premium">Premium</span>' : ""}
-            </div>
-            <div class="card-concours__titre">${c.titre}</div>
-            <div class="card-concours__infos">
-              <span class="card-concours__info">${window.icone ? window.icone("institution", 14) : ""} ${c.organisme}</span>
-              <span class="card-concours__info">${window.icone ? window.icone("document", 14) : ""} ${c.niveau || "—"}</span>
-              <span class="card-concours__info">${window.icone ? window.icone("utilisateurs", 14) : ""} ${c.places || "—"} places</span>
-              <span class="card-concours__info">${window.icone ? window.icone("paiement", 14) : ""} ${c.frais ? c.frais.toLocaleString("fr-CI") + " FCFA" : "Gratuit"}</span>
-            </div>
-          </div>
-          <div class="card-concours__pied">
-            <span class="card-concours__cloture">${window.icone ? window.icone("horloge", 13) : ""} Clôture : ${c.cloture || "—"}</span>
-            <span class="badge badge--vert">Voir →</span>
-          </div>
-        </a>
-      `,
-              )
-              .join("");
-          }
-        } catch {
-          conteneurConcours.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gris-texte);">
-        Impossible de charger les concours. <a href="/concours.html" style="color:var(--vert);">Réessayer →</a>
-      </div>`;
-        }
-
         // ── Plans Premium ─────────────────────────────────────────
         const conteneurPlans = document.getElementById("plans-container");
         try {

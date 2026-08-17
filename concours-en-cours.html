@@ -53,6 +53,7 @@
     <script src="/js/api.js"></script>
     <script src="/js/auth.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/concours-cartes.js"></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
@@ -72,35 +73,11 @@
             return;
           }
 
-          div.innerHTML = concours.map(carteConcours).join("");
+          div.innerHTML = concours.map((c) => window.construireCarteConcours(c)).join("");
         } catch (err) {
           div.innerHTML = `<p style="color:#dc2626;grid-column:1/-1;">Erreur de chargement : ${err.message}</p>`;
         }
       });
-
-      function carteConcours(c) {
-        const couleur = c.couleur || "var(--vert)";
-        return `
-    <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:${couleur};text-decoration:none;">
-      <div class="card-concours__en-tete">
-        <div class="card-concours__meta">
-          <span class="badge" style="background:${couleur}18;color:${couleur};border:1px solid ${couleur}33;">${c.categorie}</span>
-          <span class="badge" style="background:var(--rouge)18;color:var(--rouge);border:1px solid var(--rouge)33;">🔴 Ouvert</span>
-        </div>
-        <div class="card-concours__titre">${c.titre}</div>
-        <div class="card-concours__infos mt-1">
-          <span class="card-concours__info">🏢 ${c.organisme}</span>
-          <span class="card-concours__info">🎓 ${c.niveau || "—"}</span>
-          <span class="card-concours__info">👥 ${c.places ? c.places + " places" : "—"}</span>
-          <span class="card-concours__info">💰 ${c.frais ? c.frais.toLocaleString("fr-CI") + " FCFA" : "Gratuit"}</span>
-        </div>
-      </div>
-      <div class="card-concours__pied">
-        <span class="card-concours__cloture">⏰ Clôture : ${c.cloture || "—"}</span>
-        <span style="font-size:0.82rem;color:${couleur};font-weight:700;">Voir les détails →</span>
-      </div>
-    </a>`;
-      }
     </script>
   </body>
 </html>
