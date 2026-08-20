@@ -74,6 +74,11 @@
         height: 16px;
         cursor: pointer;
       }
+      .filtre-compteur {
+        font-size: 0.78rem;
+        color: var(--gris-texte);
+        font-weight: 600;
+      }
       .tri-select {
         padding: 8px 14px;
         border: 1.5px solid var(--gris-bordure);
@@ -310,7 +315,7 @@
                     value=""
                     onchange="appliquerFiltres()"
                   />
-                  Tous</label
+                  Tous <span class="filtre-compteur" id="cpt-tous"></span></label
                 >
                 <label class="filtre-check"
                   ><input
@@ -320,7 +325,7 @@
                     checked
                     onchange="appliquerFiltres()"
                   />
-                  🔴 Ouverts (en cours)</label
+                  🟢 En cours <span class="filtre-compteur" id="cpt-ouvert"></span></label
                 >
                 <label class="filtre-check"
                   ><input
@@ -329,7 +334,7 @@
                     value="à venir"
                     onchange="appliquerFiltres()"
                   />
-                  🔵 À venir</label
+                  🔵 À venir <span class="filtre-compteur" id="cpt-a-venir"></span></label
                 >
                 <label class="filtre-check"
                   ><input
@@ -338,16 +343,25 @@
                     value="fermé"
                     onchange="appliquerFiltres()"
                   />
-                  ⚫ Fermés</label
+                  ⚫ Terminés <span class="filtre-compteur" id="cpt-ferme"></span></label
                 >
                 <label class="filtre-check"
                   ><input
                     type="radio"
                     name="statut"
-                    value="résultats"
+                    value="information non confirmée"
                     onchange="appliquerFiltres()"
                   />
-                  <span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Résultats</label
+                  🟡 Date non définie <span class="filtre-compteur" id="cpt-non-definie"></span></label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="statut"
+                    value="suspendu"
+                    onchange="appliquerFiltres()"
+                  />
+                  🔴 Suspendu / Annulé <span class="filtre-compteur" id="cpt-suspendu"></span></label
                 >
               </div>
 
@@ -589,6 +603,7 @@
       // ── Chargement initial ────────────────────────────────────────
       document.addEventListener("DOMContentLoaded", async () => {
         await chargerConcours();
+        chargerCompteurs(); // en parallèle, n'a pas besoin d'être attendu avant d'afficher les concours
 
         // Pré-applique les paramètres URL
         const params = new URLSearchParams(window.location.search);
@@ -612,6 +627,39 @@
         }
         appliquerFiltres();
       });
+
+      // ── Compteurs dynamiques par statut (jamais codés en dur) ───────
+      // "fermé" et "résultats" sont additionnés sous le même compteur
+      // "Terminés", cohérent avec le filtre qui les fusionne déjà (voir
+      // Concours.findAll côté backend) et avec le badge visuel identique
+      // affiché sur les cartes pour les deux statuts.
+      async function chargerCompteurs() {
+        try {
+          const stats = await window.API.Concours.stats();
+          const parStatut = {};
+          for (const s of stats.parStatut) parStatut[s.statut] = s.total;
+
+          const cptTermines = (parStatut["fermé"] || 0) + (parStatut["résultats"] || 0);
+
+          const cibles = {
+            "cpt-tous": stats.total,
+            "cpt-ouvert": parStatut["ouvert"] || 0,
+            "cpt-a-venir": parStatut["à venir"] || 0,
+            "cpt-ferme": cptTermines,
+            "cpt-non-definie": parStatut["information non confirmée"] || 0,
+            "cpt-suspendu": parStatut["suspendu"] || 0,
+          };
+          for (const [id, valeur] of Object.entries(cibles)) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = `(${valeur})`;
+          }
+        } catch (err) {
+          // Non bloquant : les filtres restent utilisables même si les
+          // compteurs échouent à charger — juste sans le nombre entre
+          // parenthèses à côté de chaque option.
+          console.warn("Compteurs concours indisponibles :", err.message);
+        }
+      }
 
       // ── Sélection rapide par niveau de diplôme ──────────────────────
       function filtrerParNiveauRapide(niveau) {
