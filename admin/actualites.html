@@ -1,0 +1,379 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion Actualités — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
+          >
+          <a href="/admin/actualites.html" class="admin-sidebar__lien actif"
+            ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Actualités</a
+          >
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a
+          >
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
+          >
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a
+          >
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Actualités</div>
+              <div class="admin-topbar__sous" id="compteur-actu">Chargement…</div>
+            </div>
+            <div style="display: flex; gap: 10px">
+              <button
+                onclick="actualiserFlux()"
+                class="btn btn--outline-vert"
+                id="btn-actualiser"
+                title="Relance l'agrégation depuis les flux RSS externes configurés (ACTUALITES_FLUX_URLS)"
+              >
+                ⟳ Actualiser depuis les flux externes
+              </button>
+              <button onclick="ouvrirAjout()" class="btn btn--primaire">
+                + Ajouter une actualité
+              </button>
+            </div>
+          </div>
+
+          <div
+            style="
+              background: var(--blanc);
+              border: 1px solid var(--gris-bordure);
+              border-radius: var(--radius-md);
+              padding: 12px 16px;
+              margin-bottom: 20px;
+              font-size: 0.85rem;
+              color: var(--gris-texte);
+            "
+          >
+            💡 Les actualités <strong>Auto</strong> proviennent d'un flux RSS externe
+            (nécessite <code>ACTUALITES_FLUX_URLS</code> côté backend). Les actualités
+            <strong>Manuel</strong> sont saisies ici. Elles alimentent à la fois la
+            section "Dernières actualités" de la page d'accueil et le bandeau
+            défilant en haut du site.
+          </div>
+
+          <div class="filtres-bar" style="margin-bottom:20px;">
+            <select id="filtre-tag" class="form-input" onchange="filtrerActus()">
+              <option value="">Tous les tags</option>
+              <option value="Résultats">Résultats</option>
+              <option value="Communiqué">Communiqué</option>
+              <option value="CAFOP">CAFOP</option>
+              <option value="ENA">ENA</option>
+              <option value="Vigilance">Vigilance</option>
+              <option value="Emploi">Emploi</option>
+              <option value="Social">Social</option>
+              <option value="Actualité">Actualité (générique)</option>
+            </select>
+            <select id="filtre-actif" class="form-input" onchange="filtrerActus()">
+              <option value="">Actives et inactives</option>
+              <option value="true">Actives seulement</option>
+              <option value="false">Inactives seulement</option>
+            </select>
+          </div>
+
+          <div class="admin-tableau-wrap">
+            <table class="admin-tableau">
+              <thead>
+                <tr>
+                  <th>Titre</th>
+                  <th>Tag</th>
+                  <th>Source</th>
+                  <th>Publiée le</th>
+                  <th>Statut</th>
+                  <th>Origine</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-actu">
+                <tr>
+                  <td colspan="7" style="text-align: center; padding: 40px; color: var(--gris-texte);">
+                    Chargement…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal ajout/édition -->
+    <div id="modal-add-actu" class="modal hidden">
+      <div class="modal__contenu" style="max-width: 560px">
+        <div class="modal__en-tete">
+          <h3 id="modal-actu-titre"><span data-icone="ajouter" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ajouter une actualité</h3>
+          <button onclick="fermerModal('modal-add-actu')" class="modal__fermer">✕</button>
+        </div>
+        <div class="modal__corps">
+          <div class="form-groupe">
+            <label class="form-label">Titre <span>*</span></label>
+            <textarea id="actu-titre" class="form-input" rows="2" placeholder="Ex: Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet"></textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+            <div class="form-groupe">
+              <label class="form-label">Tag</label>
+              <select id="actu-tag" class="form-input">
+                <option value="Actualité">Actualité (générique)</option>
+                <option value="Résultats">Résultats</option>
+                <option value="Communiqué">Communiqué</option>
+                <option value="CAFOP">CAFOP</option>
+                <option value="ENA">ENA</option>
+                <option value="Vigilance">Vigilance</option>
+                <option value="Emploi">Emploi</option>
+                <option value="Social">Social</option>
+              </select>
+            </div>
+            <div class="form-groupe">
+              <label class="form-label">Publiée le</label>
+              <input type="date" id="actu-publie-le" class="form-input" />
+            </div>
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">Source (nom affiché)</label>
+            <input type="text" id="actu-source-nom" class="form-input" placeholder="Ex: GUCA-CI, Fonction Publique CI…" />
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">Lien (vers la source ou l'article complet)</label>
+            <input type="url" id="actu-lien" class="form-input" placeholder="https://..." />
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">Statut</label>
+            <select id="actu-actif" class="form-input">
+              <option value="true">Active (visible sur le site)</option>
+              <option value="false">Inactive (masquée)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal__pied">
+          <button onclick="fermerModal('modal-add-actu')" class="btn btn--gris">Annuler</button>
+          <button onclick="sauvegarderActu()" class="btn btn--primaire">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      let toutesActusAdmin = [];
+      let editActuId = null;
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.protegerPageAdmin()) return;
+        await charger();
+      });
+
+      async function charger() {
+        try {
+          const data = await window.API.Actualites.liste({ limit: 500 });
+          toutesActusAdmin = data.actualites || [];
+          filtrerActus();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      function filtrerActus() {
+        const tag = document.getElementById("filtre-tag").value;
+        const actif = document.getElementById("filtre-actif").value;
+        let liste = toutesActusAdmin;
+        if (tag) liste = liste.filter((a) => a.tag === tag);
+        if (actif) liste = liste.filter((a) => String(a.actif) === actif);
+
+        document.getElementById("compteur-actu").textContent =
+          `${liste.length} / ${toutesActusAdmin.length} actualité(s)`;
+        const tbody = document.getElementById("tbody-actu");
+        if (liste.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = liste
+          .map((a) => `
+    <tr>
+      <td style="font-weight:700;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${a.titre}</td>
+      <td><span class="badge badge--violet" style="font-size:0.7rem;">${a.tag || "Actualité"}</span></td>
+      <td style="font-size:0.82rem;">${a.source_nom || "—"}</td>
+      <td style="font-size:0.8rem;">${a.publie_le ? new Date(a.publie_le).toLocaleDateString("fr-FR") : "—"}</td>
+      <td>${a.actif ? '<span class="badge" style="font-size:0.7rem;background:#dcfce7;color:#166534;">Active</span>' : '<span class="badge" style="font-size:0.7rem;background:#f1f5f9;color:#475569;">Inactive</span>'}</td>
+      <td>${a.origine === "auto" ? '<span class="badge" style="font-size:0.7rem;background:#e0f2fe;color:#0369a1;">⟳ Auto</span>' : '<span class="badge" style="font-size:0.7rem;background:#f1f5f9;color:#475569;">Manuel</span>'}</td>
+      <td><div class="admin-tableau__actions">
+        <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${a.id})">✏️</button>
+        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${a.id},'${(a.titre || "").replace(/'/g, "\\'")}')">🗑️</button>
+      </div></td>
+    </tr>`)
+          .join("");
+      }
+
+      async function actualiserFlux() {
+        const btn = document.getElementById("btn-actualiser");
+        btn.disabled = true;
+        btn.textContent = "⟳ Synchronisation…";
+        try {
+          const res = await window.API.Actualites.actualiser();
+          window.afficherToast(res.message, "succes");
+          await charger();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "⟳ Actualiser depuis les flux externes";
+        }
+      }
+
+      function ouvrirAjout() {
+        editActuId = null;
+        document.getElementById("modal-actu-titre").innerHTML =
+          '<span data-icone="ajouter" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ajouter une actualité';
+        document.getElementById("actu-titre").value = "";
+        document.getElementById("actu-tag").value = "Actualité";
+        document.getElementById("actu-publie-le").value = new Date().toISOString().slice(0, 10);
+        document.getElementById("actu-source-nom").value = "";
+        document.getElementById("actu-lien").value = "";
+        document.getElementById("actu-actif").value = "true";
+        ouvrirModal("modal-add-actu");
+      }
+
+      function editer(id) {
+        const a = toutesActusAdmin.find((x) => x.id === id);
+        if (!a) return;
+        editActuId = id;
+        document.getElementById("modal-actu-titre").innerHTML =
+          '<span data-icone="crayon" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Modifier l\'actualité';
+        document.getElementById("actu-titre").value = a.titre || "";
+        document.getElementById("actu-tag").value = a.tag || "Actualité";
+        document.getElementById("actu-publie-le").value = a.publie_le ? a.publie_le.slice(0, 10) : "";
+        document.getElementById("actu-source-nom").value = a.source_nom || "";
+        document.getElementById("actu-lien").value = a.lien || "";
+        document.getElementById("actu-actif").value = String(a.actif !== false);
+        ouvrirModal("modal-add-actu");
+      }
+
+      async function sauvegarderActu() {
+        const titre = document.getElementById("actu-titre").value.trim();
+        if (!titre) {
+          window.afficherToast("Le titre est requis.", "erreur");
+          return;
+        }
+        const payload = {
+          titre,
+          tag: document.getElementById("actu-tag").value,
+          publie_le: document.getElementById("actu-publie-le").value || null,
+          source_nom: document.getElementById("actu-source-nom").value.trim(),
+          lien: document.getElementById("actu-lien").value.trim(),
+          actif: document.getElementById("actu-actif").value === "true",
+        };
+        try {
+          if (editActuId) {
+            await window.API.Actualites.modifier(editActuId, payload);
+            window.afficherToast("Actualité modifiée.", "succes");
+          } else {
+            await window.API.Actualites.creer(payload);
+            window.afficherToast("Actualité ajoutée.", "succes");
+          }
+          fermerModal("modal-add-actu");
+          editActuId = null;
+          await charger();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+
+      async function supprimer(id, titre) {
+        if (!confirm(`Supprimer l'actualité "${titre}" ? Cette action est irréversible.`)) return;
+        try {
+          await window.API.Actualites.supprimer(id);
+          window.afficherToast("Actualité supprimée.", "succes");
+          await charger();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -15,29 +15,46 @@
 //  du lien vers la fiche détaillée du concours sur EduConcoursCI.
 // ============================================================
 
+// ⚠️ Changement de convention couleur/emoji (LOT21) : le site utilisait
+// jusqu'ici 🔴 pour "ouvert/en cours" partout (menu, page d'accueil,
+// filtres). Le nouveau cahier des charges Concours demande explicitement
+// 🟢 pour "En cours" et réserve 🔴 à "Suspendu/Annulé". Appliqué ici, dans
+// le module central des cartes — mais PAS encore répercuté sur les
+// libellés codés en dur ailleurs (menu de navigation, cases à cocher de
+// filtre sur concours.html) : à corriger dans un prochain lot pour une
+// cohérence visuelle complète sur tout le site.
 const STATUT_COULEUR_CONCOURS = {
-  ouvert: "var(--rouge)",
+  ouvert: "#16a34a",
   "à venir": "var(--bleu)",
   fermé: "var(--gris-texte)",
-  résultats: "var(--orange)",
-  "information non confirmée": "#9333ea",
+  résultats: "var(--gris-texte)", // replié visuellement sous "Terminé"
+  "information non confirmée": "#ca8a04",
+  suspendu: "var(--rouge)",
 };
 const STATUT_EMOJI_CONCOURS = {
-  ouvert: "🔴",
+  ouvert: "🟢",
   "à venir": "🔵",
   fermé: "⚫",
-  résultats: "🏆",
-  "information non confirmée": "❔",
+  résultats: "⚫",
+  "information non confirmée": "🟡",
+  suspendu: "🔴",
 };
 // Libellé affiché à l'utilisateur, distinct de la valeur technique
 // stockée en base (dont dépend concoursStatutScheduler.js pour
 // recalculer automatiquement le statut à partir des dates réelles).
+// "résultats" est replié sous le même libellé que "fermé" : un
+// concours dont les résultats sont publiés reste, pour l'utilisateur,
+// un concours "Terminé" — la distinction technique entre les deux
+// reste utile en base (le statut résultats ne doit jamais être
+// recalculé automatiquement, voir concoursStatutScheduler.js) mais
+// n'a pas besoin d'être une 7ᵉ catégorie visible séparément.
 const STATUT_LABEL_CONCOURS = {
   ouvert: "En cours",
   "à venir": "À venir",
   fermé: "Terminé",
-  résultats: "Résultats disponibles",
-  "information non confirmée": "Information non confirmée",
+  résultats: "Terminé",
+  "information non confirmée": "Date non définie",
+  suspendu: "Suspendu / Annulé",
 };
 
 function fraisAfficheConcours(c) {

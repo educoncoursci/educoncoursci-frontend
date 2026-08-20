@@ -57,6 +57,7 @@
           <a href="/admin/concours.html" class="admin-sidebar__lien actif"
             ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
           >
+          <a href="/admin/actualites.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Actualités</a>
           <a href="/admin/referentiels.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a
           >
@@ -103,6 +104,14 @@
               </div>
             </div>
             <div style="display:flex;gap:10px;">
+              <button
+                onclick="lancerReseeding()"
+                class="btn btn--gris"
+                id="btn-reseeder"
+                title="Crée les fiches de la bibliothèque de concours vérifiés qui n'existent pas encore (sans écraser ni dupliquer celles déjà présentes). Alternative à 'npm run concours:seed' — utile car le Shell n'est pas disponible sur le plan gratuit Render."
+              >
+                📚 Charger la bibliothèque de concours
+              </button>
               <button onclick="filtrerVerification()" class="btn btn--gris" id="btn-a-verifier">
                 ⚠️ Dates à vérifier <span id="badge-a-verifier" class="hidden badge badge--orange" style="margin-left:4px;">0</span>
               </button>
@@ -326,12 +335,13 @@
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
             <div class="form-groupe">
               <label class="form-label">Statut <span>*</span></label>
-              <select id="conc-statut" class="form-input">
-                <option value="ouvert">🔴 En cours</option>
+              <select id="conc-statut" class="form-input" onchange="surSelectionStatutManuel()">
+                <option value="ouvert">🟢 En cours</option>
                 <option value="à venir">🔵 À venir</option>
-                <option value="fermé">⚫ Fermé</option>
-                <option value="résultats">🏆 Résultats publiés</option>
-                <option value="information non confirmée">❔ Information non confirmée</option>
+                <option value="fermé">⚫ Terminé</option>
+                <option value="résultats">⚫ Terminé (résultats publiés)</option>
+                <option value="information non confirmée">🟡 Date non définie</option>
+                <option value="suspendu">🔴 Suspendu / Annulé</option>
               </select>
             </div>
             <div class="form-groupe">
@@ -688,10 +698,51 @@
 
       // Bascule le filtre "À vérifier seulement" en un clic depuis le
       // bouton d'en-tête, sans avoir à ouvrir le menu déroulant.
+      async function lancerReseeding() {
+        if (!confirm("Charger la bibliothèque de concours vérifiés ? Les fiches déjà présentes ne seront ni dupliquées ni écrasées — seules les nouvelles seront créées.")) return;
+        const btn = document.getElementById("btn-reseeder");
+        const texteOriginal = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = "⏳ Chargement en cours…";
+        try {
+          const resume = await window.API.Concours.reseeder();
+          window.afficherToast(resume.message, "succes");
+          if (resume.erreurs && resume.erreurs.length) {
+            console.warn("Erreurs lors de l'ensemencement :", resume.erreurs);
+            window.afficherToast(`${resume.erreurs.length} fiche(s) en erreur — voir la console.`, "warn");
+          }
+          await charger();
+        } catch (err) {
+          window.afficherToast("Erreur : " + err.message, "erreur");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = texteOriginal;
+        }
+      }
+
       function filtrerVerification() {
         const select = document.getElementById("fil-verif-conc");
         select.value = select.value === "false" ? "" : "false";
         filtrerConcours();
+      }
+
+      // "suspendu" et "résultats" sont des statuts intrinsèquement
+      // manuels (jamais déductibles d'une date) — si l'admin en choisit
+      // un alors que "calcul automatique" est encore coché, le prochain
+      // recalcul nocturne (concoursStatutScheduler.js) écraserait
+      // silencieusement ce choix. On décoche donc automatiquement la
+      // case, avec un avertissement visible plutôt qu'une action
+      // silencieuse que l'admin ne remarquerait pas.
+      function surSelectionStatutManuel() {
+        const statut = document.getElementById("conc-statut").value;
+        const caseAuto = document.getElementById("conc-statut-auto");
+        if ((statut === "suspendu" || statut === "résultats") && caseAuto.checked) {
+          caseAuto.checked = false;
+          window.afficherToast?.(
+            '"Calcul automatique" a été décoché — ce statut est manuel et ne doit pas être recalculé par date.',
+            "info",
+          );
+        }
       }
 
       function ouvrirAjout() {

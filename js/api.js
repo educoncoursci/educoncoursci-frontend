@@ -170,12 +170,24 @@ async ouverts() {
 return apiCall("/concours/ouverts");
 },
 
+// Compteurs dynamiques par statut/section (jamais codés en dur)
+async stats() {
+return apiCall("/concours/stats");
+},
+
 // Admin
 async creer(data) {
 return apiCall("/concours", {
 method: "POST",
 body: JSON.stringify(data),
 });
+},
+
+// Lance la bibliothèque de concours vérifiés — alternative à
+// `npm run concours:seed` pour les hébergeurs sans Shell (Render
+// gratuit). Idempotent : rejouable sans risque de doublon.
+async reseeder() {
+return apiCall("/concours/reseeder", { method: "POST" });
 },
 
 async modifier(id, data) {
