@@ -404,19 +404,21 @@
           <h2>Dernières nouvelles</h2>
           <p>Résultats, nouvelles inscriptions, annonces officielles.</p>
         </div>
-        <div class="grille-3" id="actualites-home">
-          <div
-            class="skeleton"
-            style="height: 150px; border-radius: 16px"
-          ></div>
-          <div
-            class="skeleton"
-            style="height: 150px; border-radius: 16px"
-          ></div>
-          <div
-            class="skeleton"
-            style="height: 150px; border-radius: 16px"
-          ></div>
+        <div class="actu-scroll" id="actu-scroll-piste">
+          <div class="actu-scroll__track" id="actualites-home">
+            <div
+              class="skeleton"
+              style="height: 150px; width: 300px; border-radius: 16px; flex-shrink:0;"
+            ></div>
+            <div
+              class="skeleton"
+              style="height: 150px; width: 300px; border-radius: 16px; flex-shrink:0;"
+            ></div>
+            <div
+              class="skeleton"
+              style="height: 150px; width: 300px; border-radius: 16px; flex-shrink:0;"
+            ></div>
+          </div>
         </div>
         <div class="text-center mt-3">
           <a href="/actualites.html" class="btn btn--outline-vert"
@@ -627,31 +629,46 @@
           }
 
           if (actus.length === 0) {
-            conteneurActus.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gris-texte);">
+            // État vide : remplace tout le conteneur défilant par un
+            // message centré simple — pas de sens à faire "défiler"
+            // un message unique.
+            const piste = document.getElementById("actu-scroll-piste");
+            if (piste) {
+              piste.outerHTML = `
+      <div style="text-align:center;padding:40px;color:var(--gris-texte);">
         Aucune actualité pour le moment. <a href="/actualites.html" style="color:var(--vert);">Voir les actualités →</a>
       </div>`;
+            }
           } else {
-            conteneurActus.innerHTML = actus
-              .slice(0, 3)
-              .map((a) => {
-                const contenu = `
+            const construireCarteActu = (a) => {
+              const contenu = `
         <div class="card__contenu" style="padding:18px;">
           <span class="badge badge--vert">${echapperTexte(a.tag || "Actualité")}</span>
           <div style="font-weight:700;margin-top:10px;line-height:1.4;">${echapperTexte(a.titre)}</div>
           ${a.source_nom ? `<div style="font-size:0.78rem;color:var(--gris-texte);margin-top:10px;">${echapperTexte(a.source_nom)}</div>` : ""}
         </div>`;
-                return a.lien
-                  ? `<a href="${encodeURI(a.lien)}" target="_blank" rel="noopener" class="card card--lien">${contenu}</a>`
-                  : `<a href="/actualites.html" class="card card--lien">${contenu}</a>`;
-              })
-              .join("");
+              return a.lien
+                ? `<a href="${encodeURI(a.lien)}" target="_blank" rel="noopener" class="card card--lien">${contenu}</a>`
+                : `<a href="/actualites.html" class="card card--lien">${contenu}</a>`;
+            };
+            // Dupliqué une fois pour la boucle de défilement continue
+            // (même principe que le bandeau flash-info) — nécessite au
+            // moins 2 actualités pour boucler proprement ; avec une
+            // seule, la copie est simplement identique, sans effet
+            // visuel gênant.
+            conteneurActus.innerHTML = actus.map(construireCarteActu).join("") + actus.map(construireCarteActu).join("");
           }
         } catch {
-          conteneurActus.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gris-texte);">
+          // Même logique que l'état vide ci-dessus : remplace tout le
+          // conteneur défilant, pas juste son contenu (sinon le message
+          // hériterait de la largeur fixe de 300px prévue pour une carte).
+          const piste = document.getElementById("actu-scroll-piste");
+          if (piste) {
+            piste.outerHTML = `
+      <div style="text-align:center;padding:40px;color:var(--gris-texte);">
         Impossible de charger les actualités. <a href="/actualites.html" style="color:var(--vert);">Voir les actualités →</a>
       </div>`;
+          }
         }
 
         // ── Statistiques nationales ─────────────────────────────────
