@@ -111,3 +111,41 @@
     font-size: 0.78rem;
   }
 }
+
+/* ============================================================
+   ACTU-SCROLL — section "Dernières nouvelles" de la page d'accueil,
+   même principe de défilement continu droite→gauche que le bandeau
+   flash-info ci-dessus (translateX 0 → -50%, contenu dupliqué pour
+   une boucle sans à-coup, pause au survol) — mais avec des cartes
+   au lieu de simples lignes de texte.
+   ============================================================ */
+.actu-scroll {
+  overflow: hidden;
+  position: relative;
+  /* Estompe doucement les bords gauche/droit plutôt qu'une coupure nette */
+  mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+}
+.actu-scroll__track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  animation: actu-defile 40s linear infinite;
+  will-change: transform;
+}
+.actu-scroll:hover .actu-scroll__track {
+  animation-play-state: paused;
+}
+@keyframes actu-defile {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.actu-scroll__track > * {
+  flex-shrink: 0;
+  width: 300px;
+}
+@media (max-width: 640px) {
+  .actu-scroll__track > * {
+    width: 240px;
+  }
+}
