@@ -151,14 +151,14 @@
 
           document.getElementById("offre-partenaire").innerHTML =
             `<option value="">— Choisir un partenaire —</option>` +
-            partenairesCache.map((p) => `<option value="${p.id}">${p.nom}</option>`).join("");
+            partenairesCache.map((p) => `<option value="${p.id}">${echapperHtml(p.nom)}</option>`).join("");
 
           const tbody = document.getElementById("tbody-partenaires");
           tbody.innerHTML = partenairesCache.length
             ? partenairesCache.map((p) => `
               <tr>
-                <td style="font-weight:700;">${p.nom}</td>
-                <td style="font-size:0.82rem;">${p.email || ""}${p.telephone ? `<br>${p.telephone}` : ""}</td>
+                <td style="font-weight:700;">${echapperHtml(p.nom)}</td>
+                <td style="font-size:0.82rem;">${echapperHtml(p.email || "")}${p.telephone ? `<br>${echapperHtml(p.telephone)}` : ""}</td>
                 <td><button class="badge ${p.statut === "actif" ? "badge--vert" : "badge--gris"}" style="border:none;cursor:pointer;" onclick="basculerStatutPartenaire(${p.id}, '${p.statut}')">${p.statut === "actif" ? "✓ Actif" : "Inactif"}</button></td>
                 <td><button class="btn btn--gris btn--sm" onclick="supprimerPartenaire(${p.id})">Supprimer</button></td>
               </tr>`).join("")
@@ -213,7 +213,7 @@
           tbody.innerHTML = data.offres.length
             ? data.offres.map((o) => `
               <tr>
-                <td style="font-weight:700;">${o.titre}<div style="font-size:0.75rem;color:var(--gris-texte);font-weight:400;">${LABELS_CAT_OFFRE[o.categorie] || o.categorie}</div></td>
+                <td style="font-weight:700;">${echapperHtml(o.titre)}<div style="font-size:0.75rem;color:var(--gris-texte);font-weight:400;">${LABELS_CAT_OFFRE[o.categorie] || o.categorie}</div></td>
                 <td style="font-size:0.85rem;">${o.partenaire_nom}</td>
                 <td style="font-size:0.85rem;">${o.prix ? `${o.prix.toLocaleString("fr-FR")} F ${o.prix_unite}` : "—"}</td>
                 <td>

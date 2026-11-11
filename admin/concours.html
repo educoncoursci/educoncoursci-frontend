@@ -613,13 +613,13 @@
           const selStructure = document.getElementById("conc-structure");
           selStructure.innerHTML =
             '<option value="">— Non renseigné —</option>' +
-            structures.map((s) => `<option value="${s.id}">${s.nom}${s.sigle ? ` (${s.sigle})` : ""}</option>`).join("");
+            structures.map((s) => `<option value="${s.id}">${echapperHtml(s.nom)}${s.sigle ? ` (${echapperHtml(s.sigle)})` : ""}</option>`).join("");
 
           document.getElementById("conc-matieres").innerHTML = matieres
-            .map((m) => `<option value="${m.id}">${m.nom}</option>`).join("");
+            .map((m) => `<option value="${m.id}">${echapperHtml(m.nom)}</option>`).join("");
 
           document.getElementById("conc-diplomes").innerHTML = diplomes
-            .map((d) => `<option value="${d.id}">${d.nom}</option>`).join("");
+            .map((d) => `<option value="${d.id}">${echapperHtml(d.nom)}</option>`).join("");
         } catch (err) {
           // Pas bloquant pour le reste de la page — les champs resteront simplement vides
           console.error("Erreur chargement référentiels :", err.message);
@@ -665,9 +665,9 @@
           .map(
             (c) => `
     <tr>
-      <td style="font-weight:700;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.titre}</td>
-      <td style="font-size:0.85rem;">${c.organisme || "—"}</td>
-      <td><span class="badge badge--violet" style="font-size:0.7rem;">${c.categorie || "—"}</span></td>
+      <td style="font-weight:700;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${echapperHtml(c.titre)}</td>
+      <td style="font-size:0.85rem;">${echapperHtml(c.organisme || "—")}</td>
+      <td><span class="badge badge--violet" style="font-size:0.7rem;">${echapperHtml(c.categorie || "—")}</span></td>
       <td style="font-size:0.82rem;">${STATUT_EMOJI_ADMIN[c.statut] || "📋"} ${STATUT_LABEL_ADMIN[c.statut] || c.statut || "—"}</td>
       <td style="font-size:0.82rem;">
         ${c.cloture || "—"}
@@ -677,7 +677,7 @@
       <td>${c.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐</span>' : '<span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span>'}</td>
       <td><div class="admin-tableau__actions">
         <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${c.id})">✏️</button>
-        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${c.id},'${(c.titre || "").replace(/'/g, "\\'")}')">🗑️</button>
+        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${c.id},${echapperHtml(JSON.stringify((c.titre || "")))})">🗑️</button>
       </div></td>
     </tr>`,
           )
@@ -1034,17 +1034,17 @@
           div.innerHTML = suggestions.length
             ? suggestions.map((s) => `
               <div style="border:1px solid var(--gris-bordure);border-radius:10px;padding:12px 14px;margin-bottom:10px;">
-                <div style="font-weight:700;font-size:0.88rem;">${s.titre}</div>
+                <div style="font-weight:700;font-size:0.88rem;">${echapperHtml(s.titre)}</div>
                 <div style="font-size:0.78rem;color:var(--gris-texte);margin:4px 0 8px;">${s.extrait || ""}</div>
-                <div style="font-size:0.75rem;color:var(--gris-texte);margin-bottom:8px;">📡 ${s.source_nom || "?"} ${s.lien ? `· <a href="${s.lien}" target="_blank" rel="noopener">Voir l'article ↗</a>` : ""}</div>
+                <div style="font-size:0.75rem;color:var(--gris-texte);margin-bottom:8px;">📡 ${echapperHtml(s.source_nom || "?")} ${s.lien ? `· <a href="${echapperHtml(urlSure(s.lien, "#"))}" target="_blank" rel="noopener">Voir l'article ↗</a>` : ""}</div>
                 <div style="display:flex;gap:8px;">
-                  <button class="btn btn--vert btn--sm" onclick="approuverSuggestion(${s.id}, '${s.titre.replace(/'/g, "\\'")}')">✓ Approuver / compléter</button>
+                  <button class="btn btn--vert btn--sm" onclick="approuverSuggestion(${s.id}, ${echapperHtml(JSON.stringify(s.titre))})">✓ Approuver / compléter</button>
                   <button class="btn btn--gris btn--sm" onclick="rejeterSuggestion(${s.id})">✕ Rejeter</button>
                 </div>
               </div>`).join("")
             : `<p style="text-align:center;color:var(--gris-texte);padding:20px;">Aucune suggestion en attente.</p>`;
         } catch (err) {
-          div.innerHTML = `<p style="color:#dc2626;">Erreur : ${err.message}</p>`;
+          div.innerHTML = `<p style="color:#dc2626;">Erreur : ${echapperHtml(err.message)}</p>`;
         }
       }
 
@@ -1085,7 +1085,7 @@
             ? sources.map((s) => `
               <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
                 <div>
-                  <div style="font-weight:700;font-size:0.85rem;">${s.nom}</div>
+                  <div style="font-weight:700;font-size:0.85rem;">${echapperHtml(s.nom)}</div>
                   <div style="font-size:0.75rem;color:var(--gris-texte);">${s.url}</div>
                 </div>
                 <div style="display:flex;gap:6px;">
@@ -1095,7 +1095,7 @@
               </div>`).join("")
             : `<p style="text-align:center;color:var(--gris-texte);padding:20px;">Aucune source configurée — les sources par défaut sont utilisées en attendant.</p>`;
         } catch (err) {
-          div.innerHTML = `<p style="color:#dc2626;">Erreur : ${err.message}</p>`;
+          div.innerHTML = `<p style="color:#dc2626;">Erreur : ${echapperHtml(err.message)}</p>`;
         }
       }
 

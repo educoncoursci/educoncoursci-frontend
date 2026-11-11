@@ -103,7 +103,8 @@
                 Chargement…
               </div>
             </div>
-            <div style="display: flex; gap: 10px">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap">
+              <a href="/admin/offres-soumises.html" class="btn btn--bleu">📩 Offres soumises</a>
               <button
                 onclick="actualiserFlux()"
                 class="btn btn--outline-vert"
@@ -548,7 +549,7 @@
             zoneErreurs.classList.remove("hidden");
             listeErreurs.innerHTML = s.dernieresErreurs.map((e) => `
               <div style="padding:6px 0;border-bottom:1px solid var(--gris-bordure);">
-                <strong>${e.source_nom}</strong> — ${e.message_erreur || "Erreur inconnue"}
+                <strong>${echapperHtml(e.source_nom)}</strong> — ${e.message_erreur || "Erreur inconnue"}
                 <span style="color:var(--gris-texte);"> · ${new Date(e.created_at).toLocaleString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span>
               </div>`).join("");
           } else {
@@ -559,7 +560,7 @@
           repartition.innerHTML = (s.parSource && s.parSource.length)
             ? s.parSource.map((r) => `
                 <div style="display:flex;justify-content:space-between;padding:4px 0;">
-                  <span>${r.source_nom}</span><strong>${r.total}</strong>
+                  <span>${echapperHtml(r.source_nom)}</span><strong>${r.total}</strong>
                 </div>`).join("")
             : `<div style="color:var(--gris-texte);">Aucune offre agrégée automatiquement pour l'instant.</div>`;
         } catch (err) {
@@ -605,17 +606,17 @@
             else if (estExpiree) statutReel = `<span class="badge" style="font-size:0.7rem;background:#fee2e2;color:#991b1b;">Expiré</span>`;
             return `
     <tr>
-      <td style="font-weight:700;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${o.titre}</td>
-      <td style="font-size:0.85rem;">${o.entreprise || "—"}</td>
-      <td><span class="badge badge--violet" style="font-size:0.7rem;">${o.type_contrat}</span></td>
-      <td style="font-size:0.82rem;">${o.ville || "—"}</td>
-      <td style="font-size:0.78rem;">${o.date_limite || "—"}</td>
+      <td style="font-weight:700;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${echapperHtml(o.titre)}</td>
+      <td style="font-size:0.85rem;">${echapperHtml(o.entreprise || "—")}</td>
+      <td><span class="badge badge--violet" style="font-size:0.7rem;">${echapperHtml(o.type_contrat)}</span></td>
+      <td style="font-size:0.82rem;">${echapperHtml(o.ville || "—")}</td>
+      <td style="font-size:0.78rem;">${echapperHtml(o.date_limite || "—")}</td>
       <td>${statutReel}</td>
-      <td style="font-size:0.78rem;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${o.source_nom || "EduConcoursCI"}</td>
+      <td style="font-size:0.78rem;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${echapperHtml(o.source_nom || "EduConcoursCI")}</td>
       <td>${o.origine === "auto" ? '<span class="badge" style="font-size:0.7rem;background:#e0f2fe;color:#0369a1;">⟳ Auto</span>' : '<span class="badge" style="font-size:0.7rem;background:#f1f5f9;color:#475569;">Manuel</span>'}</td>
       <td><div class="admin-tableau__actions">
         <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${o.id})">✏️</button>
-        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${o.id},'${(o.titre || "").replace(/'/g, "\\'")}')">🗑️</button>
+        <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${o.id},${echapperHtml(JSON.stringify((o.titre || "")))})">🗑️</button>
       </div></td>
     </tr>`;
           })

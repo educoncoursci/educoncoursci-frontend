@@ -1,0 +1,393 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offres soumises — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .q-item {
+        background: var(--gris-clair);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .q-suppr {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        color: var(--rouge);
+        font-size: 1.1rem;
+        cursor: pointer;
+        font-weight: 900;
+      }
+      .opt-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 6px;
+      }
+      .opt-lettre {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: var(--gris-bordure);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+
+      .ia-grille { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }
+      .ia-q { background:#fff; border:2px solid var(--gris-bordure); border-radius:14px; padding:16px; margin-bottom:14px; }
+      .ia-q--ok { border-color:var(--vert); }
+      .ia-q__entete { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+      .ia-alerte { background:#FFF7ED; border:1px solid #F5820D; color:#7A3E00; border-radius:10px; padding:8px 12px; font-size:.85rem; margin-bottom:10px; }
+      .ia-opt { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+      .ia-opt input[type=radio] { width:20px; height:20px; accent-color:var(--vert); flex-shrink:0; }
+      .ia-opt .form-input { padding:9px 12px; }
+      .ia-barre { position:sticky; bottom:0; background:#fff; border-top:1px solid var(--gris-bordure); padding:12px 0; display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center; z-index:5; }
+      .ia-verif { display:flex; align-items:center; gap:8px; font-weight:700; cursor:pointer; }
+      .ia-verif input { width:20px; height:20px; accent-color:var(--vert); }
+      .ia-note { font-size:.85rem; color:var(--gris-texte); margin-top:6px; }
+
+      .ac-lecon { background:#fff; border:2px solid var(--gris-bordure); border-radius:14px; padding:16px; margin-bottom:16px; }
+      .ac-lecon--ok { border-color:var(--vert); }
+      .ac-sous { background:var(--gris-clair); border-radius:10px; padding:12px; margin-top:10px; }
+      .ac-barre-actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+      textarea.form-textarea { font-family:inherit; }
+
+      .os-cartes { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:20px; }
+      .os-carte { background:#fff; border:1px solid var(--gris-bordure); border-radius:12px; padding:14px; }
+      .os-carte strong { display:block; font-size:1.4rem; }
+      .os-carte span { color:var(--gris-texte); font-size:.85rem; }
+      .os-detail { white-space:pre-wrap; background:var(--gris-clair); border-radius:10px; padding:10px 12px; margin:4px 0 10px; }
+    </style>
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
+          >
+          <a href="/admin/actualites.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Actualités</a>
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a
+          >
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
+          >
+          <a href="/admin/qcm-ia.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM par IA</a>
+          <a href="/admin/academie.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="diplome" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Académie</a>
+          <a href="/admin/offres-soumises.html" class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres soumises</a>
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a
+          >
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Offres soumises par les entreprises</div>
+              <div class="admin-topbar__sous">Étudie chaque demande, convient du tarif avec l'entreprise, puis publie.</div>
+            </div>
+            <a href="/emploi.html" target="_blank" rel="noopener" class="btn btn--gris btn--sm">Voir la page Emploi</a>
+          </div>
+
+          <div class="os-cartes" id="stats"></div>
+
+          <div class="admin-card" style="margin-bottom:20px;">
+            <div class="admin-card__header">
+              <div class="admin-card__titre">Demandes</div>
+              <select id="filtre" class="form-select" style="max-width:200px;" onchange="charger()">
+                <option value="en_attente">En attente</option><option value="acceptee">Publiées</option><option value="refusee">Refusées</option><option value="">Toutes</option>
+              </select>
+            </div>
+            <div class="admin-tableau-wrap">
+              <table class="admin-tableau">
+                <thead><tr><th>Entreprise / poste</th><th>Contact</th><th>Statut</th><th>Tarif</th><th>Actions</th></tr></thead>
+                <tbody id="tbody"><tr><td colspan="5" style="text-align:center;padding:30px;">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="admin-card" id="zone-detail" style="display:none;margin-bottom:60px;">
+            <div class="admin-card__header"><div class="admin-card__titre" id="detail-titre">Demande</div></div>
+            <div class="admin-card__corps" id="detail-corps"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      let courant = null;
+      const TYPES = ["CDI", "CDD", "Stage", "Alternance", "Freelance"];
+      const STATUTS = { en_attente: ["En attente", "badge--orange"], acceptee: ["Publiée", "badge--vert"], refusee: ["Refusée", "badge--rouge"] };
+      const fcfa = (n) => (n || n === 0 ? Number(n).toLocaleString("fr-FR") + " FCFA" : "—");
+
+      function toast(msg, type) { window.afficherToast(msg, type || "info"); }
+
+      async function api(chemin, { methode = "GET", corps } = {}) {
+        const r = await fetch(window.API_URL + "/recruteurs" + chemin, {
+          method: methode,
+          headers: { "Content-Type": "application/json", Authorization: "Bearer " + window.API.getToken() },
+          body: corps ? JSON.stringify(corps) : undefined,
+        });
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(data.error || "Erreur " + r.status);
+        return data;
+      }
+
+      // DOM sûr : le texte saisi par les entreprises n'est jamais injecté en HTML.
+      function el(tag, attrs = {}, ...enfants) {
+        const n = document.createElement(tag);
+        for (const [k, v] of Object.entries(attrs)) {
+          if (k === "class") n.className = v;
+          else if (k === "text") n.textContent = v;
+          else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+          else if (v !== null && v !== undefined && v !== false) n.setAttribute(k, v === true ? "" : v);
+        }
+        enfants.flat().forEach((e) => e && n.appendChild(typeof e === "string" ? document.createTextNode(e) : e));
+        return n;
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.protegerPageAdmin()) return;
+        await Promise.all([stats(), charger()]);
+      });
+
+      async function stats() {
+        try {
+          const s = await api("/admin/stats");
+          const carte = (nombre, libelle) => el("div", { class: "os-carte" }, el("strong", { text: String(nombre) }), el("span", { text: libelle }));
+          document.getElementById("stats").replaceChildren(
+            carte(s.en_attente, "En attente"), carte(s.acceptees, "Publiées"),
+            carte(fcfa(s.encaisse_fcfa), "Encaissé"), carte(fcfa(s.a_encaisser_fcfa), "À encaisser"));
+        } catch (err) { toast(err.message, "erreur"); }
+      }
+
+      async function charger() {
+        const tbody = document.getElementById("tbody");
+        const filtre = document.getElementById("filtre").value;
+        try {
+          const { offres } = await api("/admin/offres" + (filtre ? "?statut=" + filtre : ""));
+          tbody.replaceChildren();
+          if (!offres.length) {
+            tbody.appendChild(el("tr", {}, el("td", { colspan: "5", style: "text-align:center;padding:30px;color:var(--gris-texte);", text: "Aucune demande dans cette catégorie." })));
+            return;
+          }
+          offres.forEach((o) => {
+            const [libelle, classe] = STATUTS[o.statut] || [o.statut, "badge--bleu"];
+            tbody.appendChild(el("tr", {},
+              el("td", {}, el("strong", { text: o.titre }), el("div", { style: "font-size:.8rem;color:var(--gris-texte);", text: o.entreprise + " · " + o.type_contrat })),
+              el("td", { text: o.contact_nom + " — " + o.contact_email }),
+              el("td", {}, el("span", { class: "badge " + classe, text: libelle })),
+              el("td", { text: fcfa(o.tarif_fcfa) + (o.statut === "acceptee" ? (o.paye ? " ✓ payé" : " (non payé)") : "") }),
+              el("td", {}, el("button", { class: "btn btn--primaire btn--sm", text: o.statut === "en_attente" ? "Étudier" : "Ouvrir", onclick: () => ouvrir(o.id) })),
+            ));
+          });
+        } catch (err) { toast(err.message, "erreur"); tbody.replaceChildren(); }
+      }
+
+      async function ouvrir(id) {
+        try {
+          courant = (await api("/admin/offres/" + id)).offre;
+          dessiner();
+          document.getElementById("zone-detail").style.display = "block";
+          document.getElementById("zone-detail").scrollIntoView({ behavior: "smooth" });
+        } catch (err) { toast(err.message, "erreur"); }
+      }
+
+      function champ(etiquette, id, valeur, { zone = false, lignes = 4, type = "text", bloque = false } = {}) {
+        const c = el(zone ? "textarea" : "input", { class: zone ? "form-textarea" : "form-input", id, disabled: bloque, ...(zone ? { rows: String(lignes) } : { type }) });
+        c.value = valeur ?? "";
+        return el("div", { class: "form-groupe" }, el("label", { class: "form-label", for: id, text: etiquette }), c);
+      }
+
+      function dessiner() {
+        const o = courant;
+        const [libelle, classe] = STATUTS[o.statut] || [o.statut, "badge--bleu"];
+        document.getElementById("detail-titre").replaceChildren(document.createTextNode("Demande n°" + o.id + " "), el("span", { class: "badge " + classe, text: libelle }));
+        const corps = document.getElementById("detail-corps");
+        const modifiable = o.statut === "en_attente";
+        const select = el("select", { class: "form-select", id: "d-type", disabled: !modifiable }, TYPES.map((t) => el("option", { value: t, text: t, selected: t === o.type_contrat })));
+        corps.replaceChildren(
+          el("div", { class: "ia-grille" },
+            champ("Entreprise", "d-entreprise", o.entreprise, { bloque: !modifiable }),
+            champ("Contact", "d-contact-nom", o.contact_nom, { bloque: !modifiable }),
+            champ("E-mail du contact", "d-contact-email", o.contact_email, { bloque: !modifiable }),
+            champ("Téléphone", "d-contact-tel", o.contact_telephone, { bloque: !modifiable }),
+            champ("Intitulé du poste", "d-titre", o.titre, { bloque: !modifiable }),
+            el("div", { class: "form-groupe" }, el("label", { class: "form-label", for: "d-type", text: "Contrat" }), select),
+            champ("Ville", "d-ville", o.ville, { bloque: !modifiable }),
+            champ("Secteur", "d-secteur", o.secteur, { bloque: !modifiable }),
+            champ("Rémunération", "d-salaire", o.salaire, { bloque: !modifiable }),
+            champ("Date limite", "d-limite", o.date_limite, { bloque: !modifiable }),
+            champ("Comment postuler (e-mail ou lien)", "d-candidature", o.candidature, { bloque: !modifiable })),
+          champ("Description", "d-description", o.description, { zone: true, lignes: 8, bloque: !modifiable }),
+          champ("Profil recherché", "d-profil", o.profil_recherche, { zone: true, lignes: 4, bloque: !modifiable }),
+          modifiable ? actionsEnAttente() : actionsTraitee(),
+        );
+      }
+
+      function lire() {
+        const v = (id) => document.getElementById(id).value.trim();
+        return { entreprise: v("d-entreprise"), contact_nom: v("d-contact-nom"), contact_email: v("d-contact-email"),
+          contact_telephone: v("d-contact-tel"), titre: v("d-titre"), type_contrat: v("d-type"), ville: v("d-ville"),
+          secteur: v("d-secteur"), description: v("d-description"), profil_recherche: v("d-profil"),
+          salaire: v("d-salaire"), date_limite: v("d-limite"), candidature: v("d-candidature") };
+      }
+
+      function actionsEnAttente() {
+        const tarif = el("input", { class: "form-input", id: "d-tarif", type: "number", min: "0", step: "500", placeholder: "Ex : 5000", value: courant.tarif_fcfa ?? "" });
+        const paye = el("input", { type: "checkbox", id: "d-paye" });
+        const motif = el("input", { class: "form-input", id: "d-motif", maxlength: "500", placeholder: "Motif du refus (visible par l'entreprise)" });
+        return el("div", { class: "ac-sous", style: "background:var(--gris-clair);border-radius:10px;padding:12px;margin-top:10px;" },
+          el("div", { class: "ac-barre-actions", style: "display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;" },
+            el("button", { class: "btn btn--bleu", text: "Enregistrer les corrections", onclick: enregistrer })),
+          el("div", { class: "ia-grille" },
+            el("div", { class: "form-groupe" }, el("label", { class: "form-label", for: "d-tarif", text: "Tarif convenu (FCFA)" }), tarif),
+            el("label", { class: "ia-verif", style: "align-self:end;margin-bottom:12px;" }, paye, "Paiement déjà reçu")),
+          el("button", { class: "btn btn--primaire", text: "Publier l'offre", onclick: accepter }),
+          el("div", { style: "margin-top:16px;" }, motif),
+          el("button", { class: "btn btn--danger", style: "margin-top:8px;", text: "Refuser la demande", onclick: refuser }),
+          el("button", { class: "btn btn--gris", style: "margin-top:8px;margin-left:8px;", text: "Fermer", onclick: fermer }));
+      }
+
+      function actionsTraitee() {
+        const o = courant;
+        const tarif = el("input", { class: "form-input", id: "d-tarif", type: "number", min: "0", step: "500", value: o.tarif_fcfa ?? "" });
+        const paye = el("input", { type: "checkbox", id: "d-paye" }); paye.checked = o.paye === true || o.paye === 1;
+        return el("div", { style: "margin-top:10px;" },
+          o.statut === "refusee" && o.motif_refus ? el("p", { text: "Motif du refus : " + o.motif_refus }) : null,
+          o.statut === "acceptee" ? el("div", {},
+            el("div", { class: "ia-grille" },
+              el("div", { class: "form-groupe" }, el("label", { class: "form-label", for: "d-tarif", text: "Tarif (FCFA)" }), tarif),
+              el("label", { class: "ia-verif", style: "align-self:end;margin-bottom:12px;" }, paye, "Paiement reçu")),
+            el("button", { class: "btn btn--primaire", text: "Enregistrer le paiement", onclick: enregistrerPaiement })) : null,
+          el("button", { class: "btn btn--gris", style: "margin-top:10px;", text: "Fermer", onclick: fermer }));
+      }
+
+      function tarifSaisi() {
+        const v = document.getElementById("d-tarif").value.trim();
+        return v === "" ? null : Number(v);
+      }
+
+      async function enregistrer() {
+        try { await api("/admin/offres/" + courant.id, { methode: "PUT", corps: lire() }); toast("Corrections enregistrées.", "succes"); await ouvrir(courant.id); await charger(); }
+        catch (err) { toast(err.message, "erreur"); }
+      }
+
+      async function accepter() {
+        if (!confirm("Publier cette offre sur la page Emploi ? L'entreprise sera prévenue par e-mail.")) return;
+        try {
+          await api("/admin/offres/" + courant.id, { methode: "PUT", corps: lire() });   // enregistre d'abord les corrections
+          await api("/admin/offres/" + courant.id + "/accepter", { methode: "POST", corps: { tarif_fcfa: tarifSaisi(), paye: document.getElementById("d-paye").checked } });
+          toast("Offre publiée.", "succes");
+          fermer(); await Promise.all([stats(), charger()]);
+        } catch (err) { toast(err.message, "erreur"); }
+      }
+
+      async function refuser() {
+        const motif = document.getElementById("d-motif").value.trim();
+        if (motif.length < 3) return toast("Indique un motif de refus.", "erreur");
+        if (!confirm("Refuser cette demande ? L'entreprise recevra le motif par e-mail.")) return;
+        try {
+          await api("/admin/offres/" + courant.id + "/refuser", { methode: "POST", corps: { motif } });
+          toast("Demande refusée.", "succes");
+          fermer(); await Promise.all([stats(), charger()]);
+        } catch (err) { toast(err.message, "erreur"); }
+      }
+
+      async function enregistrerPaiement() {
+        try {
+          await api("/admin/offres/" + courant.id + "/paiement", { methode: "PATCH", corps: { tarif_fcfa: tarifSaisi(), paye: document.getElementById("d-paye").checked } });
+          toast("Paiement enregistré.", "succes");
+          await Promise.all([stats(), charger()]); await ouvrir(courant.id);
+        } catch (err) { toast(err.message, "erreur"); }
+      }
+
+      function fermer() { courant = null; document.getElementById("zone-detail").style.display = "none"; }
+    </script>
+  </body>
+</html>

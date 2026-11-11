@@ -242,12 +242,12 @@
     <tr>
       <td>
         <div style="display:flex;align-items:center;gap:8px;">
-          <div class="admin-tableau__avatar">${u.nom?.[0]?.toUpperCase() || "?"}</div>
-          <span style="font-weight:700;font-size:0.9rem;">${u.nom}</span>
+          <div class="admin-tableau__avatar">${echapperHtml(u.nom?.[0]?.toUpperCase() || "?")}</div>
+          <span style="font-weight:700;font-size:0.9rem;">${echapperHtml(u.nom)}</span>
           ${u.role === "admin" ? '<span class="badge badge--rouge" style="font-size:0.65rem;">Admin</span>' : ""}
         </div>
       </td>
-      <td style="font-size:0.85rem;">${u.email}</td>
+      <td style="font-size:0.85rem;">${echapperHtml(u.email)}</td>
       <td>${u.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--gris">🆓 Gratuit</span>'}</td>
       <td style="font-size:0.85rem;">${u.premium_plan || "—"}</td>
       <td style="font-size:0.82rem;">${u.premium_expire ? new Date(u.premium_expire).toLocaleDateString("fr-FR") : "—"}</td>
@@ -256,10 +256,10 @@
         <div class="admin-tableau__actions">
           ${
             u.premium
-              ? `<button class="admin-tableau__btn" onclick="resilier(${u.id},'${u.nom.replace(/'/g, "\\'")}')" title="Résilier Premium">❌</button>`
+              ? `<button class="admin-tableau__btn" onclick="resilier(${u.id},${echapperHtml(JSON.stringify(u.nom))})" title="Résilier Premium">❌</button>`
               : `<button class="admin-tableau__btn admin-tableau__btn--edit" onclick="activerPremium(${u.id})" title="Activer Premium">⭐</button>`
           }
-          <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${u.id},'${u.nom.replace(/'/g, "\\'")}')" title="Supprimer">🗑️</button>
+          <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${u.id},${echapperHtml(JSON.stringify(u.nom))})" title="Supprimer">🗑️</button>
         </div>
       </td>
     </tr>`,

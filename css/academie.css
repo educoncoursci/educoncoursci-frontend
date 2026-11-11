@@ -1,0 +1,78 @@
+/* ============================================================
+   css/academie.css — Académie EduConcoursCI
+   Réutilise les variables du site (vert, gris, bordures).
+   ============================================================ */
+
+.academie-entete { margin-bottom: 28px; }
+.academie-entete h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin-bottom: 8px; }
+.academie-entete p  { color: var(--gris-texte); max-width: 640px; }
+
+.academie-grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 18px; }
+.academie-carte {
+  background: #fff; border: 1px solid var(--gris-bordure); border-radius: 16px;
+  padding: 20px; display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: inherit;
+  transition: box-shadow .15s, transform .15s;
+}
+.academie-carte:hover { box-shadow: 0 6px 20px rgba(0,0,0,.08); transform: translateY(-2px); }
+.academie-carte h2 { font-size: 1.1rem; margin: 0; }
+.academie-carte p  { color: var(--gris-texte); font-size: .9rem; margin: 0; }
+.academie-etiquettes { display: flex; gap: 6px; flex-wrap: wrap; }
+.academie-meta { color: var(--gris-texte); font-size: .85rem; margin-top: auto; }
+
+.academie-barre { height: 8px; background: var(--gris-bordure); border-radius: 99px; overflow: hidden; }
+.academie-barre > span { display: block; height: 100%; background: var(--vert-clair); border-radius: 99px; }
+
+.academie-vide { text-align: center; padding: 48px 16px; color: var(--gris-texte); background: #fff; border: 1px dashed var(--gris-bordure); border-radius: 16px; }
+.academie-vide a { color: var(--vert); font-weight: 700; }
+
+.academie-fil { font-size: .85rem; color: var(--gris-texte); margin-bottom: 14px; }
+.academie-fil a { color: var(--vert); text-decoration: none; font-weight: 600; }
+
+/* Liste des leçons d'un cours */
+.academie-lecons { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+.academie-lecon-ligne {
+  display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid var(--gris-bordure);
+  border-radius: 12px; padding: 14px 16px; text-decoration: none; color: inherit;
+}
+.academie-lecon-ligne:hover { border-color: var(--vert-clair); }
+.academie-lecon-num {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--gris-clair); font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.academie-lecon-num--ok { background: var(--vert-clair); color: #fff; }
+.academie-lecon-titre { flex: 1; font-weight: 600; }
+
+/* Leçon */
+.academie-lecon {
+  background: #fff; border: 1px solid var(--gris-bordure); border-radius: 16px; padding: clamp(18px, 4vw, 32px);
+  margin-bottom: 18px; line-height: 1.7;
+}
+.academie-lecon h1 { font-size: clamp(1.4rem, 4vw, 1.9rem); margin: 0 0 6px; }
+.academie-h3 { font-size: 1.25rem; margin: 26px 0 8px; color: var(--vert); }
+.academie-h4 { font-size: 1.05rem; margin: 18px 0 6px; }
+.academie-p  { margin: 0 0 12px; }
+.academie-liste { margin: 0 0 14px; padding-left: 22px; }
+.academie-liste li { margin-bottom: 6px; }
+
+.academie-points { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 14px; padding: 18px 20px; margin-bottom: 18px; }
+.academie-points h2 { font-size: 1.05rem; margin: 0 0 8px; }
+.academie-points ul { margin: 0; padding-left: 20px; }
+
+.academie-exos h2 { font-size: 1.15rem; margin: 0 0 12px; }
+.exo { background: #fff; border: 1px solid var(--gris-bordure); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+.exo-q { font-weight: 700; margin-bottom: 10px; }
+.exo-option {
+  display: block; width: 100%; text-align: left; background: var(--gris-clair); border: 2px solid transparent;
+  border-radius: 10px; padding: 11px 14px; margin-bottom: 8px; font: inherit; cursor: pointer;
+}
+.exo-option:hover:not(:disabled) { border-color: var(--vert-clair); }
+.exo-option:disabled { cursor: default; }
+.exo-option--bonne    { background: #dcfce7; border-color: #16a34a; }
+.exo-option--mauvaise { background: #fee2e2; border-color: #dc2626; }
+.exo-explication { margin-top: 8px; font-size: .92rem; color: var(--gris-texte); }
+.exo-score { font-weight: 700; margin: 4px 0 14px; }
+
+.academie-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: 8px; }
+.academie-verrou { text-align: center; padding: 36px 20px; background: #fff; border: 1px solid var(--gris-bordure); border-radius: 16px; }
+.academie-verrou h2 { margin: 8px 0; }
+.academie-verrou p { color: var(--gris-texte); max-width: 480px; margin: 0 auto 16px; }

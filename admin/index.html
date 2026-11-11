@@ -355,7 +355,7 @@
                   return `
           <div style="margin-bottom:14px;">
             <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-              <span style="font-weight:700;">${m.moyen?.includes("Wave") ? "🌊" : "🟠"} ${m.moyen}</span>
+              <span style="font-weight:700;">${m.moyen?.includes("Wave") ? "🌊" : "🟠"} ${echapperHtml(m.moyen)}</span>
               <span style="font-weight:700;">${pct}% · ${Number(m.revenus || 0).toLocaleString("fr-CI")} F</span>
             </div>
             <div class="progression"><div class="progression__barre" style="width:${pct}%;background:${c};"></div></div>
@@ -370,10 +370,10 @@
               .map(
                 (u) => `
       <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-clair);">
-        <div class="admin-tableau__avatar">${u.nom?.[0]?.toUpperCase() || "?"}</div>
+        <div class="admin-tableau__avatar">${echapperHtml(u.nom?.[0]?.toUpperCase() || "?")}</div>
         <div style="flex:1;">
-          <div style="font-weight:700;font-size:0.9rem;">${u.nom}</div>
-          <div style="font-size:0.78rem;color:var(--gris-texte);">${u.email}</div>
+          <div style="font-weight:700;font-size:0.9rem;">${echapperHtml(u.nom)}</div>
+          <div style="font-size:0.78rem;color:var(--gris-texte);">${echapperHtml(u.email)}</div>
         </div>
         ${u.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐ Premium</span>' : '<span class="badge badge--gris" style="font-size:0.7rem;">Gratuit</span>'}
       </div>`,
@@ -388,8 +388,8 @@
                 (t) => `
       <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--gris-clair);">
         <div>
-          <div style="font-weight:700;font-size:0.9rem;">${t.user_nom || t.email || "—"}</div>
-          <div style="font-size:0.75rem;color:var(--gris-texte);font-family:monospace;">Réf: ${t.tx_id}</div>
+          <div style="font-weight:700;font-size:0.9rem;">${echapperHtml(t.user_nom || t.email || "—")}</div>
+          <div style="font-size:0.75rem;color:var(--gris-texte);font-family:monospace;">Réf: ${echapperHtml(t.tx_id)}</div>
         </div>
         <div style="text-align:right;">
           <div style="font-weight:900;font-size:0.95rem;">${Number(t.montant || 0).toLocaleString("fr-CI")} F</div>

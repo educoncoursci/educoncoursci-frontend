@@ -111,7 +111,7 @@ select {
 }
 .main-content {
   flex: 1;
-  padding-top: var(--navbar-h);
+  padding-top: var(--navbar-h) !important;
 }
 .main-content--apres-flash {
   padding-top: calc(var(--navbar-h) + var(--flash-info-h));
@@ -169,10 +169,18 @@ p {
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--gris-bordure);
   z-index: 1000;
-  transition: var(--transition);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .navbar.scrolled {
   box-shadow: var(--ombre-md);
+}
+/* Se cache en glissant vers le haut quand on scrolle vers le bas ;
+   réapparaît dès qu'on remonte, même d'un pixel. Géré par
+   initNavbar() dans js/main.js. Le menu déroulant mobile (ouvert via
+   le hamburger) et les sous-menus au survol restent inchangés — seule
+   la barre entière translate. */
+.navbar--cachee {
+  transform: translateY(-100%);
 }
 
 .navbar__inner {

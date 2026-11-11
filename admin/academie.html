@@ -1,0 +1,546 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Académie — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .q-item {
+        background: var(--gris-clair);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .q-suppr {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        color: var(--rouge);
+        font-size: 1.1rem;
+        cursor: pointer;
+        font-weight: 900;
+      }
+      .opt-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 6px;
+      }
+      .opt-lettre {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: var(--gris-bordure);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+
+      .ia-grille { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }
+      .ia-q { background:#fff; border:2px solid var(--gris-bordure); border-radius:14px; padding:16px; margin-bottom:14px; }
+      .ia-q--ok { border-color:var(--vert); }
+      .ia-q__entete { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+      .ia-alerte { background:#FFF7ED; border:1px solid #F5820D; color:#7A3E00; border-radius:10px; padding:8px 12px; font-size:.85rem; margin-bottom:10px; }
+      .ia-opt { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+      .ia-opt input[type=radio] { width:20px; height:20px; accent-color:var(--vert); flex-shrink:0; }
+      .ia-opt .form-input { padding:9px 12px; }
+      .ia-barre { position:sticky; bottom:0; background:#fff; border-top:1px solid var(--gris-bordure); padding:12px 0; display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center; z-index:5; }
+      .ia-verif { display:flex; align-items:center; gap:8px; font-weight:700; cursor:pointer; }
+      .ia-verif input { width:20px; height:20px; accent-color:var(--vert); }
+      .ia-note { font-size:.85rem; color:var(--gris-texte); margin-top:6px; }
+
+      .ac-lecon { background:#fff; border:2px solid var(--gris-bordure); border-radius:14px; padding:16px; margin-bottom:16px; }
+      .ac-lecon--ok { border-color:var(--vert); }
+      .ac-sous { background:var(--gris-clair); border-radius:10px; padding:12px; margin-top:10px; }
+      .ac-barre-actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+      textarea.form-textarea { font-family:inherit; }
+    </style>
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
+          >
+          <a href="/admin/actualites.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Actualités</a>
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a
+          >
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
+          >
+          <a href="/admin/qcm-ia.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM par IA</a>
+          <a href="/admin/academie.html" class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="diplome" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Académie</a>
+          <a href="/admin/offres-soumises.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres soumises</a>
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a
+          >
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="diplome" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Académie</div>
+              <div class="admin-topbar__sous">Crée des cours avec l'IA, relis chaque leçon, puis publie.</div>
+            </div>
+            <a href="/academie.html" target="_blank" rel="noopener" class="btn btn--gris btn--sm">Voir le catalogue public</a>
+          </div>
+
+          <div class="admin-card" style="margin-bottom:20px;">
+            <div class="admin-card__header"><div class="admin-card__titre">1. Créer un cours (plan généré par l'IA)</div></div>
+            <div class="admin-card__corps">
+              <div class="ia-grille">
+                <div class="form-groupe"><label class="form-label" for="p-matiere">Matière <span>*</span></label>
+                  <input id="p-matiere" class="form-input" list="p-matieres" maxlength="100" placeholder="Ex : Culture Générale" />
+                  <datalist id="p-matieres"><option value="Culture Générale"><option value="Français"><option value="Dissertation"><option value="Mathématiques"><option value="Logique"><option value="Entretien d'embauche"><option value="Recherche d'emploi"><option value="Informatique et bureautique"></datalist></div>
+                <div class="form-groupe"><label class="form-label" for="p-theme">Thème précis</label>
+                  <input id="p-theme" class="form-input" maxlength="150" placeholder="Ex : Les institutions de la Côte d'Ivoire" /></div>
+                <div class="form-groupe"><label class="form-label" for="p-concours">Concours visé</label>
+                  <input id="p-concours" class="form-input" maxlength="150" placeholder="Ex : Fonction publique" /></div>
+                <div class="form-groupe"><label class="form-label" for="p-niveau">Niveau</label>
+                  <select id="p-niveau" class="form-select"><option>CEPE</option><option>BEPC</option><option selected>BAC</option><option>BAC+2</option><option>Licence</option><option>Master</option></select></div>
+                <div class="form-groupe"><label class="form-label" for="p-nb">Nombre de leçons (3 à 10)</label>
+                  <input id="p-nb" class="form-input" type="number" min="3" max="10" value="6" /></div>
+              </div>
+              <button id="btn-plan" class="btn btn--primaire" onclick="creerPlan()">Générer le plan du cours</button>
+              <div class="ia-note">Le plan est un brouillon : tu rédigeras ensuite chaque leçon avec l'IA (une par une), puis tu relis. Rien n'est visible du public avant ta publication.</div>
+            </div>
+          </div>
+
+          <div class="admin-card" style="margin-bottom:20px;">
+            <div class="admin-card__header"><div class="admin-card__titre">2. Mes cours <span id="nb-cours" style="font-weight:400;color:var(--gris-texte);"></span></div></div>
+            <div class="admin-tableau-wrap">
+              <table class="admin-tableau">
+                <thead><tr><th>Titre</th><th>Statut</th><th>Leçons</th><th>Actions</th></tr></thead>
+                <tbody id="tbody-cours"><tr><td colspan="4" style="text-align:center;padding:30px;">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="admin-card" id="zone-editeur" style="display:none;margin-bottom:60px;">
+            <div class="admin-card__header"><div class="admin-card__titre">3. Édition du cours <span id="badge-statut"></span></div></div>
+            <div class="admin-card__corps">
+              <div class="ia-grille">
+                <div class="form-groupe"><label class="form-label" for="e-titre">Titre</label><input id="e-titre" class="form-input" maxlength="200" /></div>
+                <div class="form-groupe"><label class="form-label" for="e-matiere">Matière</label><input id="e-matiere" class="form-input" maxlength="100" /></div>
+                <div class="form-groupe"><label class="form-label" for="e-niveau">Niveau</label>
+                  <select id="e-niveau" class="form-select"><option>CEPE</option><option>BEPC</option><option>BAC</option><option>BAC+2</option><option>Licence</option><option>Master</option></select></div>
+                <div class="form-groupe"><label class="form-label" for="e-gratuites">Leçons gratuites (les premières)</label>
+                  <input id="e-gratuites" class="form-input" type="number" min="0" max="20" value="2" /></div>
+              </div>
+              <div class="form-groupe"><label class="form-label" for="e-description">Description</label>
+                <textarea id="e-description" class="form-textarea" rows="2" maxlength="1000"></textarea></div>
+
+              <h3 style="margin:18px 0 10px;font-size:1.05rem;">Leçons</h3>
+              <div id="liste-lecons"></div>
+              <button class="btn btn--gris btn--sm" onclick="ajouterLecon()">+ Ajouter une leçon</button>
+
+              <div class="ia-barre">
+                <div id="resume-verif" style="font-weight:700;"></div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                  <button class="btn btn--gris" onclick="fermerEditeur()">Fermer</button>
+                  <button class="btn btn--bleu" id="btn-save" onclick="enregistrer(false)">Enregistrer</button>
+                  <button class="btn btn--primaire" id="btn-pub" onclick="publier()">Publier</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      let courant = null;
+      const LETTRES = ["A", "B", "C", "D", "E", "F"];
+      const SEUIL_CONTENU = 200; // identique au serveur
+
+      function toast(msg, type) { window.afficherToast(msg, type || "info"); }
+
+      async function api(chemin, { methode = "GET", corps } = {}) {
+        const r = await fetch(window.API_URL + "/academie/admin" + chemin, {
+          method: methode,
+          headers: { "Content-Type": "application/json", Authorization: "Bearer " + window.API.getToken() },
+          body: corps ? JSON.stringify(corps) : undefined,
+        });
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(data.error || "Erreur " + r.status);
+        return data;
+      }
+
+      // DOM sûr : le contenu généré par l'IA n'est jamais injecté en HTML.
+      function el(tag, attrs = {}, ...enfants) {
+        const n = document.createElement(tag);
+        for (const [k, v] of Object.entries(attrs)) {
+          if (k === "class") n.className = v;
+          else if (k === "text") n.textContent = v;
+          else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+          else if (v !== null && v !== undefined && v !== false) n.setAttribute(k, v === true ? "" : v);
+        }
+        enfants.flat().forEach((e) => e && n.appendChild(typeof e === "string" ? document.createTextNode(e) : e));
+        return n;
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.protegerPageAdmin()) return;
+        await chargerListe();
+      });
+
+      // ── Liste des cours ───────────────────────────────────────
+      async function chargerListe() {
+        const tbody = document.getElementById("tbody-cours");
+        try {
+          const { cours } = await api("/cours");
+          document.getElementById("nb-cours").textContent = "(" + cours.length + ")";
+          tbody.replaceChildren();
+          if (!cours.length) {
+            tbody.appendChild(el("tr", {}, el("td", { colspan: "4", style: "text-align:center;padding:30px;color:var(--gris-texte);", text: "Aucun cours. Génère ton premier plan ci-dessus." })));
+            return;
+          }
+          cours.forEach((c) => {
+            tbody.appendChild(el("tr", {},
+              el("td", {}, el("strong", { text: c.titre }), el("div", { style: "font-size:.8rem;color:var(--gris-texte);", text: c.matiere + " · " + c.niveau })),
+              el("td", {}, el("span", { class: "badge " + (c.statut === "publié" ? "badge--vert" : "badge--orange"), text: c.statut })),
+              el("td", { text: c.nb_redigees + " rédigées · " + c.nb_verifiees + " vérifiées / " + c.nb_lecons }),
+              el("td", {}, el("div", { class: "admin-tableau__actions" },
+                el("button", { class: "btn btn--primaire btn--sm", text: "Ouvrir", onclick: () => ouvrir(c.id) }),
+                c.statut === "publié" ? el("a", { class: "btn btn--gris btn--sm", href: "/cours.html?id=" + c.id, target: "_blank", rel: "noopener", text: "Voir" }) : null,
+                el("button", { class: "btn btn--danger btn--sm", text: "Supprimer", onclick: () => supprimerCours(c.id, c.titre) }),
+              )),
+            ));
+          });
+        } catch (err) { toast(err.message, "erreur"); tbody.replaceChildren(); }
+      }
+
+      async function creerPlan() {
+        const matiere = document.getElementById("p-matiere").value.trim();
+        if (matiere.length < 2) return toast("Indique la matière.", "erreur");
+        const btn = document.getElementById("btn-plan");
+        btn.disabled = true; btn.textContent = "Génération du plan…";
+        try {
+          const data = await api("/plan", { methode: "POST", corps: {
+            matiere,
+            theme: document.getElementById("p-theme").value.trim(),
+            concours: document.getElementById("p-concours").value.trim(),
+            niveau: document.getElementById("p-niveau").value,
+            nbLecons: parseInt(document.getElementById("p-nb").value, 10) || 6,
+          }});
+          toast(data.message, "succes");
+          await chargerListe();
+          afficherCours(data.cours);
+        } catch (err) { toast(err.message, "erreur"); }
+        finally { btn.disabled = false; btn.textContent = "Générer le plan du cours"; }
+      }
+
+      async function supprimerCours(id, titre) {
+        if (!confirm('Supprimer définitivement le cours "' + titre + '" et toutes ses leçons ?')) return;
+        try {
+          await api("/cours/" + id, { methode: "DELETE" });
+          toast("Cours supprimé.", "succes");
+          if (courant && courant.id === id) fermerEditeur(); else await chargerListe();
+        } catch (err) { toast(err.message, "erreur"); }
+      }
+
+      // ── Éditeur ───────────────────────────────────────────────
+      async function ouvrir(id) {
+        try { afficherCours((await api("/cours/" + id)).cours); }
+        catch (err) { toast(err.message, "erreur"); }
+      }
+
+      function afficherCours(cours) {
+        courant = cours;
+        courant.lecons = cours.lecons.map((l) => ({ ...l, exercices: l.exercices || [], points_cles: l.points_cles || [] }));
+        document.getElementById("e-titre").value = cours.titre;
+        document.getElementById("e-matiere").value = cours.matiere;
+        document.getElementById("e-niveau").value = cours.niveau;
+        document.getElementById("e-gratuites").value = cours.lecons_gratuites;
+        document.getElementById("e-description").value = cours.description || "";
+        const b = document.getElementById("badge-statut");
+        b.className = "badge " + (cours.statut === "publié" ? "badge--vert" : "badge--orange");
+        b.textContent = cours.statut;
+        document.getElementById("btn-pub").textContent = cours.statut === "publié" ? "Repasser en brouillon" : "Publier";
+        document.getElementById("zone-editeur").style.display = "block";
+        dessiner();
+      }
+
+      function fermerEditeur() {
+        courant = null;
+        document.getElementById("zone-editeur").style.display = "none";
+        chargerListe();
+      }
+
+      function majResume() {
+        const total = courant.lecons.length;
+        const ok = courant.lecons.filter((l) => l.verifiee).length;
+        document.getElementById("resume-verif").textContent = ok + " / " + total + " leçon(s) vérifiée(s)";
+      }
+
+      function modifie(l, carte) {           // toute modification annule la vérification
+        l.verifiee = false;
+        carte.classList.remove("ac-lecon--ok");
+        const c = carte.querySelector('input[data-role="verif"]');
+        if (c) c.checked = false;
+        majResume();
+      }
+
+      function dessiner() {
+        const zone = document.getElementById("liste-lecons");
+        zone.replaceChildren();
+        courant.lecons.forEach((l, i) => zone.appendChild(carteLecon(l, i)));
+        majResume();
+      }
+
+      function champ(carte, l, nom, etiquette, rows, aide) {
+        const t = el("textarea", { class: "form-textarea", rows: String(rows) });
+        t.value = nom === "points_cles" ? l.points_cles.join("\n") : (l[nom] || "");
+        t.addEventListener("input", () => {
+          l[nom] = nom === "points_cles" ? t.value.split("\n").map((x) => x.trim()).filter(Boolean) : t.value;
+          modifie(l, carte);
+        });
+        return el("div", { class: "form-groupe" },
+          el("label", { class: "form-label", text: etiquette }), t,
+          aide ? el("div", { class: "ia-note", text: aide }) : null);
+      }
+
+      function carteLecon(l, i) {
+        const carte = el("div", { class: "ac-lecon" + (l.verifiee ? " ac-lecon--ok" : "") });
+        const titre = el("input", { class: "form-input", maxlength: "200" });
+        titre.value = l.titre;
+        titre.addEventListener("input", () => { l.titre = titre.value; modifie(l, carte); });
+
+        carte.appendChild(el("div", { class: "ia-q__entete" },
+          el("strong", { text: "Leçon " + (i + 1) + ((l.contenu || "").length >= SEUIL_CONTENU ? "" : " — à rédiger") }),
+          el("div", { class: "ac-barre-actions" },
+            el("button", { class: "btn btn--gris btn--sm", text: "↑", "aria-label": "Monter", onclick: () => deplacer(i, -1) }),
+            el("button", { class: "btn btn--gris btn--sm", text: "↓", "aria-label": "Descendre", onclick: () => deplacer(i, 1) }),
+            el("button", { class: "btn btn--danger btn--sm", text: "Supprimer", onclick: () => {
+              if (!confirm("Supprimer cette leçon ?")) return;
+              courant.lecons.splice(i, 1); dessiner();
+            }}),
+          )));
+        carte.appendChild(el("div", { class: "form-groupe" }, el("label", { class: "form-label", text: "Titre" }), titre));
+        carte.appendChild(champ(carte, l, "objectifs", "Objectifs (guide pour l'IA)", 2));
+        carte.appendChild(el("div", { class: "ac-barre-actions", style: "margin-bottom:10px;" },
+          el("button", { class: "btn btn--primaire btn--sm", text: "✨ Rédiger avec l'IA", onclick: (e) => genererLecon(i, e.currentTarget) }),
+          el("span", { class: "ia-note", text: "Enregistre le cours d'abord automatiquement. Dure 20 à 60 secondes." }),
+        ));
+        carte.appendChild(champ(carte, l, "contenu", "Contenu de la leçon", 12,
+          "Balisage : ## Titre, ### Sous-titre, - puce, 1. liste numérotée, **gras**."));
+        carte.appendChild(champ(carte, l, "points_cles", "À retenir (un point par ligne)", 4));
+
+        // Exercices
+        const bloc = el("div", { class: "ac-sous" }, el("strong", { text: "Exercices (" + l.exercices.length + ")" }));
+        l.exercices.forEach((q, k) => bloc.appendChild(carteExercice(l, q, k, carte)));
+        bloc.appendChild(el("button", { class: "btn btn--gris btn--sm", style: "margin-top:10px;", text: "+ Ajouter un exercice", onclick: () => {
+          l.exercices.push({ question: "", options: ["", "", "", ""], correct: 0, explication: "", a_verifier: false, note_verification: "" });
+          modifie(l, carte); dessiner();
+        }}));
+        carte.appendChild(bloc);
+
+        const verif = el("input", { type: "checkbox", "data-role": "verif" });
+        verif.checked = l.verifiee === true;
+        verif.addEventListener("change", () => {
+          l.verifiee = verif.checked;
+          carte.classList.toggle("ac-lecon--ok", l.verifiee);
+          majResume();
+        });
+        carte.appendChild(el("label", { class: "ia-verif", style: "margin-top:12px;" }, verif, "J'ai vérifié cette leçon (contenu, exercices, bonnes réponses)"));
+        return carte;
+      }
+
+      function carteExercice(l, q, k, carteLecon_) {
+        const c = el("div", { class: "ia-q" });
+        c.appendChild(el("div", { class: "ia-q__entete" },
+          el("strong", { text: "Exercice " + (k + 1) }),
+          el("button", { class: "btn btn--danger btn--sm", text: "Supprimer", onclick: () => {
+            l.exercices.splice(k, 1); modifie(l, carteLecon_); dessiner();
+          }})));
+        if (q.a_verifier) c.appendChild(el("div", { class: "ia-alerte", text: "⚠️ À contrôler : " + (q.note_verification || "fait précis (date, chiffre, nom ou loi).") }));
+        const enonce = el("textarea", { class: "form-textarea", rows: "2", maxlength: "600" });
+        enonce.value = q.question;
+        enonce.addEventListener("input", () => { q.question = enonce.value; modifie(l, carteLecon_); });
+        c.appendChild(enonce);
+        const bloc = el("div", { style: "margin-top:10px;" });
+        q.options.forEach((opt, o) => {
+          const radio = el("input", { type: "radio", name: "bonne-" + l.ordre + "-" + k + "-" + (l.id || "n"), "aria-label": "Bonne réponse " + LETTRES[o] });
+          radio.checked = q.correct === o;
+          radio.addEventListener("change", () => { q.correct = o; modifie(l, carteLecon_); });
+          const champOpt = el("input", { class: "form-input", maxlength: "300" });
+          champOpt.value = opt;
+          champOpt.addEventListener("input", () => { q.options[o] = champOpt.value; modifie(l, carteLecon_); });
+          bloc.appendChild(el("div", { class: "ia-opt" }, radio, el("span", { class: "opt-lettre", text: LETTRES[o] }), champOpt));
+        });
+        c.appendChild(bloc);
+        const expl = el("textarea", { class: "form-textarea", rows: "2", style: "margin-top:8px;", placeholder: "Explication affichée après la réponse" });
+        expl.value = q.explication;
+        expl.addEventListener("input", () => { q.explication = expl.value; modifie(l, carteLecon_); });
+        c.appendChild(expl);
+        return c;
+      }
+
+      function deplacer(i, delta) {
+        const j = i + delta;
+        if (j < 0 || j >= courant.lecons.length) return;
+        [courant.lecons[i], courant.lecons[j]] = [courant.lecons[j], courant.lecons[i]];
+        dessiner();
+      }
+
+      function ajouterLecon() {
+        courant.lecons.push({ titre: "Nouvelle leçon", objectifs: "", contenu: "", points_cles: [], exercices: [], verifiee: false });
+        dessiner();
+      }
+
+      // ── Enregistrement / IA / publication ─────────────────────
+      function charge() {
+        return {
+          titre: document.getElementById("e-titre").value.trim(),
+          description: document.getElementById("e-description").value.trim(),
+          matiere: document.getElementById("e-matiere").value.trim(),
+          niveau: document.getElementById("e-niveau").value,
+          lecons_gratuites: parseInt(document.getElementById("e-gratuites").value, 10),
+          lecons: courant.lecons.map((l) => ({
+            id: l.id, titre: l.titre, objectifs: l.objectifs || "", contenu: l.contenu || "",
+            points_cles: l.points_cles, exercices: l.exercices, verifiee: l.verifiee === true,
+          })),
+        };
+      }
+
+      async function enregistrer(silencieux) {
+        const btn = document.getElementById("btn-save");
+        btn.disabled = true;
+        try {
+          const data = await api("/cours/" + courant.id, { methode: "PUT", corps: charge() });
+          afficherCours(data.cours);
+          if (!silencieux) toast("Cours enregistré.", "succes");
+          return true;
+        } catch (err) { toast(err.message, "erreur"); return false; }
+        finally { btn.disabled = false; }
+      }
+
+      async function genererLecon(i, bouton) {
+        const l = courant.lecons[i];
+        if ((l.contenu || "").length >= SEUIL_CONTENU &&
+            !confirm("Cette leçon a déjà du contenu. La régénérer va le remplacer. Continuer ?")) return;
+        bouton.disabled = true; const ancien = bouton.textContent; bouton.textContent = "Rédaction en cours…";
+        try {
+          if (!(await enregistrer(true))) return;
+          const id = courant.lecons[i].id;
+          const data = await api("/lecons/" + id + "/generer", { methode: "POST" });
+          const defilement = window.scrollY;
+          courant.lecons[i] = { ...courant.lecons[i], ...data.lecon };
+          dessiner();
+          window.scrollTo(0, defilement);
+          toast(data.message, data.exercicesRejetes ? "info" : "succes");
+        } catch (err) { toast(err.message, "erreur"); }
+        finally { bouton.disabled = false; bouton.textContent = ancien; }
+      }
+
+      async function publier() {
+        if (courant.statut === "publié") {
+          if (!confirm("Repasser ce cours en brouillon ? Il ne sera plus visible du public.")) return;
+          try {
+            await api("/cours/" + courant.id + "/depublier", { methode: "POST" });
+            toast("Cours repassé en brouillon.", "succes");
+            await ouvrir(courant.id); await chargerListe();
+          } catch (err) { toast(err.message, "erreur"); }
+          return;
+        }
+        const vides = courant.lecons.filter((l) => (l.contenu || "").length < SEUIL_CONTENU).length;
+        if (vides) return toast(vides + " leçon(s) n'ont pas encore de contenu rédigé.", "erreur");
+        const nonOk = courant.lecons.filter((l) => !l.verifiee).length;
+        if (nonOk) return toast(nonOk + " leçon(s) pas encore vérifiée(s).", "erreur");
+        if (!confirm("Publier ce cours ? Il sera visible par tous les visiteurs.")) return;
+        const btn = document.getElementById("btn-pub");
+        btn.disabled = true;
+        try {
+          if (!(await enregistrer(true))) return;
+          const data = await api("/cours/" + courant.id + "/publier", { methode: "POST" });
+          toast(data.message, "succes");
+          await ouvrir(courant.id); await chargerListe();
+        } catch (err) { toast(err.message, "erreur"); }
+        finally { btn.disabled = false; }
+      }
+    </script>
+  </body>
+</html>

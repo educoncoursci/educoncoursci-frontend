@@ -121,10 +121,10 @@
             ? data.entrees.map((e) => `
               <tr>
                 <td style="font-size:0.82rem;color:var(--gris-texte);white-space:nowrap;">${new Date(e.created_at).toLocaleString("fr-FR")}</td>
-                <td style="font-weight:700;font-size:0.85rem;">${e.user_nom || "—"}</td>
+                <td style="font-weight:700;font-size:0.85rem;">${echapperHtml(e.user_nom || "—")}</td>
                 <td><span class="badge ${BADGE_ACTION[e.action] || "badge--gris"}" style="font-size:0.75rem;">${e.action}</span></td>
                 <td style="font-size:0.85rem;">${e.cible_type || "—"}${e.cible_id ? ` #${e.cible_id}` : ""}</td>
-                <td style="font-size:0.82rem;color:var(--gris-texte);max-width:320px;">${e.details || ""}</td>
+                <td style="font-size:0.82rem;color:var(--gris-texte);max-width:320px;">${echapperHtml(e.details || "")}</td>
               </tr>`).join("")
             : `<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune activité enregistrée pour ces filtres.</td></tr>`;
         } catch (err) {

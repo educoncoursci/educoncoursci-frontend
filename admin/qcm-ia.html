@@ -1,0 +1,426 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QCM par IA — Admin EduConcoursCI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .q-item {
+        background: var(--gris-clair);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .q-suppr {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        color: var(--rouge);
+        font-size: 1.1rem;
+        cursor: pointer;
+        font-weight: 900;
+      }
+      .opt-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 6px;
+      }
+      .opt-lettre {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: var(--gris-bordure);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+
+      .ia-grille { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }
+      .ia-q { background:#fff; border:2px solid var(--gris-bordure); border-radius:14px; padding:16px; margin-bottom:14px; }
+      .ia-q--ok { border-color:var(--vert); }
+      .ia-q__entete { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+      .ia-alerte { background:#FFF7ED; border:1px solid #F5820D; color:#7A3E00; border-radius:10px; padding:8px 12px; font-size:.85rem; margin-bottom:10px; }
+      .ia-opt { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+      .ia-opt input[type=radio] { width:20px; height:20px; accent-color:var(--vert); flex-shrink:0; }
+      .ia-opt .form-input { padding:9px 12px; }
+      .ia-barre { position:sticky; bottom:0; background:#fff; border-top:1px solid var(--gris-bordure); padding:12px 0; display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center; z-index:5; }
+      .ia-verif { display:flex; align-items:center; gap:8px; font-weight:700; cursor:pointer; }
+      .ia-verif input { width:20px; height:20px; accent-color:var(--vert); }
+      .ia-note { font-size:.85rem; color:var(--gris-texte); margin-top:6px; }
+    </style>
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav
+      class="navbar"
+      style="
+        background: #0a1628;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      "
+    >
+      <div class="navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
+          ><div
+            class="navbar__logo-icon"
+            style="background: rgba(255, 255, 255, 0.1)"
+          >
+            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
+          </div>
+          <span style="color: #fff">EduConcoursCI Admin</span></a
+        >
+        <button
+          onclick="window.Auth?.deconnecter?.()"
+          class="btn btn--gris btn--sm"
+        >
+          Déconnexion
+        </button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header">
+            <div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div>
+          </div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a
+          >
+          <div class="admin-sidebar__section">Contenu</div>
+          <a href="/admin/concours.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
+          >
+          <a href="/admin/actualites.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Actualités</a>
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a
+          >
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
+          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
+          >
+          <a href="/admin/videos.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Vidéos</a
+          >
+          <a href="/admin/qcm.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
+          >
+          <a href="/admin/qcm-ia.html" class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM par IA</a>
+          <a href="/admin/academie.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="diplome" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Académie</a>
+          <a href="/admin/offres-soumises.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres soumises</a>
+          <a href="/admin/emploi.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Emploi</a
+          >
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
+          >
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
+          >
+          <a href="/admin/notifications.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a
+          >
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
+          <a href="/admin/parametres.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
+          >
+          <a href="/" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a
+          >
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> QCM par IA</div>
+              <div class="admin-topbar__sous">Génère des brouillons, relis chaque question, puis publie.</div>
+            </div>
+            <a href="/admin/qcm.html" class="btn btn--gris btn--sm">← Gestion des QCM</a>
+          </div>
+
+          <div class="admin-card" style="margin-bottom:20px;">
+            <div class="admin-card__header"><div class="admin-card__titre">1. Générer des questions</div></div>
+            <div class="admin-card__corps">
+              <div class="ia-grille">
+                <div class="form-groupe"><label class="form-label" for="g-matiere">Matière <span>*</span></label>
+                  <input id="g-matiere" class="form-input" list="g-matieres" maxlength="100" placeholder="Ex : Culture Générale" />
+                  <datalist id="g-matieres"><option value="Culture Générale"><option value="Français"><option value="Mathématiques"><option value="Logique"><option value="Droit et institutions"><option value="Informatique"><option value="Travail Social"><option value="Anglais"></datalist></div>
+                <div class="form-groupe"><label class="form-label" for="g-theme">Thème précis</label>
+                  <input id="g-theme" class="form-input" maxlength="150" placeholder="Ex : Histoire de la Côte d'Ivoire" /></div>
+                <div class="form-groupe"><label class="form-label" for="g-concours">Concours visé</label>
+                  <input id="g-concours" class="form-input" maxlength="150" placeholder="Ex : Assistant Social Adjoint" /></div>
+                <div class="form-groupe"><label class="form-label" for="g-niveau">Niveau</label>
+                  <select id="g-niveau" class="form-select"><option>CEPE</option><option>BEPC</option><option selected>BAC</option><option>BAC+2</option><option>Licence</option><option>Master</option></select></div>
+                <div class="form-groupe"><label class="form-label" for="g-diff">Difficulté</label>
+                  <select id="g-diff" class="form-select"><option>Facile</option><option selected>Moyen</option><option>Difficile</option></select></div>
+                <div class="form-groupe"><label class="form-label" for="g-nombre">Nombre (max 10)</label>
+                  <input id="g-nombre" class="form-input" type="number" min="1" max="10" value="10" /></div>
+              </div>
+              <button id="btn-generer" class="btn btn--primaire" onclick="generer()">Générer en brouillon</button>
+              <div class="ia-note">La génération prend 20 à 60 secondes. Les questions ne sont jamais visibles du public avant ta publication.</div>
+            </div>
+          </div>
+
+          <div class="admin-card" style="margin-bottom:20px;">
+            <div class="admin-card__header"><div class="admin-card__titre">2. Brouillons à relire <span id="nb-brouillons" style="font-weight:400;color:var(--gris-texte);"></span></div></div>
+            <div class="admin-tableau-wrap">
+              <table class="admin-tableau">
+                <thead><tr><th>Titre</th><th>Matière</th><th>Vérifiées</th><th>Actions</th></tr></thead>
+                <tbody id="tbody-brouillons"><tr><td colspan="4" style="text-align:center;padding:30px;">Chargement…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="admin-card" id="zone-editeur" style="display:none;margin-bottom:60px;">
+            <div class="admin-card__header"><div class="admin-card__titre">3. Relecture et publication</div></div>
+            <div class="admin-card__corps">
+              <div class="ia-grille">
+                <div class="form-groupe"><label class="form-label" for="e-titre">Titre</label><input id="e-titre" class="form-input" maxlength="200" /></div>
+                <div class="form-groupe"><label class="form-label" for="e-matiere">Matière</label><input id="e-matiere" class="form-input" maxlength="100" /></div>
+                <div class="form-groupe"><label class="form-label" for="e-diff">Difficulté</label>
+                  <select id="e-diff" class="form-select"><option>Facile</option><option>Moyen</option><option>Difficile</option></select></div>
+                <div class="form-groupe"><label class="form-label" for="e-premium">Accès</label>
+                  <select id="e-premium" class="form-select"><option value="false">Gratuit</option><option value="true">Premium</option></select></div>
+              </div>
+              <div id="liste-ia"></div>
+              <div class="ia-barre">
+                <div id="resume-verif" style="font-weight:700;"></div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                  <button class="btn btn--gris" onclick="fermerEditeur()">Fermer</button>
+                  <button class="btn btn--bleu" id="btn-save" onclick="enregistrer()">Enregistrer</button>
+                  <button class="btn btn--primaire" id="btn-pub" onclick="publier()">Publier</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      const LETTRES = ["A", "B", "C", "D", "E", "F"];
+      let courant = null; // brouillon ouvert : { id, questions: [...] }
+
+      function toast(msg, type) { window.afficherToast(msg, type || "info"); }
+
+      async function api(chemin, { methode = "GET", corps } = {}) {
+        const token = window.API.getToken();
+        const r = await fetch(window.API_URL + "/qcm-ia" + chemin, {
+          method: methode,
+          headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+          body: corps ? JSON.stringify(corps) : undefined,
+        });
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(data.error || "Erreur " + r.status);
+        return data;
+      }
+
+      // Construction DOM sûre : le contenu généré par l'IA n'est JAMAIS injecté via innerHTML.
+      function el(tag, attrs = {}, ...enfants) {
+        const n = document.createElement(tag);
+        for (const [k, v] of Object.entries(attrs)) {
+          if (k === "class") n.className = v;
+          else if (k === "text") n.textContent = v;
+          else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+          else if (v !== null && v !== undefined && v !== false) n.setAttribute(k, v === true ? "" : v);
+        }
+        enfants.flat().forEach((e) => e && n.appendChild(typeof e === "string" ? document.createTextNode(e) : e));
+        return n;
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.protegerPageAdmin()) return;
+        await chargerBrouillons();
+      });
+
+      async function chargerBrouillons() {
+        const tbody = document.getElementById("tbody-brouillons");
+        try {
+          const data = await api("/brouillons");
+          document.getElementById("nb-brouillons").textContent = "(" + data.total + ")";
+          tbody.replaceChildren();
+          if (!data.brouillons.length) {
+            tbody.appendChild(el("tr", {}, el("td", { colspan: "4", style: "text-align:center;padding:30px;color:var(--gris-texte);", text: "Aucun brouillon. Génère tes premières questions ci-dessus." })));
+            return;
+          }
+          data.brouillons.forEach((b) => {
+            const complet = b.nb_verifiees === b.nb_questions && b.nb_questions > 0;
+            tbody.appendChild(el("tr", {},
+              el("td", { text: b.titre }),
+              el("td", { text: b.matiere }),
+              el("td", {}, el("span", { class: "badge " + (complet ? "badge--vert" : "badge--orange"), text: b.nb_verifiees + " / " + b.nb_questions })),
+              el("td", {}, el("div", { class: "admin-tableau__actions" },
+                el("button", { class: "btn btn--primaire btn--sm", text: "Relire", onclick: () => ouvrir(b.id) }),
+                el("button", { class: "btn btn--danger btn--sm", text: "Supprimer", onclick: () => supprimer(b.id, b.titre) }),
+              )),
+            ));
+          });
+        } catch (err) { toast(err.message, "erreur"); tbody.replaceChildren(); }
+      }
+
+      async function generer() {
+        const btn = document.getElementById("btn-generer");
+        const matiere = document.getElementById("g-matiere").value.trim();
+        if (matiere.length < 2) return toast("Indique la matière.", "erreur");
+        btn.disabled = true; btn.textContent = "Génération en cours…";
+        try {
+          const data = await api("/generer", { methode: "POST", corps: {
+            matiere,
+            theme: document.getElementById("g-theme").value.trim(),
+            concours: document.getElementById("g-concours").value.trim(),
+            niveau: document.getElementById("g-niveau").value,
+            difficulte: document.getElementById("g-diff").value,
+            nombre: parseInt(document.getElementById("g-nombre").value, 10) || 10,
+          }});
+          toast(data.message + (data.rejetees ? " (" + data.rejetees + " écartée(s) car invalides)" : ""), "succes");
+          await chargerBrouillons();
+          await ouvrir(data.qcm.id);
+        } catch (err) { toast(err.message, "erreur"); }
+        finally { btn.disabled = false; btn.textContent = "Générer en brouillon"; }
+      }
+
+      async function ouvrir(id) {
+        try {
+          const { qcm } = await api("/" + id);
+          courant = { id: qcm.id, questions: qcm.questions.map((q) => ({ ...q })) };
+          document.getElementById("e-titre").value = qcm.titre;
+          document.getElementById("e-matiere").value = qcm.matiere;
+          document.getElementById("e-diff").value = qcm.difficulte;
+          document.getElementById("e-premium").value = qcm.premium ? "true" : "false";
+          document.getElementById("zone-editeur").style.display = "block";
+          dessiner();
+          document.getElementById("zone-editeur").scrollIntoView({ behavior: "smooth" });
+        } catch (err) { toast(err.message, "erreur"); }
+      }
+
+      function fermerEditeur() {
+        courant = null;
+        document.getElementById("zone-editeur").style.display = "none";
+        chargerBrouillons();
+      }
+
+      function dessiner() {
+        const zone = document.getElementById("liste-ia");
+        zone.replaceChildren();
+        courant.questions.forEach((q, i) => {
+          const carte = el("div", { class: "ia-q" + (q.verifiee ? " ia-q--ok" : "") });
+          carte.appendChild(el("div", { class: "ia-q__entete" },
+            el("strong", { text: "Question " + (i + 1) }),
+            el("button", { class: "btn btn--danger btn--sm", text: "Supprimer la question", onclick: () => {
+              if (!confirm("Supprimer cette question ?")) return;
+              courant.questions.splice(i, 1); dessiner();
+            }}),
+          ));
+          if (q.a_verifier) {
+            carte.appendChild(el("div", { class: "ia-alerte", text: "⚠️ À contrôler : " + (q.note_verification || "fait précis (date, chiffre, nom ou texte de loi).") }));
+          }
+          const enonce = el("textarea", { class: "form-textarea", rows: "2", maxlength: "600" });
+          enonce.value = q.question;
+          enonce.addEventListener("input", () => { q.question = enonce.value; q.verifiee = false; majResume(); });
+          carte.appendChild(enonce);
+
+          const optionsBloc = el("div", { style: "margin-top:12px;" });
+          q.options.forEach((opt, k) => {
+            const radio = el("input", { type: "radio", name: "bonne-" + i, "aria-label": "Bonne réponse " + LETTRES[k] });
+            radio.checked = q.correct === k;
+            radio.addEventListener("change", () => { q.correct = k; q.verifiee = false; majResume(); });
+            const champ = el("input", { class: "form-input", maxlength: "300" });
+            champ.value = opt;
+            champ.addEventListener("input", () => { q.options[k] = champ.value; q.verifiee = false; majResume(); });
+            optionsBloc.appendChild(el("div", { class: "ia-opt" }, radio, el("span", { class: "opt-lettre", text: LETTRES[k] }), champ));
+          });
+          carte.appendChild(optionsBloc);
+          carte.appendChild(el("div", { class: "ia-note", text: "Coche le rond à gauche de la bonne réponse." }));
+
+          const expl = el("textarea", { class: "form-textarea", rows: "2", style: "margin-top:10px;", placeholder: "Explication affichée après la correction" });
+          expl.value = q.explication;
+          expl.addEventListener("input", () => { q.explication = expl.value; q.verifiee = false; majResume(); });
+          carte.appendChild(expl);
+
+          const verif = el("input", { type: "checkbox" });
+          verif.checked = q.verifiee === true;
+          verif.addEventListener("change", () => {
+            q.verifiee = verif.checked;
+            carte.classList.toggle("ia-q--ok", q.verifiee);
+            majResume();
+          });
+          carte.appendChild(el("label", { class: "ia-verif", style: "margin-top:12px;" }, verif, "J'ai vérifié cette question (énoncé, bonne réponse, explication)"));
+          zone.appendChild(carte);
+        });
+        majResume();
+      }
+
+      function majResume() {
+        const total = courant.questions.length;
+        const ok = courant.questions.filter((q) => q.verifiee).length;
+        document.getElementById("resume-verif").textContent = ok + " / " + total + " vérifiée(s)";
+      }
+
+      function charge() {
+        return {
+          titre: document.getElementById("e-titre").value.trim(),
+          matiere: document.getElementById("e-matiere").value.trim(),
+          difficulte: document.getElementById("e-diff").value,
+          premium: document.getElementById("e-premium").value === "true",
+          questions: courant.questions,
+        };
+      }
+
+      async function enregistrer(silencieux) {
+        const btn = document.getElementById("btn-save");
+        btn.disabled = true;
+        try {
+          await api("/" + courant.id, { methode: "PUT", corps: charge() });
+          if (!silencieux) toast("Brouillon enregistré.", "succes");
+          return true;
+        } catch (err) { toast(err.message, "erreur"); return false; }
+        finally { btn.disabled = false; }
+      }
+
+      async function publier() {
+        const nonOk = courant.questions.filter((q) => !q.verifiee).length;
+        if (nonOk) return toast(nonOk + " question(s) pas encore vérifiée(s).", "erreur");
+        if (!confirm("Publier ce QCM ? Il sera visible par tous les visiteurs.")) return;
+        const btn = document.getElementById("btn-pub");
+        btn.disabled = true;
+        try {
+          if (!(await enregistrer(true))) return;
+          const data = await api("/" + courant.id + "/publier", { methode: "POST" });
+          toast(data.message, "succes");
+          fermerEditeur();
+        } catch (err) { toast(err.message, "erreur"); }
+        finally { btn.disabled = false; }
+      }
+
+      async function supprimer(id, titre) {
+        if (!confirm('Supprimer le brouillon "' + titre + '" ?')) return;
+        try { await window.API.QCM.supprimer(id); toast("Brouillon supprimé.", "succes"); await chargerBrouillons(); }
+        catch (err) { toast(err.message, "erreur"); }
+      }
+    </script>
+  </body>
+</html>

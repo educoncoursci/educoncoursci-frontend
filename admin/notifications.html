@@ -407,14 +407,14 @@
                 <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;">
                   <div>
                     <div style="font-weight:700;font-size:0.88rem;">${e.numero}</div>
-                    <div style="font-size:0.82rem;color:var(--gris-texte);margin-top:4px;white-space:pre-wrap;">${e.message}</div>
+                    <div style="font-size:0.82rem;color:var(--gris-texte);margin-top:4px;white-space:pre-wrap;">${echapperHtml(e.message)}</div>
                   </div>
                   <button class="btn btn--vert btn--sm" onclick="marquerWhatsappEnvoye(${e.id})" style="white-space:nowrap;">✓ Envoyé</button>
                 </div>
               </div>`).join("")
             : `<p style="color:var(--gris-texte);font-size:0.88rem;text-align:center;padding:20px 0;">File vide — rien à envoyer manuellement pour l'instant.</p>`;
         } catch (err) {
-          div.innerHTML = `<p style="color:#dc2626;font-size:0.85rem;">Erreur : ${err.message}</p>`;
+          div.innerHTML = `<p style="color:#dc2626;font-size:0.85rem;">Erreur : ${echapperHtml(err.message)}</p>`;
         }
       }
 
@@ -438,14 +438,14 @@
                 <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;">
                   <div>
                     <div style="font-weight:700;font-size:0.88rem;">${e.numero}</div>
-                    <div style="font-size:0.82rem;color:var(--gris-texte);margin-top:4px;white-space:pre-wrap;">${e.message}</div>
+                    <div style="font-size:0.82rem;color:var(--gris-texte);margin-top:4px;white-space:pre-wrap;">${echapperHtml(e.message)}</div>
                   </div>
                   <button class="btn btn--vert btn--sm" onclick="marquerSmsEnvoye(${e.id})" style="white-space:nowrap;">✓ Envoyé</button>
                 </div>
               </div>`).join("")
             : `<p style="color:var(--gris-texte);font-size:0.88rem;text-align:center;padding:20px 0;">File vide — rien à envoyer manuellement pour l'instant.</p>`;
         } catch (err) {
-          div.innerHTML = `<p style="color:#dc2626;font-size:0.85rem;">Erreur : ${err.message}</p>`;
+          div.innerHTML = `<p style="color:#dc2626;font-size:0.85rem;">Erreur : ${echapperHtml(err.message)}</p>`;
         }
       }
 
@@ -474,7 +474,7 @@
               (n) => `
       <div style="padding:12px 0;border-bottom:1px solid var(--gris-clair);">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px;">
-          <div style="font-weight:700;font-size:0.88rem;flex:1;">${n.urgent ? '<span style="color:var(--rouge);">🔴</span> ' : ""} ${n.titre}</div>
+          <div style="font-weight:700;font-size:0.88rem;flex:1;">${n.urgent ? '<span style="color:var(--rouge);">🔴</span> ' : ""} ${echapperHtml(n.titre)}</div>
           <span class="badge badge--gris" style="font-size:0.7rem;flex-shrink:0;">${n.cible || "tous"}</span>
         </div>
         <div style="font-size:0.78rem;color:var(--gris-texte);">${n.message?.slice(0, 80)}${n.message?.length > 80 ? "…" : ""}</div>

@@ -330,8 +330,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
       <div style="width:52px;height:52px;border-radius:50%;background:var(--gradient-vert);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:#fff;">${session.nom?.[0]?.toUpperCase()||"?"}</div>
       <div>
-        <div style="font-weight:800;font-size:1rem;">${session.nom||"—"}</div>
-        <div style="color:var(--gris-texte);font-size:0.88rem;">${session.email||"—"}</div>
+        <div style="font-weight:800;font-size:1rem;">${echapperHtml(session.nom||"—")}</div>
+        <div style="color:var(--gris-texte);font-size:0.88rem;">${echapperHtml(session.email||"—")}</div>
         <span class="badge badge--rouge" style="margin-top:4px;">Admin</span>
       </div>
     </div>`;
@@ -361,7 +361,7 @@ async function verifierConnexion() {
       <div style="display:flex;align-items:center;gap:10px;">
         <div style="width:12px;height:12px;border-radius:50%;background:var(--rouge);"></div>
         <span style="font-weight:700;color:var(--rouge);">Backend inaccessible</span>
-        <span style="font-size:0.85rem;color:var(--gris-texte);">${err.message}</span>
+        <span style="font-size:0.85rem;color:var(--gris-texte);">${echapperHtml(err.message)}</span>
       </div>
       <div style="margin-top:10px;font-size:0.85rem;color:var(--gris-texte);">
         Vérifie que Railway est bien déployé et que les variables d'environnement sont configurées.
