@@ -6,6 +6,12 @@
 //  et types de documents générables (Pro/Admin).
 // ============================================================
 
+// Échappement HTML local (délègue à window.echapperHtml quand il est chargé).
+function escRecherche(valeur) {
+  if (typeof window.echapperHtml === "function") return window.echapperHtml(valeur);
+  return String(valeur ?? "").replace(/[&<>"'`]/g, "");
+}
+
 const LABELS_SECTIONS = {
   concours: "Concours",
   documents: "Bibliothèque",
@@ -108,11 +114,11 @@ async function lancerRecherche(terme) {
       if (!items || items.length === 0) continue;
       html += `<div class="recherche-section-titre">${LABELS_SECTIONS[cle] || cle}</div>`;
       html += items.map(item => `
-        <a href="${item.lien}" class="recherche-item">
+        <a href="${window.urlSure ? window.urlSure(item.lien, "#") : "#"}" class="recherche-item">
           <div class="recherche-item__icone"><span data-icone="${ICONES_TYPES[item.type] || "document"}" data-taille="18"></span></div>
           <div class="recherche-item__texte">
-            <div class="recherche-item__titre">${item.titre}</div>
-            <div class="recherche-item__sous-titre">${item.sousTitre || ""}</div>
+            <div class="recherche-item__titre">${escRecherche(item.titre)}</div>
+            <div class="recherche-item__sous-titre">${escRecherche(item.sousTitre || "")}</div>
           </div>
           ${item.verrouille ? '<div class="recherche-item__badge">⭐ Premium</div>' : ""}
         </a>

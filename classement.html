@@ -66,14 +66,14 @@
       <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--blanc);border-radius:var(--radius-md);margin-bottom:10px;box-shadow:var(--ombre-sm);">
         <div style="font-size:1.3rem;font-weight:900;width:36px;text-align:center;color:var(--gris-texte);">${MEDAILLES[c.rang - 1] || c.rang}</div>
         <div style="flex:1;">
-          <div style="font-weight:700;">${c.nom}</div>
+          <div style="font-weight:700;">${echapperHtml(c.nom)}</div>
           <div style="font-size:0.78rem;color:var(--gris-texte);">${c.totalTentatives} QCM complétés</div>
         </div>
         <div style="font-weight:900;color:var(--vert);font-size:1.1rem;">${c.moyenne}%</div>
       </div>`)
             .join("");
         } catch (err) {
-          document.getElementById("zone-classement").innerHTML = `<p style="text-align:center;color:#dc2626;">Erreur de chargement : ${err.message}</p>`;
+          document.getElementById("zone-classement").innerHTML = `<p style="text-align:center;color:#dc2626;">Erreur de chargement : ${echapperHtml(err.message)}</p>`;
         }
       });
     </script>

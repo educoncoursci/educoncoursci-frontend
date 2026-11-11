@@ -106,7 +106,7 @@
 
           afficherAnnee(anneeActive);
         } catch (err) {
-          div.innerHTML = `<p style="color:#dc2626;">Erreur de chargement : ${err.message}</p>`;
+          div.innerHTML = `<p style="color:#dc2626;">Erreur de chargement : ${echapperHtml(err.message)}</p>`;
         }
       });
 
@@ -129,14 +129,14 @@
     <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:var(--gris-texte);text-decoration:none;opacity:0.85;">
       <div class="card-concours__en-tete">
         <div class="card-concours__meta">
-          <span class="badge" style="background:var(--gris-clair);color:var(--gris-texte);">${c.categorie}</span>
+          <span class="badge" style="background:var(--gris-clair);color:var(--gris-texte);">${echapperHtml(c.categorie)}</span>
           ${estResultats
             ? '<span class="badge" style="background:var(--vert)18;color:var(--vert);border:1px solid var(--vert)33;">🏆 Résultats publiés</span>'
             : '<span class="badge" style="background:var(--gris-clair);color:var(--gris-texte);">⚫ Clôturé</span>'}
         </div>
-        <div class="card-concours__titre">${c.titre}</div>
+        <div class="card-concours__titre">${echapperHtml(c.titre)}</div>
         <div class="card-concours__infos mt-1">
-          <span class="card-concours__info">🏢 ${c.organisme}</span>
+          <span class="card-concours__info">🏢 ${echapperHtml(c.organisme)}</span>
           <span class="card-concours__info">🎓 ${c.niveau || "—"}</span>
         </div>
       </div>

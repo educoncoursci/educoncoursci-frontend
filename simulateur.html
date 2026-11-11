@@ -801,7 +801,7 @@
         indexExam = idx;
         const q = questionsExam[idx];
         document.getElementById("q-context").textContent =
-          `${q.matiere} · Question ${idx + 1} / ${questionsExam.length}`;
+          `${echapperHtml(q.matiere)} · Question ${idx + 1} / ${questionsExam.length}`;
         document.getElementById("q-num").textContent =
           `Question ${idx + 1} / ${questionsExam.length}`;
         document.getElementById("sim-enonce").textContent = q.question;
@@ -982,10 +982,10 @@
           .map(
             (c, i) => `
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin-bottom:10px;border-left:3px solid ${c.ok ? "var(--vert-clair)" : "var(--rouge)"};">
-      <div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;">${c.ok ? "✅" : "❌"} Q${i + 1} (${c.matiere}) : ${c.question}</div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;">${c.ok ? "✅" : "❌"} Q${i + 1} (${echapperHtml(c.matiere)}) : ${echapperHtml(c.question)}</div>
       ${!c.ok ? `<div style="font-size:0.83rem;color:rgba(255,255,255,0.5);margin-bottom:3px;">Ta réponse : ${c.rep !== undefined ? LETTRE[c.rep] + "—" + c.options[c.rep] : "Non répondue"}</div>` : ""}
       <div style="font-size:0.83rem;color:var(--vert-clair);">Bonne réponse : ${LETTRE[c.correct]} — ${c.options[c.correct]}</div>
-      ${c.explication ? `<div style="font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:6px;">💡 ${c.explication}</div>` : ""}
+      ${c.explication ? `<div style="font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:6px;">💡 ${echapperHtml(c.explication)}</div>` : ""}
     </div>`,
           )
           .join("");

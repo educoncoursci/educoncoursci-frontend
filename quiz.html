@@ -316,7 +316,7 @@
                 >← Retour aux QCM</a
               >
               <button onclick="partagerResultat()" class="btn btn--bleu">
-                📤 Partager
+                📤 Partager sur WhatsApp
               </button>
             </div>
           </div>
@@ -579,11 +579,11 @@
           .map(
             (c, i) => `
     <div class="detail-item ${c.est_correcte ? "ok" : "ko"}">
-      <div class="detail-item__question">${c.est_correcte ? "✅" : "❌"} Q${i + 1} : ${c.question}</div>
+      <div class="detail-item__question">${c.est_correcte ? "✅" : "❌"} Q${i + 1} : ${echapperHtml(c.question)}</div>
       <div class="detail-item__reponse">
         ${!c.est_correcte ? `<span style="color:var(--rouge);">Ta réponse : Option ${LETTRE[c.reponse_utilisateur] ?? "-"}</span><br>` : ""}
         <span style="color:var(--vert);font-weight:600;">Bonne réponse : Option ${LETTRE[c.bonne_reponse]}</span>
-        ${c.explication ? `<br><span style="color:var(--gris-texte);font-size:0.82rem;">💡 ${c.explication}</span>` : ""}
+        ${c.explication ? `<br><span style="color:var(--gris-texte);font-size:0.82rem;">💡 ${echapperHtml(c.explication)}</span>` : ""}
       </div>
     </div>`,
           )
@@ -619,10 +619,13 @@
       }
 
       function partagerResultat() {
-        const txt = `J'ai obtenu ${document.getElementById("res-pct").textContent} au QCM "${qcmData.titre}" sur EduConcoursCI ! 🎓`;
-        window.Utils?.copierTexte?.(
-          txt + " → " + window.location.origin + "/preparation.html",
-        );
+        const txt = `J'ai obtenu ${document.getElementById("res-pct").textContent} au QCM "${qcmData.titre}" sur EduConcoursCI ! 🎓 Et toi, combien tu fais ?`;
+        const lien = window.location.origin + "/preparation.html";
+        if (typeof window.partagerWhatsApp === "function") {
+          window.partagerWhatsApp(txt, lien);
+        } else {
+          window.Utils?.copierTexte?.(txt + " → " + lien);
+        }
       }
 
       function afficherErreur() {

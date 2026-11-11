@@ -23,6 +23,12 @@
 // libellés codés en dur ailleurs (menu de navigation, cases à cocher de
 // filtre sur concours.html) : à corriger dans un prochain lot pour une
 // cohérence visuelle complète sur tout le site.
+// Échappement HTML local (délègue à window.echapperHtml quand il est chargé).
+function escCartes(valeur) {
+  if (typeof window.echapperHtml === "function") return window.echapperHtml(valeur);
+  return String(valeur ?? "").replace(/[&<>"'`]/g, "");
+}
+
 const STATUT_COULEUR_CONCOURS = {
   ouvert: "#16a34a",
   "à venir": "var(--bleu)",
@@ -90,10 +96,10 @@ function construireCarteConcours(c, options = {}) {
 
   const ligneTitre = c.structure_logo_url
     ? `<div class="card-concours__titre-ligne">
-         <img src="${c.structure_logo_url}" alt="Logo ${c.organisme}" class="card-concours__logo" loading="lazy" onerror="this.remove()">
-         <div class="card-concours__titre">${c.titre}</div>
+         <img src="${escCartes(window.urlSure ? window.urlSure(c.structure_logo_url) : "")}" alt="Logo ${escCartes(c.organisme)}" class="card-concours__logo" loading="lazy" onerror="this.remove()">
+         <div class="card-concours__titre">${escCartes(c.titre)}</div>
        </div>`
-    : `<div class="card-concours__titre">${c.titre}</div>`;
+    : `<div class="card-concours__titre">${escCartes(c.titre)}</div>`;
 
   const age = ageAfficheConcours(c);
   const lieu = lieuAfficheConcours(c);
@@ -120,7 +126,7 @@ function construireCarteConcours(c, options = {}) {
     <a href="/concours-detail.html?id=${c.id}" class="card-concours" style="border-left-color:${couleur};text-decoration:none;">
       <div class="card-concours__en-tete">
         <div class="card-concours__meta">
-          <span class="badge" style="background:${couleur}18;color:${couleur};border:1px solid ${couleur}33;">${c.categorie}</span>
+          <span class="badge" style="background:${couleur}18;color:${couleur};border:1px solid ${couleur}33;">${escCartes(c.categorie)}</span>
           <span class="badge" style="background:${couleurStatut}18;color:${couleurStatut};border:1px solid ${couleurStatut}33;">${emoji} ${STATUT_LABEL_CONCOURS[c.statut] || c.statut}</span>
           ${badgeAnnee}
           ${options.badgeExtra || ""}
@@ -128,7 +134,7 @@ function construireCarteConcours(c, options = {}) {
         </div>
         ${ligneTitre}
         <div class="card-concours__infos mt-1">
-          <span class="card-concours__info">🏢 ${c.organisme}</span>
+          <span class="card-concours__info">🏢 ${escCartes(c.organisme)}</span>
           <span class="card-concours__info">🎓 ${c.niveau || "—"}</span>
           <span class="card-concours__info">👥 ${c.places ? c.places + " places" : "—"}</span>
           <span class="card-concours__info">💰 ${fraisAfficheConcours(c)}</span>

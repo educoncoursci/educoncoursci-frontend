@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cours — EduConcoursCI</title>
+  <meta name="description" content="Plan du cours, leçons et progression.">
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="EduConcoursCI" />
+  <meta property="og:title" content="Cours — EduConcoursCI" />
+  <meta property="og:description" content="Plan du cours, leçons et progression." />
+  <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+  <meta property="og:url" content="https://educoncoursci.netlify.app/cours.html" />
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/recherche.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/academie.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main style="padding:calc(var(--navbar-h) + 36px) 0 60px;background:var(--gris-clair);">
+  <div class="container">
+    <div class="academie-fil"><a href="/academie.html">Académie</a> › <span id="fil-cours">Cours</span></div>
+    <div id="zone-cours"><div class="academie-vide">Chargement…</div></div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="/js/layout.js"></script>
+<script src="/js/icons.js"></script>
+<script src="/js/recherche.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/academie.js"></script>
+<script>
+(function () {
+"use strict";
+const { api, el, idDepuisUrl, estConnecte } = window.Academie;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const zone = document.getElementById("zone-cours");
+  const id = idDepuisUrl();
+  if (!id) { zone.replaceChildren(el("div", { class: "academie-vide", text: "Cours introuvable." })); return; }
+  try {
+    const { cours } = await api("/cours/" + id);
+    document.title = cours.titre + " — EduConcoursCI";
+    document.getElementById("fil-cours").textContent = cours.titre;
+
+    const total = cours.lecons.length;
+    const faites = cours.lecons.filter((l) => l.terminee).length;
+    const pct = total ? Math.round((faites / total) * 100) : 0;
+    const prochaine = cours.lecons.find((l) => !l.terminee) || cours.lecons[0];
+
+    zone.replaceChildren(
+      el("div", { class: "academie-entete" },
+        el("div", { class: "academie-etiquettes", style: "margin-bottom:10px;" },
+          el("span", { class: "badge badge--vert", text: cours.matiere }),
+          el("span", { class: "badge badge--bleu", text: cours.niveau }),
+        ),
+        el("h1", { text: cours.titre }),
+        cours.description ? el("p", { text: cours.description }) : null,
+      ),
+      estConnecte()
+        ? el("div", {},
+            el("div", { class: "academie-barre" }, el("span", { style: "width:" + pct + "%" })),
+            el("p", { class: "academie-meta", style: "margin-top:6px;", text: faites + " / " + total + " leçons terminées" }),
+          )
+        : el("p", { class: "academie-meta" }, el("a", { href: "/auth/login.html", text: "Connecte-toi" }), " pour enregistrer ta progression."),
+      prochaine
+        ? el("a", { class: "btn btn--primaire", style: "margin-top:14px;display:inline-block;",
+            href: "/lecon.html?id=" + prochaine.id, text: faites ? "Continuer le cours →" : "Commencer le cours →" })
+        : null,
+      el("div", { style: "margin-top:12px;" },
+        el("button", { type: "button", class: "btn btn--gris btn--sm", text: "📤 Partager ce cours", onclick: () =>
+          window.partagerWhatsApp("Un cours gratuit pour préparer ton concours sur EduConcoursCI : « " + cours.titre + " ».", window.location.href) })),
+      el("div", { class: "academie-lecons" },
+        cours.lecons.map((l) =>
+          el("a", { class: "academie-lecon-ligne", href: "/lecon.html?id=" + l.id },
+            el("span", { class: "academie-lecon-num" + (l.terminee ? " academie-lecon-num--ok" : ""), text: l.terminee ? "✓" : String(l.ordre) }),
+            el("span", { class: "academie-lecon-titre", text: l.titre }),
+            el("span", { class: "badge " + (l.gratuite ? "badge--vert" : "badge--orange"), text: l.gratuite ? "Gratuit" : "Premium" }),
+          )),
+      ),
+    );
+  } catch (err) {
+    zone.replaceChildren(el("div", { class: "academie-vide", text: err.message }));
+  }
+});
+})();
+</script>
+
+</body>
+</html>

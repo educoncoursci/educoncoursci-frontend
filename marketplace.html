@@ -36,7 +36,7 @@
   <body>
     <div id="site-header"></div>
 
-    <main class="container" style="max-width: 1000px; padding: calc(var(--navbar-h) + 32px) 20px 60px;">
+    <main class="container" style="max-width: 1000px; padding: calc(var(--navbar-h) + 32px) 20px 60px !important;">
       <div style="text-align:center;margin-bottom:24px;">
         <h1>🛍️ Marketplace</h1>
         <p style="color:var(--gris-texte);">
@@ -142,7 +142,7 @@
           grille.innerHTML = data.offres.map(carteOffre).join("");
           afficherPagination(data.page, data.totalPages);
         } catch (err) {
-          grille.innerHTML = `<p style="color:#dc2626;grid-column:1/-1;">Erreur : ${err.message}</p>`;
+          grille.innerHTML = `<p style="color:#dc2626;grid-column:1/-1;">Erreur : ${echapperHtml(err.message)}</p>`;
         }
       }
 
@@ -185,7 +185,7 @@
       <p style="font-size:0.9rem;line-height:1.7;margin:10px 0;">${echapperHtml(offre.description)}</p>
       <p style="font-size:0.85rem;color:var(--gris-texte);">Proposé par <strong>${echapperHtml(offre.partenaire_nom)}</strong></p>
       <p style="font-weight:800;color:var(--vert);font-size:1.1rem;margin-top:8px;">${offre.prix ? `${offre.prix.toLocaleString("fr-FR")} F ${echapperHtml(offre.prix_unite)}` : "Sur devis"}</p>
-      ${offre.lien_externe ? `<a href="${offre.lien_externe}" target="_blank" rel="noopener" class="btn btn--gris btn--sm" style="margin-top:6px;">🔗 Voir plus de détails</a>` : ""}`;
+      ${offre.lien_externe ? `<a href="${echapperHtml(urlSure(offre.lien_externe, "#"))}" target="_blank" rel="noopener" class="btn btn--gris btn--sm" style="margin-top:6px;">🔗 Voir plus de détails</a>` : ""}`;
 
           const session = window.Auth?.getSession();
           document.getElementById("contact-nom").value = session?.nom || "";

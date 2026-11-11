@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Académie — EduConcoursCI</title>
+  <meta name="description" content="Cours courts, exercices et progression suivie pour préparer tes concours et ta recherche d'emploi en Côte d'Ivoire.">
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="EduConcoursCI" />
+  <meta property="og:title" content="Académie — EduConcoursCI" />
+  <meta property="og:description" content="Cours courts, exercices et progression suivie pour préparer tes concours et ta recherche d'emploi en Côte d'Ivoire." />
+  <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+  <meta property="og:url" content="https://educoncoursci.netlify.app/academie.html" />
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/recherche.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/academie.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main style="padding:calc(var(--navbar-h) + 36px) 0 60px;background:var(--gris-clair);">
+  <div class="container">
+    <div class="academie-entete">
+      <h1>Académie EduConcoursCI</h1>
+      <p>Des cours courts avec des exercices pour apprendre à ton rythme. Les premières leçons de chaque cours sont gratuites.</p>
+    </div>
+    <div id="zone-cours"><div class="academie-vide">Chargement…</div></div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="/js/layout.js"></script>
+<script src="/js/icons.js"></script>
+<script src="/js/recherche.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/academie.js"></script>
+<script>
+(function () {
+"use strict";
+const { api, el, estConnecte } = window.Academie;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const zone = document.getElementById("zone-cours");
+  try {
+    const { cours } = await api("/cours");
+    zone.replaceChildren();
+    if (!cours.length) {
+      zone.appendChild(el("div", { class: "academie-vide" },
+        el("p", { text: "Les premiers cours arrivent bientôt." }),
+        el("p", {}, "En attendant, entraîne-toi avec les ", el("a", { href: "/preparation.html", text: "QCM de préparation" }), "."),
+      ));
+      return;
+    }
+    const grille = el("div", { class: "academie-grille" });
+    cours.forEach((c) => {
+      const pct = c.nb_lecons ? Math.round((c.nb_terminees / c.nb_lecons) * 100) : 0;
+      const carte = el("a", { class: "academie-carte", href: "/cours.html?id=" + c.id },
+        el("div", { class: "academie-etiquettes" },
+          el("span", { class: "badge badge--vert", text: c.matiere }),
+          el("span", { class: "badge badge--bleu", text: c.niveau }),
+        ),
+        el("h2", { text: c.titre }),
+        c.description ? el("p", { text: c.description }) : null,
+        estConnecte() && c.nb_terminees > 0
+          ? el("div", { class: "academie-barre", title: pct + " %" }, el("span", { style: "width:" + pct + "%" }))
+          : null,
+        el("div", { class: "academie-meta", text:
+          c.nb_lecons + " leçon" + (c.nb_lecons > 1 ? "s" : "") +
+          (c.lecons_gratuites > 0 ? " · " + c.lecons_gratuites + " gratuite" + (c.lecons_gratuites > 1 ? "s" : "") : "") +
+          (estConnecte() && c.nb_terminees > 0 ? " · " + c.nb_terminees + "/" + c.nb_lecons + " terminée" + (c.nb_terminees > 1 ? "s" : "") : "") }),
+      );
+      grille.appendChild(carte);
+    });
+    zone.appendChild(grille);
+  } catch (err) {
+    zone.replaceChildren(el("div", { class: "academie-vide", text: err.message }));
+  }
+});
+})();
+</script>
+
+</body>
+</html>

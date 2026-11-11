@@ -270,9 +270,9 @@ function afficherVideos(liste) {
     const miniature  = v.miniature || "";
     return `
       <div class="card-video">
-        <div class="card-video__miniature" onclick="${verrouille ? "demanderPremium()" : `lireVideo('${v.youtube_id||""}','${v.url||""}','${v.titre.replace(/'/g,"\\'")}','${v.categorie||""}')`}">
+        <div class="card-video__miniature" onclick="${verrouille ? "demanderPremium()" : `lireVideo('${v.youtube_id||""}','${v.url||""}',${echapperHtml(JSON.stringify(v.titre))},'${echapperHtml(v.categorie||"")}')`}">
           ${miniature
-            ? `<img src="${miniature}" alt="${v.titre}" loading="lazy">`
+            ? `<img src="${miniature}" alt="${echapperHtml(v.titre)}" loading="lazy">`
             : `<div style="height:100%;background:linear-gradient(135deg,#1A1A2E,#7B2FBE);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🎬</div>`
           }
           <div class="card-video__play">
@@ -282,15 +282,15 @@ function afficherVideos(liste) {
         </div>
         <div class="card-video__corps">
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
-            <span class="badge badge--violet">${v.categorie||"Général"}</span>
+            <span class="badge badge--violet">${echapperHtml(v.categorie||"Général")}</span>
             ${v.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--gratuit">🆓 Gratuit</span>'}
           </div>
-          <div class="card-video__titre">${v.titre}</div>
+          <div class="card-video__titre">${echapperHtml(v.titre)}</div>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
             <span style="font-size:0.78rem;color:var(--gris-texte);">👁 ${(v.vues||0).toLocaleString("fr-CI")} vues</span>
             ${verrouille
               ? `<a href="/boutique.html" class="btn btn--orange btn--sm">⭐ Débloquer</a>`
-              : `<button onclick="lireVideo('${v.youtube_id||""}','${v.url||""}','${v.titre.replace(/'/g,"\\'")}','${v.categorie||""}')" class="btn btn--violet btn--sm" style="background:var(--violet);color:#fff;border:none;">▶ Regarder</button>`
+              : `<button onclick="lireVideo('${v.youtube_id||""}','${v.url||""}',${echapperHtml(JSON.stringify(v.titre))},'${echapperHtml(v.categorie||"")}')" class="btn btn--violet btn--sm" style="background:var(--violet);color:#fff;border:none;">▶ Regarder</button>`
             }
           </div>
         </div>

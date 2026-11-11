@@ -67,7 +67,7 @@
   <body>
     <div id="site-header"></div>
 
-    <main class="container" style="max-width: 820px; padding: calc(var(--navbar-h) + 32px) 20px 60px;">
+    <main class="container" style="max-width: 820px; padding: calc(var(--navbar-h) + 32px) 20px 60px !important;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:20px;">
         <div>
           <h1 style="margin-bottom:4px;">💬 Communauté</h1>
@@ -179,7 +179,7 @@
           div.innerHTML = data.sujets.map(carteSujet).join("");
           afficherPagination(data.page, data.totalPages);
         } catch (err) {
-          div.innerHTML = `<p style="color:#dc2626;">Erreur de chargement : ${err.message}</p>`;
+          div.innerHTML = `<p style="color:#dc2626;">Erreur de chargement : ${echapperHtml(err.message)}</p>`;
         }
       }
 
@@ -189,7 +189,7 @@
     <a href="/sujet-detail.html?id=${s.id}" class="forum-sujet">
       <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;">
         <div style="min-width:0;">
-          <span class="forum-tag forum-tag--${s.categorie}">${LABELS_CAT[s.categorie] || s.categorie}</span>
+          <span class="forum-tag forum-tag--${echapperHtml(s.categorie)}">${LABELS_CAT[s.categorie] || s.categorie}</span>
           ${s.epingle ? '<span class="forum-tag" style="background:#fde68a;color:#78350f;">📌 Épinglé</span>' : ""}
           ${s.concours_titre ? `<span class="forum-tag" style="background:var(--gris-clair);color:var(--gris-texte);">${echapperHtml(s.concours_titre)}</span>` : ""}
           <div style="font-weight:800;font-size:0.98rem;margin-top:6px;">${echapperHtml(s.titre)}</div>

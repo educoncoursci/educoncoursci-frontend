@@ -159,7 +159,7 @@
           const { diplomes } = await window.API.Referentiels.diplomes();
           document.getElementById("elig-diplome").innerHTML =
             '<option value="">Sélectionner…</option>' +
-            diplomes.map((d) => `<option value="${d.id}">${d.nom}</option>`).join("");
+            diplomes.map((d) => `<option value="${d.id}">${echapperHtml(d.nom)}</option>`).join("");
         } catch (err) {
           console.error("Erreur chargement diplômes :", err.message);
         }
@@ -176,11 +176,11 @@
     <div class="elig-carte">
       <div style="flex:1;min-width:200px;">
         <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;">
-          <span class="badge badge--vert" style="font-size:0.7rem;">${c.categorie}</span>
+          <span class="badge badge--vert" style="font-size:0.7rem;">${echapperHtml(c.categorie)}</span>
           <span style="font-size:0.78rem;color:var(--gris-texte);">${STATUT_EMOJI[c.statut] || ""} ${c.statut}</span>
         </div>
-        <a href="/concours-detail.html?id=${c.id}" style="font-weight:700;text-decoration:none;color:inherit;">${c.titre}</a>
-        <div style="font-size:0.82rem;color:var(--gris-texte);">${c.organisme}</div>
+        <a href="/concours-detail.html?id=${c.id}" style="font-weight:700;text-decoration:none;color:inherit;">${echapperHtml(c.titre)}</a>
+        <div style="font-size:0.82rem;color:var(--gris-texte);">${echapperHtml(c.organisme)}</div>
         ${montrerRaisons && c.raisons?.length ? `<div style="margin-top:6px;font-size:0.8rem;color:#b91c1c;">${c.raisons.map((r) => `• ${r}`).join("<br>")}</div>` : ""}
       </div>
       <div class="elig-score" style="color:${couleurScore};">${c.score}%</div>

@@ -327,6 +327,9 @@
           regroupées ci-dessous, ou accède en un clic aux sites d'emploi partenaires
           pour voir toutes leurs offres à jour.
         </p>
+        <p style="margin-top:14px;">
+          <a href="/publier-offre.html" class="btn btn--outline-vert btn--sm">Vous recrutez ? Publiez votre offre</a>
+        </p>
       </div>
 
       <div class="option-eyebrow option-eyebrow--vert">💼 Option 1</div>
@@ -505,22 +508,22 @@
         return `
             <div class="card-emploi" onclick="voirDetail(${o.id})">
               ${o.image_url
-                ? `<img src="${o.image_url}" alt="" style="width:100%;height:110px;object-fit:cover;border-radius:10px;margin-bottom:10px;" onerror="this.style.display='none'">`
+                ? `<img src="${echapperHtml(urlSure(o.image_url))}" alt="" style="width:100%;height:110px;object-fit:cover;border-radius:10px;margin-bottom:10px;" onerror="this.style.display='none'">`
                 : `<div style="width:100%;height:70px;display:flex;align-items:center;justify-content:center;background:var(--gris-clair);border-radius:10px;margin-bottom:10px;font-size:1.6rem;">💼</div>`
               }
               <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px;">
-                <div class="card-emploi__type" style="margin-bottom:0;">${o.type_contrat}</div>
+                <div class="card-emploi__type" style="margin-bottom:0;">${echapperHtml(o.type_contrat)}</div>
                 ${estNouvelle ? `<span style="font-size:0.65rem;font-weight:800;text-transform:uppercase;padding:3px 8px;border-radius:20px;background:#fef3c7;color:#92400e;">🆕 Nouveau</span>` : ""}
               </div>
-              <div class="card-emploi__titre">${o.titre}</div>
-              <div class="card-emploi__entreprise">${o.entreprise}</div>
+              <div class="card-emploi__titre">${echapperHtml(o.titre)}</div>
+              <div class="card-emploi__entreprise">${echapperHtml(o.entreprise)}</div>
               <p style="font-size:0.82rem;color:var(--gris-texte);line-height:1.5;margin:6px 0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
                 ${(o.description || "").replace(/</g, "&lt;")}
               </p>
               <div class="card-emploi__meta">
-                <span><span data-icone="institution" data-taille="14"></span> ${o.ville || "Non précisé"}</span>
-                ${o.salaire ? `<span><span data-icone="portefeuille" data-taille="14"></span> ${o.salaire}</span>` : ""}
-                ${o.date_limite ? `<span>⏳ Jusqu'au ${o.date_limite}</span>` : ""}
+                <span><span data-icone="institution" data-taille="14"></span> ${echapperHtml(o.ville || "Non précisé")}</span>
+                ${o.salaire ? `<span><span data-icone="portefeuille" data-taille="14"></span> ${echapperHtml(o.salaire)}</span>` : ""}
+                ${o.date_limite ? `<span>⏳ Jusqu'au ${echapperHtml(o.date_limite)}</span>` : ""}
               </div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
                 <span style="font-size:0.72rem;color:var(--gris-texte);">
@@ -655,28 +658,30 @@
           const source = o.source_nom || "EduConcoursCI";
           contenu.innerHTML = `
             <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
-              <div class="card-emploi__type" style="margin-bottom:0;">${o.type_contrat}</div>
+              <div class="card-emploi__type" style="margin-bottom:0;">${echapperHtml(o.type_contrat)}</div>
               <span style="font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--gris-clair);color:var(--gris-texte);">Source : ${source}</span>
             </div>
-            <h2 style="margin: 10px 0 4px;">${o.titre}</h2>
-            <p style="color: var(--gris-texte); margin-bottom: 16px;">${o.entreprise} · ${o.ville || ""}${o.region ? ` (${o.region})` : ""}</p>
+            <h2 style="margin: 10px 0 4px;">${echapperHtml(o.titre)}</h2>
+            <p style="color: var(--gris-texte); margin-bottom: 16px;">${echapperHtml(o.entreprise)} · ${echapperHtml(o.ville || "")}${o.region ? ` (${echapperHtml(o.region)})` : ""}</p>
 
-            ${o.salaire ? `<p><strong>Rémunération :</strong> ${o.salaire}</p>` : ""}
-            ${o.niveau_etudes ? `<p><strong>Niveau d'études :</strong> ${o.niveau_etudes}</p>` : ""}
-            ${o.experience ? `<p><strong>Expérience requise :</strong> ${o.experience}</p>` : ""}
-            ${o.date_limite ? `<p><strong>Date limite :</strong> ${o.date_limite}${o.expiree ? ' <span style="color:#dc2626;font-weight:700;">(expirée)</span>' : ""}</p>` : ""}
+            ${o.salaire ? `<p><strong>Rémunération :</strong> ${echapperHtml(o.salaire)}</p>` : ""}
+            ${o.niveau_etudes ? `<p><strong>Niveau d'études :</strong> ${echapperHtml(o.niveau_etudes)}</p>` : ""}
+            ${o.experience ? `<p><strong>Expérience requise :</strong> ${echapperHtml(o.experience)}</p>` : ""}
+            ${o.date_limite ? `<p><strong>Date limite :</strong> ${echapperHtml(o.date_limite)}${o.expiree ? ' <span style="color:#dc2626;font-weight:700;">(expirée)</span>' : ""}</p>` : ""}
 
             <h3 style="margin-top:20px; font-size:1rem;">Description du poste</h3>
-            <p style="white-space:pre-wrap; font-size:0.9rem; line-height:1.6;">${o.description}</p>
+            <p style="white-space:pre-wrap; font-size:0.9rem; line-height:1.6;">${echapperHtml(o.description)}</p>
 
             ${o.profil_recherche ? `
               <h3 style="margin-top:16px; font-size:1rem;">Profil recherché</h3>
-              <p style="white-space:pre-wrap; font-size:0.9rem; line-height:1.6;">${o.profil_recherche}</p>
+              <p style="white-space:pre-wrap; font-size:0.9rem; line-height:1.6;">${echapperHtml(o.profil_recherche)}</p>
             ` : ""}
 
             <div id="zone-candidature" style="margin-top:24px;">
               ${o.lien_externe ? `
-                <a href="${o.lien_externe}" target="_blank" rel="noopener" class="btn btn--primaire btn--full">Postuler sur le site de l'entreprise →</a>
+                <a href="${echapperHtml(urlSure(o.lien_externe, "#"))}" target="_blank" rel="noopener" class="btn btn--primaire btn--full">Postuler sur le site de l'entreprise →</a>
+              ` : (o.source_nom === "Entreprise partenaire" && o.email_contact && /^[^\s<>"'`@]+@[^\s<>"'`@]+$/.test(o.email_contact)) ? `
+                <a href="mailto:${echapperHtml(o.email_contact)}?subject=${encodeURIComponent("Candidature : " + o.titre)}" class="btn btn--primaire btn--full">Postuler par e-mail</a>
               ` : `
                 <textarea id="message-candidature" class="form-textarea" rows="3" placeholder="Un message pour accompagner ta candidature (optionnel)"></textarea>
                 <button onclick="postulerOffre(${o.id})" class="btn btn--primaire btn--full btn--lg" style="margin-top:10px;" id="btn-postuler">

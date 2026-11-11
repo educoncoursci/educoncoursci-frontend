@@ -1022,13 +1022,12 @@
             for (const m of modeles) {
               const estSelectionne = m.id === modeleChoisi;
               html += `
-                <div class="modele-carte ${estSelectionne ? "selectionne" : ""}" data-modele-id="${m.id}" onclick="choisirModele('${m.id}')" title="${m.description}">
+                <div class="modele-carte ${estSelectionne ? "selectionne" : ""}" data-modele-id="${m.id}" onclick="choisirModele('${m.id}')" title="${echapperHtml(m.description)}">
                   ${m.premium ? '<div class="modele-carte__badge">⭐ Premium</div>' : ""}
                   <div class="modele-carte__check">
                     <span data-icone="coche" data-taille="12"></span>
                   </div>
                   <div class="modele-carte__apercu">
-                    <div class="modele-carte__colonne" style="background:${m.couleurs.primaire};"></div>
                     <div class="modele-carte__corps">
                       <div class="modele-carte__ligne" style="width:80%; background:${m.couleurs.primaire};"></div>
                       <div class="modele-carte__ligne" style="width:60%;"></div>
@@ -1038,7 +1037,7 @@
                     </div>
                   </div>
                   <div class="modele-carte__info">
-                    <div class="modele-carte__nom">${m.nom}</div>
+                    <div class="modele-carte__nom">${echapperHtml(m.nom)}</div>
                   </div>
                 </div>`;
             }

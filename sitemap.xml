@@ -28,4 +28,6 @@
   <url><loc>https://educoncoursci.netlify.app/guide.html</loc><priority>0.4</priority></url>
   <url><loc>https://educoncoursci.netlify.app/boutique.html</loc><priority>0.5</priority></url>
   <url><loc>https://educoncoursci.netlify.app/resultats.html</loc><priority>0.6</priority></url>
+  <url><loc>https://educoncoursci.netlify.app/academie.html</loc><priority>0.8</priority></url>
+  <url><loc>https://educoncoursci.netlify.app/publier-offre.html</loc><priority>0.6</priority></url>
 </urlset>

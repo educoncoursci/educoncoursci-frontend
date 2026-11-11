@@ -190,13 +190,13 @@
               </div>`;
           }
 
-          messagesDiv.innerHTML += htmlAlerte + `<div class="chat-message chat-message--assistant">${res.reponse}</div>`;
+          messagesDiv.innerHTML += htmlAlerte + `<div class="chat-message chat-message--assistant">${echapperHtml(res.reponse)}</div>`;
           messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
           historiqueChat.push({ role: "user", contenu: message });
           historiqueChat.push({ role: "assistant", contenu: res.reponse });
         } catch (err) {
-          messagesDiv.innerHTML += `<div class="chat-message chat-message--assistant" style="color:#dc2626;">${err.message || "impossible de répondre pour le moment."}</div>`;
+          messagesDiv.innerHTML += `<div class="chat-message chat-message--assistant" style="color:#dc2626;">${echapperHtml(err.message || "impossible de répondre pour le moment.")}</div>`;
         } finally {
           btn.disabled = false;
         }

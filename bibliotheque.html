@@ -615,9 +615,9 @@
           ${verrouille ? "🔒" : icone}
         </div>
         <div class="card-pdf__corps">
-          <div class="card-pdf__titre">${p.titre}</div>
+          <div class="card-pdf__titre">${echapperHtml(p.titre)}</div>
           <div class="card-pdf__meta">
-            ${p.categorie ? `<span class="badge badge--gris" style="margin-right:4px;">${p.categorie}</span>` : ""}
+            ${p.categorie ? `<span class="badge badge--gris" style="margin-right:4px;">${echapperHtml(p.categorie)}</span>` : ""}
             ${p.premium ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--gratuit">🆓 Gratuit</span>'}
           </div>
           <div style="display:flex;gap:14px;margin-top:8px;font-size:0.78rem;color:var(--gris-texte);">
@@ -630,7 +630,7 @@
           ${
             verrouille
               ? `<a href="/boutique.html" class="btn btn--orange btn--sm btn--full">⭐ Débloquer</a>`
-              : `<button onclick="telecharger(${p.id},'${p.titre.replace(/'/g, "\\'")}',${p.premium})" class="btn btn--primaire btn--sm btn--full">⬇ Télécharger</button>`
+              : `<button onclick="telecharger(${p.id},${echapperHtml(JSON.stringify(p.titre))},${p.premium})" class="btn btn--primaire btn--sm btn--full">⬇ Télécharger</button>`
           }
         </div>
       </div>`;

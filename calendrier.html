@@ -250,8 +250,8 @@
         return `
       <a href="/concours-detail.html?id=${e.concoursId}" style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--gris-bordure);text-decoration:none;color:inherit;">
         <div style="min-width:0;">
-          <div style="font-weight:700;font-size:0.9rem;">${e.titre}</div>
-          <div style="font-size:0.78rem;color:var(--gris-texte);">🏢 ${e.organisme} · ${e.type} — ${e.date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</div>
+          <div style="font-weight:700;font-size:0.9rem;">${echapperHtml(e.titre)}</div>
+          <div style="font-size:0.78rem;color:var(--gris-texte);">🏢 ${echapperHtml(e.organisme)} · ${e.type} — ${e.date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</div>
         </div>
         <span class="badge ${e.type === "Clôture" ? "badge--rouge" : "badge--vert"}" style="white-space:nowrap;">${jours >= 0 ? `J-${jours}` : "Passé"}</span>
       </a>`;

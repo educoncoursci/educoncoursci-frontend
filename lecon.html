@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leçon — EduConcoursCI</title>
+  <meta name="description" content="Leçon, points clés et exercices.">
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="EduConcoursCI" />
+  <meta property="og:title" content="Leçon — EduConcoursCI" />
+  <meta property="og:description" content="Leçon, points clés et exercices." />
+  <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+  <meta property="og:url" content="https://educoncoursci.netlify.app/lecon.html" />
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/recherche.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/academie.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main style="padding:calc(var(--navbar-h) + 36px) 0 60px;background:var(--gris-clair);">
+  <div class="container">
+    <div class="academie-fil"><a href="/academie.html">Académie</a> › <a id="fil-cours-lien" href="/academie.html">Cours</a></div>
+    <div id="zone-lecon"><div class="academie-vide">Chargement…</div></div>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="/js/layout.js"></script>
+<script src="/js/icons.js"></script>
+<script src="/js/recherche.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/academie.js"></script>
+<script>
+(function () {
+"use strict";
+const { api, el, rendreContenu, idDepuisUrl, estConnecte } = window.Academie;
+
+function afficherVerrou(zone, data) {
+  document.getElementById("fil-cours-lien").textContent = data.cours.titre;
+  document.getElementById("fil-cours-lien").href = "/cours.html?id=" + data.cours.id;
+  zone.replaceChildren(el("div", { class: "academie-verrou" },
+    el("div", { style: "font-size:2rem;", text: "🔒" }),
+    el("h2", { text: data.lecon.titre }),
+    el("p", { text: data.connecte
+      ? "Cette leçon est réservée aux abonnés Premium. Les premières leçons du cours restent gratuites."
+      : "Cette leçon est réservée aux abonnés Premium. Connecte-toi si tu as déjà un abonnement." }),
+    el("div", { style: "display:flex;gap:10px;justify-content:center;flex-wrap:wrap;" },
+      el("a", { class: "btn btn--primaire", href: "/boutique.html", text: "Voir le Premium" }),
+      data.connecte ? null : el("a", { class: "btn btn--outline-vert", href: "/auth/login.html", text: "Se connecter" }),
+      el("a", { class: "btn btn--gris", href: "/cours.html?id=" + data.cours.id, text: "Retour au cours" }),
+    ),
+  ));
+}
+
+function dessinerExercices(exercices) {
+  let reponses = 0, bonnes = 0;
+  const score = el("div", { class: "exo-score", style: "display:none;" });
+  const bloc = el("section", { class: "academie-exos" }, el("h2", { text: "Exercices" }));
+  exercices.forEach((q, i) => {
+    const boutons = [];
+    const explication = el("div", { class: "exo-explication", style: "display:none;" });
+    q.options.forEach((opt, k) => {
+      const b = el("button", { type: "button", class: "exo-option", text: opt });
+      b.addEventListener("click", () => {
+        boutons.forEach((x) => (x.disabled = true));
+        boutons[q.correct].classList.add("exo-option--bonne");
+        if (k !== q.correct) b.classList.add("exo-option--mauvaise");
+        else bonnes++;
+        explication.textContent = (k === q.correct ? "Bonne réponse. " : "Ce n'est pas la bonne réponse. ") + q.explication;
+        explication.style.display = "block";
+        reponses++;
+        if (reponses === exercices.length) {
+          score.textContent = "Ton score : " + bonnes + " / " + exercices.length;
+          score.style.display = "block";
+        }
+      });
+      boutons.push(b);
+    });
+    bloc.appendChild(el("div", { class: "exo" },
+      el("div", { class: "exo-q", text: (i + 1) + ". " + q.question }), boutons, explication));
+  });
+  bloc.appendChild(score);
+  return bloc;
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const zone = document.getElementById("zone-lecon");
+  const id = idDepuisUrl();
+  if (!id) { zone.replaceChildren(el("div", { class: "academie-vide", text: "Leçon introuvable." })); return; }
+  try {
+    const d = await api("/lecons/" + id);
+    document.title = d.lecon.titre + " — EduConcoursCI";
+    document.getElementById("fil-cours-lien").textContent = d.cours.titre;
+    document.getElementById("fil-cours-lien").href = "/cours.html?id=" + d.cours.id;
+
+    const contenu = el("div");
+    rendreContenu(d.lecon.contenu, contenu);
+
+    const statut = el("div", { class: "academie-meta", style: "margin-top:12px;" });
+    const boutonTerminer = el("button", { type: "button", class: "btn btn--primaire", text: d.terminee ? "✓ Leçon terminée" : "Marquer comme terminée" });
+    if (d.terminee) boutonTerminer.disabled = true;
+
+    boutonTerminer.addEventListener("click", async () => {
+      if (!estConnecte()) { window.location.href = "/auth/login.html"; return; }
+      boutonTerminer.disabled = true;
+      try {
+        const r = await api("/lecons/" + id + "/terminer", { methode: "POST" });
+        boutonTerminer.textContent = "✓ Leçon terminée";
+        statut.textContent = r.progression.cours_termine
+          ? "🎉 Bravo, tu as terminé tout le cours !"
+          : r.progression.terminees + " / " + r.progression.total + " leçons terminées.";
+      } catch (err) {
+        boutonTerminer.disabled = false;
+        window.afficherToast(err.message, "erreur");
+      }
+    });
+    if (!estConnecte()) boutonTerminer.textContent = "Se connecter pour enregistrer ma progression";
+
+    zone.replaceChildren(
+      el("article", { class: "academie-lecon" },
+        el("div", { class: "academie-meta", text: "Leçon " + d.lecon.ordre + " sur " + d.lecon.total }),
+        el("h1", { text: d.lecon.titre }),
+        contenu,
+      ),
+      d.lecon.points_cles.length
+        ? el("section", { class: "academie-points" },
+            el("h2", { text: "À retenir" }),
+            el("ul", {}, d.lecon.points_cles.map((p) => el("li", { text: p }))))
+        : null,
+      d.lecon.exercices.length ? dessinerExercices(d.lecon.exercices) : null,
+      el("div", { class: "academie-actions" },
+        d.precedente
+          ? el("a", { class: "btn btn--gris", href: "/lecon.html?id=" + d.precedente.id, text: "← Leçon précédente" })
+          : el("a", { class: "btn btn--gris", href: "/cours.html?id=" + d.cours.id, text: "← Retour au cours" }),
+        boutonTerminer,
+        d.suivante
+          ? el("a", { class: "btn btn--outline-vert", href: "/lecon.html?id=" + d.suivante.id, text: "Leçon suivante →" })
+          : el("a", { class: "btn btn--outline-vert", href: "/academie.html", text: "Tous les cours" }),
+      ),
+      statut,
+      el("div", { style: "margin-top:18px;text-align:center;" },
+        el("button", { type: "button", class: "btn btn--gris", text: "📤 Partager cette leçon sur WhatsApp", onclick: () =>
+          window.partagerWhatsApp("Je révise avec EduConcoursCI : « " + d.lecon.titre + " » (" + d.cours.titre + ").", window.location.href) })),
+    );
+  } catch (err) {
+    if (err.status === 403 && err.data?.premium) { afficherVerrou(zone, err.data); return; }
+    zone.replaceChildren(el("div", { class: "academie-vide", text: err.message }));
+  }
+});
+})();
+</script>
+
+</body>
+</html>

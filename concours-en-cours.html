@@ -75,7 +75,7 @@
 
           div.innerHTML = concours.map((c) => window.construireCarteConcours(c)).join("");
         } catch (err) {
-          div.innerHTML = `<p style="color:#dc2626;grid-column:1/-1;">Erreur de chargement : ${err.message}</p>`;
+          div.innerHTML = `<p style="color:#dc2626;grid-column:1/-1;">Erreur de chargement : ${echapperHtml(err.message)}</p>`;
         }
       });
     </script>

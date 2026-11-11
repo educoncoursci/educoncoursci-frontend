@@ -103,7 +103,7 @@
 
           document.getElementById("zone-sujet").innerHTML = `
       <div class="message-carte">
-        <span class="forum-tag forum-tag--${sujet.categorie}">${LABELS_CAT[sujet.categorie] || sujet.categorie}</span>
+        <span class="forum-tag forum-tag--${echapperHtml(sujet.categorie)}">${LABELS_CAT[sujet.categorie] || sujet.categorie}</span>
         ${sujet.concours_titre ? `<span class="forum-tag" style="background:var(--gris-clair);color:var(--gris-texte);">📌 ${echapperHtml(sujet.concours_titre)}</span>` : ""}
         <h1 style="font-size:1.4rem;margin:12px 0 8px;">${echapperHtml(sujet.titre)}</h1>
         <div class="message-carte__auteur">${echapperHtml(sujet.auteur_nom)} <span class="message-carte__date">· ${date} · 👁️ ${sujet.vues} vues</span></div>
@@ -120,7 +120,7 @@
           }
           document.getElementById("zone-reponses").innerHTML = reponses.map((r) => carteReponse(r, session)).join("");
         } catch (err) {
-          document.getElementById("zone-sujet").innerHTML = `<p style="color:#dc2626;">Erreur : ${err.message}</p>`;
+          document.getElementById("zone-sujet").innerHTML = `<p style="color:#dc2626;">Erreur : ${echapperHtml(err.message)}</p>`;
         }
       }
 

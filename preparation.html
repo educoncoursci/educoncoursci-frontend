@@ -410,7 +410,7 @@
                     margin: 0;
                   "
                 >
-                  Cours complets, sujets corrigés, fiches de révision.
+                  Documents de préparation et fiches de révision.
                 </p>
               </div>
             </a>
@@ -564,10 +564,10 @@
           <div class="card-qcm__icone">📝</div>
           ${verrouille ? '<span class="badge badge--premium">⭐ Premium</span>' : '<span class="badge badge--vert">🆓 Gratuit</span>'}
         </div>
-        <div class="card-qcm__titre">${q.titre}</div>
+        <div class="card-qcm__titre">${echapperHtml(q.titre)}</div>
         <div class="card-qcm__meta">
           <span class="diff-badge ${DIFF_CLASS[q.difficulte] || "diff-moyen"}">${DIFF_EMOJI[q.difficulte] || "🟡"} ${q.difficulte || "Moyen"}</span>
-          <span class="badge badge--gris" style="margin-left:6px;">${q.matiere}</span>
+          <span class="badge badge--gris" style="margin-left:6px;">${echapperHtml(q.matiere)}</span>
         </div>
         <div class="card-qcm__stats">
           <span class="card-qcm__stat">📊 ${q.tentatives || 0} tentatives</span>

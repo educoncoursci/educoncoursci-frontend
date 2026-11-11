@@ -368,8 +368,8 @@
             <div class="type-carte" data-type-id="${t.id}" onclick="choisirType('${t.id}')">
               ${t.premium ? '<div class="type-carte__badge">⭐ Premium</div>' : ""}
               <div class="type-carte__icone"><span data-icone="${t.icone}" data-taille="22"></span></div>
-              <div class="type-carte__nom">${t.nom}</div>
-              <div class="type-carte__desc">${t.description}</div>
+              <div class="type-carte__nom">${echapperHtml(t.nom)}</div>
+              <div class="type-carte__desc">${echapperHtml(t.description)}</div>
             </div>
           `).join("");
         } catch (err) {

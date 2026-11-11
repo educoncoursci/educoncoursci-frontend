@@ -492,7 +492,7 @@
               return `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
       <div style="min-width:0;">
-        <div style="font-weight:700;font-size:0.88rem;">${verrouille ? "🔒 " : ""}${p.titre}</div>
+        <div style="font-weight:700;font-size:0.88rem;">${verrouille ? "🔒 " : ""}${echapperHtml(p.titre)}</div>
         <div style="font-size:0.78rem;color:var(--gris-texte);">${TYPE_LABELS[p.type] || p.type || ""} ${p.matiere ? "· " + p.matiere : ""}</div>
       </div>
       ${
@@ -515,7 +515,7 @@
                 return `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
       <div style="min-width:0;">
-        <div style="font-weight:700;font-size:0.88rem;">${verrouille ? "🔒 " : ""}📘 ${p.titre}</div>
+        <div style="font-weight:700;font-size:0.88rem;">${verrouille ? "🔒 " : ""}📘 ${echapperHtml(p.titre)}</div>
         <div style="font-size:0.78rem;color:var(--gris-texte);">${p.matiere ? p.matiere : "Cours de préparation"}</div>
       </div>
       ${
@@ -559,7 +559,7 @@
 
         if (c.salaire || c.debouches) {
           let html = "";
-          if (c.salaire) html += `<p style="margin-bottom:10px;"><strong>💰 Salaire :</strong> ${c.salaire}</p>`;
+          if (c.salaire) html += `<p style="margin-bottom:10px;"><strong>💰 Salaire :</strong> ${echapperHtml(c.salaire)}</p>`;
           if (c.debouches) {
             html += `<div><strong>🚀 Débouchés :</strong></div>` +
               c.debouches.split("\n").filter(Boolean).map((l) => `<p style="margin:6px 0 0;">• ${l}</p>`).join("");
@@ -574,9 +574,9 @@
               src="https://maps.google.com/maps?q=${encodeURIComponent(c.adresse)}&output=embed"
               width="100%" height="260" style="border:0;display:block;"
               loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-              title="Localisation — ${c.titre}"
+              title="Localisation — ${echapperHtml(c.titre)}"
             ></iframe>
-            <div style="font-size:0.8rem;color:var(--gris-texte);padding:8px 2px 0;">📍 ${c.adresse}</div>`;
+            <div style="font-size:0.8rem;color:var(--gris-texte);padding:8px 2px 0;">📍 ${echapperHtml(c.adresse)}</div>`;
           document.getElementById("section-carte").classList.remove("hidden");
         }
 
@@ -586,10 +586,10 @@
             .map(
               (com) => `
     <div style="padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
-      <div style="font-weight:700;font-size:0.9rem;">${com.titre}</div>
+      <div style="font-weight:700;font-size:0.9rem;">${echapperHtml(com.titre)}</div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:4px;">
         <span style="font-size:0.78rem;color:var(--gris-texte);">${com.date || ""}</span>
-        ${com.url ? `<a href="${com.url}" target="_blank" rel="noopener" class="btn btn--gris btn--sm">Consulter →</a>` : ""}
+        ${com.url ? `<a href="${echapperHtml(urlSure(com.url, "#"))}" target="_blank" rel="noopener" class="btn btn--gris btn--sm">Consulter →</a>` : ""}
       </div>
     </div>`,
             )
@@ -603,8 +603,8 @@
             .map(
               (f) => `
     <details style="padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
-      <summary style="font-weight:700;font-size:0.9rem;cursor:pointer;">${f.question}</summary>
-      <p style="margin-top:8px;font-size:0.88rem;color:var(--gris-texte);line-height:1.7;">${f.reponse}</p>
+      <summary style="font-weight:700;font-size:0.9rem;cursor:pointer;">${echapperHtml(f.question)}</summary>
+      <p style="margin-top:8px;font-size:0.88rem;color:var(--gris-texte);line-height:1.7;">${echapperHtml(f.reponse)}</p>
     </details>`,
             )
             .join("");
@@ -775,7 +775,7 @@
 
         // En-tête
         const logoHeader = c.structure?.logo_url
-          ? `<img src="${c.structure.logo_url}" alt="Logo ${c.organisme}" style="width:64px;height:64px;border-radius:12px;object-fit:contain;background:#fff;border:1px solid var(--gris-bordure);padding:6px;flex-shrink:0;" onerror="this.remove()">`
+          ? `<img src="${echapperHtml(urlSure(c.structure.logo_url))}" alt="Logo ${echapperHtml(c.organisme)}" style="width:64px;height:64px;border-radius:12px;object-fit:contain;background:#fff;border:1px solid var(--gris-bordure);padding:6px;flex-shrink:0;" onerror="this.remove()">`
           : "";
         document.getElementById("detail-header").innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
@@ -783,12 +783,12 @@
         ${logoHeader}
         <div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-            <span class="badge badge--vert">${c.categorie}</span>
+            <span class="badge badge--vert">${echapperHtml(c.categorie)}</span>
             <span class="badge badge--rouge">${STATUT_EMOJI[c.statut] || "📋"} ${STATUT_LABEL[c.statut] || c.statut}</span>
             ${c.premium ? '<span class="badge badge--premium">⭐ Contenu Premium</span>' : '<span class="badge badge--gratuit">🆓 Accès gratuit</span>'}
           </div>
-          <h1 style="font-size:1.6rem;margin-bottom:6px;">${c.titre}</h1>
-          <p style="color:var(--gris-texte);font-size:1rem;">🏢 ${c.organisme}</p>
+          <h1 style="font-size:1.6rem;margin-bottom:6px;">${echapperHtml(c.titre)}</h1>
+          <p style="color:var(--gris-texte);font-size:1rem;">🏢 ${echapperHtml(c.organisme)}</p>
         </div>
       </div>
       <div style="text-align:right;">
@@ -823,11 +823,11 @@
         if (c.structure) {
           morceaux.push(`
             <div style="margin-bottom:14px;display:flex;gap:12px;align-items:flex-start;">
-              ${c.structure.logo_url ? `<img src="${c.structure.logo_url}" alt="Logo ${c.structure.nom}" style="width:48px;height:48px;border-radius:10px;object-fit:contain;background:#fff;border:1px solid var(--gris-bordure);padding:4px;flex-shrink:0;" onerror="this.remove()">` : ""}
+              ${c.structure.logo_url ? `<img src="${echapperHtml(urlSure(c.structure.logo_url))}" alt="Logo ${echapperHtml(c.structure.nom)}" style="width:48px;height:48px;border-radius:10px;object-fit:contain;background:#fff;border:1px solid var(--gris-bordure);padding:4px;flex-shrink:0;" onerror="this.remove()">` : ""}
               <div>
-                <div style="font-weight:700;">${c.structure.nom}${c.structure.sigle ? ` (${c.structure.sigle})` : ""}</div>
+                <div style="font-weight:700;">${echapperHtml(c.structure.nom)}${c.structure.sigle ? ` (${echapperHtml(c.structure.sigle)})` : ""}</div>
                 ${c.structure.ministere ? `<div style="font-size:0.85rem;color:var(--gris-texte);">${c.structure.ministere}</div>` : ""}
-                ${c.structure.description ? `<div style="margin-top:6px;">${c.structure.description}</div>` : ""}
+                ${c.structure.description ? `<div style="margin-top:6px;">${echapperHtml(c.structure.description)}</div>` : ""}
               </div>
             </div>`);
         }
@@ -836,7 +836,7 @@
             <div style="margin-bottom:10px;">
               <div style="font-weight:700;font-size:0.85rem;margin-bottom:6px;">Matières de composition</div>
               <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                ${c.matieres.map((m) => `<span class="badge badge--violet" style="font-size:0.78rem;">${m.nom}</span>`).join("")}
+                ${c.matieres.map((m) => `<span class="badge badge--violet" style="font-size:0.78rem;">${echapperHtml(m.nom)}</span>`).join("")}
               </div>
             </div>`);
         }
@@ -845,7 +845,7 @@
             <div>
               <div style="font-weight:700;font-size:0.85rem;margin-bottom:6px;">Diplômes acceptés</div>
               <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                ${c.diplomes.map((d) => `<span class="badge badge--vert" style="font-size:0.78rem;">${d.nom}</span>`).join("")}
+                ${c.diplomes.map((d) => `<span class="badge badge--vert" style="font-size:0.78rem;">${echapperHtml(d.nom)}</span>`).join("")}
               </div>
             </div>`);
         }
@@ -942,8 +942,8 @@
       <a href="/concours-detail.html?id=${c.id}" style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-clair);text-decoration:none;color:inherit;">
         <div style="width:10px;height:38px;border-radius:4px;background:${c.couleur || "var(--vert)"};flex-shrink:0;"></div>
         <div>
-          <div style="font-weight:700;font-size:0.88rem;">${c.titre}</div>
-          <div style="font-size:0.78rem;color:var(--gris-texte);">${c.organisme} · ${c.statut}</div>
+          <div style="font-weight:700;font-size:0.88rem;">${echapperHtml(c.titre)}</div>
+          <div style="font-size:0.78rem;color:var(--gris-texte);">${echapperHtml(c.organisme)} · ${c.statut}</div>
         </div>
       </a>`,
             )

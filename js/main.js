@@ -19,7 +19,7 @@ document.body.appendChild(conteneur);
 const icones = { succes: "✅", erreur: "❌", info: "ℹ️", warn: "⚠️" };
 const toast  = document.createElement("div");
 toast.className = `toast toast--${type}`;
-toast.innerHTML = `<span>${icones[type] || "ℹ️"}</span><span>${message}</span>`;
+toast.innerHTML = `<span>${icones[type] || "ℹ️"}</span><span>${window.echapperHtml ? window.echapperHtml(message) : message}</span>`;
 
 conteneur.appendChild(toast);
 
@@ -40,10 +40,32 @@ function initNavbar() {
 const navbar = document.querySelector(".navbar");
 if (!navbar) return;
 
-// Ombre au scroll
+// Ombre au scroll + masquage au scroll vers le bas (réapparition au
+// scroll vers le haut). Le menu mobile ouvert bloque le masquage pour
+// ne pas le faire disparaître pendant qu'on le consulte.
+let dernierScrollY = window.scrollY;
 window.addEventListener("scroll", () => {
-navbar.classList.toggle("scrolled", window.scrollY > 20);
+const scrollActuel = window.scrollY;
+navbar.classList.toggle("scrolled", scrollActuel > 20);
+
+const menuMobileOuvert = document.querySelector(".navbar__mobile.ouvert");
+const sousMenuOuvert   = document.querySelector(".navbar__groupe.ouvert");
+if (menuMobileOuvert || sousMenuOuvert) {
+  navbar.classList.remove("navbar--cachee");
+} else if (scrollActuel > dernierScrollY && scrollActuel > var_navbarHauteur()) {
+  // Défilement vers le bas, et on a dépassé la hauteur de la navbar
+  // elle-même — évite un masquage prématuré tout en haut de la page.
+  navbar.classList.add("navbar--cachee");
+} else if (scrollActuel < dernierScrollY) {
+  // Défilement vers le haut, même léger : réapparition immédiate.
+  navbar.classList.remove("navbar--cachee");
+}
+dernierScrollY = scrollActuel;
 }, { passive: true });
+
+function var_navbarHauteur() {
+  return parseInt(getComputedStyle(document.documentElement).getPropertyValue("--navbar-h")) || 70;
+}
 
 // Hamburger menu mobile
 const hamburger  = document.querySelector(".navbar__hamburger");

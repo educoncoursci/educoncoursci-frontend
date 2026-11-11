@@ -402,7 +402,7 @@
                 <div class="carrousel-actu__titre">${echapper(a.titre)}</div>
               `;
               return a.lien
-                ? `<a class="carrousel-actu__slide" href="${encodeURI(a.lien)}" target="_blank" rel="noopener">${contenu}</a>`
+                ? `<a class="carrousel-actu__slide" href="${encodeURI(urlSure(a.lien, "/actualites.html"))}" target="_blank" rel="noopener">${contenu}</a>`
                 : `<div class="carrousel-actu__slide">${contenu}</div>`;
             })
             .join("");

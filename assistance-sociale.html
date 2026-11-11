@@ -375,7 +375,7 @@
           const data = await window.API.AssistanceSociale.urgences();
           const principaux = data.numeros.filter(n => ["185","111","139","116"].includes(n.numero));
           document.getElementById("bandeau-urgence-liste").innerHTML = principaux.map(n => `
-            <div class="bandeau-urgence__item"><strong>${n.numero}</strong> ${n.nom}</div>
+            <div class="bandeau-urgence__item"><strong>${n.numero}</strong> ${echapperHtml(n.nom)}</div>
           `).join("");
         } catch (err) {
         }
@@ -387,12 +387,12 @@
           const data = await window.API.AssistanceSociale.structures();
           conteneur.innerHTML = data.structures.map(s => `
             <div class="structure-carte">
-              <div class="structure-carte__categorie">${s.categorie}</div>
-              <div style="font-weight:700; margin-bottom:4px;">${s.nom}</div>
-              <div style="font-size:0.88rem; color:#444; margin-bottom:8px;">${s.description}</div>
+              <div class="structure-carte__categorie">${echapperHtml(s.categorie)}</div>
+              <div style="font-weight:700; margin-bottom:4px;">${echapperHtml(s.nom)}</div>
+              <div style="font-size:0.88rem; color:#444; margin-bottom:8px;">${echapperHtml(s.description)}</div>
               <div style="display:flex; gap:14px; flex-wrap:wrap; font-size:0.82rem; color:var(--gris-texte);">
-                ${s.telephone ? `<span><span data-icone="telephone" data-taille="14"></span> ${s.telephone}</span>` : ""}
-                ${s.adresse ? `<span><span data-icone="institution" data-taille="14"></span> ${s.adresse}</span>` : ""}
+                ${s.telephone ? `<span><span data-icone="telephone" data-taille="14"></span> ${echapperHtml(s.telephone)}</span>` : ""}
+                ${s.adresse ? `<span><span data-icone="institution" data-taille="14"></span> ${echapperHtml(s.adresse)}</span>` : ""}
                 <span>${s.zone}</span>
               </div>
             </div>
@@ -411,7 +411,7 @@
             <div class="type-carte" data-type-id="${t.id}" onclick="choisirTypeDoc('${t.id}')" style="background:var(--blanc); border:2px solid var(--gris-bordure); border-radius:var(--radius-lg); padding:16px; cursor:pointer; text-align:center; position:relative;">
               ${t.premium ? '<div style="position:absolute; top:6px; right:6px; background:#f59e0b; color:#fff; font-size:0.6rem; font-weight:800; padding:2px 7px; border-radius:20px;">⭐ Premium</div>' : ""}
               <div style="width:40px; height:40px; border-radius:10px; background:rgba(124,45,18,0.1); color:#7c2d12; display:flex; align-items:center; justify-content:center; margin:0 auto 8px;"><span data-icone="${t.icone}" data-taille="20"></span></div>
-              <div style="font-weight:700; font-size:0.85rem;">${t.nom}</div>
+              <div style="font-weight:700; font-size:0.85rem;">${echapperHtml(t.nom)}</div>
             </div>
           `).join("");
         } catch (err) {
@@ -534,17 +534,17 @@
             htmlAlerte = `
               <div class="chat-alerte">
                 <strong>⚠️ Si tu es en danger ou en détresse, contacte immédiatement :</strong><br>
-                ${res.numerosUrgence.map(n => `<strong>${n.numero}</strong> — ${n.nom}`).join("<br>")}
+                ${res.numerosUrgence.map(n => `<strong>${n.numero}</strong> — ${echapperHtml(n.nom)}`).join("<br>")}
               </div>`;
           }
 
-          messagesDiv.innerHTML += htmlAlerte + `<div class="chat-message chat-message--assistant">${res.reponse}</div>`;
+          messagesDiv.innerHTML += htmlAlerte + `<div class="chat-message chat-message--assistant">${echapperHtml(res.reponse)}</div>`;
           messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
           historiqueChat.push({ role: "user", contenu: message });
           historiqueChat.push({ role: "assistant", contenu: res.reponse });
         } catch (err) {
-          messagesDiv.innerHTML += `<div class="chat-message chat-message--assistant" style="color:#dc2626;">Erreur : ${err.message || "impossible de répondre pour le moment."}</div>`;
+          messagesDiv.innerHTML += `<div class="chat-message chat-message--assistant" style="color:#dc2626;">Erreur : ${echapperHtml(err.message || "impossible de répondre pour le moment.")}</div>`;
         } finally {
           btn.disabled = false;
         }

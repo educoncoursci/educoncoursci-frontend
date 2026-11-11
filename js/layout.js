@@ -19,6 +19,26 @@
 //  déjà présents dans le DOM.
 // ============================================================
 
+// ============================================================
+//  CONFIGURATION DU SITE — À REMPLIR PAR LE PROPRIÉTAIRE
+//  Un seul endroit pour les réseaux sociaux et les statistiques.
+//  Laisse une valeur vide ("") pour désactiver l'élément concerné :
+//  une icône sans lien n'est jamais affichée.
+// ============================================================
+window.SITE_CONFIG = {
+  reseaux: {
+    whatsappChaine: "", // ex : "https://whatsapp.com/channel/XXXXXXXX"
+    facebook: "",       // ex : "https://www.facebook.com/educoncoursci"
+    instagram: "",
+    tiktok: "",         // ex : "https://www.tiktok.com/@educoncoursci"
+    youtube: "",
+  },
+  // Statistiques de visite (une seule des deux) :
+  //  - fournisseur "cloudflare" : id = jeton « Web Analytics » (sans cookies)
+  //  - fournisseur "ga4"        : id = identifiant de mesure « G-XXXXXXXXXX »
+  analytics: { fournisseur: "", id: "" },
+};
+
 const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo">
@@ -126,21 +146,39 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
       </div>
     </nav>`;
 
+// ── Réseaux sociaux : seuls les liens renseignés sont affichés ──
+function construireReseaux() {
+  const r = window.SITE_CONFIG.reseaux || {};
+  const liste = [
+    ["Facebook", "facebook", r.facebook],
+    ["Instagram", "instagram", r.instagram],
+    ["WhatsApp", "whatsapp", r.whatsappChaine],
+    ["TikTok", "tiktok", r.tiktok],
+    ["YouTube", "youtube", r.youtube],
+  ].filter(([, , url]) => typeof url === "string" && /^https:\/\//i.test(url));
+  if (!liste.length) return "";
+  return `<div class="footer__reseaux">` + liste.map(([nom, icone, url]) =>
+    `<a href="${url.replace(/"/g, "&quot;")}" class="footer__reseau" aria-label="${nom}" target="_blank" rel="noopener noreferrer"><span data-icone="${icone}" data-taille="20"></span></a>`
+  ).join("") + `</div>`;
+}
+
+// ── Partage WhatsApp (utilisable depuis toutes les pages) ──
+window.partagerWhatsApp = function (texte, url) {
+  const lien = url || window.location.href;
+  window.open("https://wa.me/?text=" + encodeURIComponent(texte + " " + lien), "_blank", "noopener");
+};
+
+
 const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
       <div class="container">
         <div class="footer__grille">
           <div>
             <div class="footer__logo" style="display:flex;align-items:center;gap:10px;"><img src="/assets/logo-icon.png" alt="EduConcoursCI" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" />EduConcoursCI</div>
             <p class="footer__desc">
-              La plateforme de référence pour préparer les concours de Côte
-              d'Ivoire. QCM, cours, vidéos, alertes et génération IA de CV.
+              Prépare les concours de Côte d'Ivoire : QCM, cours, vidéos,
+              alertes et génération IA de CV et de lettres.
             </p>
-            <div class="footer__reseaux">
-              <a href="#" class="footer__reseau" aria-label="Facebook"><span data-icone="facebook" data-taille="20"></span></a>
-              <a href="#" class="footer__reseau" aria-label="Instagram"><span data-icone="instagram" data-taille="20"></span></a>
-              <a href="#" class="footer__reseau" aria-label="WhatsApp"><span data-icone="whatsapp" data-taille="20"></span></a>
-              <a href="#" class="footer__reseau" aria-label="YouTube"><span data-icone="youtube" data-taille="20"></span></a>
-            </div>
+            ${construireReseaux()}
           </div>
           <div>
             <div class="footer__titre-col">Plateforme</div>
@@ -196,5 +234,46 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
   const zoneFooter = document.getElementById("site-footer");
   if (zoneFooter) {
     zoneFooter.outerHTML = EDUCONCOURSCI_FOOTER_HTML;
+  }
+})();
+
+// ── Bandeau « Rejoins la chaîne WhatsApp » (si la chaîne est configurée) ──
+(function afficherBandeauChaine() {
+  const zone = document.getElementById("bandeau-chaine");
+  const url = (window.SITE_CONFIG.reseaux || {}).whatsappChaine;
+  if (!zone || typeof url !== "string" || !/^https:\/\//i.test(url)) return;
+  const lien = document.createElement("a");
+  lien.href = url;
+  lien.target = "_blank";
+  lien.rel = "noopener noreferrer";
+  lien.className = "btn btn--primaire";
+  lien.textContent = "Rejoindre la chaîne WhatsApp";
+  const texte = document.createElement("p");
+  texte.style.cssText = "margin:0 0 12px;font-weight:700;";
+  texte.textContent = "Reçois chaque jour un QCM, les concours à surveiller et des conseils emploi.";
+  zone.style.cssText = "text-align:center;padding:22px 16px;background:#f0fdf4;border-bottom:1px solid #bbf7d0;";
+  zone.appendChild(texte);
+  zone.appendChild(lien);
+})();
+
+// ── Statistiques de visite (désactivées tant que rien n'est configuré) ──
+(function chargerStatistiques() {
+  const a = window.SITE_CONFIG.analytics || {};
+  if (!a.fournisseur || !a.id) return;
+  if (a.fournisseur === "cloudflare" && /^[a-f0-9]{20,64}$/i.test(a.id)) {
+    const sc = document.createElement("script");
+    sc.defer = true;
+    sc.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    sc.setAttribute("data-cf-beacon", JSON.stringify({ token: a.id }));
+    document.head.appendChild(sc);
+  } else if (a.fournisseur === "ga4" && /^G-[A-Z0-9]{6,14}$/.test(a.id)) {
+    const sc = document.createElement("script");
+    sc.async = true;
+    sc.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(a.id);
+    document.head.appendChild(sc);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag("js", new Date());
+    window.gtag("config", a.id);
   }
 })();

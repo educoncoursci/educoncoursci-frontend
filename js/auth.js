@@ -4,6 +4,28 @@
 //  persistance du token JWT en localStorage.
 // ============================================================
 
+// ── Échappement HTML ──────────────────────────────────────────
+// À utiliser pour TOUT texte provenant d'un utilisateur (nom, e-mail, message…)
+// avant de l'insérer dans du HTML construit avec innerHTML / template strings.
+// Sans cela, un nom piégé (« <img src=x onerror=… ») s'exécuterait dans le
+// navigateur de l'administrateur qui consulte la liste des inscrits.
+if (typeof window.echapperHtml !== "function") {
+  window.echapperHtml = function (valeur) {
+    return String(valeur ?? "").replace(/[&<>"'`]/g, (c) => (
+      { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;", "`": "&#96;" }[c]
+    ));
+  };
+}
+
+// Adresse web sûre : uniquement http(s):// ou un chemin du site (/...).
+// Bloque « javascript: », « data: », etc. dans un lien ou une image venant des données.
+if (typeof window.urlSure !== "function") {
+  window.urlSure = function (valeur, parDefaut = "") {
+    const s = String(valeur ?? "").trim();
+    return /^(https?:\/\/|\/(?!\/))/i.test(s) && !/[\s"'<>`]/.test(s) ? s : parDefaut;
+  };
+}
+
 // ── Clés localStorage ────────────────────────────────────────
 const CLE_TOKEN = "ecc_token";
 const CLE_USER  = "ecc_user";
@@ -201,7 +223,7 @@ const lienAdmin = estAdmin()
 // reste de la navbar plutôt qu'un style ad hoc.
 htmlDesktop = `<div class="navbar__groupe navbar__groupe--compte">
   <button class="navbar__groupe-btn navbar__compte-btn">
-    <span class="navbar__avatar">👤</span> ${prenom} ${badgePremium}
+    <span class="navbar__avatar">👤</span> ${echapperHtml(prenom)} ${badgePremium}
     <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
   <div class="navbar__sous-menu navbar__sous-menu--droite">
@@ -214,7 +236,7 @@ htmlDesktop = `<div class="navbar__groupe navbar__groupe--compte">
 // Mobile : liste à plat (pas de menu déroulant flottant dans le
 // panneau hamburger, qui est déjà une liste verticale) — cohérent
 // avec le reste du menu mobile.
-htmlMobile = `<div style="padding:8px 12px;font-weight:700;font-size:0.9rem;">👤 ${prenom} ${badgePremium}</div>
+htmlMobile = `<div style="padding:8px 12px;font-weight:700;font-size:0.9rem;">👤 ${echapperHtml(prenom)} ${badgePremium}</div>
   <a href="/dashboard/index.html" class="btn btn--outline-vert btn--sm w-full">🏠 Tableau de bord</a>
   ${estAdmin() ? '<a href="/admin/index.html" class="btn btn--bleu btn--sm w-full mt-1">⚙️ Administration</a>' : ""}
   <button onclick="deconnecter()" class="btn btn--gris btn--sm w-full mt-1">🚪 Déconnexion</button>`;

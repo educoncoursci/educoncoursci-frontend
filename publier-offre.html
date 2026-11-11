@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publier une offre d'emploi — EduConcoursCI</title>
+  <meta name="description" content="Entreprises : publiez vos offres d'emploi et de stage auprès des candidats d'EduConcoursCI.">
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="EduConcoursCI" />
+  <meta property="og:title" content="Académie — EduConcoursCI" />
+  <meta property="og:description" content="Entreprises : publiez vos offres d'emploi et de stage auprès des candidats d'EduConcoursCI." />
+  <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+  <meta property="og:url" content="https://educoncoursci.netlify.app/publier-offre.html" />
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/recherche.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/academie.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<main style="padding:calc(var(--navbar-h) + 36px) 0 60px;background:var(--gris-clair);">
+  <div class="container" style="max-width:780px;">
+    <div class="academie-fil"><a href="/emploi.html">Emploi</a> › <span>Publier une offre</span></div>
+    <div class="academie-entete">
+      <h1>Vous recrutez ? Publiez votre offre</h1>
+      <p>Touchez les candidats inscrits sur EduConcoursCI. Nous étudions chaque demande, puis nous vous contactons pour les conditions de publication : la publication des offres est payante.</p>
+    </div>
+
+    <div id="zone-connexion" class="academie-vide" style="display:none;">
+      <p><strong>Un compte est nécessaire pour envoyer une demande.</strong></p>
+      <p><a href="/auth/login.html">Se connecter</a> · <a href="/auth/register.html">Créer un compte</a></p>
+    </div>
+
+    <form id="formulaire" class="academie-lecon" style="display:none;" novalidate>
+      <h2 style="margin-top:0;font-size:1.1rem;">L'entreprise et le contact</h2>
+      <div class="form-groupe"><label class="form-label" for="f-entreprise">Nom de l'entreprise <span>*</span></label><input id="f-entreprise" class="form-input" maxlength="150" required /></div>
+      <div class="form-groupe"><label class="form-label" for="f-contact-nom">Nom du contact <span>*</span></label><input id="f-contact-nom" class="form-input" maxlength="80" autocomplete="name" required /></div>
+      <div class="form-groupe"><label class="form-label" for="f-contact-email">E-mail du contact <span>*</span></label><input id="f-contact-email" class="form-input" type="email" maxlength="150" autocomplete="email" required /></div>
+      <div class="form-groupe"><label class="form-label" for="f-contact-tel">Téléphone (facultatif)</label><input id="f-contact-tel" class="form-input" maxlength="25" autocomplete="tel" /></div>
+
+      <h2 style="font-size:1.1rem;">L'offre</h2>
+      <div class="form-groupe"><label class="form-label" for="f-titre">Intitulé du poste <span>*</span></label><input id="f-titre" class="form-input" maxlength="200" required /></div>
+      <div class="form-groupe"><label class="form-label" for="f-type">Type de contrat <span>*</span></label>
+        <select id="f-type" class="form-select"><option>CDI</option><option selected>CDD</option><option>Stage</option><option>Alternance</option><option>Freelance</option></select></div>
+      <div class="form-groupe"><label class="form-label" for="f-ville">Ville</label><input id="f-ville" class="form-input" maxlength="100" value="Abidjan" /></div>
+      <div class="form-groupe"><label class="form-label" for="f-secteur">Secteur</label><input id="f-secteur" class="form-input" maxlength="100" placeholder="Ex : Finance, Santé, Éducation…" /></div>
+      <div class="form-groupe"><label class="form-label" for="f-description">Description du poste <span>*</span></label>
+        <textarea id="f-description" class="form-textarea" rows="7" maxlength="5000" placeholder="Missions, contexte, conditions… (50 caractères minimum)" required></textarea></div>
+      <div class="form-groupe"><label class="form-label" for="f-profil">Profil recherché</label><textarea id="f-profil" class="form-textarea" rows="4" maxlength="3000" placeholder="Diplômes, expérience, qualités…"></textarea></div>
+      <div class="form-groupe"><label class="form-label" for="f-salaire">Rémunération (facultatif)</label><input id="f-salaire" class="form-input" maxlength="100" placeholder="Ex : 250 000 FCFA / mois" /></div>
+      <div class="form-groupe"><label class="form-label" for="f-limite">Date limite de candidature</label><input id="f-limite" class="form-input" maxlength="100" placeholder="Ex : 30/11/2026" /></div>
+      <div class="form-groupe"><label class="form-label" for="f-candidature">Comment postuler ? <span>*</span></label>
+        <input id="f-candidature" class="form-input" maxlength="300" placeholder="Une adresse e-mail ou un lien https://…" required />
+        <div class="academie-meta" style="margin-top:4px;">Les candidats vous contacteront directement par ce moyen.</div></div>
+
+      <button type="submit" id="btn-envoyer" class="btn btn--primaire btn--lg">Envoyer ma demande</button>
+    </form>
+
+    <section id="zone-mes-demandes" style="display:none;margin-top:28px;">
+      <h2 style="font-size:1.15rem;">Mes demandes</h2>
+      <div id="liste-demandes"></div>
+    </section>
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="/js/layout.js"></script>
+<script src="/js/icons.js"></script>
+<script src="/js/recherche.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/academie.js"></script>
+<script>
+(function () {
+"use strict";
+const { el } = window.Academie;
+const STATUTS = { en_attente: ["En attente", "badge--orange"], acceptee: ["Publiée", "badge--vert"], refusee: ["Refusée", "badge--rouge"] };
+
+async function appel(chemin, { methode = "GET", corps } = {}) {
+  const r = await fetch(window.API_URL + "/recruteurs" + chemin, {
+    method: methode,
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + window.API.getToken() },
+    body: corps ? JSON.stringify(corps) : undefined,
+  });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.error || "Erreur " + r.status);
+  return data;
+}
+
+async function chargerDemandes() {
+  const zone = document.getElementById("liste-demandes");
+  try {
+    const { offres } = await appel("/mes-offres");
+    document.getElementById("zone-mes-demandes").style.display = offres.length ? "block" : "none";
+    zone.replaceChildren(...offres.map((o) => {
+      const [libelle, classe] = STATUTS[o.statut] || [o.statut, "badge--bleu"];
+      return el("div", { class: "academie-lecon-ligne", style: "flex-wrap:wrap;margin-bottom:10px;" },
+        el("span", { class: "academie-lecon-titre", text: o.titre + " — " + o.entreprise }),
+        el("span", { class: "badge " + classe, text: libelle }),
+        o.statut === "refusee" && o.motif_refus ? el("div", { class: "academie-meta", style: "width:100%;", text: "Motif : " + o.motif_refus }) : null,
+        o.statut === "acceptee" ? el("a", { href: "/emploi.html", class: "academie-meta", text: "Voir sur la page Emploi →" }) : null);
+    }));
+  } catch (err) { /* liste facultative : on n'affiche rien si elle échoue */ }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const connecte = !!(window.API && window.API.getToken && window.API.getToken());
+  document.getElementById("zone-connexion").style.display = connecte ? "none" : "block";
+  document.getElementById("formulaire").style.display = connecte ? "block" : "none";
+  if (!connecte) return;
+  chargerDemandes();
+
+  document.getElementById("formulaire").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const v = (id) => document.getElementById(id).value.trim();
+    const bouton = document.getElementById("btn-envoyer");
+    bouton.disabled = true; bouton.textContent = "Envoi en cours…";
+    try {
+      const data = await appel("/offres", { methode: "POST", corps: {
+        entreprise: v("f-entreprise"), contact_nom: v("f-contact-nom"), contact_email: v("f-contact-email"),
+        contact_telephone: v("f-contact-tel"), titre: v("f-titre"), type_contrat: document.getElementById("f-type").value,
+        ville: v("f-ville"), secteur: v("f-secteur"), description: v("f-description"), profil_recherche: v("f-profil"),
+        salaire: v("f-salaire"), date_limite: v("f-limite"), candidature: v("f-candidature"),
+      }});
+      window.afficherToast(data.message, "succes");
+      document.getElementById("formulaire").reset();
+      document.getElementById("f-ville").value = "Abidjan";
+      chargerDemandes();
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    } catch (err) {
+      window.afficherToast(err.message, "erreur");
+    } finally {
+      bouton.disabled = false; bouton.textContent = "Envoyer ma demande";
+    }
+  });
+});
+})();
+</script>
+
+</body>
+</html>
