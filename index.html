@@ -4,20 +4,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EduConcoursCI — Concours, CV, Emploi & Accompagnement en Côte d'Ivoire</title>
+    <title>ProInsertion — CV, lettres de motivation, emploi, entretiens et concours en Côte d'Ivoire</title>
     <meta
       name="description"
-      content="Plateforme ivoirienne : préparation aux concours, générateur de CV et documents par IA, offres d'emploi et assistance sociale — réunis au même endroit."
+      content="Votre avenir professionnel commence ici. Créez votre CV et votre lettre de motivation, trouvez un emploi ou un stage, préparez vos entretiens et accédez aux concours en Côte d'Ivoire."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="EduConcoursCI" />
-    <meta property="og:title" content="EduConcoursCI — Concours, CV, Emploi & Accompagnement en Côte d'Ivoire" />
-    <meta property="og:description" content="Plateforme ivoirienne : préparation aux concours, générateur de CV et documents par IA, offres d'emploi et assistance sociale — réunis au même endroit." />
+    <meta property="og:site_name" content="ProInsertion" />
+    <meta property="og:title" content="ProInsertion — CV, lettres de motivation, emploi, entretiens et concours en Côte d'Ivoire" />
+    <meta property="og:description" content="Votre avenir professionnel commence ici. Créez votre CV et votre lettre de motivation, trouvez un emploi ou un stage, préparez vos entretiens et accédez aux concours en Côte d'Ivoire." />
     <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <meta property="og:url" content="https://educoncoursci.netlify.app/index.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="EduConcoursCI — Concours, CV, Emploi & Accompagnement en Côte d'Ivoire" />
-    <meta name="twitter:description" content="Plateforme ivoirienne : préparation aux concours, générateur de CV et documents par IA, offres d'emploi et assistance sociale — réunis au même endroit." />
+    <meta name="twitter:title" content="ProInsertion — CV, lettres de motivation, emploi, entretiens et concours en Côte d'Ivoire" />
+    <meta name="twitter:description" content="Votre avenir professionnel commence ici. Créez votre CV et votre lettre de motivation, trouvez un emploi ou un stage, préparez vos entretiens et accédez aux concours en Côte d'Ivoire." />
     <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />    <link rel="icon" href="/assets/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,16 +28,17 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/proinsertion.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
     <link rel="stylesheet" href="/css/flash-info.css" />
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "EduConcoursCI",
+      "name": "ProInsertion",
       "url": "https://educoncoursci.netlify.app",
       "logo": "https://educoncoursci.netlify.app/assets/logo-icon.png",
-      "description": "Plateforme de préparation aux concours, générateur de CV et documents par IA, offres d'emploi et assistance sociale en Côte d'Ivoire.",
+      "description": "Plateforme d'accompagnement à l'insertion professionnelle en Côte d'Ivoire : CV, lettres de motivation, documents professionnels, offres d'emploi, préparation aux entretiens et concours.",
       "areaServed": "CI",
       "sameAs": []
     }
@@ -46,7 +47,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "EduConcoursCI",
+      "name": "ProInsertion",
       "url": "https://educoncoursci.netlify.app",
       "potentialAction": {
         "@type": "SearchAction",
@@ -164,19 +165,21 @@
     <section class="hero hero--apres-flash">
       <div class="container">
         <div class="hero__contenu">
-          <div class="hero__tag">🇨🇮 Concours, CV et emploi en Côte d'Ivoire</div>
+          <div class="hero__tag">🇨🇮 Insertion professionnelle en Côte d'Ivoire</div>
           <h1 class="hero__titre">
-            Réussis tes concours<br />
-            <span>construis ta carrière en Côte d'Ivoire</span>
+            Votre CV, votre lettre de motivation<br />
+            <span>et vos offres d'emploi.</span>
           </h1>
           <p class="hero__sous-titre">
-            Concours et QCM, CV et documents professionnels par IA, offres d'emploi
-            et accompagnement social — tout ce qu'il te faut pour avancer, réuni au
-            même endroit.
+            Créez un CV et une lettre professionnels en quelques minutes,
+            trouvez des offres d'emploi et de stage, et analysez gratuitement
+            chaque offre pour postuler mieux. Préparation aux entretiens et
+            concours en complément.
           </p>
           <div class="hero__actions" id="hero-actions">
-            <a href="/auth/register.html" class="btn btn--primaire btn--lg">Créer mon compte gratuit →</a>
-            <a href="/concours.html" class="btn btn--outline-blanc btn--lg">Voir les concours</a>
+            <a href="/cv-generator.html" class="btn btn--primaire btn--lg">Créer mon CV →</a>
+            <a href="/emploi.html" class="btn btn--outline-blanc btn--lg">Trouver un emploi</a>
+            <a href="/analyse-offre.html" class="btn btn--outline-blanc btn--lg">Analyser une offre (gratuit)</a>
           </div>
           <div class="hero__stats">
             <div class="hero__stat">
@@ -184,17 +187,205 @@
               <div class="hero__stat-label">Modèles de CV</div>
             </div>
             <div class="hero__stat">
-              <div class="hero__stat-nombre">Gratuit</div>
-              <div class="hero__stat-label">Pour commencer</div>
+              <div class="hero__stat-nombre">🇨🇮</div>
+              <div class="hero__stat-label">Pensé pour la Côte d'Ivoire</div>
             </div>
             <div class="hero__stat">
               <div class="hero__stat-nombre">24/7</div>
-              <div class="hero__stat-label">Accès illimité</div>
+              <div class="hero__stat-label">Accessible partout</div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- ── SERVICES PROINSERTION ───────────────────────────────────── -->
+
+    <section class="section" id="section-services">
+      <div class="container">
+        <div class="pi-titre">
+          <h2>Tout pour réussir votre insertion professionnelle</h2>
+          <p>Du CV à l'entretien, ProInsertion vous accompagne à chaque étape de votre recherche.</p>
+        </div>
+        <div class="pi-services">
+          <a href="/cv-generator.html" class="pi-service">
+            <div class="pi-service__icone"><span data-icone="fusee" data-taille="24"></span></div>
+            <h3>Créer mon CV</h3>
+            <p>Des modèles professionnels, lisibles par les logiciels de recrutement.</p>
+            <div class="pi-service__action">Créer mon CV →</div>
+          </a>
+          <a href="/cv-generator.html" class="pi-service">
+            <div class="pi-service__icone"><span data-icone="document" data-taille="24"></span></div>
+            <h3>Générer ma lettre de motivation</h3>
+            <p>Une lettre adaptée au poste et à l'organisation que vous visez.</p>
+            <div class="pi-service__action">Générer ma lettre →</div>
+          </a>
+          <a href="/emploi.html" class="pi-service">
+            <div class="pi-service__icone"><span data-icone="loupe" data-taille="24"></span></div>
+            <h3>Trouver un emploi</h3>
+            <p>Les offres d'emploi regroupées, avec filtres par secteur et par ville.</p>
+            <div class="pi-service__action">Voir les offres →</div>
+          </a>
+          <a href="/analyse-offre.html" class="pi-service">
+            <div class="pi-service__icone"><span data-icone="loupe" data-taille="24"></span></div>
+            <h3>Analyser une offre d'emploi</h3>
+            <p>Comprenez ce que le recruteur attend, puis créez un CV et une lettre ciblés. Gratuit avec un compte.</p>
+            <div class="pi-service__action">Analyser une offre →</div>
+          </a>
+          <a href="/simulation-entretien.html" class="pi-service">
+            <div class="pi-service__icone"><span data-icone="aide" data-taille="24"></span></div>
+            <h3>Simuler un entretien</h3>
+            <p>Entraînez-vous avec des questions adaptées au poste, puis recevez une analyse de vos réponses.</p>
+            <div class="pi-service__action">Lancer une simulation →</div>
+          </a>
+          <a href="/documents-pro.html" class="pi-service">
+            <div class="pi-service__icone"><span data-icone="portefeuille" data-taille="24"></span></div>
+            <h3>Documents professionnels</h3>
+            <p>Courriers et documents administratifs et professionnels, prêts à personnaliser.</p>
+            <div class="pi-service__action">Découvrir les documents →</div>
+          </a>
+          <a href="/emploi.html?opportunite=stage" class="pi-service">
+            <div class="pi-service__icone"><span data-icone="graphique" data-taille="24"></span></div>
+            <h3>Trouver un stage</h3>
+            <p>Les offres de stage et d'alternance, mises à jour régulièrement.</p>
+            <div class="pi-service__action">Voir les stages →</div>
+          </a>
+          <a href="/concours.html" class="pi-service">
+            <div class="pi-service__icone"><span data-icone="institution" data-taille="24"></span></div>
+            <h3>Accéder aux concours</h3>
+            <p>Concours, calendrier, préparation et QCM : toute la rubrique concours est conservée.</p>
+            <div class="pi-service__action">Accéder aux concours →</div>
+          </a>
+          <a href="/academie.html" class="pi-service">
+            <div class="pi-service__icone"><span data-icone="diplome" data-taille="24"></span></div>
+            <h3>Découvrir les formations</h3>
+            <p>Cours courts avec exercices, et vidéos de formation.</p>
+            <div class="pi-service__action">Voir les formations →</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── EXPERTISE ───────────────────────────────────────────────── -->
+
+    <section class="section pi-expertise" id="section-expertise">
+      <div class="container">
+        <div class="pi-titre">
+          <h2>Des services étudiés pour votre insertion</h2>
+          <p>Des solutions professionnelles étudiées et élaborées par l'équipe ProInsertion pour mieux accompagner votre insertion professionnelle.</p>
+        </div>
+        <div class="pi-piliers">
+          <div class="pi-pilier">
+            <h3>Pensé pour le marché ivoirien</h3>
+            <p>Des documents et des conseils adaptés aux usages des recruteurs en Côte d'Ivoire.</p>
+          </div>
+          <div class="pi-pilier">
+            <h3>Des tarifs clairs et accessibles</h3>
+            <p>Nos services et nos tarifs ont fait l'objet d'une étude afin de vous proposer un accompagnement de qualité, accessible et adapté à vos besoins.</p>
+          </div>
+          <div class="pi-pilier">
+            <h3>De la candidature à l'entretien</h3>
+            <p>CV, lettre de motivation, offres d'emploi et de stage, préparation aux entretiens : un seul endroit pour avancer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TARIFS (alimentés par le catalogue ; cachés tant qu'aucun produit n'est actif) ── -->
+
+    <section class="section section-gris" id="section-tarifs" style="display: none">
+      <div class="container">
+        <div class="pi-titre">
+          <h2>Nos tarifs</h2>
+          <p>Prix fixes en FCFA, affichés avant tout achat.</p>
+        </div>
+        <div class="pi-tarifs" id="grille-tarifs"></div>
+      </div>
+    </section>
+
+    <div id="bandeau-chaine"></div>
+
+    <!-- ── CARRIÈRE : CV, LETTRE, EMPLOI ──────────────────────────── -->
+
+    <section class="section" id="section-carriere" style="background: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%);">
+      <div class="container">
+        <div class="section__en-tete">
+          <span class="section__tag"><span data-icone="portefeuille" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>CV &amp; Emploi</span>
+          <h2>Ne laissez plus un CV mal adapté réduire vos chances</h2>
+          <p>Un CV et une lettre qui correspondent au poste visé font la différence. Candidate avec des documents professionnels, pensés pour le marché ivoirien.</p>
+        </div>
+        <div class="grille-2" style="gap:18px;">
+          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
+            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
+            <div>
+              <h3 style="font-size:1.05rem; margin-bottom:6px;">Un CV professionnel adapté</h3>
+              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Rédigé avec l'IA à partir de tes informations, avec des modèles adaptés aux entreprises, aux ONG et à la Fonction publique.</p>
+              <a href="/cv-generator.html" class="btn btn--outline-vert btn--sm mt-2">Créer mon CV →</a>
+            </div>
+          </div>
+          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
+            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
+            <div>
+              <h3 style="font-size:1.05rem; margin-bottom:6px;">Une lettre de motivation personnalisée</h3>
+              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Écrite pour l'organisation et le poste que tu vises, en candidature spontanée ou en réponse à une offre.</p>
+              <a href="/cv-generator.html" class="btn btn--outline-vert btn--sm mt-2">Rédiger ma lettre →</a>
+            </div>
+          </div>
+          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
+            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
+            <div>
+              <h3 style="font-size:1.05rem; margin-bottom:6px;">Des outils pour booster tes candidatures</h3>
+              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Analyse ATS de ton CV et adaptation à une offre d'emploi précise pour mieux correspondre à ce que le recruteur cherche (Premium).</p>
+              <a href="/boutique.html" class="btn btn--outline-vert btn--sm mt-2">Voir le Premium →</a>
+            </div>
+          </div>
+          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
+            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
+            <div>
+              <h3 style="font-size:1.05rem; margin-bottom:6px;">Des conseils pour mieux chercher un emploi</h3>
+              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Des repères simples pour postuler plus efficacement, à retrouver juste en dessous.</p>
+              <a href="/emploi.html" class="btn btn--outline-vert btn--sm mt-2">Voir les offres d'emploi →</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="max-width: 780px; margin: 32px auto 0;">
+          <h3 style="margin-bottom:12px; font-size:1.1rem;">Nos conseils pour ta recherche d'emploi</h3>
+          <details class="faq-item">
+            <summary>Adapte ton CV à chaque offre</summary>
+            <p>Relis l'annonce et reprends ses mots-clés (poste, compétences, outils) là où ils décrivent vraiment ton parcours. Un CV ciblé est plus lu qu'un CV générique.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Soigne tes coordonnées</summary>
+            <p>Utilise une adresse e-mail sobre (de type prenom.nom), un numéro sur lequel tu es joignable, et vérifie l'orthographe de ton CV avant chaque envoi.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Postule vite, puis relance</summary>
+            <p>Les premiers dossiers reçus sont souvent les mieux examinés. Si tu n'as pas de réponse après une semaine, une relance courte et polite est bienvenue.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Multiplie les canaux</summary>
+            <p>Combine sites d'offres, pages officielles des organisations, réseau professionnel et alertes. Beaucoup de postes ne sont vus que par ceux qui les cherchent régulièrement.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Prépare l'entretien</summary>
+            <p>Renseigne-toi sur l'organisation et prépare deux ou trois exemples concrets de ce que tu as accompli. Ils valent mieux que des qualités énumérées.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Méfie-toi des arnaques</summary>
+            <p>Un recruteur sérieux ne demande jamais d'argent pour un entretien, un dossier ou une embauche. En cas de doute, vérifie l'offre sur le site officiel de l'organisation.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── RUBRIQUE CONCOURS (conservée telle quelle) ─────────────── -->
+
+    <div class="pi-separateur container">
+      <h2>Concours</h2>
+      <p>Concours de la fonction publique, calendrier, préparation et QCM.</p>
+      <a href="/concours.html" class="btn btn--outline-vert btn--sm">Accéder à la rubrique concours →</a>
+    </div>
 
     <!-- ── STATISTIQUES NATIONALES ─────────────────────────────────── -->
 
@@ -368,82 +559,6 @@
       </div>
     </section>
 
-    <div id="bandeau-chaine"></div>
-
-    <!-- ── CARRIÈRE : CV, LETTRE, EMPLOI ──────────────────────────── -->
-
-    <section class="section" id="section-carriere" style="background: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%);">
-      <div class="container">
-        <div class="section__en-tete">
-          <span class="section__tag"><span data-icone="portefeuille" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>CV &amp; Emploi</span>
-          <h2>Ne laissez plus un CV mal adapté réduire vos chances</h2>
-          <p>Un CV et une lettre qui correspondent au poste visé font la différence. Candidate avec des documents professionnels, pensés pour le marché ivoirien.</p>
-        </div>
-        <div class="grille-2" style="gap:18px;">
-          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
-            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
-            <div>
-              <h3 style="font-size:1.05rem; margin-bottom:6px;">Un CV professionnel adapté</h3>
-              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Rédigé avec l'IA à partir de tes informations, avec des modèles adaptés aux entreprises, aux ONG et à la Fonction publique.</p>
-              <a href="/cv-generator.html" class="btn btn--outline-vert btn--sm mt-2">Créer mon CV →</a>
-            </div>
-          </div>
-          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
-            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
-            <div>
-              <h3 style="font-size:1.05rem; margin-bottom:6px;">Une lettre de motivation personnalisée</h3>
-              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Écrite pour l'organisation et le poste que tu vises, en candidature spontanée ou en réponse à une offre.</p>
-              <a href="/cv-generator.html" class="btn btn--outline-vert btn--sm mt-2">Rédiger ma lettre →</a>
-            </div>
-          </div>
-          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
-            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
-            <div>
-              <h3 style="font-size:1.05rem; margin-bottom:6px;">Des outils pour booster tes candidatures</h3>
-              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Analyse ATS de ton CV et adaptation à une offre d'emploi précise pour mieux correspondre à ce que le recruteur cherche (Premium).</p>
-              <a href="/boutique.html" class="btn btn--outline-vert btn--sm mt-2">Voir le Premium →</a>
-            </div>
-          </div>
-          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
-            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
-            <div>
-              <h3 style="font-size:1.05rem; margin-bottom:6px;">Des conseils pour mieux chercher un emploi</h3>
-              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Des repères simples pour postuler plus efficacement, à retrouver juste en dessous.</p>
-              <a href="/emploi.html" class="btn btn--outline-vert btn--sm mt-2">Voir les offres d'emploi →</a>
-            </div>
-          </div>
-        </div>
-
-        <div style="max-width: 780px; margin: 32px auto 0;">
-          <h3 style="margin-bottom:12px; font-size:1.1rem;">Nos conseils pour ta recherche d'emploi</h3>
-          <details class="faq-item">
-            <summary>Adapte ton CV à chaque offre</summary>
-            <p>Relis l'annonce et reprends ses mots-clés (poste, compétences, outils) là où ils décrivent vraiment ton parcours. Un CV ciblé est plus lu qu'un CV générique.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Soigne tes coordonnées</summary>
-            <p>Utilise une adresse e-mail sobre (de type prenom.nom), un numéro sur lequel tu es joignable, et vérifie l'orthographe de ton CV avant chaque envoi.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Postule vite, puis relance</summary>
-            <p>Les premiers dossiers reçus sont souvent les mieux examinés. Si tu n'as pas de réponse après une semaine, une relance courte et polite est bienvenue.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Multiplie les canaux</summary>
-            <p>Combine sites d'offres, pages officielles des organisations, réseau professionnel et alertes. Beaucoup de postes ne sont vus que par ceux qui les cherchent régulièrement.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Prépare l'entretien</summary>
-            <p>Renseigne-toi sur l'organisation et prépare deux ou trois exemples concrets de ce que tu as accompli. Ils valent mieux que des qualités énumérées.</p>
-          </details>
-          <details class="faq-item">
-            <summary>Méfie-toi des arnaques</summary>
-            <p>Un recruteur sérieux ne demande jamais d'argent pour un entretien, un dossier ou une embauche. En cas de doute, vérifie l'offre sur le site officiel de l'organisation.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
     <!-- ── PLANS PREMIUM ──────────────────────────────────────────── -->
 
     <section class="section-gris" id="section-plans">
@@ -545,7 +660,7 @@
         </div>
         <div id="liste-faq">
           <details class="faq-item">
-            <summary>EduConcoursCI est-il gratuit ?</summary>
+            <summary>ProInsertion est-il gratuit ?</summary>
             <p>Oui — l'essentiel (fiches concours, alertes, moteur d'éligibilité, une partie des QCM et des cours) est gratuit. L'abonnement Premium débloque un usage illimité des outils IA, l'analyse ATS, l'adaptation du CV à une offre, les modèles de CV premium et les contenus Premium dès leur publication.</p>
           </details>
           <details class="faq-item">
@@ -568,7 +683,7 @@
 
     <section class="section">
       <div class="container">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;" class="grille-newsletter-app">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px;" class="grille-newsletter-app">
           <div style="background:var(--vert);border-radius:var(--radius-lg);padding:32px;color:#fff;">
             <h3 style="margin-bottom:8px;color:#fff;"><span data-icone="email" data-taille="20" style="display:inline-flex;vertical-align:-4px;"></span> Newsletter</h3>
             <p style="opacity:0.9;margin-bottom:16px;font-size:0.9rem;">Reçois un résumé des nouveaux concours et des actualités importantes.</p>
@@ -581,7 +696,7 @@
             </div>
           </div>
           <div style="background:var(--blanc);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--ombre-sm);">
-            <h3 style="margin-bottom:8px;"><span data-icone="telephone" data-taille="20" style="display:inline-flex;vertical-align:-4px;"></span> Emporte EduConcoursCI partout</h3>
+            <h3 style="margin-bottom:8px;"><span data-icone="telephone" data-taille="20" style="display:inline-flex;vertical-align:-4px;"></span> Emporte ProInsertion partout</h3>
             <p style="color:var(--gris-texte);margin-bottom:16px;font-size:0.9rem;">Installe l'application sur ton téléphone pour un accès rapide, même avec une connexion faible.</p>
             <button class="btn btn--outline-vert btn--full" id="btn-installer-app" onclick="window.installerPWA?.()">
               <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Installer l'application
@@ -609,6 +724,12 @@
     <script src="/js/recherche.js"></script>
 
     <script src="/js/main.js"></script>
+    <script src="/js/tarifs.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        window.Tarifs.charger(document.getElementById("section-tarifs"), document.getElementById("grille-tarifs"));
+      });
+    </script>
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {

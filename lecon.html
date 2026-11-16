@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leçon — EduConcoursCI</title>
+  <title>Leçon — ProInsertion</title>
   <meta name="description" content="Leçon, points clés et exercices.">
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="EduConcoursCI" />
-  <meta property="og:title" content="Leçon — EduConcoursCI" />
+  <meta property="og:site_name" content="ProInsertion" />
+  <meta property="og:title" content="Leçon — ProInsertion" />
   <meta property="og:description" content="Leçon, points clés et exercices." />
   <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
   <meta property="og:url" content="https://educoncoursci.netlify.app/lecon.html" />
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!id) { zone.replaceChildren(el("div", { class: "academie-vide", text: "Leçon introuvable." })); return; }
   try {
     const d = await api("/lecons/" + id);
-    document.title = d.lecon.titre + " — EduConcoursCI";
+    document.title = d.lecon.titre + " — ProInsertion";
     document.getElementById("fil-cours-lien").textContent = d.cours.titre;
     document.getElementById("fil-cours-lien").href = "/cours.html?id=" + d.cours.id;
 
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       statut,
       el("div", { style: "margin-top:18px;text-align:center;" },
         el("button", { type: "button", class: "btn btn--gris", text: "📤 Partager cette leçon sur WhatsApp", onclick: () =>
-          window.partagerWhatsApp("Je révise avec EduConcoursCI : « " + d.lecon.titre + " » (" + d.cours.titre + ").", window.location.href) })),
+          window.partagerWhatsApp("Je révise avec ProInsertion : « " + d.lecon.titre + " » (" + d.cours.titre + ").", window.location.href) })),
     );
   } catch (err) {
     if (err.status === 403 && err.data?.premium) { afficherVerrou(zone, err.data); return; }

@@ -4,16 +4,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Détail Concours — EduConcoursCI</title>
+    <title>Détail Concours — ProInsertion</title>
   <meta name="description" content="Fiche complète d'un concours en Côte d'Ivoire : conditions, dates, documents à fournir, débouchés et préparation associée.">
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="EduConcoursCI" />
-    <meta property="og:title" content="Détail Concours — EduConcoursCI" />
+    <meta property="og:site_name" content="ProInsertion" />
+    <meta property="og:title" content="Détail Concours — ProInsertion" />
     <meta property="og:description" content="Fiche complète d'un concours en Côte d'Ivoire : conditions, dates, documents à fournir, débouchés et préparation associée." />
     <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <meta property="og:url" content="https://educoncoursci.netlify.app/concours-detail.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Détail Concours — EduConcoursCI" />
+    <meta name="twitter:title" content="Détail Concours — ProInsertion" />
     <meta name="twitter:description" content="Fiche complète d'un concours en Côte d'Ivoire : conditions, dates, documents à fournir, débouchés et préparation associée." />
     <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
@@ -175,6 +175,7 @@
       </div>
     </div>
 
+    <main id="contenu-principal">
     <!-- Squelette de chargement -->
     <div id="skeleton-detail" class="container" style="padding: 32px 20px; max-width: 900px;">
       <div class="skeleton" style="height: 32px; width: 60%; border-radius: 8px; margin-bottom: 16px;"></div>
@@ -342,16 +343,11 @@
                   <span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sauvegarder
                 </button>
                 <button
+                  id="btn-candidater"
                   class="btn btn--primaire btn--full"
-                  onclick="
-                    window.afficherToast(
-                      'Rends-toi au centre de dépôt pour déposer ton dossier.',
-                      'info',
-                      5000,
-                    )
-                  "
+                  onclick="candidaterConcours()"
                 >
-                  <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Déposer mon dossier
+                  <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Candidater
                 </button>
                 <div
                   style="
@@ -614,9 +610,9 @@
 
       function injecterSchemaOrg(c) {
         // Met à jour le titre de l'onglet et la meta description pour ce concours précis
-        document.title = `${c.titre} — EduConcoursCI`;
+        document.title = `${c.titre} — ProInsertion`;
         const metaDesc = document.querySelector('meta[name="description"]');
-        const descriptionConcours = `${c.titre} (${c.organisme}) — conditions, dates, documents à fournir et préparation sur EduConcoursCI.`;
+        const descriptionConcours = `${c.titre} (${c.organisme}) — conditions, dates, documents à fournir et préparation sur ProInsertion.`;
         if (metaDesc) {
           metaDesc.setAttribute("content", descriptionConcours);
         }
@@ -627,13 +623,13 @@
         // lieu du nom réel du concours, ce qui nuit fortement au partage
         // organique (canal de diffusion clé pour ce type de contenu).
         const ogTitle = document.querySelector('meta[property="og:title"]');
-        if (ogTitle) ogTitle.setAttribute("content", `${c.titre} — EduConcoursCI`);
+        if (ogTitle) ogTitle.setAttribute("content", `${c.titre} — ProInsertion`);
         const ogDesc = document.querySelector('meta[property="og:description"]');
         if (ogDesc) ogDesc.setAttribute("content", descriptionConcours);
         const ogUrl = document.querySelector('meta[property="og:url"]');
         if (ogUrl) ogUrl.setAttribute("content", `https://educoncoursci.netlify.app/concours-detail.html?id=${c.id}`);
         const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-        if (twitterTitle) twitterTitle.setAttribute("content", `${c.titre} — EduConcoursCI`);
+        if (twitterTitle) twitterTitle.setAttribute("content", `${c.titre} — ProInsertion`);
         const twitterDesc = document.querySelector('meta[name="twitter:description"]');
         if (twitterDesc) twitterDesc.setAttribute("content", descriptionConcours);
 
@@ -670,7 +666,7 @@
           organizer: { "@type": "Organization", name: c.organisme },
           eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
           eventStatus:
-            c.statut === "fermé"
+            ["fermé", "en attente de résultats", "résultats", "annulé"].includes(c.statut)
               ? "https://schema.org/EventCancelled"
               : "https://schema.org/EventScheduled",
         };
@@ -753,25 +749,44 @@
         zone.classList.remove("hidden");
       }
 
+      // « Candidater » : ouvre le site officiel s'il est connu, sinon renvoie vers la procédure.
+      function candidaterConcours() {
+        if (window.__lienOfficielConcours) { window.open(window.__lienOfficielConcours, "_blank", "noopener"); return; }
+        window.afficherToast("Lien officiel non communiqué : consulte la procédure d'inscription et le communiqué de l'organisme.", "info", 6000);
+      }
+
       function afficherDetail(c) {
-        document.title = `${c.titre} — EduConcoursCI`;
+        document.title = `${c.titre} — ProInsertion`;
         const filTitre = document.getElementById("fil-titre");
         if (filTitre) filTitre.textContent = c.titre;
 
         const STATUT_EMOJI = {
-          ouvert: "🔴",
+          ouvert: "🟢",
           "à venir": "🔵",
           fermé: "⚫",
+          "en attente de résultats": "⏳",
           résultats: "🏆",
+          suspendu: "🔴",
+          annulé: "🔴",
           "information non confirmée": "❔",
         };
         const STATUT_LABEL = {
-          ouvert: "Ouvert",
+          ouvert: "En cours",
           "à venir": "À venir",
-          fermé: "Terminé",
+          fermé: "Clôturé",
+          "en attente de résultats": "En attente de résultats",
           résultats: "Résultats disponibles",
+          suspendu: "Suspendu",
+          annulé: "Annulé",
           "information non confirmée": "Information non confirmée",
         };
+        const NC = '<span style="color:var(--gris-texte);font-style:italic;">Non communiqué</span>';
+        const jourFr = (iso) => {
+          const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || "");
+          if (!m) return null;
+          return `${Number(m[3])} ${["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][Number(m[2]) - 1]} ${m[1]}`;
+        };
+        const ageTxt = c.age_min && c.age_max ? `${c.age_min} à ${c.age_max} ans` : c.age_max ? `${c.age_max} ans maximum` : c.age_min ? `${c.age_min} ans minimum` : null;
 
         // En-tête
         const logoHeader = c.structure?.logo_url
@@ -801,16 +816,42 @@
         const infos = [
           ["🏢 Organisme", c.organisme],
           ["📂 Catégorie", c.categorie],
-          ["🎓 Niveau", c.niveau || "—"],
-          ["👥 Places", c.places ? `${c.places} postes` : "—"],
-          ["📅 Ouverture", c.ouverture || "—"],
-          ["⏰ Clôture", c.cloture || "—"],
+          ["🎓 Niveau", c.niveau ? echapperHtml(c.niveau) : NC],
+          ["🎂 Âge", ageTxt || NC],
+          ["👥 Places", c.places ? `${c.places} postes` : NC],
+          ["📅 Ouverture des inscriptions", jourFr(c.date_ouverture) || (c.ouverture ? echapperHtml(c.ouverture) : NC)],
+          ["⏰ Clôture des inscriptions", jourFr(c.date_cloture) || (c.cloture ? echapperHtml(c.cloture) : NC)],
+          ["✍️ Date de composition", jourFr(c.date_composition) || NC],
+          ["🏆 Résultats", jourFr(c.date_resultats) || NC],
           [
             "💰 Frais",
             fraisAffiche(c),
           ],
           ["📊 Statut", `${STATUT_EMOJI[c.statut] || ""} ${STATUT_LABEL[c.statut] || c.statut}`],
         ];
+        const blocs = [];
+        if (c.procedure_inscription) blocs.push(`<div class="detail-card"><h3 style="margin-bottom:12px">🧭 Procédure d'inscription</h3><div style="white-space:pre-line;font-size:0.92rem;">${echapperHtml(c.procedure_inscription)}</div></div>`);
+        if (c.conseils) blocs.push(`<div class="detail-card"><h3 style="margin-bottom:12px">💡 Conseils</h3><div style="white-space:pre-line;font-size:0.92rem;">${echapperHtml(c.conseils)}</div></div>`);
+        const lienSrc = c.source_url && /^https?:\/\//i.test(c.source_url) ? c.source_url : null;
+        const lienOff = c.lien_officiel && /^https?:\/\//i.test(c.lien_officiel) ? c.lien_officiel : null;
+        blocs.push(`<div class="detail-card" style="font-size:0.88rem;">
+          <h3 style="margin-bottom:10px">🔎 Fiabilité de l'information</h3>
+          <div class="info-ligne"><span class="info-ligne__label">Source</span><span class="info-ligne__valeur">${c.source_info ? echapperHtml(c.source_info) : NC}</span></div>
+          <div class="info-ligne"><span class="info-ligne__label">Lien officiel</span><span class="info-ligne__valeur">${lienOff ? `<a href="${echapperHtml(lienOff)}" target="_blank" rel="noopener noreferrer">Consulter le site officiel ↗</a>` : NC}</span></div>
+          ${lienSrc ? `<div class="info-ligne"><span class="info-ligne__label">Page source</span><span class="info-ligne__valeur"><a href="${echapperHtml(lienSrc)}" target="_blank" rel="noopener noreferrer">Voir la source ↗</a></span></div>` : ""}
+          <div class="info-ligne"><span class="info-ligne__label">Dernière vérification</span><span class="info-ligne__valeur">${jourFr(c.verifie_le) || NC}</span></div>
+          <p style="margin-top:8px;color:var(--gris-texte);">Vérifie toujours les dates et conditions sur le communiqué officiel avant de candidater.</p>
+        </div>`);
+        let zone = document.getElementById("detail-blocs-v2");
+        if (!zone) { zone = document.createElement("div"); zone.id = "detail-blocs-v2"; document.getElementById("detail-infos").closest(".detail-card").after(zone); }
+        zone.innerHTML = blocs.join("");
+        window.__lienOfficielConcours = lienOff;
+        const btnCand = document.getElementById("btn-candidater");
+        if (btnCand) {
+          const clos = ["fermé", "en attente de résultats", "résultats", "annulé"].includes(c.statut);
+          if (clos) { btnCand.disabled = true; btnCand.textContent = c.statut === "annulé" ? "Concours annulé" : "Inscriptions closes"; }
+          else if (c.statut === "à venir") btnCand.textContent = "Candidater (bientôt ouvert)";
+        }
         document.getElementById("detail-infos").innerHTML = infos
           .map(
             ([l, v]) =>
@@ -1061,7 +1102,7 @@
       function partagerWhatsApp() {
         const url = encodeURIComponent(window.location.href);
         const txt = encodeURIComponent(
-          `📋 Concours : ${concoursActuel?.titre} — EduConcoursCI`,
+          `📋 Concours : ${concoursActuel?.titre} — ProInsertion`,
         );
         window.open(`https://wa.me/?text=${txt}%20${url}`, "_blank");
       }

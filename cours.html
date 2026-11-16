@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cours — EduConcoursCI</title>
+  <title>Cours — ProInsertion</title>
   <meta name="description" content="Plan du cours, leçons et progression.">
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="EduConcoursCI" />
-  <meta property="og:title" content="Cours — EduConcoursCI" />
+  <meta property="og:site_name" content="ProInsertion" />
+  <meta property="og:title" content="Cours — ProInsertion" />
   <meta property="og:description" content="Plan du cours, leçons et progression." />
   <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
   <meta property="og:url" content="https://educoncoursci.netlify.app/cours.html" />
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!id) { zone.replaceChildren(el("div", { class: "academie-vide", text: "Cours introuvable." })); return; }
   try {
     const { cours } = await api("/cours/" + id);
-    document.title = cours.titre + " — EduConcoursCI";
+    document.title = cours.titre + " — ProInsertion";
     document.getElementById("fil-cours").textContent = cours.titre;
 
     const total = cours.lecons.length;
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         : null,
       el("div", { style: "margin-top:12px;" },
         el("button", { type: "button", class: "btn btn--gris btn--sm", text: "📤 Partager ce cours", onclick: () =>
-          window.partagerWhatsApp("Un cours gratuit pour préparer ton concours sur EduConcoursCI : « " + cours.titre + " ».", window.location.href) })),
+          window.partagerWhatsApp("Un cours gratuit pour préparer ton concours sur ProInsertion : « " + cours.titre + " ».", window.location.href) })),
       el("div", { class: "academie-lecons" },
         cours.lecons.map((l) =>
           el("a", { class: "academie-lecon-ligne", href: "/lecon.html?id=" + l.id },

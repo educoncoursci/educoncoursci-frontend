@@ -4,19 +4,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Offres d'Emploi & Stages — EduConcoursCI</title>
+    <title>Offres d'Emploi & Stages — ProInsertion</title>
     <meta
       name="description"
       content="Trouve ton prochain emploi, stage ou mission freelance en Côte d'Ivoire."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="EduConcoursCI" />
-    <meta property="og:title" content="Offres d'Emploi & Stages — EduConcoursCI" />
+    <meta property="og:site_name" content="ProInsertion" />
+    <meta property="og:title" content="Offres d'Emploi & Stages — ProInsertion" />
     <meta property="og:description" content="Trouve ton prochain emploi, stage ou mission freelance en Côte d'Ivoire." />
     <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <meta property="og:url" content="https://educoncoursci.netlify.app/emploi.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Offres d'Emploi & Stages — EduConcoursCI" />
+    <meta name="twitter:title" content="Offres d'Emploi & Stages — ProInsertion" />
     <meta name="twitter:description" content="Trouve ton prochain emploi, stage ou mission freelance en Côte d'Ivoire." />
     <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
@@ -333,7 +333,7 @@
       </div>
 
       <div class="option-eyebrow option-eyebrow--vert">💼 Option 1</div>
-      <h2 class="option-titre">Offres regroupées sur EduConcoursCI</h2>
+      <h2 class="option-titre">Offres regroupées sur ProInsertion</h2>
       <p class="option-sous-titre">
         Les offres ci-dessous sont automatiquement récupérées et mises à jour depuis
         plusieurs sites d'emploi ivoiriens. Filtre-les selon tes critères.
@@ -496,14 +496,20 @@
       let offresChargees = 0;
       let offresTotal = 0;
 
+      // Lien direct « Trouver un stage » : /emploi.html?opportunite=stage présélectionne le filtre.
+      document.addEventListener("DOMContentLoaded", () => {
+        const choix = new URLSearchParams(window.location.search).get("opportunite");
+        const select = document.getElementById("filtre-opportunite");
+        if (choix && select && [...select.options].some((o) => o.value === choix)) select.value = choix;
+      });
       document.addEventListener("DOMContentLoaded", chargerOffres);
 
       function construireCarteOffre(o) {
         // Source affichée clairement sur chaque carte (point 9/10 du
         // cahier des charges) : une offre agrégée automatiquement a
         // toujours source_nom renseigné ; une offre saisie à la main
-        // sur EduConcoursCI n'en a pas (source = "EduConcoursCI").
-        const source = o.source_nom || "EduConcoursCI";
+        // sur ProInsertion n'en a pas (source = "ProInsertion").
+        const source = o.source_nom || "ProInsertion";
         const estNouvelle = o.nouvelle === true || o.nouvelle === "t";
         return `
             <div class="card-emploi" onclick="voirDetail(${o.id})">
@@ -655,7 +661,7 @@
           offreCourante = data.offre;
           const o = offreCourante;
 
-          const source = o.source_nom || "EduConcoursCI";
+          const source = o.source_nom || "ProInsertion";
           contenu.innerHTML = `
             <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
               <div class="card-emploi__type" style="margin-bottom:0;">${echapperHtml(o.type_contrat)}</div>

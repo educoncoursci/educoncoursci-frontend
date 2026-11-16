@@ -1,5 +1,5 @@
 // ============================================================
-//  js/main.js — Script global EduConcoursCI
+//  js/main.js — Script global ProInsertion
 //  Navbar, toast, sidebar mobile, utilitaires communs.
 //  Chargé sur toutes les pages.
 // ============================================================

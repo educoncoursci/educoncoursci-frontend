@@ -1,5 +1,5 @@
 // ============================================================
-//  js/academie.js — Académie EduConcoursCI (pages publiques)
+//  js/academie.js — Académie ProInsertion (pages publiques)
 //  Fonctions communes : appel API, construction DOM sûre,
 //  affichage du contenu d'une leçon.
 //

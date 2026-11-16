@@ -1,0 +1,309 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analyser une offre d'emploi — ProInsertion</title>
+    <meta name="description" content="Collez ou importez une offre d'emploi : ProInsertion l'analyse comme un recruteur, vous dit ce qui est attendu et prépare votre CV et votre lettre." />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <style>
+      .carte-bloc { background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm); margin-bottom: 20px; }
+      .etapes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+      .etape { background: var(--blanc); border-radius: 14px; padding: 18px; box-shadow: var(--ombre-sm); text-align: center; }
+      .etape__num { width: 34px; height: 34px; border-radius: 50%; background: var(--vert); color: #fff; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+      .etape h3 { margin: 0 0 4px; font-size: 1rem; }
+      .etape p { margin: 0; font-size: .85rem; color: var(--gris-texte); line-height: 1.5; }
+      .modes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+      .mode { border: 2px solid var(--gris-bordure); background: #fff; border-radius: 10px; padding: 9px 14px; font-weight: 700; font-size: .9rem; cursor: pointer; font-family: inherit; }
+      .mode.actif { border-color: var(--vert); background: #f0fdf4; color: var(--vert); }
+      .depot { border: 2px dashed var(--gris-bordure); border-radius: 14px; padding: 28px 16px; text-align: center; cursor: pointer; background: #fafafa; }
+      .depot:hover, .depot.survol { border-color: var(--vert); background: #f0fdf4; }
+      .depot__nom { margin-top: 8px; font-weight: 700; word-break: break-all; }
+      .groupe { border-radius: 14px; padding: 18px 20px; margin-top: 16px; background: #fff; box-shadow: var(--ombre-sm); }
+      .groupe h3 { margin: 0 0 10px; font-size: 1.05rem; }
+      .groupe h4 { margin: 14px 0 6px; font-size: .9rem; color: var(--gris-texte); text-transform: uppercase; letter-spacing: .03em; }
+      .puces { display: flex; flex-wrap: wrap; gap: 6px; }
+      .puce { background: #eef6ee; color: #14532d; border-radius: 999px; padding: 4px 12px; font-size: .84rem; font-weight: 600; }
+      .puce--cle { background: #fff7ed; color: #9a3412; }
+      .puce--manque { background: #fef2f2; color: #991b1b; }
+      .liste-simple { margin: 4px 0 0 18px; padding: 0; line-height: 1.7; font-size: .92rem; }
+      .vide { color: var(--gris-texte); font-style: italic; font-size: .88rem; }
+      .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+      .score { text-align: center; padding: 18px; border-radius: 14px; background: #f0fdf4; margin-bottom: 8px; }
+      .score__valeur { font-family: "Space Grotesk", sans-serif; font-size: 3.2rem; font-weight: 700; line-height: 1; }
+      .jauge { height: 10px; border-radius: 99px; background: #e5e7eb; overflow: hidden; margin: 10px auto 0; max-width: 360px; }
+      .jauge > span { display: block; height: 100%; border-radius: 99px; }
+      .premium-note { background: #fff7ed; border-radius: 12px; padding: 14px 16px; font-size: .9rem; }
+      .histo { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #eee; flex-wrap: wrap; font-size: .9rem; }
+      .attente { text-align: center; padding: 30px 10px; color: var(--gris-texte); }
+      .rond { width: 34px; height: 34px; border: 4px solid #e5e7eb; border-top-color: var(--vert); border-radius: 50%; margin: 0 auto 10px; animation: tourne 0.9s linear infinite; }
+      @keyframes tourne { to { transform: rotate(360deg); } }
+      @media (max-width: 640px) { .etapes { grid-template-columns: 1fr; } .actions .btn { width: 100%; } }
+    </style>
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <div class="page-header" style="background: linear-gradient(135deg, #0a2540, #0a6ebd)">
+      <div class="container">
+        <h1>Analysez une offre d'emploi comme un recruteur</h1>
+        <p>Comprenez précisément ce que l'employeur recherche avant de postuler, puis créez un CV et une lettre qui y répondent.</p>
+      </div>
+    </div>
+
+    <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
+      <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
+        <p style="margin-bottom:16px; color:var(--gris-texte);">Crée un compte gratuit ou connecte-toi pour analyser une offre.</p>
+        <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
+      </div>
+
+      <div id="zone-principale">
+        <div class="etapes">
+          <div class="etape"><div class="etape__num">1</div><h3>Importez l'offre</h3><p>Collez le texte, ajoutez une capture d'écran ou un PDF.</p></div>
+          <div class="etape"><div class="etape__num">2</div><h3>Comprenez l'employeur</h3><p>Compétences, attentes, mots-clés et atouts à mettre en avant.</p></div>
+          <div class="etape"><div class="etape__num">3</div><h3>Postulez mieux</h3><p>Créez un CV et une lettre ciblés, ou comparez votre CV actuel.</p></div>
+        </div>
+
+        <!-- 1. Import -->
+        <div id="zone-import" class="carte-bloc">
+          <h3 style="margin:0 0 12px;">Importer l'offre</h3>
+          <div class="modes" role="tablist">
+            <button class="mode actif" data-mode="texte" type="button">📋 Coller le texte</button>
+            <button class="mode" data-mode="image" type="button">📷 Capture d'écran</button>
+            <button class="mode" data-mode="pdf" type="button">📄 Document PDF</button>
+          </div>
+          <div id="mode-texte"><textarea id="offre-texte" class="form-textarea" rows="9" maxlength="15000" placeholder="Colle ici l'offre d'emploi complète (intitulé, missions, profil recherché…)"></textarea></div>
+          <div id="mode-fichier" class="hidden">
+            <label class="depot" id="depot-offre" for="offre-fichier">
+              <div style="font-size:2rem;" id="depot-icone">📷</div>
+              <div id="depot-texte"><strong>Touche ici pour choisir un fichier</strong><br /><span style="color:var(--gris-texte);font-size:.85rem;" id="depot-aide">Image JPG, PNG ou WEBP — 5 Mo maximum</span></div>
+              <div class="depot__nom" id="offre-nom"></div>
+            </label>
+            <input type="file" id="offre-fichier" class="hidden" />
+          </div>
+          <div class="actions"><button id="btn-analyser" class="btn btn--primaire btn--lg" type="button">🔍 Analyser cette offre</button></div>
+          <p style="margin:10px 0 0;font-size:.8rem;color:var(--gris-texte);">Gratuit avec un compte (nombre d'analyses limité par jour sans abonnement Premium). Tes fichiers ne sont pas conservés : seul le résultat de l'analyse est enregistré, et tu peux le supprimer à tout moment.</p>
+        </div>
+
+        <div id="zone-attente" class="carte-bloc attente hidden"><div class="rond"></div>Analyse en cours… cela prend en général 10 à 30 secondes.</div>
+        <div id="zone-message" class="hidden"></div>
+
+        <!-- 2. Résultats -->
+        <div id="zone-resultats" class="hidden"></div>
+
+        <!-- 3. Comparaison avec le CV -->
+        <div id="zone-comparer" class="carte-bloc hidden">
+          <h3 style="margin:0 0 4px;">Comparer avec mon CV actuel <span class="puce puce--cle" style="font-size:.7rem;">⭐ Premium</span></h3>
+          <p style="margin:0 0 14px;font-size:.9rem;color:var(--gris-texte);">Importe ton CV en PDF : tu obtiens un score de correspondance, les compétences à mieux montrer et des mots-clés à ajouter.</p>
+          <label class="depot" for="cv-fichier"><div style="font-size:1.6rem;">📎</div><div><strong>Choisir mon CV (PDF)</strong></div><div class="depot__nom" id="cv-nom-fichier"></div></label>
+          <input type="file" id="cv-fichier" accept="application/pdf" class="hidden" />
+          <div class="actions"><button id="btn-comparer" class="btn btn--secondaire" type="button">📊 Comparer mon CV à l'offre</button></div>
+          <div id="zone-comparaison"></div>
+        </div>
+
+        <!-- Historique -->
+        <div id="zone-historique" class="carte-bloc hidden">
+          <h3 style="margin:0 0 8px;">Mes analyses précédentes</h3>
+          <div id="liste-historique"></div>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+    <script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+      const $ = (id) => document.getElementById(id);
+      const MAX = 5 * 1024 * 1024;
+      let mode = "texte", courante = null; // courante = { id, analyse }
+
+      async function appel(chemin, options = {}) {
+        const token = localStorage.getItem("ecc_token");
+        let r;
+        try { r = await fetch(window.API_URL + chemin, { ...options, headers: { Authorization: "Bearer " + token } }); }
+        catch { throw Object.assign(new Error("Impossible de contacter le serveur. Vérifie ta connexion."), {}); }
+        let d = {}; try { d = await r.json(); } catch {}
+        if (r.status === 401) { location.href = "/auth/login.html?session=expiree"; throw new Error("Session expirée."); }
+        if (r.ok && d.error) throw new Error(d.error);
+        if (!r.ok) throw Object.assign(new Error(d.error || "Erreur " + r.status), { premiumRequis: !!d.premiumRequis, quota: !!d.quotaAtteint });
+        return d;
+      }
+
+      function afficherMessage(texte, type = "erreur", lien) {
+        const c = type === "erreur" ? "#fef2f2;color:#991b1b" : "#fff7ed;color:#9a3412";
+        $("zone-message").className = "";
+        $("zone-message").innerHTML = `<div style="background:${c};border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:.92rem;">${esc(texte)}${lien ? ` <a href="${lien}" style="font-weight:700;">Voir les offres Premium →</a>` : ""}</div>`;
+        $("zone-message").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      const cacherMessage = () => $("zone-message").classList.add("hidden");
+
+      // ── Modes d'import ──
+      document.querySelectorAll(".mode").forEach((b) => b.addEventListener("click", () => {
+        mode = b.dataset.mode;
+        document.querySelectorAll(".mode").forEach((x) => x.classList.toggle("actif", x === b));
+        $("mode-texte").classList.toggle("hidden", mode !== "texte");
+        $("mode-fichier").classList.toggle("hidden", mode === "texte");
+        const f = $("offre-fichier"); f.value = ""; $("offre-nom").textContent = "";
+        f.accept = mode === "pdf" ? "application/pdf" : "image/jpeg,image/png,image/webp";
+        $("depot-icone").textContent = mode === "pdf" ? "📄" : "📷";
+        $("depot-aide").textContent = mode === "pdf" ? "Document PDF contenant l'offre — 5 Mo maximum" : "Image JPG, PNG ou WEBP — 5 Mo maximum";
+      }));
+      $("offre-fichier").addEventListener("change", (e) => { const f = e.target.files[0]; $("offre-nom").textContent = f ? "✅ " + f.name : ""; });
+      $("cv-fichier").addEventListener("change", (e) => { const f = e.target.files[0]; $("cv-nom-fichier").textContent = f ? "✅ " + f.name : ""; });
+
+      function verifierFichier(f) {
+        if (!f) return "Choisis d'abord un fichier.";
+        if (f.size > MAX) return "Ce fichier dépasse 5 Mo. Réduis sa taille ou colle le texte de l'offre.";
+        return null;
+      }
+
+      // ── Analyse ──
+      async function analyser() {
+        cacherMessage();
+        const fd = new FormData();
+        if (mode === "texte") {
+          const t = $("offre-texte").value.trim();
+          if (t.length < 80) return afficherMessage("Colle l'offre complète (au moins quelques lignes) pour pouvoir l'analyser.");
+          fd.append("texte", t);
+        } else {
+          const f = $("offre-fichier").files[0]; const e = verifierFichier(f);
+          if (e) return afficherMessage(e);
+          fd.append("offre", f);
+        }
+        $("btn-analyser").disabled = true; $("zone-attente").classList.remove("hidden"); $("zone-resultats").classList.add("hidden"); $("zone-comparer").classList.add("hidden");
+        try {
+          const d = await appel("/offres/analyser", { method: "POST", body: fd });
+          courante = { id: d.id, analyse: d.analyse };
+          rendreResultats(d.analyse); chargerHistorique();
+        } catch (err) { afficherMessage(err.message, err.quota ? "info" : "erreur", err.quota ? "/boutique.html" : null); }
+        finally { $("btn-analyser").disabled = false; $("zone-attente").classList.add("hidden"); }
+      }
+
+      const puces = (liste, cls = "") => liste && liste.length ? `<div class="puces">${liste.map((x) => `<span class="puce ${cls}">${esc(x)}</span>`).join("")}</div>` : `<div class="vide">Non précisé dans l'offre</div>`;
+      const puce = (liste) => liste && liste.length ? `<ul class="liste-simple">${liste.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : `<div class="vide">Non précisé dans l'offre</div>`;
+
+      function rendreResultats(a) {
+        const c = a.competences, t = a.attentes;
+        $("zone-resultats").className = "";
+        $("zone-resultats").innerHTML = `
+          <div class="carte-bloc" style="margin-bottom:0;">
+            <h3 style="margin:0 0 4px;">${esc(a.intitule)}</h3>
+            <div style="color:var(--gris-texte);font-size:.9rem;">${esc(a.organisation)} · ${esc(a.lieu)} · ${esc(a.type_contrat)}</div>
+            ${a.resume ? `<p style="margin:12px 0 0;line-height:1.6;">${esc(a.resume)}</p>` : ""}
+          </div>
+          <div class="groupe"><h3>A. Les compétences recherchées</h3>
+            <h4>Compétences techniques</h4>${puces(c.techniques)}
+            <h4>Compétences comportementales</h4>${puces(c.comportementales)}
+            <h4>Qualifications et diplômes</h4>${puces(c.qualifications)}
+            <h4>Expériences exigées</h4>${puces(c.experiences)}
+            <h4>Outils et logiciels</h4>${puces(c.outils)}
+          </div>
+          <div class="groupe"><h3>B. Les attentes du recruteur</h3>
+            <h4>Missions principales</h4>${puce(t.missions)}
+            <h4>Responsabilités</h4>${puce(t.responsabilites)}
+            <h4>Qualités personnelles</h4>${puces(t.qualites)}
+            <h4>Mots-clés à intégrer dans le CV</h4>${puces(t.mots_cles, "puce--cle")}
+            <h4>Ce qui peut faire la différence</h4>${puce(t.differenciants)}
+          </div>
+          <div class="groupe" style="border:2px solid var(--vert);"><h3>C. Les atouts à mettre en avant</h3>
+            ${puce(a.atouts)}
+            ${a.conseil_candidature ? `<p style="margin:12px 0 0;background:#f0fdf4;border-radius:10px;padding:10px 14px;font-size:.9rem;">💡 ${esc(a.conseil_candidature)}</p>` : ""}
+          </div>
+          <div class="actions">
+            <button class="btn btn--primaire" type="button" onclick="versGenerateur('cv')">📄 Créer mon CV adapté à cette offre</button>
+            <button class="btn btn--secondaire" type="button" onclick="versGenerateur('lm')">✉️ Créer ma lettre de motivation</button>
+            <button class="btn btn--secondaire" type="button" onclick="versSimulation()">🎤 M'entraîner à l'entretien</button>
+          </div>`;
+        $("zone-comparaison").innerHTML = "";
+        $("zone-comparer").classList.remove("hidden");
+        $("zone-resultats").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      // ── Passerelles : l'analyse alimente CV, lettre, simulation (rien à ressaisir) ──
+      function preparerTransfert() {
+        const a = courante.analyse, t = a.attentes, c = a.competences;
+        const resume = [
+          `Poste : ${a.intitule}`, a.organisation !== "Non précisé" ? `Employeur : ${a.organisation}` : "",
+          t.missions.length ? `Missions : ${t.missions.join(" ; ")}` : "",
+          [...c.techniques, ...c.outils].length ? `Compétences et outils : ${[...c.techniques, ...c.outils].join(", ")}` : "",
+          c.qualifications.length ? `Qualifications : ${c.qualifications.join(", ")}` : "",
+          c.experiences.length ? `Expérience : ${c.experiences.join(", ")}` : "",
+          t.qualites.length ? `Qualités : ${t.qualites.join(", ")}` : "",
+          t.mots_cles.length ? `Mots-clés : ${t.mots_cles.join(", ")}` : "",
+        ].filter(Boolean).join("\n");
+        try { sessionStorage.setItem("pi_offre_ciblee", JSON.stringify({ id: courante.id, poste: a.intitule, organisation: a.organisation, resume, mots_cles: t.mots_cles })); } catch {}
+      }
+      function versGenerateur(type) { preparerTransfert(); location.href = "/cv-generator.html?offre=" + courante.id + (type === "lm" ? "&onglet=lm" : ""); }
+      function versSimulation() { preparerTransfert(); location.href = "/simulation-entretien.html?offre=" + courante.id; }
+
+      // ── Comparaison avec le CV (Premium) ──
+      async function comparer() {
+        cacherMessage();
+        const f = $("cv-fichier").files[0]; const e = verifierFichier(f);
+        if (e) return afficherMessage(e);
+        const fd = new FormData(); fd.append("cv", f);
+        $("btn-comparer").disabled = true; $("zone-comparaison").innerHTML = `<div class="attente"><div class="rond"></div>Comparaison en cours…</div>`;
+        try {
+          const d = await appel(`/offres/${courante.id}/comparer`, { method: "POST", body: fd });
+          rendreComparaison(d.comparaison);
+        } catch (err) {
+          $("zone-comparaison").innerHTML = err.premiumRequis
+            ? `<div class="premium-note">⭐ La comparaison approfondie avec ton CV est réservée aux comptes Premium. <a href="/boutique.html" style="font-weight:700;">Découvrir Premium →</a></div>`
+            : `<div style="background:#fef2f2;color:#991b1b;border-radius:12px;padding:14px 16px;font-size:.92rem;">${esc(err.message)}</div>`;
+        } finally { $("btn-comparer").disabled = false; }
+      }
+      function rendreComparaison(r) {
+        const couleur = r.score >= 70 ? "#16a34a" : r.score >= 45 ? "#ea580c" : "#dc2626";
+        $("zone-comparaison").innerHTML = `
+          <div class="score" style="margin-top:16px;"><div class="score__valeur" style="color:${couleur}">${r.score}<span style="font-size:1.2rem">/100</span></div>
+            <div style="font-weight:700;">Score de correspondance</div>
+            <div class="jauge"><span style="width:${r.score}%;background:${couleur}"></span></div>
+            ${r.verdict ? `<p style="margin:12px 0 0;font-size:.92rem;line-height:1.6;">${esc(r.verdict)}</p>` : ""}</div>
+          <div class="groupe"><h4 style="margin-top:0">Points forts de ton CV</h4>${puces(r.points_forts)}
+            <h4>Compétences manquantes ou insuffisantes</h4>${puces(r.competences_manquantes, "puce--manque")}
+            <h4>À mieux valoriser</h4>${puce(r.a_mieux_valoriser)}
+            <h4>Mots-clés à ajouter (si cela correspond à ton parcours)</h4>${puces(r.mots_cles_a_ajouter, "puce--cle")}
+            <h4>Améliorations concrètes</h4>${puce(r.ameliorations)}
+            <p style="margin:12px 0 0;font-size:.8rem;color:var(--gris-texte);">N'ajoute jamais une compétence, un diplôme ou une expérience que tu n'as pas : montre mieux ce que tu as déjà.</p></div>`;
+      }
+
+      // ── Historique ──
+      async function chargerHistorique() {
+        try {
+          const d = await appel("/offres");
+          $("zone-historique").classList.toggle("hidden", !d.analyses.length);
+          $("liste-historique").innerHTML = d.analyses.map((x) => `<div class="histo"><div><strong>${esc(x.intitule || "Offre")}</strong><br><span style="color:var(--gris-texte);font-size:.8rem;">${esc(x.organisation || "")} · ${new Date(x.created_at).toLocaleDateString("fr-FR")}${x.compare ? " · comparée" : ""}</span></div>
+            <div style="display:flex;gap:8px;"><button class="btn btn--secondaire btn--sm" type="button" onclick="rouvrir(${x.id})">Rouvrir</button><button class="btn btn--sm" type="button" style="color:#b91c1c" onclick="supprimer(${x.id})">Supprimer</button></div></div>`).join("");
+        } catch {}
+      }
+      async function rouvrir(id) {
+        try { const d = await appel("/offres/" + id); courante = { id: d.id, analyse: d.analyse }; rendreResultats(d.analyse); if (d.comparaison) rendreComparaison(d.comparaison); }
+        catch (err) { afficherMessage(err.message); }
+      }
+      async function supprimer(id) {
+        if (!confirm("Supprimer cette analyse ?")) return;
+        try { await appel("/offres/" + id, { method: "DELETE" }); if (courante && courante.id === id) { courante = null; $("zone-resultats").classList.add("hidden"); $("zone-comparer").classList.add("hidden"); } chargerHistorique(); }
+        catch (err) { afficherMessage(err.message); }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!window.Auth?.estConnecte()) { $("zone-non-connecte").classList.remove("hidden"); $("zone-principale").classList.add("hidden"); return; }
+        $("btn-analyser").onclick = analyser; $("btn-comparer").onclick = comparer;
+        chargerHistorique();
+        const id = new URLSearchParams(location.search).get("id"); if (id && /^\d+$/.test(id)) rouvrir(id);
+      });
+    </script>
+  </body>
+</html>

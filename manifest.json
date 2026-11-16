@@ -1,7 +1,7 @@
 {
-  "name": "EduConcoursCI",
-  "short_name": "EduConcours",
-  "description": "Prépare les concours de Côte d'Ivoire — QCM, cours, alertes, CV IA",
+  "name": "ProInsertion",
+  "short_name": "ProInsertion",
+  "description": "Votre avenir professionnel commence ici. CV, lettres, documents, emploi, entretiens et concours.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0F3D22",

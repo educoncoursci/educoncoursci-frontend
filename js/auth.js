@@ -271,9 +271,9 @@ const zone = document.getElementById("hero-actions");
 if (!zone) return;
 
 if (user) {
-zone.innerHTML = `<a href="/dashboard/index.html" class="btn btn--primaire btn--lg">Accéder à mon tableau de bord →</a> <a href="/concours.html" class="btn btn--outline-blanc btn--lg">Voir les concours</a>`;
+zone.innerHTML = `<a href="/cv-generator.html" class="btn btn--primaire btn--lg">Créer mon CV →</a> <a href="/dashboard/index.html" class="btn btn--outline-blanc btn--lg">Mon tableau de bord</a> <a href="/analyse-offre.html" class="btn btn--outline-blanc btn--lg">Analyser une offre (gratuit)</a>`;
 } else {
-zone.innerHTML = `<a href="/auth/register.html" class="btn btn--primaire btn--lg">Créer mon compte gratuit →</a> <a href="/concours.html" class="btn btn--outline-blanc btn--lg">Voir les concours</a>`;
+zone.innerHTML = `<a href="/cv-generator.html" class="btn btn--primaire btn--lg">Créer mon CV →</a> <a href="/emploi.html" class="btn btn--outline-blanc btn--lg">Trouver un emploi</a> <a href="/analyse-offre.html" class="btn btn--outline-blanc btn--lg">Analyser une offre (gratuit)</a>`;
 }
 }
 

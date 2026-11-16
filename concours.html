@@ -4,19 +4,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Concours CI — EduConcoursCI</title>
+    <title>Concours CI — ProInsertion</title>
     <meta
       name="description"
       content="Tous les concours de la Fonction Publique, grandes écoles et sécurité en Côte d'Ivoire. Filtres par catégorie, statut et niveau."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="EduConcoursCI" />
-    <meta property="og:title" content="Concours CI — EduConcoursCI" />
+    <meta property="og:site_name" content="ProInsertion" />
+    <meta property="og:title" content="Concours CI — ProInsertion" />
     <meta property="og:description" content="Tous les concours de la Fonction Publique, grandes écoles et sécurité en Côte d'Ivoire. Filtres par catégorie, statut et niveau." />
     <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <meta property="og:url" content="https://educoncoursci.netlify.app/concours.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Concours CI — EduConcoursCI" />
+    <meta name="twitter:title" content="Concours CI — ProInsertion" />
     <meta name="twitter:description" content="Tous les concours de la Fonction Publique, grandes écoles et sécurité en Côte d'Ivoire. Filtres par catégorie, statut et niveau." />
     <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
@@ -343,7 +343,25 @@
                     value="fermé"
                     onchange="appliquerFiltres()"
                   />
-                  ⚫ Terminés <span class="filtre-compteur" id="cpt-ferme"></span></label
+                  ⚫ Clôturés <span class="filtre-compteur" id="cpt-cloture"></span></label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="statut"
+                    value="en attente de résultats"
+                    onchange="appliquerFiltres()"
+                  />
+                  ⏳ En attente de résultats <span class="filtre-compteur" id="cpt-attente"></span></label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="statut"
+                    value="résultats"
+                    onchange="appliquerFiltres()"
+                  />
+                  🏆 Résultats disponibles <span class="filtre-compteur" id="cpt-resultats"></span></label
                 >
                 <label class="filtre-check"
                   ><input
@@ -362,6 +380,15 @@
                     onchange="appliquerFiltres()"
                   />
                   🔴 Suspendu / Annulé <span class="filtre-compteur" id="cpt-suspendu"></span></label
+                >
+                <label class="filtre-check"
+                  ><input
+                    type="radio"
+                    name="statut"
+                    value="archives"
+                    onchange="appliquerFiltres()"
+                  />
+                  🗄️ Archives <span class="filtre-compteur" id="cpt-archives"></span></label
                 >
               </div>
 
@@ -569,6 +596,7 @@
               id="pagination"
               style="
                 display: flex;
+                flex-wrap: wrap;
                 justify-content: center;
                 gap: 8px;
                 margin-top: 28px;
@@ -635,28 +663,24 @@
       // affiché sur les cartes pour les deux statuts.
       async function chargerCompteurs() {
         try {
-          const stats = await window.API.Concours.stats();
-          const parStatut = {};
-          for (const s of stats.parStatut) parStatut[s.statut] = s.total;
-
-          const cptTermines = (parStatut["fermé"] || 0) + (parStatut["résultats"] || 0);
-
+          const n = await window.API.Concours.compteurs();
           const cibles = {
-            "cpt-tous": stats.total,
-            "cpt-ouvert": parStatut["ouvert"] || 0,
-            "cpt-a-venir": parStatut["à venir"] || 0,
-            "cpt-ferme": cptTermines,
-            "cpt-non-definie": parStatut["information non confirmée"] || 0,
-            "cpt-suspendu": parStatut["suspendu"] || 0,
+            "cpt-tous": n.total,
+            "cpt-ouvert": n.en_cours,
+            "cpt-a-venir": n.a_venir,
+            "cpt-cloture": n.cloture,
+            "cpt-attente": n.attente_resultats,
+            "cpt-resultats": n.resultats,
+            "cpt-non-definie": n.non_confirme,
+            "cpt-suspendu": n.suspendu_annule,
+            "cpt-archives": n.archives,
           };
           for (const [id, valeur] of Object.entries(cibles)) {
             const el = document.getElementById(id);
             if (el) el.textContent = `(${valeur})`;
           }
         } catch (err) {
-          // Non bloquant : les filtres restent utilisables même si les
-          // compteurs échouent à charger — juste sans le nombre entre
-          // parenthèses à côté de chaque option.
+          // Non bloquant : les filtres restent utilisables sans les nombres.
           console.warn("Compteurs concours indisponibles :", err.message);
         }
       }
@@ -672,8 +696,15 @@
       // ── Charge tous les concours ──────────────────────────────────
       async function chargerConcours() {
         try {
-          const data = await window.API.Concours.liste({ limit: 200 });
+          // Chargement par lots de 200 jusqu'à épuisement : aucun concours n'est
+          // tronqué, et les compteurs correspondent toujours à ce qui est listé.
+          let data = await window.API.Concours.liste({ limit: 200, offset: 0, archive: "tous" });
           tousConcours = data.concours || [];
+          for (let lot = (data.concours || []).length, tours = 0; lot === 200 && tours < 25; tours++) {
+            const suite = await window.API.Concours.liste({ limit: 200, offset: tousConcours.length, archive: "tous" });
+            lot = (suite.concours || []).length;
+            tousConcours = tousConcours.concat(suite.concours || []);
+          }
 
           // Charge les catégories dans les filtres
           const categories = [
@@ -747,7 +778,11 @@
             !c.organisme.toLowerCase().includes(recherche)
           )
             return false;
-          if (statut && c.statut !== statut) return false;
+          // Les archives restent consultables mais ne polluent pas les autres vues
+          if (statut === "archives") { if (!c.archive) return false; }
+          else if (c.archive) return false;
+          if (statut === "suspendu") { if (c.statut !== "suspendu" && c.statut !== "annulé") return false; }
+          else if (statut && statut !== "archives" && c.statut !== statut) return false;
           if (categorie && c.categorie !== categorie) return false;
           if (niveau && c.niveau !== niveau) return false;
           if (structure && String(c.structure_id) !== structure) return false;
@@ -765,7 +800,7 @@
           // (les plus récents en premier), à partir de la vraie date de
           // clôture — le badge année sur chaque card reste cohérent avec
           // l'ordre d'affichage.
-          if (statut === "fermé" && tri === "recent") {
+          if (["fermé", "en attente de résultats", "résultats", "archives"].includes(statut) && tri === "recent") {
             const anneeA = a.date_cloture ? new Date(a.date_cloture).getFullYear() : 0;
             const anneeB = b.date_cloture ? new Date(b.date_cloture).getFullYear() : 0;
             if (anneeA !== anneeB) return anneeB - anneeA;
@@ -838,11 +873,19 @@
           return;
         }
 
+        // Pagination à fenêtre : 1 … 4 [5] 6 … 20 (ne déborde jamais, même avec 50 pages)
+        const pages = [];
+        for (let i = 1; i <= total; i++) {
+          if (i === 1 || i === total || Math.abs(i - pageActuelle) <= 1) pages.push(i);
+          else if (pages[pages.length - 1] !== "…") pages.push("…");
+        }
         let html = "";
         if (pageActuelle > 1)
-          html += `<button class="btn btn--gris btn--sm" onclick="changerPage(${pageActuelle - 1})">← Préc.</button>`;
-        for (let i = 1; i <= total; i++) {
-          html += `<button class="btn btn--sm ${i === pageActuelle ? "btn--primaire" : "btn--gris"}" onclick="changerPage(${i})">${i}</button>`;
+          html += `<button class="btn btn--gris btn--sm" onclick="changerPage(${pageActuelle - 1})" aria-label="Page précédente">← Préc.</button>`;
+        for (const i of pages) {
+          html += i === "…"
+            ? `<span style="align-self:center;color:var(--gris-texte);">…</span>`
+            : `<button class="btn btn--sm ${i === pageActuelle ? "btn--primaire" : "btn--gris"}" onclick="changerPage(${i})" ${i === pageActuelle ? 'aria-current="page"' : ""}>${i}</button>`;
         }
         if (pageActuelle < total)
           html += `<button class="btn btn--gris btn--sm" onclick="changerPage(${pageActuelle + 1})">Suiv. →</button>`;

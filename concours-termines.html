@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Concours terminés en Côte d'Ivoire — Archives — EduConcoursCI</title>
+    <title>Concours terminés en Côte d'Ivoire — Archives — ProInsertion</title>
     <meta
       name="description"
       content="Archives des concours clôturés en Côte d'Ivoire, classées par année : anciens sujets, communiqués et résultats lorsqu'ils sont disponibles."
@@ -66,11 +66,10 @@
           // publiés par un admin) : ce sont des concours clôturés eux
           // aussi, ils doivent rester visibles dans les archives plutôt
           // que disparaître du site public une fois les résultats sortis.
-          const [dataFermes, dataResultats] = await Promise.all([
-            window.API.Concours.liste({ statut: "fermé", limit: 500 }),
-            window.API.Concours.liste({ statut: "résultats", limit: 500 }),
-          ]);
-          const concours = [...(dataFermes.concours || []), ...(dataResultats.concours || [])];
+          // Le filtre « fermé » du serveur couvre déjà clôturé + en attente de
+          // résultats + résultats publiés ; archive:"tous" garde les archivés visibles ici.
+          const dataFermes = await window.API.Concours.liste({ statut: "fermé", archive: "tous", limit: 500 });
+          const concours = dataFermes.concours || [];
 
           if (concours.length === 0) {
             div.innerHTML = `

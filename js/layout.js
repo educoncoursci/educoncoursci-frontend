@@ -42,11 +42,28 @@ window.SITE_CONFIG = {
 const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo">
-          <div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="EduConcoursCI" /></div>
-          <span class="navbar__logo-texte">Edu<span>Concours</span>CI</span>
+          <div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion" /></div>
+          <span class="navbar__logo-texte">Pro<span>Insertion</span></span>
         </a>
 
                 <ul class="navbar__links">
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">
+              Services
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
+              <a href="/packs.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> Packs</a>
+              <a href="/documents-redaction.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Courriers et documents</a>
+              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
+              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
+              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
+              <a href="/emploi.html?opportunite=stage" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Offres de stage</a>
+              <a href="/analyse-offre.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Analyser une offre</a>
+              <a href="/simulation-entretien.html" class="navbar__sous-lien"><span data-icone="aide" data-taille="16"></span> Simulation d'entretien</a>
+            </div>
+          </li>
           <li class="navbar__groupe">
             <button class="navbar__groupe-btn">
               Concours
@@ -79,18 +96,6 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
               <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
             </div>
           </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Carrière
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/cv-generator.html" class="navbar__sous-lien"><span data-icone="fusee" data-taille="16"></span> CV & Lettre de motivation</a>
-              <a href="/documents-pro.html" class="navbar__sous-lien"><span data-icone="portefeuille" data-taille="16"></span> Documents Professionnels</a>
-              <a href="/documents-admin.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Documents Administratifs</a>
-              <a href="/emploi.html" class="navbar__sous-lien"><span data-icone="loupe" data-taille="16"></span> Offres d'emploi</a>
-            </div>
-          </li>
           <li><a href="/assistance-sociale.html" class="navbar__link">Assistance Sociale</a></li>
           <li><a href="/boutique.html" class="navbar__link">Premium</a></li>
         </ul>
@@ -110,6 +115,16 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
       </div>
 
       <div class="navbar__mobile" id="menu-mobile">
+        <a href="/cv-generator.html" class="navbar__link"><span data-icone="fusee" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>CV & Lettre de motivation</a>
+        <a href="/packs.html" class="navbar__link"><span data-icone="fusee" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Packs</a>
+        <a href="/documents-redaction.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Courriers et documents</a>
+        <a href="/documents-pro.html" class="navbar__link"><span data-icone="portefeuille" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Documents professionnels</a>
+        <a href="/documents-admin.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Documents administratifs</a>
+        <a href="/emploi.html" class="navbar__link"><span data-icone="loupe" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Offres d'emploi</a>
+        <a href="/emploi.html?opportunite=stage" class="navbar__link"><span data-icone="graphique" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Offres de stage</a>
+        <a href="/analyse-offre.html" class="navbar__link"><span data-icone="loupe" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Analyser une offre</a>
+        <a href="/simulation-entretien.html" class="navbar__link"><span data-icone="aide" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Simulation d'entretien</a>
+        <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:8px 0;" />
         <a href="/concours.html" class="navbar__link"><span data-icone="institution" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Concours</a>
         <a href="/concours-en-cours.html" class="navbar__link" style="padding-left:40px;">🔴 En cours</a>
         <a href="/concours-a-venir.html" class="navbar__link" style="padding-left:40px;">🔵 À venir</a>
@@ -173,10 +188,11 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
       <div class="container">
         <div class="footer__grille">
           <div>
-            <div class="footer__logo" style="display:flex;align-items:center;gap:10px;"><img src="/assets/logo-icon.png" alt="EduConcoursCI" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" />EduConcoursCI</div>
+            <div class="footer__logo" style="display:flex;align-items:center;gap:10px;"><img src="/assets/logo-icon.png" alt="ProInsertion" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" />ProInsertion</div>
             <p class="footer__desc">
-              Prépare les concours de Côte d'Ivoire : QCM, cours, vidéos,
-              alertes et génération IA de CV et de lettres.
+              Votre avenir professionnel commence ici. CV, lettres de motivation,
+              documents professionnels, offres d'emploi, préparation aux
+              entretiens et concours.
             </p>
             ${construireReseaux()}
           </div>
@@ -195,6 +211,10 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
             <a href="/cv-generator.html" class="footer__lien"
               >Générateur CV/LM</a
             >
+            <a href="/analyse-offre.html" class="footer__lien">Analyser une offre</a>
+            <a href="/simulation-entretien.html" class="footer__lien">Simulation d'entretien</a>
+            <a href="/packs.html" class="footer__lien">Packs</a>
+            <a href="/documents-redaction.html" class="footer__lien">Courriers et documents</a>
             <a href="/documents-pro.html" class="footer__lien">Documents Pro</a>
             <a href="/documents-admin.html" class="footer__lien">Documents Admin</a>
             <a href="/emploi.html" class="footer__lien">Emploi & Stages</a>
@@ -220,7 +240,7 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
       </div>
       <div class="footer__bas">
         <div class="container">
-          © 2026 EduConcoursCI — Tous droits réservés · Abidjan, Côte d'Ivoire
+          © 2026 ProInsertion — Tous droits réservés · Abidjan, Côte d'Ivoire
         </div>
       </div>
     </footer>`;

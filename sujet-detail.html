@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sujet — Communauté EduConcoursCI</title>
+    <title>Sujet — Communauté ProInsertion</title>
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -95,7 +95,7 @@
       async function chargerSujet() {
         try {
           const { sujet, reponses } = await window.API.Forum.detailSujet(sujetId);
-          document.title = `${sujet.titre} — Communauté EduConcoursCI`;
+          document.title = `${sujet.titre} — Communauté ProInsertion`;
 
           const session = window.Auth?.getSession();
           const peutSupprimer = session && (session.id === sujet.user_id || session.role === "admin");

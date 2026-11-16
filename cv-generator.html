@@ -4,19 +4,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Générateur CV & LM — EduConcoursCI</title>
+    <title>Générateur CV & LM — ProInsertion</title>
     <meta
       name="description"
       content="Génère un CV professionnel et une lettre de motivation adaptés au marché ivoirien grâce à l'IA Claude."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="EduConcoursCI" />
-    <meta property="og:title" content="Générateur CV & LM — EduConcoursCI" />
+    <meta property="og:site_name" content="ProInsertion" />
+    <meta property="og:title" content="Générateur CV & LM — ProInsertion" />
     <meta property="og:description" content="Génère un CV professionnel et une lettre de motivation adaptés au marché ivoirien grâce à l'IA Claude." />
     <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <meta property="og:url" content="https://educoncoursci.netlify.app/cv-generator.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Générateur CV & LM — EduConcoursCI" />
+    <meta name="twitter:title" content="Générateur CV & LM — ProInsertion" />
     <meta name="twitter:description" content="Génère un CV professionnel et une lettre de motivation adaptés au marché ivoirien grâce à l'IA Claude." />
     <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
@@ -606,14 +606,14 @@
                 </div>
               </div>
 
-              <!-- Choix du modèle de CV -->
+              <!-- Choix du type de CV -->
               <div style="margin-top: 28px">
                 <label class="form-label" style="margin-bottom: 12px; display: block;">
                   <span data-icone="graphique" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
-                  Choisis un modèle de CV
+                  Choisis ton type de CV
                 </label>
-                <div id="modeles-cv-conteneur" style="color: var(--gris-texte); font-size: 0.85rem;">
-                  Chargement des modèles…
+                <div id="types-cv-conteneur" class="types-cv-grille" style="color: var(--gris-texte); font-size: 0.85rem;">
+                  Chargement…
                 </div>
               </div>
 
@@ -624,7 +624,7 @@
                   onclick="genererCV()"
                   class="btn btn--primaire btn--full btn--lg"
                 >
-                  <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon CV avec l'IA
+                  <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer mon CV
                 </button>
               </div>
             </div>
@@ -718,12 +718,9 @@
                   <span data-icone="batiment" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Informations sur le poste
                 </div>
                 <div class="cv-layout">
-                  <div class="form-groupe">
-                    <label class="form-label">Type de candidature</label>
-                    <select id="lm-type" class="form-input">
-                      <option value="candidature">Réponse à une offre</option>
-                      <option value="spontanee">Candidature spontanée</option>
-                    </select>
+                  <div class="form-groupe" style="grid-column: 1 / -1;">
+                    <label class="form-label">Type de lettre</label>
+                    <div id="types-lm-conteneur" class="types-cv-grille" style="color: var(--gris-texte); font-size: 0.85rem;">Chargement…</div>
                   </div>
                   <div class="form-groupe">
                     <label class="form-label">Poste visé <span>*</span></label
@@ -828,10 +825,87 @@
                 onclick="genererLM()"
                 class="btn btn--bleu btn--full btn--lg"
               >
-                <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer ma Lettre de Motivation
+                <span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer ma lettre
               </button>
             </div>
           </div>
+
+          <!-- ═══════════════ CV COMMANDÉ (aperçu → paiement → PDF) ═══════════════ -->
+          <div id="zone-commande" class="hidden">
+            <div style="background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm);">
+              <h3 style="color: var(--vert); margin: 0 0 4px" id="cmd-titre">Ton CV</h3>
+              <div id="cmd-sous-titre" style="color: var(--gris-texte); font-size: .9rem; margin-bottom: 16px;"></div>
+
+              <div class="cmd-doc">
+                <div class="cmd-doc__texte" id="cmd-texte"></div>
+                <div class="cmd-doc__flou" id="cmd-flou" aria-hidden="true"></div>
+              </div>
+
+              <!-- Paiement -->
+              <div id="cmd-paiement" class="cmd-pay hidden">
+                <div style="font-weight:800; font-size:1.05rem; margin-bottom:6px;">
+                  Débloque ton document complet : <span id="cmd-prix"></span>
+                </div>
+                <ol style="margin:0 0 14px 18px; padding:0; line-height:1.8; font-size:.9rem;">
+                  <li>Envoie le montant exact par <strong>Wave</strong> ou <strong>Orange Money</strong> :
+                    <div id="cmd-numeros" style="margin-top:4px;"></div></li>
+                  <li>Note l'identifiant de transaction reçu par SMS.</li>
+                  <li>Saisis-le ci-dessous. Un même identifiant ne peut servir qu'une seule fois.</li>
+                </ol>
+                <div id="cmd-rejet" class="hidden" style="background:#fef2f2;color:#991b1b;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:.88rem;">
+                  Ton précédent paiement n'a pas pu être confirmé. Vérifie l'identifiant et réessaie.
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 2fr; gap:10px;">
+                  <select id="cmd-moyen" class="form-input">
+                    <option value="wave">Wave</option>
+                    <option value="orange">Orange Money</option>
+                  </select>
+                  <input id="cmd-txid" class="form-input" placeholder="Identifiant de transaction" autocomplete="off" />
+                </div>
+                <button id="cmd-btn-payer" onclick="envoyerPaiementCv()" class="btn btn--primaire btn--full" style="margin-top:12px;">
+                  J'ai payé — valider mon identifiant
+                </button>
+              </div>
+
+              <!-- Vérification en cours -->
+              <div id="cmd-verification" class="cmd-pay hidden">
+                <strong>Paiement reçu, vérification en cours.</strong>
+                <p style="margin:6px 0 12px; font-size:.9rem;">Notre équipe confirme la réception des fonds (24 h maximum). Ton document sera téléchargeable dès la validation.</p>
+                <button onclick="rafraichirCommande()" class="btn btn--outline-vert btn--sm">Actualiser le statut</button>
+              </div>
+
+              <!-- CV débloqué -->
+              <div id="cmd-valide" class="hidden" style="margin-top:16px;">
+                <button onclick="telechargerCvPaye()" class="btn btn--primaire btn--full btn--lg">
+                  Télécharger mon document (PDF)
+                </button>
+                <button onclick="copierCvPaye()" class="btn btn--gris btn--sm" style="margin-top:10px;">Copier le texte</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mes CV -->
+          <div id="zone-mes-cv" class="hidden" style="margin-top:20px;">
+            <div style="background: var(--blanc); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--ombre-sm);">
+              <h3 style="margin:0 0 12px; font-size:1rem;">Mes documents</h3>
+              <div id="liste-mes-cv"></div>
+            </div>
+          </div>
+
+          <style>
+            .types-cv-grille { display:grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap:10px; }
+            .type-cv { border:2px solid var(--gris-clair, #e5e7eb); border-radius:12px; padding:12px 14px; cursor:pointer; background:#fff; }
+            .type-cv.selectionne { border-color: var(--vert); background:#f0fdf4; }
+            .type-cv__nom { font-weight:800; font-size:.92rem; }
+            .type-cv__desc { font-size:.78rem; color: var(--gris-texte); margin:4px 0 6px; line-height:1.4; }
+            .type-cv__prix { font-weight:800; color: var(--vert); }
+            .cmd-doc { position:relative; border:3px solid var(--vert); border-radius: var(--radius-lg); overflow:hidden; background:#fff; }
+            .cmd-doc__texte, .cmd-doc__flou { white-space:pre-wrap; font-family: inherit; font-size:.88rem; line-height:1.6; padding:18px 20px; word-break:break-word; }
+            .cmd-doc__flou { filter: blur(5px); user-select:none; pointer-events:none; color:#555; padding-top:0; max-height:320px; overflow:hidden;
+              -webkit-mask-image: linear-gradient(#000 40%, transparent); mask-image: linear-gradient(#000 40%, transparent); }
+            .cmd-pay { background:#fff7ed; border-radius:12px; padding:16px 18px; margin-top:16px; }
+            .mes-cv-ligne { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #eee; font-size:.88rem; flex-wrap:wrap; }
+          </style>
 
           <!-- RÉSULTAT -->
           <div id="zone-resultat" class="hidden">
@@ -932,7 +1006,7 @@
                     <div
                       style="font-weight: 900; font-size: 0.95rem; color: #fff"
                     >
-                      EduConcoursCI
+                      ProInsertion
                     </div>
                     <div
                       style="
@@ -940,7 +1014,7 @@
                         color: rgba(255, 255, 255, 0.75);
                       "
                     >
-                      Document généré par IA ·
+                      Document généré ·
                       <span id="date-generation"></span>
                     </div>
                   </div>
@@ -989,7 +1063,30 @@
       let dataFormulaire = null;
       let modeleChoisi = "ats_classique_1";
       let modelesCatalogue = {};
+      let commandeActive = null;
+      let typeCvChoisi = null;
+      let typesCv = [];
       let expCount = 1, forCount = 1;
+
+      // Offre analysée sur /analyse-offre.html : on pré-remplit uniquement ce qui vient de l'OFFRE
+      // (poste, employeur, résumé des attentes). Rien n'est ajouté au parcours du candidat.
+      function appliquerOffreCiblee() {
+        let o = null;
+        try { o = JSON.parse(sessionStorage.getItem("pi_offre_ciblee") || "null"); } catch {}
+        const id = new URLSearchParams(location.search).get("offre");
+        if (!o || !id || String(o.id) !== id) return;
+        const mettre = (cible, v) => { const e = document.getElementById(cible); if (e && v && !e.value) e.value = v; };
+        mettre("cv-poste", o.poste); mettre("lm-poste", o.poste);
+        if (o.organisation && o.organisation !== "Non précisé") mettre("lm-org", o.organisation);
+        mettre("texte-offre-emploi", o.resume);
+        const bandeau = document.createElement("div");
+        bandeau.style.cssText = "background:#f0fdf4;border-left:4px solid var(--vert);border-radius:10px;padding:12px 16px;margin:0 0 16px;font-size:.9rem;";
+        bandeau.innerHTML = "🎯 Document ciblé sur l'offre <strong></strong>. Complète ton parcours réel : rien n'est inventé à ta place." + (o.mots_cles && o.mots_cles.length ? "<br><span style='color:var(--gris-texte)'>Mots-clés à intégrer si ils correspondent à ton parcours : " + "</span><span class='mots'></span>" : "");
+        bandeau.querySelector("strong").textContent = o.poste;
+        const m = bandeau.querySelector(".mots"); if (m) m.textContent = o.mots_cles.join(", ");
+        const zone = document.getElementById("zone-generateur"); if (zone) zone.prepend(bandeau);
+        if (new URLSearchParams(location.search).get("onglet") === "lm") { const b = document.querySelectorAll(".onglet-btn")[1]; if (b) changerOnglet("lm", b); }
+      }
 
       document.addEventListener("DOMContentLoaded", () => {
         if (!window.Auth?.estConnecte()) {
@@ -998,6 +1095,7 @@
           return;
         }
         document.getElementById("date-generation").textContent = new Date().toLocaleDateString("fr-FR");
+        appliquerOffreCiblee();
 
         // Pré-remplir avec les infos du profil
         const session = window.Auth.getSession();
@@ -1006,7 +1104,8 @@
           if (session.email) { document.getElementById("cv-email").value = session.email; document.getElementById("lm-email").value = session.email; }
         }
 
-        chargerModelesCv();
+        chargerTypesCv();
+        chargerMesCv();
       });
 
       // ── Chargement et affichage des modèles de CV ──────────────────
@@ -1079,6 +1178,7 @@
         document.getElementById("form-cv").classList.toggle("hidden", type !== "cv");
         document.getElementById("form-lm").classList.toggle("hidden", type !== "lm");
         document.getElementById("zone-resultat").classList.add("hidden");
+        document.getElementById("zone-commande").classList.toggle("hidden", !commandeActive || (commandeActive.type.startsWith("lm-") ? "lm" : "cv") !== type);
       }
 
       // ── Gestion expériences ───────────────────────────────────────
@@ -1149,29 +1249,178 @@
       };
       }
 
-      // ── Générer CV ────────────────────────────────────────────────
+      // ── Types de CV (catalogue : nom, description, prix) ─────────────
+      let typesLm = [];
+      let typeLmChoisi = null;
+      function rendreTypes(conteneurId, liste, choisi, fonction) {
+        document.getElementById(conteneurId).innerHTML = liste.map((t) => `
+          <div class="type-cv ${t.id === choisi ? "selectionne" : ""}" data-type="${echapperHtml(t.id)}" onclick="${fonction}('${echapperHtml(t.id)}')">
+            <div class="type-cv__nom">${echapperHtml(t.nom)}</div>
+            <div class="type-cv__desc">${echapperHtml(t.description)}</div>
+            <div class="type-cv__prix">${Number(t.prix_fcfa).toLocaleString("fr-FR")} FCFA</div>
+          </div>`).join("");
+      }
+
+      async function chargerTypesCv() {
+        const IDS_CV = ["cv-classique", "cv-moderne", "cv-professionnel", "cv-ats", "cv-international", "cv-bilingue"];
+        const IDS_LM = ["lm-classique", "lm-personnalisee", "lm-internationale", "lm-spontanee", "lm-stage", "lm-emploi"];
+        try {
+          const r = await fetch(window.API_URL + "/catalogue");
+          const data = await r.json();
+          const tous = (data.categories || []).flatMap((c) => c.produits);
+          typesCv = tous.filter((p) => IDS_CV.includes(p.id));
+          typesLm = tous.filter((p) => IDS_LM.includes(p.id));
+        } catch {
+          typesCv = []; typesLm = [];
+        }
+        const vide = "Ces documents ne sont pas disponibles pour le moment.";
+        if (typesCv.length) { typeCvChoisi = typesCv[0].id; rendreTypes("types-cv-conteneur", typesCv, typeCvChoisi, "choisirTypeCv"); }
+        else document.getElementById("types-cv-conteneur").textContent = vide;
+        if (typesLm.length) { typeLmChoisi = typesLm[0].id; rendreTypes("types-lm-conteneur", typesLm, typeLmChoisi, "choisirTypeLm"); }
+        else document.getElementById("types-lm-conteneur").textContent = vide;
+      }
+
+      function choisirTypeCv(id) {
+        typeCvChoisi = id;
+        document.querySelectorAll("#types-cv-conteneur .type-cv").forEach((el) => el.classList.toggle("selectionne", el.dataset.type === id));
+      }
+      function choisirTypeLm(id) {
+        typeLmChoisi = id;
+        document.querySelectorAll("#types-lm-conteneur .type-cv").forEach((el) => el.classList.toggle("selectionne", el.dataset.type === id));
+      }
+
+      // ── Générer CV : stocké côté serveur, aperçu partiel ─────────────
       async function genererCV() {
-      const data = collecterDataCV();
-      if (!data.nom || !data.poste) {
-      window.afficherToast("Nom et poste recherché sont requis.", "warn"); return;
+        const data = collecterDataCV();
+        if (!data.nom || !data.poste) {
+          window.afficherToast("Nom et poste recherché sont requis.", "warn"); return;
+        }
+        if (!typeCvChoisi) {
+          window.afficherToast("Choisis d'abord un type de CV.", "warn"); return;
+        }
+
+        const btn = document.getElementById("btn-generer-cv");
+        btn.classList.add("btn--chargement"); btn.disabled = true;
+        btn.textContent = "⏳ Rédaction de ton CV…";
+
+        try {
+          const res = await window.API.CVLM.creerCommande({ ...data, type: typeCvChoisi });
+          afficherCommande(res.commande);
+          chargerMesCv();
+          window.afficherToast("Ton CV est prêt. Voici l'aperçu.", "succes");
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur de génération.", "erreur");
+        } finally {
+          btn.classList.remove("btn--chargement"); btn.disabled = false;
+          btn.textContent = "🚀 Générer mon CV";
+        }
       }
 
-      const btn = document.getElementById("btn-generer-cv");
-      btn.classList.add("btn--chargement"); btn.disabled = true;
-      btn.textContent = "⏳ L'IA rédige ton CV…";
-
-      try {
-      const res = await window.API.CVLM.genererCV(data);
-      dataFormulaire = data;
-      contenuGenere  = res.cv;
-      afficherResultat("📄 Ton CV Professionnel");
-      window.afficherToast("CV généré avec succès !", "succes");
-      } catch (err) {
-      window.afficherToast(err.message || "Erreur de génération.", "erreur");
-      } finally {
-      btn.classList.remove("btn--chargement"); btn.disabled = false;
-      btn.textContent = "🚀 Générer mon CV avec l'IA";
+      // ── Affichage d'une commande selon son état ──────────────────────
+      function afficherCommande(c) {
+        commandeActive = c;
+        const montrer = (id, oui) => document.getElementById(id).classList.toggle("hidden", !oui);
+        document.getElementById("cmd-titre").textContent = c.nom;
+        document.getElementById("cmd-sous-titre").textContent =
+          c.etat === "valide" ? "Paiement confirmé : ton document complet est disponible."
+                              : "Aperçu partiel : la suite de ton document est masquée jusqu'au paiement.";
+        const texte = document.getElementById("cmd-texte");
+        const flou = document.getElementById("cmd-flou");
+        if (c.etat === "valide") {
+          texte.textContent = c.contenu || "";
+          flou.textContent = "";
+          flou.classList.add("hidden");
+        } else {
+          texte.textContent = c.apercu?.visible || "";
+          flou.textContent = c.apercu?.flou || "";
+          flou.classList.remove("hidden");
+        }
+        montrer("cmd-paiement", c.etat === "a_payer" || c.etat === "rejete");
+        montrer("cmd-rejet", c.etat === "rejete");
+        montrer("cmd-verification", c.etat === "en_verification");
+        montrer("cmd-valide", c.etat === "valide");
+        if (c.etat === "a_payer" || c.etat === "rejete") {
+          document.getElementById("cmd-prix").textContent = Number(c.prix_fcfa).toLocaleString("fr-FR") + " FCFA";
+          const nums = [];
+          if (c.paiement?.wave_numero) nums.push(`Wave : <strong>${echapperHtml(c.paiement.wave_numero)}</strong>`);
+          if (c.paiement?.orange_numero) nums.push(`Orange Money : <strong>${echapperHtml(c.paiement.orange_numero)}</strong>`);
+          document.getElementById("cmd-numeros").innerHTML = nums.length ? nums.join("<br>") : "Le numéro de paiement sera communiqué par le support.";
+        }
+        document.getElementById("zone-resultat").classList.add("hidden");
+        document.getElementById("zone-commande").classList.remove("hidden");
+        document.getElementById("zone-commande").scrollIntoView({ behavior: "smooth", block: "start" });
       }
+
+      async function envoyerPaiementCv() {
+        if (!commandeActive) return;
+        const txId = document.getElementById("cmd-txid").value.trim();
+        if (!txId) { window.afficherToast("Saisis l'identifiant de transaction.", "warn"); return; }
+        const btn = document.getElementById("cmd-btn-payer");
+        btn.disabled = true;
+        try {
+          const res = await window.API.CVLM.payerCommande(commandeActive.id, document.getElementById("cmd-moyen").value, txId);
+          window.afficherToast(res.message || "Identifiant reçu.", "succes");
+          document.getElementById("cmd-txid").value = "";
+          await rafraichirCommande();
+          chargerMesCv();
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur de paiement.", "erreur");
+        } finally {
+          btn.disabled = false;
+        }
+      }
+
+      async function rafraichirCommande() {
+        if (!commandeActive) return;
+        try {
+          const res = await window.API.CVLM.lireCommande(commandeActive.id);
+          afficherCommande(res.commande);
+        } catch (err) {
+          window.afficherToast(err.message || "Impossible d'actualiser.", "erreur");
+        }
+      }
+
+      async function telechargerCvPaye() {
+        if (!commandeActive) return;
+        try {
+          const lettre = commandeActive.type.startsWith("lm-");
+          const brut = lettre ? document.getElementById("lm-nom").value : collecterDataCV().nom;
+          const nom = (brut || "").replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "");
+          await window.API.CVLM.telechargerCommandePDF(commandeActive.id, nom || "document", lettre ? "LM" : "CV");
+        } catch (err) {
+          window.afficherToast(err.message || "Erreur PDF.", "erreur");
+        }
+      }
+
+      async function copierCvPaye() {
+        if (commandeActive?.contenu) {
+          await window.Utils?.copierTexte?.(commandeActive.contenu);
+          window.afficherToast("Texte copié.", "succes");
+        }
+      }
+
+      // ── Mes CV ───────────────────────────────────────────────────────
+      const LIBELLES_ETAT = { a_payer: "À payer", en_verification: "Paiement en vérification", valide: "Disponible", rejete: "Paiement refusé" };
+      async function chargerMesCv() {
+        try {
+          const res = await window.API.CVLM.mesCommandes();
+          const liste = (res.commandes || []).filter((c) => !c.type.startsWith("entretien-"));
+          document.getElementById("zone-mes-cv").classList.toggle("hidden", !liste.length);
+          document.getElementById("liste-mes-cv").innerHTML = liste.map((c) => `
+            <div class="mes-cv-ligne">
+              <span><strong>${echapperHtml(c.nom)}</strong> · ${new Date(c.date).toLocaleDateString("fr-FR")} · ${echapperHtml(LIBELLES_ETAT[c.etat] || c.etat)}</span>
+              <button class="btn btn--outline-vert btn--sm" onclick="ouvrirCommande(${Number(c.id)})">Ouvrir</button>
+            </div>`).join("");
+        } catch { /* la liste est un confort : on n'affiche rien en cas d'erreur */ }
+      }
+
+      async function ouvrirCommande(id) {
+        try {
+          const res = await window.API.CVLM.lireCommande(id);
+          afficherCommande(res.commande);
+        } catch (err) {
+          window.afficherToast(err.message || "CV introuvable.", "erreur");
+        }
       }
 
       // ── Générer LM ────────────────────────────────────────────────
@@ -1181,7 +1430,6 @@
       email:      document.getElementById("lm-email").value.trim(),
       telephone:  document.getElementById("lm-tel").value.trim(),
       ville:      document.getElementById("lm-ville").value.trim(),
-      type:       document.getElementById("lm-type").value,
       poste:      document.getElementById("lm-poste").value.trim(),
       organisation: document.getElementById("lm-org").value.trim(),
       destinataire: document.getElementById("lm-dest").value.trim(),
@@ -1195,22 +1443,27 @@
       if (!data.nom || !data.poste || !data.organisation) {
       window.afficherToast("Nom, poste et organisation sont requis.", "warn"); return;
       }
+      if (!data.motivation) {
+      window.afficherToast("Indique ta motivation principale.", "warn"); return;
+      }
+      if (!typeLmChoisi) {
+      window.afficherToast("Choisis d'abord un type de lettre.", "warn"); return;
+      }
 
       const btn = document.getElementById("btn-generer-lm");
       btn.classList.add("btn--chargement"); btn.disabled = true;
-      btn.textContent = "⏳ L'IA rédige ta lettre…";
+      btn.textContent = "⏳ Rédaction de ta lettre…";
 
       try {
-      const res = await window.API.CVLM.genererLM(data);
-      dataFormulaire = data;
-      contenuGenere  = res.lm;
-      afficherResultat("✉️ Ta Lettre de Motivation");
-      window.afficherToast("Lettre générée avec succès !", "succes");
+      const res = await window.API.CVLM.creerCommande({ ...data, type: typeLmChoisi });
+      afficherCommande(res.commande);
+      chargerMesCv();
+      window.afficherToast("Ta lettre est prête. Voici l'aperçu.", "succes");
       } catch (err) {
       window.afficherToast(err.message || "Erreur de génération.", "erreur");
       } finally {
       btn.classList.remove("btn--chargement"); btn.disabled = false;
-      btn.textContent = "🚀 Générer ma Lettre de Motivation";
+      btn.textContent = "🚀 Générer ma lettre";
       }
       }
 
@@ -1339,6 +1592,8 @@
 
       function regenerer() {
       document.getElementById("zone-resultat").classList.add("hidden");
+      document.getElementById("zone-commande").classList.add("hidden");
+      commandeActive = null;
       document.getElementById("zone-analyse-ats").classList.add("hidden");
       document.getElementById("zone-adapter-offre").classList.add("hidden");
       contenuGenere = null;

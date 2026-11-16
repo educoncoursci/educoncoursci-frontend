@@ -1,0 +1,222 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulation d'entretien — ProInsertion</title>
+    <meta name="description" content="Entraînez-vous avec des questions adaptées au poste visé, puis recevez une analyse de vos réponses, une note sur 100 et un rapport final." />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <style>
+      .carte-bloc { background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm); margin-bottom: 20px; }
+      .grille-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .grille-2 .pleine { grid-column: 1 / -1; }
+      .question { border: 2px solid var(--gris-bordure); border-radius: 12px; padding: 14px 16px; margin-top: 14px; }
+      .question__titre { font-weight: 800; margin-bottom: 8px; }
+      .note-globale { text-align: center; padding: 18px; border-radius: 14px; background: #f0fdf4; }
+      .note-globale__valeur { font-family: "Space Grotesk", sans-serif; font-size: 3rem; font-weight: 700; color: var(--vert); line-height: 1; }
+      .retour { border-left: 4px solid var(--vert); background: #f8faf8; border-radius: 8px; padding: 10px 14px; margin-top: 10px; font-size: .88rem; line-height: 1.55; }
+      .retour--amelio { border-left-color: #ea580c; background: #fff7ed; }
+      .liste-simple { margin: 6px 0 0 18px; padding: 0; line-height: 1.7; font-size: .92rem; }
+      .tag-note { display: inline-block; background: var(--vert); color: #fff; border-radius: 8px; padding: 1px 8px; font-size: .78rem; font-weight: 700; margin-left: 6px; }
+      @media (max-width: 640px) { .grille-2 { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <div class="page-header" style="background: linear-gradient(135deg, #0a2540, #0a6ebd)">
+      <div class="container">
+        <h1>Simulation d'entretien</h1>
+        <p>Des questions adaptées au poste, puis une analyse de vos réponses, une note sur 100 et un rapport final.</p>
+      </div>
+    </div>
+
+    <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
+      <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
+        <p style="margin-bottom:16px; color:var(--gris-texte);">Connecte-toi pour lancer une simulation.</p>
+        <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
+      </div>
+
+      <div id="zone-principale">
+        <!-- 1. Formulaire -->
+        <div id="zone-formulaire" class="carte-bloc">
+          <h3 style="margin:0 0 4px;">Prépare ta simulation</h3>
+          <div style="color:var(--gris-texte); font-size:.88rem; margin-bottom:16px;">
+            Prix : <strong id="prix-simulation">…</strong>. 8 questions adaptées à ton poste ; tu réponds par écrit, puis tu reçois ton analyse.
+            Tu préfères d'abord une fiche de préparation ? <a href="/documents-redaction.html">Voir la préparation à l'entretien</a>.
+          </div>
+          <div class="grille-2">
+            <div class="form-groupe"><label class="form-label">Nom complet <span>*</span></label><input id="s-nom" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Poste visé <span>*</span></label><input id="s-poste" class="form-input" placeholder="Assistant comptable" /></div>
+            <div class="form-groupe pleine"><label class="form-label">Organisation (facultatif)</label><input id="s-org" class="form-input" /></div>
+            <div class="form-groupe pleine"><label class="form-label">Ton profil (formation, expériences, atouts)</label><textarea id="s-profil" class="form-textarea" rows="4"></textarea></div>
+          </div>
+          <button id="btn-lancer" class="btn btn--primaire btn--full btn--lg" style="margin-top:20px;">Préparer ma simulation</button>
+        </div>
+
+        <!-- 2. Aperçu + paiement (brique partagée) -->
+        <div id="zone-commande" class="hidden"></div>
+
+        <!-- 3. Réponses -->
+        <div id="zone-reponses" class="carte-bloc hidden">
+          <h3 style="margin:0 0 4px;">Ta simulation est débloquée</h3>
+          <div style="color:var(--gris-texte); font-size:.88rem;">Réponds comme en entretien réel (2 000 caractères maximum par réponse). L'analyse n'a lieu qu'une fois : relis-toi avant d'envoyer.</div>
+          <div id="liste-questions"></div>
+          <button id="btn-analyser" class="btn btn--primaire btn--full btn--lg" style="margin-top:20px;">Envoyer mes réponses pour analyse</button>
+        </div>
+
+        <!-- 4. Rapport -->
+        <div id="zone-rapport" class="carte-bloc hidden"></div>
+
+        <div id="zone-mes-simulations" class="hidden">
+          <div class="carte-bloc">
+            <h3 style="margin:0 0 12px; font-size:1rem;">Mes simulations</h3>
+            <div id="liste-mes-simulations"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/commande.js"></script>
+    <script>
+      const ID = "entretien-simulation";
+      let courante = null;
+
+      const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+      const $ = (id) => document.getElementById(id);
+      const val = (id) => $(id).value.trim();
+      const cacher = (id, oui) => $(id).classList.toggle("hidden", oui);
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estConnecte()) {
+          cacher("zone-non-connecte", false); cacher("zone-principale", true); return;
+        }
+        const s = window.Auth.getSession() || {};
+        $("s-nom").value = s.nom || "";
+        Commande.monter($("zone-commande"), { valideMasque: true, nomFichier: () => val("s-nom").replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "") || "rapport" });
+        document.addEventListener("commande:afficher", (e) => { if (e.detail.type === ID) afficherEtat(e.detail); });
+        document.addEventListener("commande:maj", chargerListe);
+        try {
+          const o = JSON.parse(sessionStorage.getItem("pi_offre_ciblee") || "null");
+          if (o && String(o.id) === new URLSearchParams(location.search).get("offre")) {
+            if (!$("s-poste").value) $("s-poste").value = o.poste || "";
+            if (!$("s-org").value && o.organisation && o.organisation !== "Non précisé") $("s-org").value = o.organisation;
+          }
+        } catch {}
+        $("btn-lancer").onclick = lancer;
+        $("btn-analyser").onclick = analyser;
+        chargerPrix();
+        chargerListe();
+        const id = new URLSearchParams(location.search).get("id");
+        if (id && /^\d+$/.test(id)) Commande.ouvrir(Number(id));
+      });
+
+      async function chargerPrix() {
+        try {
+          const data = await fetch(window.API_URL + "/catalogue").then((r) => r.json());
+          const p = (data.categories || []).flatMap((c) => c.produits).find((x) => x.id === ID);
+          $("prix-simulation").textContent = p ? Number(p.prix_fcfa).toLocaleString("fr-FR") + " FCFA" : "bientôt disponible";
+          if (!p) { $("btn-lancer").disabled = true; }
+        } catch { $("prix-simulation").textContent = "—"; }
+      }
+
+      async function lancer() {
+        const data = { nom: val("s-nom"), poste: val("s-poste"), organisation: val("s-org"), profil: val("s-profil") };
+        if (!data.nom || !data.poste) { window.afficherToast("Nom et poste visé sont requis.", "warn"); return; }
+        const btn = $("btn-lancer");
+        btn.classList.add("btn--chargement"); btn.disabled = true; btn.textContent = "⏳ Préparation de tes questions…";
+        try {
+          const res = await window.API.CVLM.creerSimulation(data);
+          Commande.afficher(res.commande);
+          chargerListe();
+          window.afficherToast("Ta simulation est prête. Voici l'aperçu.", "succes");
+        } catch (e) {
+          window.afficherToast(e.message || "Erreur de préparation.", "erreur");
+        } finally {
+          btn.classList.remove("btn--chargement"); btn.disabled = false; btn.textContent = "Préparer ma simulation";
+        }
+      }
+
+      // Affiche la bonne étape selon l'état de la simulation
+      function afficherEtat(c) {
+        courante = c;
+        const paye = c.etat === "valide";
+        cacher("zone-formulaire", true);
+        cacher("zone-reponses", !(paye && !c.resultat));
+        cacher("zone-rapport", !(paye && c.resultat));
+        if (paye && !c.resultat) {
+          $("liste-questions").innerHTML = (c.questions || []).map((q, i) => `
+            <div class="question">
+              <div class="question__titre">Question ${i + 1} — ${esc(q)}</div>
+              <textarea class="form-textarea rep" rows="4" maxlength="2000" placeholder="Ta réponse…"></textarea>
+            </div>`).join("");
+          $("zone-reponses").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        if (paye && c.resultat) rendreRapport(c);
+      }
+
+      async function analyser() {
+        if (!courante) return;
+        const reponses = [...document.querySelectorAll(".rep")].map((t) => t.value.trim());
+        if (!reponses.some(Boolean)) { window.afficherToast("Réponds à au moins une question.", "warn"); return; }
+        const vides = reponses.filter((r) => !r).length;
+        if (vides && !confirm(`${vides} question(s) sans réponse seront notées 0. Envoyer quand même ?`)) return;
+        const btn = $("btn-analyser");
+        btn.classList.add("btn--chargement"); btn.disabled = true; btn.textContent = "⏳ Analyse de tes réponses…";
+        try {
+          const res = await window.API.CVLM.repondreSimulation(courante.id, reponses);
+          courante = res.commande;
+          afficherEtat(courante);
+          window.afficherToast("Ton rapport est prêt.", "succes");
+          chargerListe();
+        } catch (e) {
+          window.afficherToast(e.message || "Erreur d'analyse.", "erreur");
+        } finally {
+          btn.classList.remove("btn--chargement"); btn.disabled = false; btn.textContent = "Envoyer mes réponses pour analyse";
+        }
+      }
+
+      function rendreRapport(c) {
+        const r = c.resultat;
+        const liste = (t) => (t || []).length ? `<ul class="liste-simple">${t.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
+        $("zone-rapport").innerHTML = `
+          <h3 style="margin:0 0 14px;">Ton rapport de simulation</h3>
+          <div class="note-globale"><div class="note-globale__valeur">${Number(r.note)}<span style="font-size:1.2rem;color:var(--gris-texte)"> / 100</span></div>
+            <div style="margin-top:8px;font-size:.92rem;">${esc(r.conclusion)}</div></div>
+          ${r.pointsForts?.length ? `<div style="margin-top:16px;"><strong>Points forts</strong>${liste(r.pointsForts)}</div>` : ""}
+          ${r.axesAmelioration?.length ? `<div style="margin-top:14px;"><strong>Axes d'amélioration</strong>${liste(r.axesAmelioration)}</div>` : ""}
+          <div style="margin-top:20px;font-weight:800;">Détail par question</div>
+          ${(c.questions || []).map((q, i) => `
+            <div class="question"><div class="question__titre">Question ${i + 1}<span class="tag-note">${Number(r.questions[i]?.note ?? 0)}/10</span></div>
+              <div style="font-size:.9rem;">${esc(q)}</div>
+              <div class="retour">${esc(r.questions[i]?.commentaire)}</div>
+              <div class="retour retour--amelio"><strong>Pour progresser :</strong> ${esc(r.questions[i]?.amelioration)}</div></div>`).join("")}
+          <button id="btn-pdf" class="btn btn--primaire btn--full btn--lg" style="margin-top:20px;">Télécharger le rapport (PDF)</button>`;
+        $("btn-pdf").onclick = async () => {
+          try {
+            const nom = val("s-nom").replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "") || "rapport";
+            await window.API.CVLM.telechargerCommandePDF(c.id, nom, "ENTRETIEN");
+          } catch (e) { window.afficherToast(e.message || "Erreur PDF.", "erreur"); }
+        };
+        $("zone-rapport").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function chargerListe() {
+        Commande.lister($("zone-mes-simulations"), $("liste-mes-simulations"), "entretien-simulation");
+      }
+    </script>
+  </body>
+</html>

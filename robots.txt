@@ -1,4 +1,4 @@
-# EduConcoursCI — robots.txt
+# ProInsertion — robots.txt
 User-agent: *
 Allow: /
 Disallow: /admin/

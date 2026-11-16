@@ -175,6 +175,11 @@ async stats() {
 return apiCall("/concours/stats");
 },
 
+// Compteurs par catégorie d'affichage + archives (heure d'Abidjan côté serveur)
+async compteurs() {
+return apiCall("/concours/compteurs");
+},
+
 // Admin
 async creer(data) {
 return apiCall("/concours", {
@@ -1044,6 +1049,52 @@ body: JSON.stringify(data),
 
 async modeles() {
 return apiCall("/cv/modeles");
+},
+
+// ── CV à l'acte : génération stockée → aperçu → paiement → PDF ──
+async creerCommande(data) {
+return apiCall("/cv/commande", { method: "POST", body: JSON.stringify(data) });
+},
+async creerSimulation(data) {
+return apiCall("/cv/commande/simulation", { method: "POST", body: JSON.stringify(data) });
+},
+async repondreSimulation(id, reponses) {
+return apiCall(`/cv/commande/${encodeURIComponent(id)}/repondre`, { method: "POST", body: JSON.stringify({ reponses }) });
+},
+async creerPack(data) {
+return apiCall("/cv/commande/pack", { method: "POST", body: JSON.stringify(data) });
+},
+async lirePack(gid) {
+return apiCall(`/cv/commande/pack/${encodeURIComponent(gid)}`);
+},
+async mesCommandes() {
+return apiCall("/cv/commande");
+},
+async lireCommande(id) {
+return apiCall(`/cv/commande/${encodeURIComponent(id)}`);
+},
+async payerCommande(id, moyen, txId) {
+return apiCall(`/cv/commande/${encodeURIComponent(id)}/payer`, {
+method: "POST",
+body: JSON.stringify({ moyen, txId }),
+});
+},
+async telechargerCommandePDF(id, nomFichier, prefixe = "CV") {
+const response = await fetch(`${API_URL}/cv/commande/${encodeURIComponent(id)}/pdf`, {
+headers: { Authorization: `Bearer ${getToken()}` },
+});
+if (!response.ok) {
+  let msg = "Erreur lors du téléchargement du PDF.";
+  try { msg = (await response.json()).error || msg; } catch {}
+  throw new Error(msg);
+}
+const blob = await response.blob();
+const url  = URL.createObjectURL(blob);
+const a    = document.createElement("a");
+a.href     = url;
+a.download = `${prefixe}_${nomFichier || "document"}.pdf`;
+a.click();
+URL.revokeObjectURL(url);
 },
 
 async exporterPDF(contenu, type, data, style = "simple", modeleId = null) {

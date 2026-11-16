@@ -4,17 +4,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Guide d'utilisation — EduConcoursCI</title>
-  <meta name="description" content="Découvre comment utiliser EduConcoursCI : préparation aux concours, générateur de CV, offres d'emploi et assistance sociale.">
+    <title>Guide d'utilisation — ProInsertion</title>
+  <meta name="description" content="Découvre comment utiliser ProInsertion : CV et lettres de motivation, documents professionnels, offres d'emploi, préparation aux entretiens et aux concours.">
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="EduConcoursCI" />
-    <meta property="og:title" content="Guide d'utilisation — EduConcoursCI" />
-    <meta property="og:description" content="Découvre comment utiliser EduConcoursCI : préparation aux concours, générateur de CV, offres d'emploi et assistance sociale." />
+    <meta property="og:site_name" content="ProInsertion" />
+    <meta property="og:title" content="Guide d'utilisation — ProInsertion" />
+    <meta property="og:description" content="Découvre comment utiliser ProInsertion : CV et lettres de motivation, documents professionnels, offres d'emploi, préparation aux entretiens et aux concours." />
     <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <meta property="og:url" content="https://educoncoursci.netlify.app/guide.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Guide d'utilisation — EduConcoursCI" />
-    <meta name="twitter:description" content="Découvre comment utiliser EduConcoursCI : préparation aux concours, générateur de CV, offres d'emploi et assistance sociale." />
+    <meta name="twitter:title" content="Guide d'utilisation — ProInsertion" />
+    <meta name="twitter:description" content="Découvre comment utiliser ProInsertion : CV et lettres de motivation, documents professionnels, offres d'emploi, préparation aux entretiens et aux concours." />
     <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -75,7 +75,7 @@
       }
       @media (max-width: 900px) {
         .guide-layout {
-          flex-direction: column;
+          grid-template-columns: minmax(0, 1fr) !important;
         }
         .guide-nav {
           position: static;
@@ -187,7 +187,7 @@
 
     <main style="padding: calc(var(--navbar-h) + 36px) 0 60px">
       <div class="container">
-        <div style="display: grid; grid-template-columns: 220px 1fr; gap: 32px">
+        <div class="guide-layout" style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px">
           <nav class="guide-nav">
             <a href="#paiement">💳 Paiement</a>
             <a href="#cv">📄 Générateur de CV</a>
@@ -199,7 +199,7 @@
             <div class="guide-section" id="paiement">
               <h2 style="margin-bottom: 18px"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Comment payer</h2>
               <div
-                style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px"
               >
                 <div
                   style="
@@ -308,7 +308,7 @@
                   ⏰ Des rappels J-7, J-3, J-1 avant la clôture des inscriptions
                 </li>
                 <li>
-                  <span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Les notifications importantes de l'équipe EduConcoursCI
+                  <span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Les notifications importantes de l'équipe ProInsertion
                 </li>
               </ul>
             </div>

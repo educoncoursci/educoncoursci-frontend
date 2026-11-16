@@ -12,7 +12,6 @@
   <url><loc>https://educoncoursci.netlify.app/examens.html</loc><priority>0.8</priority></url>
   <url><loc>https://educoncoursci.netlify.app/preparation.html</loc><priority>0.8</priority></url>
   <url><loc>https://educoncoursci.netlify.app/classement.html</loc><priority>0.5</priority></url>
-  <url><loc>https://educoncoursci.netlify.app/classement.html</loc><priority>0.5</priority></url>
   <url><loc>https://educoncoursci.netlify.app/quiz.html</loc><priority>0.7</priority></url>
   <url><loc>https://educoncoursci.netlify.app/simulateur.html</loc><priority>0.7</priority></url>
   <url><loc>https://educoncoursci.netlify.app/bibliotheque.html</loc><priority>0.7</priority></url>
@@ -30,4 +29,8 @@
   <url><loc>https://educoncoursci.netlify.app/resultats.html</loc><priority>0.6</priority></url>
   <url><loc>https://educoncoursci.netlify.app/academie.html</loc><priority>0.8</priority></url>
   <url><loc>https://educoncoursci.netlify.app/publier-offre.html</loc><priority>0.6</priority></url>
+  <url><loc>https://educoncoursci.netlify.app/documents-redaction.html</loc><priority>0.7</priority></url>
+  <url><loc>https://educoncoursci.netlify.app/packs.html</loc><priority>0.7</priority></url>
+  <url><loc>https://educoncoursci.netlify.app/simulation-entretien.html</loc><priority>0.7</priority></url>
+  <url><loc>https://educoncoursci.netlify.app/analyse-offre.html</loc><priority>0.8</priority></url>
 </urlset>

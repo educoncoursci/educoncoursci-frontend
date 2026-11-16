@@ -12,7 +12,7 @@
 //  âge requis, places, frais, date d'ouverture, date limite,
 //  lieu(x), un extrait des conditions d'accès, et un lien direct
 //  vers l'inscription officielle quand il est renseigné — en plus
-//  du lien vers la fiche détaillée du concours sur EduConcoursCI.
+//  du lien vers la fiche détaillée du concours sur ProInsertion.
 // ============================================================
 
 // ⚠️ Changement de convention couleur/emoji (LOT21) : le site utilisait
@@ -33,17 +33,21 @@ const STATUT_COULEUR_CONCOURS = {
   ouvert: "#16a34a",
   "à venir": "var(--bleu)",
   fermé: "var(--gris-texte)",
-  résultats: "var(--gris-texte)", // replié visuellement sous "Terminé"
+  "en attente de résultats": "#7c3aed",
+  résultats: "#0f766e",
   "information non confirmée": "#ca8a04",
   suspendu: "var(--rouge)",
+  annulé: "var(--rouge)",
 };
 const STATUT_EMOJI_CONCOURS = {
   ouvert: "🟢",
   "à venir": "🔵",
   fermé: "⚫",
-  résultats: "⚫",
+  "en attente de résultats": "⏳",
+  résultats: "🏆",
   "information non confirmée": "🟡",
   suspendu: "🔴",
+  annulé: "🔴",
 };
 // Libellé affiché à l'utilisateur, distinct de la valeur technique
 // stockée en base (dont dépend concoursStatutScheduler.js pour
@@ -57,10 +61,12 @@ const STATUT_EMOJI_CONCOURS = {
 const STATUT_LABEL_CONCOURS = {
   ouvert: "En cours",
   "à venir": "À venir",
-  fermé: "Terminé",
-  résultats: "Terminé",
+  fermé: "Clôturé",
+  "en attente de résultats": "En attente de résultats",
+  résultats: "Résultats disponibles",
   "information non confirmée": "Date non définie",
-  suspendu: "Suspendu / Annulé",
+  suspendu: "Suspendu",
+  annulé: "Annulé",
 };
 
 function fraisAfficheConcours(c) {
@@ -90,7 +96,7 @@ function construireCarteConcours(c, options = {}) {
   const emoji = STATUT_EMOJI_CONCOURS[c.statut] || "📋";
   const couleurStatut = STATUT_COULEUR_CONCOURS[c.statut] || "var(--gris-texte)";
   const annee = c.date_cloture ? new Date(c.date_cloture).getFullYear() : null;
-  const badgeAnnee = c.statut === "fermé" && annee
+  const badgeAnnee = ["fermé", "en attente de résultats", "résultats"].includes(c.statut) && annee
     ? `<span class="badge" style="background:#f0f0f0;color:var(--gris-texte);border:1px solid var(--gris-bordure);">📅 ${annee}</span>`
     : "";
 

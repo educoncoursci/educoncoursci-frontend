@@ -1,0 +1,273 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Packs — ProInsertion</title>
+    <meta name="description" content="Un CV et une lettre de motivation assortis, à prix réduit : packs Essentiel, Professionnel, International et Recherche d'emploi." />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <style>
+      .carte-bloc { background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm); margin-bottom: 20px; }
+      .packs-grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+      .pack { border: 2px solid var(--gris-bordure); border-radius: 12px; padding: 14px 16px; cursor: pointer; background: #fff; }
+      .pack.selectionne { border-color: var(--vert); background: #f0fdf4; }
+      .pack__nom { font-weight: 800; }
+      .pack__desc { font-size: .82rem; color: var(--gris-texte); margin: 4px 0 8px; line-height: 1.45; }
+      .pack__prix { font-weight: 800; color: var(--vert); font-size: 1.05rem; }
+      .pack__eco { display: inline-block; margin-left: 8px; background: #fff7ed; color: #c2410c; font-weight: 700; font-size: .75rem; border-radius: 8px; padding: 2px 8px; }
+      .pack__inclus { font-size: .78rem; margin: 6px 0 0 16px; padding: 0; color: var(--gris-texte); }
+      .grille-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .grille-2 .pleine { grid-column: 1 / -1; }
+      .bloc-item { background: var(--gris-clair); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+      .titre-section { font-weight: 800; color: var(--bleu); margin: 22px 0 10px; }
+      .doc-pack { border: 2px solid var(--gris-bordure); border-radius: 12px; margin-top: 14px; overflow: hidden; }
+      .doc-pack__tete { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; background: var(--gris-clair); font-weight: 700; font-size: .9rem; flex-wrap: wrap; }
+      .doc-pack__corps { position: relative; white-space: pre-wrap; font-size: .84rem; line-height: 1.55; padding: 14px 16px; word-break: break-word; }
+      .doc-pack__flou { filter: blur(5px); user-select: none; pointer-events: none; color: #555; max-height: 200px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 40%, transparent); mask-image: linear-gradient(#000 40%, transparent); }
+      @media (max-width: 640px) { .grille-2 { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <div class="page-header" style="background: linear-gradient(135deg, #0a2540, #0a6ebd)">
+      <div class="container">
+        <h1>Packs</h1>
+        <p>Plusieurs documents ou services assortis, un seul paiement, un prix réduit.</p>
+      </div>
+    </div>
+
+    <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
+      <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
+        <p style="margin-bottom:16px; color:var(--gris-texte);">Connecte-toi pour commander un pack.</p>
+        <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
+      </div>
+
+      <div id="zone-generateur">
+        <div class="carte-bloc">
+          <h3 style="margin:0 0 12px;">1. Choisis ton pack</h3>
+          <div id="liste-packs" class="packs-grille" style="color: var(--gris-texte);">Chargement…</div>
+        </div>
+
+        <div id="zone-formulaire" class="carte-bloc hidden">
+          <h3 style="margin:0 0 4px;">2. Renseigne tes informations</h3>
+          <div style="color:var(--gris-texte); font-size:.85rem;">Une seule saisie pour tous les documents du pack.</div>
+
+          <div class="titre-section">Ton profil</div>
+          <div class="grille-2">
+            <div class="form-groupe"><label class="form-label">Nom complet <span>*</span></label><input id="p-nom" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Poste recherché <span>*</span></label><input id="p-poste" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">E-mail</label><input id="p-email" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Téléphone</label><input id="p-tel" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Ville</label><input id="p-ville" class="form-input" placeholder="Abidjan" /></div>
+            <div class="form-groupe"><label class="form-label">Pays</label><input id="p-pays" class="form-input" placeholder="Côte d'Ivoire" /></div>
+            <div class="form-groupe pleine"><label class="form-label">Profil (quelques lignes sur toi)</label><textarea id="p-profil" class="form-textarea" rows="3"></textarea></div>
+          </div>
+
+          <div id="bloc-cv">
+          <div class="titre-section">Expériences professionnelles</div>
+          <div id="liste-exp"></div>
+          <button type="button" class="btn btn--gris btn--sm" onclick="ajouterExp()">+ Ajouter une expérience</button>
+
+          <div class="titre-section">Formations</div>
+          <div id="liste-for"></div>
+          <button type="button" class="btn btn--gris btn--sm" onclick="ajouterFor()">+ Ajouter une formation</button>
+
+          <div class="titre-section">Compétences, langues, loisirs</div>
+          <div class="grille-2">
+            <div class="form-groupe pleine"><label class="form-label">Compétences (séparées par des virgules)</label><textarea id="p-competences" class="form-textarea" rows="2"></textarea></div>
+            <div class="form-groupe"><label class="form-label">Langues</label><input id="p-langues" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Loisirs</label><input id="p-loisirs" class="form-input" /></div>
+          </div>
+
+          </div>
+
+          <div id="bloc-entretien" class="hidden">
+            <div class="titre-section">Pour ton entretien</div>
+            <div class="grille-2">
+              <div class="form-groupe pleine"><label class="form-label">Organisation (facultatif)</label><input id="p-org2" class="form-input" /></div>
+              <div class="form-groupe pleine"><label class="form-label">Ce qui t'inquiète pour cet entretien (facultatif)</label><textarea id="p-inq" class="form-textarea" rows="2"></textarea></div>
+            </div>
+          </div>
+
+          <div id="bloc-lettre">
+            <div class="titre-section">Pour la lettre de motivation</div>
+            <div class="grille-2">
+              <div class="form-groupe"><label class="form-label">Organisation visée <span>*</span></label><input id="p-org" class="form-input" /></div>
+              <div class="form-groupe"><label class="form-label">Destinataire</label><input id="p-dest" class="form-input" placeholder="Madame, Monsieur le Directeur des Ressources Humaines" /></div>
+              <div class="form-groupe pleine"><label class="form-label">Ta motivation principale <span>*</span></label><textarea id="p-motivation" class="form-textarea" rows="3"></textarea></div>
+              <div class="form-groupe pleine"><label class="form-label">Expérience ou formation clé</label><textarea id="p-experience" class="form-textarea" rows="2"></textarea></div>
+              <div class="form-groupe"><label class="form-label">Atout 1</label><input id="p-atout1" class="form-input" /></div>
+              <div class="form-groupe"><label class="form-label">Atout 2</label><input id="p-atout2" class="form-input" /></div>
+              <div class="form-groupe"><label class="form-label">Atout 3</label><input id="p-atout3" class="form-input" /></div>
+            </div>
+          </div>
+
+          <button id="btn-generer" class="btn btn--primaire btn--full btn--lg" style="margin-top:22px;">Générer mon pack</button>
+        </div>
+
+        <div id="zone-resultat" class="hidden">
+          <div id="zone-commande"></div>
+          <div class="carte-bloc" style="margin-top:20px;">
+            <h3 style="margin:0;">Documents du pack</h3>
+            <div id="docs-pack"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/commande.js"></script>
+    <script>
+      const IDS_PACKS = ["pack-entretien", "pack-essentiel", "pack-professionnel", "pack-international", "pack-recherche-emploi"];
+      let packs = [];
+      let packChoisi = null;
+      let groupeCourant = null;
+
+      const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+      const val = (id) => document.getElementById(id).value.trim();
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estConnecte()) {
+          document.getElementById("zone-non-connecte").classList.remove("hidden");
+          document.getElementById("zone-generateur").classList.add("hidden");
+          return;
+        }
+        const s = window.Auth.getSession() || {};
+        document.getElementById("p-nom").value = s.nom || "";
+        document.getElementById("p-email").value = s.email || "";
+        ajouterExp(); ajouterFor();
+        Commande.monter(document.getElementById("zone-commande"), { nomFichier: () => val("p-nom").replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "") || "document" });
+        document.addEventListener("commande:maj", rafraichirPack);
+        document.getElementById("btn-generer").onclick = generer;
+        await chargerPacks();
+        const gid = new URLSearchParams(location.search).get("pack");
+        if (gid && /^\d+$/.test(gid)) ouvrirPack(Number(gid));
+      });
+
+      async function chargerPacks() {
+        const zone = document.getElementById("liste-packs");
+        try {
+          const data = await fetch(window.API_URL + "/catalogue").then((r) => r.json());
+          packs = (data.categories || []).flatMap((c) => c.produits).filter((p) => IDS_PACKS.includes(p.id));
+          if (!packs.length) { zone.textContent = "Les packs ne sont pas disponibles pour le moment."; return; }
+          zone.innerHTML = packs.map((p) => `
+            <div class="pack" data-id="${esc(p.id)}">
+              <div class="pack__nom">${esc(p.nom)}</div>
+              <div class="pack__desc">${esc(p.description)}</div>
+              ${p.composition?.length || p.inclus?.length ? `<ul class="pack__inclus">${(p.composition || []).map((c) => `<li>${esc(c.nom)}</li>`).join("")}${(p.inclus || []).map((i) => `<li>${esc(i)}</li>`).join("")}</ul>` : ""}
+              <div style="margin-top:8px;"><span class="pack__prix">${Number(p.prix_fcfa).toLocaleString("fr-FR")} FCFA</span>${p.economie_fcfa ? `<span class="pack__eco">−${Number(p.economie_fcfa).toLocaleString("fr-FR")} F</span>` : ""}</div>
+            </div>`).join("");
+          zone.querySelectorAll(".pack").forEach((el) => (el.onclick = () => choisir(el.dataset.id)));
+        } catch { zone.textContent = "Impossible de charger les packs. Réessaie dans un instant."; }
+      }
+
+      function choisir(id) {
+        packChoisi = id;
+        document.querySelectorAll(".pack").forEach((el) => el.classList.toggle("selectionne", el.dataset.id === id));
+        const p = packs.find((x) => x.id === id);
+        const avecLettre = (p?.composition || []).some((c) => c.id.startsWith("lm-"));
+        const entretien = (p?.composition || []).some((c) => c.id.startsWith("entretien-"));
+        document.getElementById("bloc-lettre").classList.toggle("hidden", !avecLettre);
+        document.getElementById("bloc-cv").classList.toggle("hidden", entretien);
+        document.getElementById("bloc-entretien").classList.toggle("hidden", !entretien);
+        document.getElementById("zone-formulaire").classList.remove("hidden");
+        document.getElementById("zone-formulaire").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function ajouterExp() {
+        const d = document.createElement("div"); d.className = "bloc-item exp-item";
+        d.innerHTML = `<div class="grille-2">
+          <input class="form-input exp-poste" placeholder="Poste" /><input class="form-input exp-entreprise" placeholder="Employeur" />
+          <input class="form-input exp-debut" placeholder="Début (ex. 2022)" /><input class="form-input exp-fin" placeholder="Fin (vide = en cours)" />
+          <textarea class="form-textarea exp-desc pleine" rows="2" placeholder="Missions"></textarea></div>
+          <button type="button" class="btn btn--gris btn--sm" style="margin-top:8px;" onclick="this.parentElement.remove()">Supprimer</button>`;
+        document.getElementById("liste-exp").appendChild(d);
+      }
+      function ajouterFor() {
+        const d = document.createElement("div"); d.className = "bloc-item for-item";
+        d.innerHTML = `<div class="grille-2">
+          <input class="form-input for-diplome" placeholder="Diplôme" /><input class="form-input for-etab" placeholder="Établissement" />
+          <input class="form-input for-annee" placeholder="Année" /><input class="form-input for-mention" placeholder="Mention (facultatif)" /></div>
+          <button type="button" class="btn btn--gris btn--sm" style="margin-top:8px;" onclick="this.parentElement.remove()">Supprimer</button>`;
+        document.getElementById("liste-for").appendChild(d);
+      }
+
+      function collecter() {
+        const v = (el, c) => el.querySelector(c)?.value.trim() || "";
+        const experiences = [...document.querySelectorAll("#liste-exp .exp-item")].map((el) => ({ poste: v(el, ".exp-poste"), entreprise: v(el, ".exp-entreprise"), debut: v(el, ".exp-debut"), fin: v(el, ".exp-fin"), description: v(el, ".exp-desc") })).filter((e) => e.poste || e.entreprise);
+        const formations = [...document.querySelectorAll("#liste-for .for-item")].map((el) => ({ diplome: v(el, ".for-diplome"), etablissement: v(el, ".for-etab"), annee: v(el, ".for-annee"), mention: v(el, ".for-mention") })).filter((f) => f.diplome || f.etablissement);
+        return {
+          pack: packChoisi,
+          nom: val("p-nom"), poste: val("p-poste"), email: val("p-email"), telephone: val("p-tel"), ville: val("p-ville"), pays: val("p-pays"),
+          profil: val("p-profil"), competences: val("p-competences"), langues: val("p-langues"), loisirs: val("p-loisirs"),
+          organisation: val("p-org") || val("p-org2"), inquietudes: val("p-inq"), destinataire: val("p-dest"), motivation: val("p-motivation"), experience: val("p-experience"),
+          atout1: val("p-atout1"), atout2: val("p-atout2"), atout3: val("p-atout3"),
+          experiences, formations,
+        };
+      }
+
+      async function generer() {
+        if (!packChoisi) { window.afficherToast("Choisis d'abord un pack.", "warn"); return; }
+        const data = collecter();
+        if (!data.nom || !data.poste) { window.afficherToast("Nom et poste recherché sont requis.", "warn"); return; }
+        const entretien = !document.getElementById("bloc-entretien").classList.contains("hidden");
+        if (entretien) { delete data.experiences; delete data.formations; if (!data.profil) { window.afficherToast("Décris ton profil pour personnaliser l'entretien.", "warn"); return; } }
+        const avecLettre = !document.getElementById("bloc-lettre").classList.contains("hidden");
+        if (avecLettre && (!data.organisation || !data.motivation)) { window.afficherToast("Organisation visée et motivation sont requises.", "warn"); return; }
+
+        const btn = document.getElementById("btn-generer");
+        btn.classList.add("btn--chargement"); btn.disabled = true; btn.textContent = "⏳ Rédaction de ton pack…";
+        try {
+          const res = await window.API.CVLM.creerPack(data);
+          groupeCourant = res.groupe_id;
+          rendrePack(res.documents);
+          window.afficherToast("Ton pack est prêt. Voici l'aperçu.", "succes");
+        } catch (e) {
+          window.afficherToast(e.message || "Erreur de génération.", "erreur");
+        } finally {
+          btn.classList.remove("btn--chargement"); btn.disabled = false; btn.textContent = "Générer mon pack";
+        }
+      }
+
+      async function ouvrirPack(gid) {
+        try { const res = await window.API.CVLM.lirePack(gid); groupeCourant = gid; rendrePack(res.documents); }
+        catch (e) { window.afficherToast(e.message || "Pack introuvable.", "erreur"); }
+      }
+      async function rafraichirPack() { if (groupeCourant) ouvrirPack(groupeCourant); }
+
+      function rendrePack(docs) {
+        document.getElementById("zone-resultat").classList.remove("hidden");
+        Commande.afficher(docs[0]);
+        const valide = docs[0].etat === "valide";
+        document.getElementById("docs-pack").innerHTML = docs.map((d, i) => `
+          <div class="doc-pack">
+            <div class="doc-pack__tete"><span>${esc(d.nom)}</span>
+              ${valide && d.type === "entretien-simulation" ? "" : valide ? `<button class="btn btn--primaire btn--sm" data-dl="${d.id}" data-type="${esc(d.type)}">Télécharger (PDF)</button>` : `<span style="color:var(--gris-texte);font-weight:500;">Aperçu</span>`}</div>
+            <div class="doc-pack__corps">${valide && d.type === "entretien-simulation"
+              ? `Ta simulation est débloquée. <a class="btn btn--primaire btn--sm" href="/simulation-entretien.html?id=${Number(d.id)}">Passer la simulation</a>`
+              : esc(valide ? d.contenu : d.apercu?.visible)}${valide ? "" : `<div class="doc-pack__flou">${esc(d.apercu?.flou)}</div>`}</div>
+          </div>`).join("");
+        document.querySelectorAll("[data-dl]").forEach((b) => (b.onclick = async () => {
+          const t = b.dataset.type;
+          const prefixe = t.startsWith("cv-") ? "CV" : t.startsWith("lm-") ? "LM" : "DOC";
+          const nom = val("p-nom").replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "") || "document";
+          try { await window.API.CVLM.telechargerCommandePDF(b.dataset.dl, nom + "_" + t, prefixe); }
+          catch (e) { window.afficherToast(e.message || "Erreur PDF.", "erreur"); }
+        }));
+      }
+    </script>
+  </body>
+</html>
