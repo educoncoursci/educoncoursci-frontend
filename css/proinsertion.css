@@ -1,0 +1,55 @@
+/* ============================================================
+   css/proinsertion.css — Page d'accueil ProInsertion
+   (services, expertise, tarifs). Réutilise les variables du site.
+   ============================================================ */
+
+.pi-titre { text-align: center; max-width: 720px; margin: 0 auto 30px; }
+.pi-titre h2 { font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 8px; }
+.pi-titre p  { color: var(--gris-texte); margin: 0; }
+
+/* Les 8 entrées de services */
+.pi-services { display: grid; grid-template-columns: repeat(auto-fit, minmax(235px, 1fr)); gap: 16px; }
+.pi-service {
+  position: relative; display: flex; flex-direction: column; gap: 8px; padding: 22px;
+  background: #fff; border: 1px solid var(--gris-bordure); border-radius: 16px;
+  text-decoration: none; color: inherit; transition: box-shadow .15s, transform .15s, border-color .15s;
+}
+a.pi-service:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translateY(-2px); border-color: var(--vert-clair); }
+.pi-service__icone {
+  width: 46px; height: 46px; border-radius: 12px; background: #f0fdf4; color: var(--vert);
+  display: flex; align-items: center; justify-content: center;
+}
+.pi-service h3 { font-size: 1.08rem; margin: 6px 0 0; }
+.pi-service p  { margin: 0; color: var(--gris-texte); font-size: .9rem; line-height: 1.5; }
+.pi-service__action { margin-top: auto; padding-top: 6px; font-weight: 700; color: var(--vert); font-size: .9rem; }
+.pi-service--bientot { background: #fafaf7; border-style: dashed; }
+.pi-service--bientot .pi-service__icone { background: var(--gris-clair); color: var(--gris-texte); }
+.pi-bientot {
+  position: absolute; top: 14px; right: 14px; background: #fff7ed; color: var(--orange);
+  border: 1px solid #fed7aa; border-radius: 99px; padding: 2px 10px; font-size: .75rem; font-weight: 700;
+}
+
+/* Expertise */
+.pi-expertise { background: linear-gradient(135deg, #0f3d24 0%, #14532d 100%); color: #fff; }
+.pi-expertise .pi-titre p { color: #d1e7d9; }
+.pi-expertise .pi-titre h2 { color: #fff; }
+.pi-piliers { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.pi-pilier { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 16px; padding: 22px; }
+.pi-pilier h3 { font-size: 1.05rem; margin: 0 0 6px; color: #fff; }
+.pi-pilier p  { margin: 0; color: #d1e7d9; font-size: .92rem; line-height: 1.55; }
+
+/* Tarifs (alimentés par /api/catalogue) */
+.pi-tarifs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; align-items: start; }
+.pi-tarifs__carte { background: #fff; border: 1px solid var(--gris-bordure); border-radius: 16px; padding: 20px; }
+.pi-tarifs__carte h3 { font-size: 1.05rem; margin: 0 0 12px; }
+.pi-tarif { padding: 10px 0; border-top: 1px solid var(--gris-bordure); }
+.pi-tarif:first-of-type { border-top: 0; padding-top: 0; }
+.pi-tarif__ligne { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.pi-tarif__nom { font-weight: 600; }
+.pi-tarif__prix { font-weight: 800; color: var(--vert); white-space: nowrap; }
+.pi-tarif small { display: block; color: var(--gris-texte); margin-top: 2px; }
+.pi-tarif__eco { display: inline-block; margin-top: 4px; }
+
+.pi-separateur { text-align: center; padding: 28px 0 0; }
+.pi-separateur h2 { font-size: clamp(1.3rem, 3.5vw, 1.7rem); margin: 0 0 6px; }
+.pi-separateur p { color: var(--gris-texte); margin: 0 0 10px; }

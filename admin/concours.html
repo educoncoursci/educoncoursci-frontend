@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestion Concours — Admin EduConcoursCI</title>
+    <title>Gestion Concours — Admin ProInsertion</title>
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -32,7 +32,7 @@
           >
             <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
           </div>
-          <span style="color: #fff">EduConcoursCI Admin</span></a
+          <span style="color: #fff">ProInsertion Admin</span></a
         >
         <button
           onclick="window.Auth?.deconnecter?.()"
@@ -78,6 +78,9 @@
           <div class="admin-sidebar__section">Utilisateurs</div>
           <a href="/admin/abonnes.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a
+          >
+          <a href="/admin/ventes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ventes</a
           >
           <a href="/admin/paiements.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
@@ -197,8 +200,12 @@
               <option value="">Tous les statuts</option>
               <option value="ouvert">🔴 En cours</option>
               <option value="à venir">🔵 À venir</option>
-              <option value="fermé">⚫ Fermé</option>
+              <option value="fermé">⚫ Clôturé</option>
+              <option value="en attente de résultats">⏳ En attente de résultats</option>
               <option value="résultats">🏆 Résultats publiés</option>
+              <option value="suspendu">🔴 Suspendu</option>
+              <option value="annulé">🔴 Annulé</option>
+              <option value="archives">🗄️ Archivés</option>
               <option value="information non confirmée">❔ Information non confirmée</option>
             </select>
             <select
@@ -338,10 +345,12 @@
               <select id="conc-statut" class="form-input" onchange="surSelectionStatutManuel()">
                 <option value="ouvert">🟢 En cours</option>
                 <option value="à venir">🔵 À venir</option>
-                <option value="fermé">⚫ Terminé</option>
-                <option value="résultats">⚫ Terminé (résultats publiés)</option>
+                <option value="fermé">⚫ Clôturé</option>
+                <option value="en attente de résultats">⏳ En attente de résultats</option>
+                <option value="résultats">🏆 Résultats publiés</option>
                 <option value="information non confirmée">🟡 Date non définie</option>
-                <option value="suspendu">🔴 Suspendu / Annulé</option>
+                <option value="suspendu">🔴 Suspendu</option>
+                <option value="annulé">🔴 Annulé</option>
               </select>
             </div>
             <div class="form-groupe">
@@ -488,6 +497,24 @@
           </div>
 
           <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:18px 0;" />
+          <div style="font-weight:700;margin-bottom:10px;">🗓️ Calendrier, source et vérification <span style="font-weight:400;color:var(--gris-texte);font-size:0.8rem;">(rien n'est inventé : un champ vide s'affiche « Non communiqué »)</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="form-groupe"><label class="form-label">Date de composition</label><input type="date" id="conc-composition" class="form-input" /></div>
+            <div class="form-groupe"><label class="form-label">Date des résultats</label><input type="date" id="conc-date-resultats" class="form-input" /></div>
+          </div>
+          <div class="form-groupe"><label class="form-label">Lien officiel (inscription / site de l'organisme)</label><input type="url" id="conc-lien" class="form-input" placeholder="https://…" /></div>
+          <div class="form-groupe"><label class="form-label">Procédure d'inscription</label><textarea id="conc-procedure" class="form-textarea" rows="3" placeholder="Étapes pour s'inscrire, où déposer le dossier…"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Conseils</label><textarea id="conc-conseils" class="form-textarea" rows="3"></textarea></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="form-groupe"><label class="form-label">Source de l'information</label><input type="text" id="conc-source-info" class="form-input" placeholder="Ex : Communiqué du ministère du 12/10/2026" /></div>
+            <div class="form-groupe"><label class="form-label">Lien de la source</label><input type="url" id="conc-source-url" class="form-input" placeholder="https://…" /></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="form-groupe"><label class="form-label">Dernière vérification</label><input type="date" id="conc-verifie-le" class="form-input" /></div>
+            <div class="form-groupe"><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.88rem;margin-top:30px;"><input type="checkbox" id="conc-archive" style="accent-color:var(--vert);" /> 🗄️ Archiver (reste consultable, masqué des listes courantes)</label></div>
+          </div>
+
+          <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:18px 0;" />
           <div style="font-weight:700;margin-bottom:10px;">📄 Fiche enrichie <span style="font-weight:400;color:var(--gris-texte);font-size:0.8rem;">(tout est optionnel — les sections vides restent masquées sur la fiche publique)</span></div>
 
           <div class="form-groupe">
@@ -577,16 +604,23 @@
       let editConcId = null;
 
       const STATUT_EMOJI_ADMIN = {
-        ouvert: "🔴",
+        ouvert: "🟢",
         "à venir": "🔵",
         fermé: "⚫",
+        "en attente de résultats": "⏳",
         résultats: "🏆",
+        suspendu: "🔴",
+        annulé: "🔴",
+        "information non confirmée": "🟡",
       };
       const STATUT_LABEL_ADMIN = {
         ouvert: "En cours",
         "à venir": "À venir",
-        fermé: "Fermé",
+        fermé: "Clôturé",
+        "en attente de résultats": "En attente de résultats",
         résultats: "Résultats publiés",
+        suspendu: "Suspendu",
+        annulé: "Annulé",
         "information non confirmée": "Information non confirmée",
       };
 
@@ -628,7 +662,7 @@
 
       async function charger() {
         try {
-          const data = await window.API.Concours.liste({ limit: 500 });
+          const data = await window.API.Concours.liste({ limit: 500, archive: "tous" });
           tousConcoursAdmin = data.concours || [];
           mettreAJourBadgeAVerifier();
           filtrerConcours();
@@ -649,7 +683,8 @@
             !(c.organisme || "").toLowerCase().includes(rech)
           )
             return false;
-          if (statut && c.statut !== statut) return false;
+          if (statut === "archives") { if (!c.archive) return false; }
+          else if (statut && c.statut !== statut) return false;
           if (acc !== "" && String(c.premium) !== acc) return false;
           if (verif === "false" && c.date_verifiee !== false) return false;
           return true;
@@ -676,7 +711,9 @@
       <td style="font-size:0.85rem;">${c.places || "—"}</td>
       <td>${c.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐</span>' : '<span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span>'}</td>
       <td><div class="admin-tableau__actions">
-        <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${c.id})">✏️</button>
+        <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${c.id})" title="Modifier">✏️</button>
+        ${c.statut !== "résultats" && c.statut !== "annulé" ? `<button class="admin-tableau__btn" onclick="actionRapideConcours(${c.id},'resultats')" title="Publier les résultats">🏆</button>` : ""}
+        <button class="admin-tableau__btn" onclick="actionRapideConcours(${c.id},'archive')" title="${c.archive ? "Désarchiver" : "Archiver"}">${c.archive ? "📤" : "🗄️"}</button>
         <button class="admin-tableau__btn admin-tableau__btn--danger" onclick="supprimer(${c.id},${echapperHtml(JSON.stringify((c.titre || "")))})">🗑️</button>
       </div></td>
     </tr>`,
@@ -736,13 +773,26 @@
       function surSelectionStatutManuel() {
         const statut = document.getElementById("conc-statut").value;
         const caseAuto = document.getElementById("conc-statut-auto");
-        if ((statut === "suspendu" || statut === "résultats") && caseAuto.checked) {
+        if ((statut === "suspendu" || statut === "résultats" || statut === "annulé") && caseAuto.checked) {
           caseAuto.checked = false;
           window.afficherToast?.(
             '"Calcul automatique" a été décoché — ce statut est manuel et ne doit pas être recalculé par date.',
             "info",
           );
         }
+      }
+
+      // Actions rapides : publier les résultats / archiver, répercutées immédiatement
+      async function actionRapideConcours(id, action) {
+        const c = tousConcoursAdmin.find((x) => x.id === id);
+        if (!c) return;
+        const corps = action === "resultats" ? { statut: "résultats", statutAuto: false } : { archive: !c.archive };
+        if (action === "resultats" && !confirm(`Publier les résultats de « ${c.titre} » ?`)) return;
+        try {
+          await window.API.Concours.modifier(id, corps);
+          window.afficherToast(action === "resultats" ? "Résultats publiés." : c.archive ? "Concours désarchivé." : "Concours archivé.", "succes");
+          await charger();
+        } catch (err) { window.afficherToast(err.message || "Action impossible.", "erreur"); }
       }
 
       function ouvrirAjout() {
@@ -771,6 +821,8 @@
         document.getElementById("conc-age-min").value = "";
         document.getElementById("conc-age-max").value = "";
         document.getElementById("conc-sexe").value = "tous";
+        for (const id of ["conc-composition", "conc-date-resultats", "conc-lien", "conc-procedure", "conc-conseils", "conc-source-info", "conc-source-url", "conc-verifie-le"]) document.getElementById(id).value = "";
+        document.getElementById("conc-archive").checked = false;
         document.getElementById("conc-historique").value = "";
         document.getElementById("conc-salaire").value = "";
         document.getElementById("conc-adresse").value = "";
@@ -871,6 +923,15 @@
         document.getElementById("conc-age-min").value = "";
         document.getElementById("conc-age-max").value = "";
         document.getElementById("conc-sexe").value = "tous";
+        document.getElementById("conc-composition").value = c.date_composition || "";
+        document.getElementById("conc-date-resultats").value = c.date_resultats || "";
+        document.getElementById("conc-lien").value = c.lien_officiel || "";
+        document.getElementById("conc-procedure").value = c.procedure_inscription || "";
+        document.getElementById("conc-conseils").value = c.conseils || "";
+        document.getElementById("conc-source-info").value = c.source_info || "";
+        document.getElementById("conc-source-url").value = c.source_url || "";
+        document.getElementById("conc-verifie-le").value = c.verifie_le || "";
+        document.getElementById("conc-archive").checked = !!c.archive;
         document.getElementById("conc-historique").value = c.historique || "";
         document.getElementById("conc-salaire").value = c.salaire || "";
         document.getElementById("conc-adresse").value = c.adresse || "";
@@ -956,6 +1017,15 @@
           adresse: document.getElementById("conc-adresse").value.trim(),
           communiques: texteVersCommuniques(document.getElementById("conc-communiques").value),
           faq: texteVersFaq(document.getElementById("conc-faq").value),
+          dateComposition: document.getElementById("conc-composition").value || "",
+          dateResultats: document.getElementById("conc-date-resultats").value || "",
+          lienOfficiel: document.getElementById("conc-lien").value.trim() || null,
+          procedureInscription: document.getElementById("conc-procedure").value.trim(),
+          conseils: document.getElementById("conc-conseils").value.trim(),
+          sourceInfo: document.getElementById("conc-source-info").value.trim(),
+          sourceUrl: document.getElementById("conc-source-url").value.trim(),
+          verifieLe: document.getElementById("conc-verifie-le").value || "",
+          archive: document.getElementById("conc-archive").checked,
         };
         if (!payload.titre || !payload.organisme || !payload.categorie) {
           window.afficherToast(

@@ -1,0 +1,192 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ventes — Admin ProInsertion</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 20px; }
+      .kpi { background: var(--blanc); border-radius: 14px; padding: 16px; box-shadow: var(--ombre-sm); }
+      .kpi__label { font-size: .8rem; color: var(--gris-texte); font-weight: 600; }
+      .kpi__valeur { font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; font-weight: 700; margin-top: 4px; }
+      .kpi--alerte .kpi__valeur { color: #c2410c; }
+      .periodes { display: flex; gap: 8px; flex-wrap: wrap; }
+      .periode-btn.actif { background: var(--vert); color: #fff; border-color: var(--vert); }
+      .barres { display: flex; align-items: flex-end; gap: 3px; height: 160px; padding-top: 10px; }
+      .barre { flex: 1; min-width: 3px; background: var(--vert); border-radius: 3px 3px 0 0; opacity: .85; position: relative; }
+      .barre--zero { background: var(--gris-bordure); height: 2px !important; opacity: 1; }
+      .barre:hover { opacity: 1; }
+      .axe { display: flex; justify-content: space-between; font-size: .75rem; color: var(--gris-texte); margin-top: 6px; }
+      .tableau { width: 100%; min-width: 460px; border-collapse: collapse; font-size: .88rem; }
+      .tableau th { text-align: left; font-size: .75rem; color: var(--gris-texte); padding: 8px 10px; border-bottom: 2px solid var(--gris-bordure); }
+      .tableau td { padding: 9px 10px; border-bottom: 1px solid var(--gris-bordure); }
+      .tableau .num { text-align: right; white-space: nowrap; }
+      .jauge { height: 6px; background: var(--gris-bordure); border-radius: 3px; margin-top: 4px; }
+      .jauge > span { display: block; height: 100%; background: var(--vert); border-radius: 3px; }
+      .deux-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+      @media (max-width: 860px) { .deux-col { grid-template-columns: 1fr; } .tableau { font-size: .8rem; } .admin-card__corps { overflow-x: auto; } }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" style="background: #0a2540">
+      <div class="container navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo"
+          ><div class="navbar__logo-icon" style="background: rgba(255, 255, 255, 0.1)"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+          <span style="color: #fff">ProInsertion Admin</span></a
+        >
+        <button onclick="window.Auth?.deconnecter?.()" class="btn btn--gris btn--sm">Déconnexion</button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header"><div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div></div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a>
+          <a href="/admin/ventes.html" class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ventes</a>
+          <a href="/admin/tarifs.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tarifs</a>
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a>
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
+          <a href="/" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a>
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Ventes</div>
+              <div class="admin-topbar__sous">Seuls les paiements validés comptent dans le chiffre d'affaires.</div>
+            </div>
+            <div class="periodes" id="periodes"></div>
+          </div>
+
+          <div class="kpis" id="kpis"></div>
+
+          <div class="admin-card" style="margin-bottom:18px;">
+            <div class="admin-card__header"><div class="admin-card__titre">Chiffre d'affaires par jour</div></div>
+            <div class="admin-card__corps"><div class="barres" id="barres"></div><div class="axe" id="axe"></div></div>
+          </div>
+
+          <div class="admin-card" style="margin-bottom:18px;" id="carte-attente">
+            <div class="admin-card__header">
+              <div class="admin-card__titre">Paiements à valider</div>
+              <a href="/admin/paiements.html" class="btn btn--primaire btn--sm">Ouvrir les paiements</a>
+            </div>
+            <div class="admin-card__corps"><div id="attente"></div></div>
+          </div>
+
+          <div class="deux-col">
+            <div class="admin-card"><div class="admin-card__header"><div class="admin-card__titre">Par catégorie</div></div><div class="admin-card__corps" id="categories"></div></div>
+            <div class="admin-card"><div class="admin-card__header"><div class="admin-card__titre">Par moyen de paiement</div></div><div class="admin-card__corps" id="moyens"></div></div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card__header"><div class="admin-card__titre">Produits les plus vendus</div></div>
+            <div class="admin-card__corps" id="produits"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      const fcfa = (n) => Number(n).toLocaleString("fr-FR") + " F";
+      const $ = (id) => document.getElementById(id);
+      let jours = 30;
+
+      // DOM sûr : aucun texte n'est injecté en HTML.
+      function el(tag, attrs = {}, ...enfants) {
+        const n = document.createElement(tag);
+        for (const [k, v] of Object.entries(attrs)) {
+          if (k === "class") n.className = v;
+          else if (k === "text") n.textContent = v;
+          else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+          else if (v !== null && v !== undefined && v !== false) n.setAttribute(k, v === true ? "" : v);
+        }
+        enfants.flat().forEach((e) => e && n.appendChild(typeof e === "string" ? document.createTextNode(e) : e));
+        return n;
+      }
+      const vide = (texte) => el("div", { style: "color:var(--gris-texte);padding:6px 0;", text: texte });
+
+      function tableau(entetes, lignes) {
+        // Conteneur défilable : sur petit écran, le tableau reste lisible sans déborder de la page
+        return el("div", { style: "overflow-x:auto;" }, el("table", { class: "tableau" },
+          el("thead", {}, el("tr", {}, entetes.map(([t, num]) => el("th", { class: num ? "num" : "", text: t })))),
+          el("tbody", {}, lignes)));
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.protegerPageAdmin()) return;
+        $("periodes").replaceChildren(...[[7, "7 jours"], [30, "30 jours"], [90, "90 jours"], [365, "1 an"]].map(([j, t]) =>
+          el("button", { class: "btn btn--gris btn--sm periode-btn" + (j === jours ? " actif" : ""), "data-j": j, text: t, onclick: () => { jours = j; charger(); } })));
+        charger();
+      });
+
+      async function charger() {
+        document.querySelectorAll(".periode-btn").forEach((b) => b.classList.toggle("actif", Number(b.dataset.j) === jours));
+        try {
+          const r = await fetch(window.API_URL + "/admin/ventes?jours=" + jours, { headers: { Authorization: "Bearer " + window.API.getToken() } });
+          const d = await r.json().catch(() => ({}));
+          if (!r.ok) throw new Error(d.error || "Erreur " + r.status);
+          rendre(d);
+        } catch (err) { window.afficherToast(err.message, "erreur"); }
+      }
+
+      function rendre(d) {
+        const t = d.totaux;
+        $("kpis").replaceChildren(
+          el("div", { class: "kpi" }, el("div", { class: "kpi__label", text: "Chiffre d'affaires" }), el("div", { class: "kpi__valeur", text: fcfa(t.ca) })),
+          el("div", { class: "kpi" }, el("div", { class: "kpi__label", text: "Ventes validées" }), el("div", { class: "kpi__valeur", text: String(t.nb_ventes) })),
+          el("div", { class: "kpi" }, el("div", { class: "kpi__label", text: "Panier moyen" }), el("div", { class: "kpi__valeur", text: fcfa(t.panier_moyen) })),
+          el("div", { class: "kpi" + (t.en_attente_nb ? " kpi--alerte" : "") }, el("div", { class: "kpi__label", text: "À valider" }),
+            el("div", { class: "kpi__valeur", text: t.en_attente_nb + " · " + fcfa(t.en_attente_montant) })));
+
+        // Barres journalières (hauteur relative au meilleur jour)
+        const max = Math.max(1, ...d.par_jour.map((x) => x.ca));
+        $("barres").replaceChildren(...d.par_jour.map((x) => {
+          const b = el("div", { class: "barre" + (x.ca ? "" : " barre--zero"), title: new Date(x.jour).toLocaleDateString("fr-FR") + " : " + fcfa(x.ca) + " (" + x.nb + " vente" + (x.nb > 1 ? "s" : "") + ")" });
+          if (x.ca) b.style.height = Math.max(4, Math.round((x.ca / max) * 100)) + "%";
+          return b;
+        }));
+        const premier = d.par_jour[0], dernier = d.par_jour[d.par_jour.length - 1];
+        $("axe").replaceChildren(el("span", { text: new Date(premier.jour).toLocaleDateString("fr-FR") }), el("span", { text: "Max : " + fcfa(max === 1 && !t.ca ? 0 : max) }), el("span", { text: new Date(dernier.jour).toLocaleDateString("fr-FR") }));
+
+        // Paiements à valider (les plus anciens d'abord)
+        $("attente").replaceChildren(d.a_valider.length
+          ? tableau([["Client"], ["Produit"], ["Moyen"], ["Montant", true], ["Depuis"]], d.a_valider.map((p) => {
+              const h = Math.max(0, Math.round((Date.now() - new Date(p.date).getTime()) / 3600000));
+              return el("tr", {}, el("td", { text: p.email || "—" }), el("td", { text: p.produit }), el("td", { text: p.moyen || "—" }),
+                el("td", { class: "num", text: fcfa(p.montant) }), el("td", { text: h >= 24 ? Math.floor(h / 24) + " j" : h + " h" }));
+            }))
+          : vide("Aucun paiement en attente."));
+
+        const parts = (liste, cle, libelle) => {
+          const tot = liste.reduce((s, x) => s + x.ca, 0) || 1;
+          return liste.length ? tableau([[libelle], ["Ventes", true], ["CA", true]], liste.map((x) =>
+            el("tr", {}, el("td", {}, x[cle], el("div", { class: "jauge" }, el("span", { style: "width:" + Math.round((x.ca / tot) * 100) + "%" }))),
+              el("td", { class: "num", text: String(x.nb) }), el("td", { class: "num", text: fcfa(x.ca) })))) : vide("Aucune vente sur la période.");
+        };
+        $("categories").replaceChildren(parts(d.par_categorie, "categorie", "Catégorie"));
+        $("moyens").replaceChildren(parts(d.par_moyen, "moyen", "Moyen"));
+        $("produits").replaceChildren(d.par_produit.length
+          ? tableau([["Produit"], ["Catégorie"], ["Ventes", true], ["CA", true]], d.par_produit.map((p) =>
+              el("tr", {}, el("td", { text: p.nom }), el("td", { text: p.categorie }), el("td", { class: "num", text: String(p.nb) }), el("td", { class: "num", text: fcfa(p.ca) }))))
+          : vide("Aucune vente sur la période."));
+      }
+    </script>
+  </body>
+</html>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paramètres — Admin EduConcoursCI</title>
+  <title>Paramètres — Admin ProInsertion</title>
   <link rel="icon" href="/assets/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
 
 <nav class="navbar" style="background:#0A1628;border-bottom:1px solid rgba(255,255,255,0.08);">
   <div class="navbar__inner">
-    <a href="/admin/index.html" class="navbar__logo" style="color:#fff;"><div class="navbar__logo-icon" style="background:rgba(255,255,255,0.1);"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div><span style="color:#fff;">EduConcoursCI Admin</span></a>
+    <a href="/admin/index.html" class="navbar__logo" style="color:#fff;"><div class="navbar__logo-icon" style="background:rgba(255,255,255,0.1);"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div><span style="color:#fff;">ProInsertion Admin</span></a>
     <button onclick="window.Auth?.deconnecter?.()" class="btn btn--gris btn--sm">Déconnexion</button>
   </div>
 </nav>
@@ -50,7 +50,10 @@
       <a href="/admin/qcm.html"           class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a>
       <div class="admin-sidebar__section">Utilisateurs</div>
       <a href="/admin/abonnes.html"       class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a>
-      <a href="/admin/paiements.html"     class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+      <a href="/admin/ventes.html" class="admin-sidebar__lien"
+            ><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ventes</a
+          >
+          <a href="/admin/paiements.html"     class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
       <a href="/admin/notifications.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Notifications</a>
       <div class="admin-sidebar__section">Système</div>
       <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
@@ -190,7 +193,7 @@
         <div class="env-key">EMAIL_FROM</div>
         <div style="flex:1;">
           <div style="font-size:0.85rem;font-weight:600;margin-bottom:2px;">Expéditeur affiché</div>
-          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : EduConcoursCI &lt;noreply@educoncoursci.ci&gt;</div>
+          <div style="font-family:monospace;font-size:0.75rem;color:var(--gris-texte);">Exemple : ProInsertion &lt;noreply@educoncoursci.ci&gt;</div>
         </div>
         <span class="env-statut env-ok"><span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Requis</span>
       </div>
