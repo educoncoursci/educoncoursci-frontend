@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Académie — ProInsertion</title>
-  <meta name="description" content="Cours courts, exercices et progression suivie pour préparer tes concours et ta recherche d'emploi en Côte d'Ivoire.">
+  <title>Académie — ProInsertion CI</title>
+  <meta name="description" content="Cours courts, exercices et progression suivie pour préparer vos concours et votre recherche d'emploi en Côte d'Ivoire.">
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="ProInsertion" />
-  <meta property="og:title" content="Académie — ProInsertion" />
-  <meta property="og:description" content="Cours courts, exercices et progression suivie pour préparer tes concours et ta recherche d'emploi en Côte d'Ivoire." />
-  <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-  <meta property="og:url" content="https://educoncoursci.netlify.app/academie.html" />
+  <meta property="og:site_name" content="ProInsertion CI" />
+  <meta property="og:title" content="Académie — ProInsertion CI" />
+  <meta property="og:description" content="Cours courts, exercices et progression suivie pour préparer vos concours et votre recherche d'emploi en Côte d'Ivoire." />
+  <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+  <meta property="og:url" content="https://proinsertionci.netlify.app/academie.html" />
   <link rel="icon" href="/assets/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,10 @@
   <link rel="stylesheet" href="/css/recherche.css">
   <link rel="stylesheet" href="/css/responsive.css">
   <link rel="stylesheet" href="/css/academie.css">
-</head>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  </head>
 <body>
 
 <div id="site-header"></div>
@@ -27,8 +30,8 @@
 <main style="padding:calc(var(--navbar-h) + 36px) 0 60px;background:var(--gris-clair);">
   <div class="container">
     <div class="academie-entete">
-      <h1>Académie ProInsertion</h1>
-      <p>Des cours courts avec des exercices pour apprendre à ton rythme. Les premières leçons de chaque cours sont gratuites.</p>
+      <h1>Académie ProInsertion CI</h1>
+      <p>Des cours courts avec des exercices pour apprendre à votre rythme. Les premières leçons de chaque cours sont gratuites.</p>
     </div>
     <div id="zone-cours"><div class="academie-vide">Chargement…</div></div>
   </div>
@@ -56,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!cours.length) {
       zone.appendChild(el("div", { class: "academie-vide" },
         el("p", { text: "Les premiers cours arrivent bientôt." }),
-        el("p", {}, "En attendant, entraîne-toi avec les ", el("a", { href: "/preparation.html", text: "QCM de préparation" }), "."),
+        el("p", {}, "En attendant, entraînez-vous avec les ", el("a", { href: "/preparation.html", text: "QCM de préparation" }), "."),
       ));
       return;
     }

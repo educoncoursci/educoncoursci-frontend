@@ -4,18 +4,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QCM — ProInsertion</title>
-  <meta name="description" content="Entraîne-toi avec des QCM chronométrés et corrigés par IA pour réussir les concours et examens en Côte d'Ivoire.">
+    <title>QCM — ProInsertion CI</title>
+  <meta name="description" content="Entraînez-vous avec des QCM chronométrés et corrigés avec explications pour réussir les concours et examens en Côte d'Ivoire.">
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="ProInsertion" />
-    <meta property="og:title" content="QCM — ProInsertion" />
-    <meta property="og:description" content="Entraîne-toi avec des QCM chronométrés et corrigés par IA pour réussir les concours et examens en Côte d'Ivoire." />
-    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-    <meta property="og:url" content="https://educoncoursci.netlify.app/quiz.html" />
+    <meta property="og:site_name" content="ProInsertion CI" />
+    <meta property="og:title" content="QCM — ProInsertion CI" />
+    <meta property="og:description" content="Entraînez-vous avec des QCM chronométrés et corrigés avec explications pour réussir les concours et examens en Côte d'Ivoire." />
+    <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://proinsertionci.netlify.app/quiz.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="QCM — ProInsertion" />
-    <meta name="twitter:description" content="Entraîne-toi avec des QCM chronométrés et corrigés par IA pour réussir les concours et examens en Côte d'Ivoire." />
-    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta name="twitter:title" content="QCM — ProInsertion CI" />
+    <meta name="twitter:description" content="Entraînez-vous avec des QCM chronométrés et corrigés avec explications pour réussir les concours et examens en Côte d'Ivoire." />
+    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -127,6 +127,9 @@
         font-size: 0.85rem;
       }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="padding-top: var(--navbar-h)">
     <div id="site-header"></div>
@@ -265,7 +268,7 @@
               </div>
             </div>
 
-            <!-- Conseil IA -->
+            <!-- Conseil personnalisé -->
             <div
               id="conseil-ia"
               class="hidden"
@@ -285,7 +288,7 @@
                   margin-bottom: 8px;
                 "
               >
-                <span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Conseil personnalisé IA
+                <span data-icone="etoile" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Conseil personnalisé
               </div>
               <div
                 id="conseil-texte"
@@ -386,7 +389,7 @@
         try {
           const data = await window.API.QCM.detail(qcmId);
           qcmData = data.qcm;
-          document.title = `${qcmData.titre} — ProInsertion`;
+          document.title = `${qcmData.titre} — ProInsertion CI`;
           demarrer();
         } catch (err) {
           if (err.message.includes("Premium")) {
@@ -504,7 +507,7 @@
       function validerReponse() {
         if (reponses[indexActuel] === undefined) {
           window.afficherToast(
-            "Sélectionne une réponse avant de valider.",
+            "Sélectionnez une réponse avant de valider.",
             "warn",
           );
           return;
@@ -589,7 +592,7 @@
           )
           .join("");
 
-        // Conseil IA (si connecté)
+        // Conseil personnalisé (si connecté)
         if (window.Auth?.estConnecte())
           chargerConseilIA(qcmData.matiere, score, total);
       }
@@ -619,7 +622,7 @@
       }
 
       function partagerResultat() {
-        const txt = `J'ai obtenu ${document.getElementById("res-pct").textContent} au QCM "${qcmData.titre}" sur ProInsertion ! 🎓 Et toi, combien tu fais ?`;
+        const txt = `J'ai obtenu ${document.getElementById("res-pct").textContent} au QCM "${qcmData.titre}" sur ProInsertion CI ! 🎓 Et vous, combien vous faites ?`;
         const lien = window.location.origin + "/preparation.html";
         if (typeof window.partagerWhatsApp === "function") {
           window.partagerWhatsApp(txt, lien);

@@ -4,18 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Examens Nationaux — ProInsertion</title>
-  <meta name="description" content="BAC, BEPC, CEPE, BTS — Prépare les examens nationaux de Côte d'Ivoire avec ProInsertion.">
+  <title>Examens Nationaux — ProInsertion CI</title>
+  <meta name="description" content="BAC, BEPC, CEPE, BTS — Préparez les examens nationaux de Côte d'Ivoire avec ProInsertion CI.">
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="ProInsertion" />
-    <meta property="og:title" content="Examens Nationaux — ProInsertion" />
-    <meta property="og:description" content="BAC, BEPC, CEPE, BTS — Prépare les examens nationaux de Côte d'Ivoire avec ProInsertion." />
-    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-    <meta property="og:url" content="https://educoncoursci.netlify.app/examens.html" />
+    <meta property="og:site_name" content="ProInsertion CI" />
+    <meta property="og:title" content="Examens Nationaux — ProInsertion CI" />
+    <meta property="og:description" content="BAC, BEPC, CEPE, BTS — Préparez les examens nationaux de Côte d'Ivoire avec ProInsertion CI." />
+    <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://proinsertionci.netlify.app/examens.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Examens Nationaux — ProInsertion" />
-    <meta name="twitter:description" content="BAC, BEPC, CEPE, BTS — Prépare les examens nationaux de Côte d'Ivoire avec ProInsertion." />
-    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta name="twitter:title" content="Examens Nationaux — ProInsertion CI" />
+    <meta name="twitter:description" content="BAC, BEPC, CEPE, BTS — Préparez les examens nationaux de Côte d'Ivoire avec ProInsertion CI." />
+    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
   <link rel="icon" href="/assets/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,6 @@
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/recherche.css">
   <link rel="stylesheet" href="/css/responsive.css">
-  <link rel="stylesheet" href="/css/flash-info.css">
   <style>
     .examen-card {
       background:var(--blanc);border-radius:var(--radius-xl);padding:28px;
@@ -42,111 +41,23 @@
     .matiere-tag  { display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--gris-clair);border-radius:20px;font-size:0.78rem;font-weight:600;color:var(--texte); }
     .stat-examen  { display:flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:600; }
   </style>
-</head>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  </head>
 <body>
 
 <div id="site-header"></div>
-        <!-- ── FLASH INFO ──────────────────────────────────────────── -->
-    <div class="flash-info">
-      <div class="flash-info__label">
-        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-        <span>Flash info</span>
-      </div>
-      <div class="flash-info__piste">
-        <div class="flash-info__track">
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Résultats</span>
-            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">CAFOP</span>
-            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">ENA</span>
-            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Vigilance</span>
-            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
-          </a>
-          <!-- Duplication pour un défilement continu sans interruption -->
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Résultats</span>
-            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">CAFOP</span>
-            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">ENA</span>
-            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Vigilance</span>
-            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
-          </a>
-        </div>
-      </div>
-    </div>
+        
 
 
 <!-- HERO -->
 
-<div class="page-header main-content page-header--apres-flash" style="background:linear-gradient(135deg,#C84B11,#F5820D);">
+<div class="page-header main-content page-header--standard" style="background:linear-gradient(135deg,#C84B11,#F5820D);">
   <div class="container">
     <span class="section__tag" style="background:rgba(255,255,255,0.2);color:#fff;margin-bottom:12px;display:inline-block;"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Examens nationaux</span>
     <h1>Examens Nationaux CI</h1>
-    <p>Prépare le BAC, BEPC, CEPE et BTS avec des cours, sujets corrigés et QCM spécialisés.</p>
+    <p>Préparez le BAC, BEPC, CEPE et BTS avec des cours, sujets corrigés et QCM spécialisés.</p>
   </div>
 </div>
 
@@ -155,7 +66,7 @@
 
 <!-- 4 examens principaux -->
 <div class="section__en-tete" style="text-align:center;margin-bottom:36px;">
-  <h2>Choisir ton examen</h2>
+  <h2>Choisir votre examen</h2>
   <p style="color:var(--gris-texte);">Contenus et ressources spécialisés pour chaque examen national ivoirien.</p>
 </div>
 
@@ -165,7 +76,7 @@
   <div class="examen-card examen-card--bac">
     <div class="examen-icone"><span data-icone="diplome" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
     <div class="examen-titre" style="color:#1A6B3C;">Baccalauréat (BAC)</div>
-    <div class="examen-desc">L'examen national de fin de lycée. Prépare toutes les séries (A, B, C, D, E) avec des sujets corrigés officiels et des QCM par matière.</div>
+    <div class="examen-desc">L'examen national de fin de lycée. Préparez toutes les séries (A, B, C, D, E) avec des sujets corrigés officiels et des QCM par matière.</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
       <span class="matiere-tag"><span data-icone="regle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Maths</span>
       <span class="matiere-tag"><span data-icone="microscope" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sciences</span>
@@ -189,7 +100,7 @@
   <div class="examen-card examen-card--bepc">
     <div class="examen-icone"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
     <div class="examen-titre" style="color:#0A6EBD;">BEPC</div>
-    <div class="examen-desc">Le Brevet d'Études du Premier Cycle, examen de fin de collège. Révise toutes les matières avec des sujets officiels et annales corrigées.</div>
+    <div class="examen-desc">Le Brevet d'Études du Premier Cycle, examen de fin de collège. Révisez toutes les matières avec des sujets officiels et annales corrigées.</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
       <span class="matiere-tag"><span data-icone="regle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Maths</span>
       <span class="matiere-tag"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Français</span>
@@ -237,7 +148,7 @@
   <div class="examen-card examen-card--bts">
     <div class="examen-icone">🏫</div>
     <div class="examen-titre" style="color:#7B2FBE;">BTS</div>
-    <div class="examen-desc">Le Brevet de Technicien Supérieur, diplôme de niveau Bac+2. Prépare les épreuves écrites et orales de ta filière avec des cours spécialisés.</div>
+    <div class="examen-desc">Le Brevet de Technicien Supérieur, diplôme de niveau Bac+2. Préparez les épreuves écrites et orales de votre filière avec des cours spécialisés.</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
       <span class="matiere-tag"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Commerce</span>
       <span class="matiere-tag">💻 Informatique</span>
@@ -324,13 +235,13 @@
       </tbody>
     </table>
   </div>
-  <p style="font-size:0.8rem;color:var(--gris-texte);margin-top:12px;"><span data-icone="attention" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Dates indicatives — Consulte le site officiel de la DECO (Direction des Examens et Concours) pour les dates officielles.</p>
+  <p style="font-size:0.8rem;color:var(--gris-texte);margin-top:12px;"><span data-icone="attention" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Dates indicatives — Consultez le site officiel de la DECO (Direction des Examens et Concours) pour les dates officielles.</p>
 </div>
 
 <!-- CTA Premium -->
 <div style="background:var(--gradient-hero);border-radius:var(--radius-xl);padding:36px;color:#fff;text-align:center;">
   <div style="font-size:3rem;margin-bottom:12px;">⭐</div>
-  <h3 style="color:#fff;font-size:1.5rem;margin-bottom:10px;">Accède à tous les sujets corrigés</h3>
+  <h3 style="color:#fff;font-size:1.5rem;margin-bottom:10px;">Accédez à tous les sujets corrigés</h3>
   <p style="opacity:0.85;max-width:480px;margin:0 auto 24px;line-height:1.7;">Les sujets corrigés officiels, annales et cours complets sont disponibles en Premium. Paiement Wave ou Orange Money.</p>
   <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
     <a href="/boutique.html" class="btn btn--orange btn--lg">Voir les offres Premium →</a>

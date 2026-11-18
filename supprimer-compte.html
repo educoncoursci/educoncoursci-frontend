@@ -1,0 +1,118 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supprimer mon compte — ProInsertion CI</title>
+  <meta name="description" content="Comment ProInsertion CI collecte, utilisez et protège vos données personnelles, et comment exercer vos droits.">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ProInsertion CI" />
+    <meta property="og:title" content="Supprimer mon compte — ProInsertion CI" />
+    <meta property="og:description" content="Comment ProInsertion CI collecte, utilisez et protège vos données personnelles, et comment exercer vos droits." />
+    <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://proinsertionci.netlify.app/confidentialite.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Supprimer mon compte — ProInsertion CI" />
+    <meta name="twitter:description" content="Comment ProInsertion CI collecte, utilisez et protège vos données personnelles, et comment exercer vos droits." />
+    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>.legal{max-width:780px;margin:0 auto;padding:40px 0 64px}.legal h1{font-family:var(--font-titre);font-size:2rem;margin-bottom:6px}.legal .maj{color:var(--gris-texte);font-size:.85rem;margin-bottom:28px}.legal h2{font-size:1.1rem;margin:28px 0 8px;color:var(--vert)}.legal p,.legal li{line-height:1.7;font-size:.95rem}.legal ul{padding-left:20px}</style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+    <main class="container"><article class="legal">
+<h1>Supprimer mon compte</h1>
+<div class="maj">Application et site ProInsertion CI</div>
+<p>Vous pouvez supprimer votre compte ProInsertion CI et vos données personnelles à tout moment, directement depuis cette page. La suppression est <strong>définitive</strong>.</p>
+
+<h2>Ce qui est supprimé</h2>
+<ul>
+<li>Votre compte (nom, adresse e-mail, mot de passe, photo de profil).</li>
+<li>Vos CV, lettres de motivation, analyses d'offres et commandes de documents.</li>
+<li>Vos candidatures, alertes, scores, progression, messages et abonnements aux notifications.</li>
+<li>Vos publications sur le forum liées à votre compte.</li>
+</ul>
+<h2>Ce qui peut être conservé</h2>
+<p>Les enregistrements de paiement (service, montant, identifiant de transaction) peuvent être conservés sans lien avec votre identité, pour la comptabilité et la prévention des fraudes. Les copies de sauvegarde techniques sont purgées au plus tard après 30 jours.</p>
+<p>Si vous avez un abonnement Premium en cours, il prend fin avec le compte et n'est pas remboursé.</p>
+
+<h2>Comment faire</h2>
+<ol>
+<li><a href="/auth/login.html">Connectez-vous</a> à votre compte. Mot de passe oublié ? <a href="/auth/forgot-password.html">Réinitialisez-le ici</a>.</li>
+<li>Saisissez votre mot de passe et le mot « SUPPRIMER » dans le formulaire ci-dessous.</li>
+<li>Validez : votre compte est supprimé immédiatement.</li>
+</ol>
+
+<div id="bloc-suppression" style="border:1px solid #e5e7eb;border-radius:14px;padding:22px;margin:24px 0;background:#fff;">
+  <div id="etat-deconnecte" class="hidden">
+    <p style="margin:0 0 14px">Vous n'êtes pas connecté(e). Connectez-vous pour supprimer votre compte.</p>
+    <a class="btn btn--primaire" href="/auth/login.html?retour=/supprimer-compte.html">Se connecter</a>
+  </div>
+  <form id="form-suppression" class="hidden" autocomplete="off">
+    <label for="sup-password" style="display:block;font-weight:600;margin-bottom:6px">Votre mot de passe</label>
+    <input id="sup-password" type="password" required autocomplete="current-password" class="form-input" style="width:100%;margin-bottom:14px" />
+    <label for="sup-confirm" style="display:block;font-weight:600;margin-bottom:6px">Tapez SUPPRIMER pour confirmer</label>
+    <input id="sup-confirm" type="text" required autocomplete="off" class="form-input" style="width:100%;margin-bottom:14px" />
+    <button type="submit" class="btn" id="btn-supprimer" style="background:#b91c1c;color:#fff">Supprimer définitivement mon compte</button>
+    <p id="sup-message" role="alert" style="margin:14px 0 0;font-size:.92rem"></p>
+  </form>
+  <p id="sup-admin" class="hidden" style="margin:0">Un compte administrateur ne peut pas être supprimé depuis cette page.</p>
+</div>
+
+<div id="contact-bloc" class="hidden">
+  <h2>Vous ne pouvez pas vous connecter ?</h2>
+  <p>Écrivez-nous à <a id="contact-lien" href="#"></a> depuis l'adresse e-mail de votre compte, en indiquant « Suppression de compte ». Nous traitons la demande sous 30 jours.</p>
+</div>
+<p style="margin-top:28px"><a href="/confidentialite.html">Politique de confidentialité</a></p>
+</article></main>
+<div id="site-footer"></div>
+<script src="/js/layout.js"></script>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/main.js"></script>
+<script>
+  // Adresse de contact pour les personnes qui ne peuvent plus se connecter.
+  // Renseignez-la (ex. "contact@votre-domaine.ci") pour afficher la rubrique.
+  const CONTACT_EMAIL = "support@proinsertionci.ci";
+  document.addEventListener("DOMContentLoaded", () => {
+    const connecte = !!localStorage.getItem("ecc_token");
+    let user = null;
+    try { user = JSON.parse(localStorage.getItem("ecc_user") || "null"); } catch {}
+    const $ = (id) => document.getElementById(id);
+    if (!connecte) $("etat-deconnecte").classList.remove("hidden");
+    else if (user && user.role === "admin") $("sup-admin").classList.remove("hidden");
+    else $("form-suppression").classList.remove("hidden");
+    if (CONTACT_EMAIL) {
+      $("contact-bloc").classList.remove("hidden");
+      $("contact-lien").textContent = CONTACT_EMAIL;
+      $("contact-lien").href = "mailto:" + CONTACT_EMAIL + "?subject=Suppression%20de%20compte";
+    }
+    $("form-suppression").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const msg = $("sup-message"), btn = $("btn-supprimer");
+      msg.style.color = "#374151"; msg.textContent = "Suppression en cours…"; btn.disabled = true;
+      try {
+        await window.API.Auth.supprimerMonCompte($("sup-password").value, $("sup-confirm").value.trim());
+        $("form-suppression").innerHTML = '<p style="margin:0"><strong>Votre compte a été supprimé.</strong> Merci d\'avoir utilisé ProInsertion CI.</p><p style="margin:12px 0 0"><a href="/">Retour à l\'accueil</a></p>';
+      } catch (err) {
+        msg.style.color = "#b91c1c"; msg.textContent = err.message || "Suppression impossible."; btn.disabled = false;
+      }
+    });
+  });
+</script>
+</body>
+</html>

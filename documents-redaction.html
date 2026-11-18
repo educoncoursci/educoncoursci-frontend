@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Courriers et documents — ProInsertion</title>
+    <title>Courriers et documents — ProInsertion CI</title>
     <meta name="description" content="Lettres de relance, de recommandation, de démission, demandes de congé, rapport de stage, projet professionnel, discours et biographie : rédigés pour vous à l'unité." />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,6 +25,9 @@
       .doc-form .pleine { grid-column: 1 / -1; }
       @media (max-width: 640px) { .doc-form { grid-template-columns: 1fr; } }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -38,18 +41,18 @@
 
     <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
       <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
-        <p style="margin-bottom:16px; color:var(--gris-texte);">Connecte-toi pour commander un document.</p>
+        <p style="margin-bottom:16px; color:var(--gris-texte);">Connectez-vous pour commander un document.</p>
         <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
       </div>
 
       <div id="zone-generateur">
         <div style="background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm); margin-bottom: 20px;">
-          <h3 style="margin:0 0 6px;">1. Choisis ton document</h3>
+          <h3 style="margin:0 0 6px;">1. Choisissez votre document</h3>
           <div id="catalogue-docs" style="color: var(--gris-texte);">Chargement…</div>
         </div>
 
         <div id="zone-formulaire" class="hidden" style="background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm); margin-bottom: 20px;">
-          <h3 style="margin:0 0 14px;" id="titre-formulaire">2. Renseigne les informations</h3>
+          <h3 style="margin:0 0 14px;" id="titre-formulaire">2. Renseignez les informations</h3>
           <div class="doc-form" id="champs-formulaire"></div>
           <button id="btn-generer" class="btn btn--primaire btn--full btn--lg" style="margin-top:20px;">Générer mon document</button>
         </div>
@@ -118,7 +121,7 @@
           }).join("");
           zone.querySelectorAll(".doc-type").forEach((c) => (c.onclick = () => choisir(c.dataset.id)));
         } catch {
-          zone.textContent = "Impossible de charger les documents. Réessaie dans un instant.";
+          zone.textContent = "Impossible de charger les documents. Réessayez dans un instant.";
         }
       }
 
@@ -127,7 +130,7 @@
         document.querySelectorAll(".doc-type").forEach((c) => c.classList.toggle("selectionne", c.dataset.id === id));
         const def = definitions[id];
         const produit = produits.find((p) => p.id === id);
-        document.getElementById("titre-formulaire").textContent = "2. Renseigne les informations — " + (produit?.nom || def.titre);
+        document.getElementById("titre-formulaire").textContent = "2. Renseignez les informations — " + (produit?.nom || def.titre);
         const s = window.Auth.getSession() || {};
         const pre = { nom: s.nom, email: s.email };
         document.getElementById("champs-formulaire").innerHTML = def.champs.map((c) => {
@@ -155,7 +158,7 @@
           const res = await window.API.CVLM.creerCommande(data);
           Commande.afficher(res.commande);
           chargerMesDocs();
-          window.afficherToast("Ton document est prêt. Voici l'aperçu.", "succes");
+          window.afficherToast("Votre document est prêt. Voici l'aperçu.", "succes");
         } catch (e) {
           window.afficherToast(e.message || "Erreur de génération.", "erreur");
         } finally {

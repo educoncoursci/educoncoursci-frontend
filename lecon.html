@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leçon — ProInsertion</title>
+  <title>Leçon — ProInsertion CI</title>
   <meta name="description" content="Leçon, points clés et exercices.">
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="ProInsertion" />
-  <meta property="og:title" content="Leçon — ProInsertion" />
+  <meta property="og:site_name" content="ProInsertion CI" />
+  <meta property="og:title" content="Leçon — ProInsertion CI" />
   <meta property="og:description" content="Leçon, points clés et exercices." />
-  <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-  <meta property="og:url" content="https://educoncoursci.netlify.app/lecon.html" />
+  <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+  <meta property="og:url" content="https://proinsertionci.netlify.app/lecon.html" />
   <link rel="icon" href="/assets/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,10 @@
   <link rel="stylesheet" href="/css/recherche.css">
   <link rel="stylesheet" href="/css/responsive.css">
   <link rel="stylesheet" href="/css/academie.css">
-</head>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  </head>
 <body>
 
 <div id="site-header"></div>
@@ -53,7 +56,7 @@ function afficherVerrou(zone, data) {
     el("h2", { text: data.lecon.titre }),
     el("p", { text: data.connecte
       ? "Cette leçon est réservée aux abonnés Premium. Les premières leçons du cours restent gratuites."
-      : "Cette leçon est réservée aux abonnés Premium. Connecte-toi si tu as déjà un abonnement." }),
+      : "Cette leçon est réservée aux abonnés Premium. Connectez-vous si vous avez déjà un abonnement." }),
     el("div", { style: "display:flex;gap:10px;justify-content:center;flex-wrap:wrap;" },
       el("a", { class: "btn btn--primaire", href: "/boutique.html", text: "Voir le Premium" }),
       data.connecte ? null : el("a", { class: "btn btn--outline-vert", href: "/auth/login.html", text: "Se connecter" }),
@@ -80,7 +83,7 @@ function dessinerExercices(exercices) {
         explication.style.display = "block";
         reponses++;
         if (reponses === exercices.length) {
-          score.textContent = "Ton score : " + bonnes + " / " + exercices.length;
+          score.textContent = "Votre score : " + bonnes + " / " + exercices.length;
           score.style.display = "block";
         }
       });
@@ -99,7 +102,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!id) { zone.replaceChildren(el("div", { class: "academie-vide", text: "Leçon introuvable." })); return; }
   try {
     const d = await api("/lecons/" + id);
-    document.title = d.lecon.titre + " — ProInsertion";
+    document.title = d.lecon.titre + " — ProInsertion CI";
     document.getElementById("fil-cours-lien").textContent = d.cours.titre;
     document.getElementById("fil-cours-lien").href = "/cours.html?id=" + d.cours.id;
 
@@ -117,7 +120,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const r = await api("/lecons/" + id + "/terminer", { methode: "POST" });
         boutonTerminer.textContent = "✓ Leçon terminée";
         statut.textContent = r.progression.cours_termine
-          ? "🎉 Bravo, tu as terminé tout le cours !"
+          ? "🎉 Bravo, vous avez terminé tout le cours !"
           : r.progression.terminees + " / " + r.progression.total + " leçons terminées.";
       } catch (err) {
         boutonTerminer.disabled = false;
@@ -150,7 +153,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       statut,
       el("div", { style: "margin-top:18px;text-align:center;" },
         el("button", { type: "button", class: "btn btn--gris", text: "📤 Partager cette leçon sur WhatsApp", onclick: () =>
-          window.partagerWhatsApp("Je révise avec ProInsertion : « " + d.lecon.titre + " » (" + d.cours.titre + ").", window.location.href) })),
+          window.partagerWhatsApp("Je révise avec ProInsertion CI : « " + d.lecon.titre + " » (" + d.cours.titre + ").", window.location.href) })),
     );
   } catch (err) {
     if (err.status === 403 && err.data?.premium) { afficherVerrou(zone, err.data); return; }

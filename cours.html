@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cours — ProInsertion</title>
+  <title>Cours — ProInsertion CI</title>
   <meta name="description" content="Plan du cours, leçons et progression.">
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="ProInsertion" />
-  <meta property="og:title" content="Cours — ProInsertion" />
+  <meta property="og:site_name" content="ProInsertion CI" />
+  <meta property="og:title" content="Cours — ProInsertion CI" />
   <meta property="og:description" content="Plan du cours, leçons et progression." />
-  <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-  <meta property="og:url" content="https://educoncoursci.netlify.app/cours.html" />
+  <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+  <meta property="og:url" content="https://proinsertionci.netlify.app/cours.html" />
   <link rel="icon" href="/assets/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,10 @@
   <link rel="stylesheet" href="/css/recherche.css">
   <link rel="stylesheet" href="/css/responsive.css">
   <link rel="stylesheet" href="/css/academie.css">
-</head>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  </head>
 <body>
 
 <div id="site-header"></div>
@@ -51,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!id) { zone.replaceChildren(el("div", { class: "academie-vide", text: "Cours introuvable." })); return; }
   try {
     const { cours } = await api("/cours/" + id);
-    document.title = cours.titre + " — ProInsertion";
+    document.title = cours.titre + " — ProInsertion CI";
     document.getElementById("fil-cours").textContent = cours.titre;
 
     const total = cours.lecons.length;
@@ -73,14 +76,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             el("div", { class: "academie-barre" }, el("span", { style: "width:" + pct + "%" })),
             el("p", { class: "academie-meta", style: "margin-top:6px;", text: faites + " / " + total + " leçons terminées" }),
           )
-        : el("p", { class: "academie-meta" }, el("a", { href: "/auth/login.html", text: "Connecte-toi" }), " pour enregistrer ta progression."),
+        : el("p", { class: "academie-meta" }, el("a", { href: "/auth/login.html", text: "Connectez-vous" }), " pour enregistrer votre progression."),
       prochaine
         ? el("a", { class: "btn btn--primaire", style: "margin-top:14px;display:inline-block;",
             href: "/lecon.html?id=" + prochaine.id, text: faites ? "Continuer le cours →" : "Commencer le cours →" })
         : null,
       el("div", { style: "margin-top:12px;" },
         el("button", { type: "button", class: "btn btn--gris btn--sm", text: "📤 Partager ce cours", onclick: () =>
-          window.partagerWhatsApp("Un cours gratuit pour préparer ton concours sur ProInsertion : « " + cours.titre + " ».", window.location.href) })),
+          window.partagerWhatsApp("Un cours gratuit pour préparer votre concours sur ProInsertion CI : « " + cours.titre + " ».", window.location.href) })),
       el("div", { class: "academie-lecons" },
         cours.lecons.map((l) =>
           el("a", { class: "academie-lecon-ligne", href: "/lecon.html?id=" + l.id },

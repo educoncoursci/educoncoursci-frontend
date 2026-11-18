@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Communauté — ProInsertion</title>
+    <title>Communauté — ProInsertion CI</title>
     <meta
       name="description"
       content="Échange avec d'autres candidats aux concours de Côte d'Ivoire : entraide, questions, actualités."
@@ -63,6 +63,9 @@
       .forum-tag--question { background: #fef3c7; color: #92400e; }
       .forum-tag--actualite{ background: #fee2e2; color: #991b1b; }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -113,11 +116,11 @@
           </div>
           <div class="form-groupe">
             <label class="form-label">Titre</label>
-            <input type="text" id="sujet-titre" class="form-input" placeholder="Résume ta question ou ton sujet en une phrase" maxlength="200" />
+            <input type="text" id="sujet-titre" class="form-input" placeholder="Résumez votre question ou votre sujet en une phrase" maxlength="200" />
           </div>
           <div class="form-groupe">
             <label class="form-label">Message</label>
-            <textarea id="sujet-contenu" class="form-textarea" rows="5" placeholder="Détaille ta question, partage ton expérience…"></textarea>
+            <textarea id="sujet-contenu" class="form-textarea" rows="5" placeholder="Détaillez votre question, partage votre expérience…"></textarea>
           </div>
         </div>
         <div class="modal__pied">
@@ -170,7 +173,7 @@
       <div class="empty-state">
         <div class="empty-state__icone">💬</div>
         <div class="empty-state__titre">Aucun sujet pour l'instant</div>
-        <p class="empty-state__texte">Sois le premier à lancer une discussion !</p>
+        <p class="empty-state__texte">Soyez le premier à lancer une discussion !</p>
       </div>`;
             document.getElementById("pagination-forum").innerHTML = "";
             return;

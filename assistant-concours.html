@@ -4,10 +4,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Assistant IA Concours — ProInsertion</title>
+    <title>Assistant Concours — ProInsertion CI</title>
     <meta
       name="description"
-      content="Pose tes questions sur les concours de la Fonction Publique et des grandes écoles de Côte d'Ivoire à l'assistant IA d'ProInsertion."
+      content="Pose vos questions sur les concours de la Fonction Publique et des grandes écoles de Côte d'Ivoire à l'assistant de ProInsertion CI."
     />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -81,15 +81,18 @@
         color: #fff;
       }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
 
     <main class="container main-content" style="max-width: 760px; padding-bottom: 60px;">
       <div style="text-align: center; margin: 24px 0 20px;">
-        <h1>🤖 Assistant IA Concours</h1>
+        <h1>Assistant Concours</h1>
         <p style="color: var(--gris-texte);">
-          Pose tes questions sur les conditions, épreuves, pièces à fournir ou la
+          Pose vos questions sur les conditions, épreuves, pièces à fournir ou la
           méthode de révision pour un concours ivoirien.
         </p>
       </div>
@@ -101,11 +104,11 @@
       <div class="chat-conteneur">
         <div class="chat-messages" id="chat-messages">
           <div class="chat-message chat-message--assistant">
-            Bonjour ! Je suis l'assistant IA d'ProInsertion. Pose-moi une question sur un concours (conditions, épreuves, pièces à fournir, méthode de révision…). Je ne peux garantir aucune admission — pour les infos officielles, vérifie toujours la fiche du concours ou la source du ministère organisateur.
+            Bonjour ! Je suis l'assistant de ProInsertion CI. Pose-moi une question sur un concours (conditions, épreuves, pièces à fournir, méthode de révision…). Je ne peux garantir aucune admission — pour les infos officielles, vérifiez toujours la fiche du concours ou la source du ministère organisateur.
           </div>
         </div>
         <div class="chat-input-zone">
-          <input type="text" id="chat-input" class="form-input" placeholder="Écris ta question…" onkeydown="if(event.key==='Enter') envoyerMessage()" />
+          <input type="text" id="chat-input" class="form-input" placeholder="Écrivez votre question…" onkeydown="if(event.key==='Enter') envoyerMessage()" />
           <button onclick="envoyerMessage()" class="btn btn--primaire" id="btn-chat-envoyer">Envoyer</button>
         </div>
       </div>
@@ -152,7 +155,7 @@
 
         if (!window.Auth?.estConnecte()) {
           document.getElementById("mention-quota").textContent =
-            "Connecte-toi pour discuter avec l'assistant.";
+            "Connectez-vous pour discuter avec l'assistant.";
         }
       });
 
@@ -186,7 +189,7 @@
           if (res.alerteFraude) {
             htmlAlerte = `
               <div class="chat-alerte">
-                ⚠️ Rappel : aucun intermédiaire ne peut garantir la réussite à un concours. En cas de sollicitation suspecte, contacte le numéro vert anti-fraude de la Fonction Publique : <strong>1364</strong>.
+                ⚠️ Rappel : aucun intermédiaire ne peut garantir la réussite à un concours. En cas de sollicitation suspecte, contactez le numéro vert anti-fraude de la Fonction Publique : <strong>1364</strong>.
               </div>`;
           }
 

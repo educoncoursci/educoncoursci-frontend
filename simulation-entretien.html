@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simulation d'entretien — ProInsertion</title>
+    <title>Simulation d'entretien — ProInsertion CI</title>
     <meta name="description" content="Entraînez-vous avec des questions adaptées au poste visé, puis recevez une analyse de vos réponses, une note sur 100 et un rapport final." />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,6 +27,9 @@
       .tag-note { display: inline-block; background: var(--vert); color: #fff; border-radius: 8px; padding: 1px 8px; font-size: .78rem; font-weight: 700; margin-left: 6px; }
       @media (max-width: 640px) { .grille-2 { grid-template-columns: 1fr; } }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -40,23 +43,23 @@
 
     <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
       <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
-        <p style="margin-bottom:16px; color:var(--gris-texte);">Connecte-toi pour lancer une simulation.</p>
+        <p style="margin-bottom:16px; color:var(--gris-texte);">Connectez-vous pour lancer une simulation.</p>
         <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
       </div>
 
       <div id="zone-principale">
         <!-- 1. Formulaire -->
         <div id="zone-formulaire" class="carte-bloc">
-          <h3 style="margin:0 0 4px;">Prépare ta simulation</h3>
+          <h3 style="margin:0 0 4px;">Préparez votre simulation</h3>
           <div style="color:var(--gris-texte); font-size:.88rem; margin-bottom:16px;">
-            Prix : <strong id="prix-simulation">…</strong>. 8 questions adaptées à ton poste ; tu réponds par écrit, puis tu reçois ton analyse.
-            Tu préfères d'abord une fiche de préparation ? <a href="/documents-redaction.html">Voir la préparation à l'entretien</a>.
+            Prix : <strong id="prix-simulation">…</strong>. 8 questions adaptées à votre poste ; vous répondez par écrit, puis vous recevez votre analyse.
+            Vous préférez d'abord une fiche de préparation ? <a href="/documents-redaction.html">Voir la préparation à l'entretien</a>.
           </div>
           <div class="grille-2">
             <div class="form-groupe"><label class="form-label">Nom complet <span>*</span></label><input id="s-nom" class="form-input" /></div>
             <div class="form-groupe"><label class="form-label">Poste visé <span>*</span></label><input id="s-poste" class="form-input" placeholder="Assistant comptable" /></div>
             <div class="form-groupe pleine"><label class="form-label">Organisation (facultatif)</label><input id="s-org" class="form-input" /></div>
-            <div class="form-groupe pleine"><label class="form-label">Ton profil (formation, expériences, atouts)</label><textarea id="s-profil" class="form-textarea" rows="4"></textarea></div>
+            <div class="form-groupe pleine"><label class="form-label">Votre profil (formation, expériences, atouts)</label><textarea id="s-profil" class="form-textarea" rows="4"></textarea></div>
           </div>
           <button id="btn-lancer" class="btn btn--primaire btn--full btn--lg" style="margin-top:20px;">Préparer ma simulation</button>
         </div>
@@ -66,8 +69,8 @@
 
         <!-- 3. Réponses -->
         <div id="zone-reponses" class="carte-bloc hidden">
-          <h3 style="margin:0 0 4px;">Ta simulation est débloquée</h3>
-          <div style="color:var(--gris-texte); font-size:.88rem;">Réponds comme en entretien réel (2 000 caractères maximum par réponse). L'analyse n'a lieu qu'une fois : relis-toi avant d'envoyer.</div>
+          <h3 style="margin:0 0 4px;">Votre simulation est débloquée</h3>
+          <div style="color:var(--gris-texte); font-size:.88rem;">Répondez comme en entretien réel (2 000 caractères maximum par réponse). L'analyse n'a lieu qu'une fois : relisez-vous avant d'envoyer.</div>
           <div id="liste-questions"></div>
           <button id="btn-analyser" class="btn btn--primaire btn--full btn--lg" style="margin-top:20px;">Envoyer mes réponses pour analyse</button>
         </div>
@@ -137,12 +140,12 @@
         const data = { nom: val("s-nom"), poste: val("s-poste"), organisation: val("s-org"), profil: val("s-profil") };
         if (!data.nom || !data.poste) { window.afficherToast("Nom et poste visé sont requis.", "warn"); return; }
         const btn = $("btn-lancer");
-        btn.classList.add("btn--chargement"); btn.disabled = true; btn.textContent = "⏳ Préparation de tes questions…";
+        btn.classList.add("btn--chargement"); btn.disabled = true; btn.textContent = "⏳ Préparation de vos questions…";
         try {
           const res = await window.API.CVLM.creerSimulation(data);
           Commande.afficher(res.commande);
           chargerListe();
-          window.afficherToast("Ta simulation est prête. Voici l'aperçu.", "succes");
+          window.afficherToast("Votre simulation est prête. Voici l'aperçu.", "succes");
         } catch (e) {
           window.afficherToast(e.message || "Erreur de préparation.", "erreur");
         } finally {
@@ -161,7 +164,7 @@
           $("liste-questions").innerHTML = (c.questions || []).map((q, i) => `
             <div class="question">
               <div class="question__titre">Question ${i + 1} — ${esc(q)}</div>
-              <textarea class="form-textarea rep" rows="4" maxlength="2000" placeholder="Ta réponse…"></textarea>
+              <textarea class="form-textarea rep" rows="4" maxlength="2000" placeholder="Votre réponse…"></textarea>
             </div>`).join("");
           $("zone-reponses").scrollIntoView({ behavior: "smooth", block: "start" });
         }
@@ -171,16 +174,16 @@
       async function analyser() {
         if (!courante) return;
         const reponses = [...document.querySelectorAll(".rep")].map((t) => t.value.trim());
-        if (!reponses.some(Boolean)) { window.afficherToast("Réponds à au moins une question.", "warn"); return; }
+        if (!reponses.some(Boolean)) { window.afficherToast("Répondez à au moins une question.", "warn"); return; }
         const vides = reponses.filter((r) => !r).length;
         if (vides && !confirm(`${vides} question(s) sans réponse seront notées 0. Envoyer quand même ?`)) return;
         const btn = $("btn-analyser");
-        btn.classList.add("btn--chargement"); btn.disabled = true; btn.textContent = "⏳ Analyse de tes réponses…";
+        btn.classList.add("btn--chargement"); btn.disabled = true; btn.textContent = "⏳ Analyse de vos réponses…";
         try {
           const res = await window.API.CVLM.repondreSimulation(courante.id, reponses);
           courante = res.commande;
           afficherEtat(courante);
-          window.afficherToast("Ton rapport est prêt.", "succes");
+          window.afficherToast("Votre rapport est prêt.", "succes");
           chargerListe();
         } catch (e) {
           window.afficherToast(e.message || "Erreur d'analyse.", "erreur");
@@ -193,7 +196,7 @@
         const r = c.resultat;
         const liste = (t) => (t || []).length ? `<ul class="liste-simple">${t.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : "";
         $("zone-rapport").innerHTML = `
-          <h3 style="margin:0 0 14px;">Ton rapport de simulation</h3>
+          <h3 style="margin:0 0 14px;">Votre rapport de simulation</h3>
           <div class="note-globale"><div class="note-globale__valeur">${Number(r.note)}<span style="font-size:1.2rem;color:var(--gris-texte)"> / 100</span></div>
             <div style="margin-top:8px;font-size:.92rem;">${esc(r.conclusion)}</div></div>
           ${r.pointsForts?.length ? `<div style="margin-top:16px;"><strong>Points forts</strong>${liste(r.pointsForts)}</div>` : ""}

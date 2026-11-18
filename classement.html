@@ -4,10 +4,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Classement — ProInsertion</title>
+    <title>Classement — ProInsertion CI</title>
     <meta
       name="description"
-      content="Classement général des meilleurs scores QCM sur ProInsertion. Entraîne-toi et grimpe dans le classement !"
+      content="Classement général des meilleurs scores QCM sur ProInsertion CI. Entraînez-vous et grimpe dans le classement !"
     />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -56,7 +59,7 @@
           const zone = document.getElementById("zone-classement");
 
           if (classement.length === 0) {
-            zone.innerHTML = `<p style="text-align:center;color:var(--gris-texte);padding:40px 0;">Pas encore assez de tentatives pour établir un classement. Sois parmi les premiers !</p>`;
+            zone.innerHTML = `<p style="text-align:center;color:var(--gris-texte);padding:40px 0;">Pas encore assez de tentatives pour établir un classement. Soyez parmi les premiers !</p>`;
             return;
           }
 

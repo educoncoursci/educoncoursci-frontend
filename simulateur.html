@@ -4,18 +4,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Examen Blanc — ProInsertion</title>
-  <meta name="description" content="Passe des examens blancs en conditions réelles pour évaluer ton niveau avant le jour du concours.">
+    <title>Examen Blanc — ProInsertion CI</title>
+  <meta name="description" content="Passe des examens blancs en conditions réelles pour évaluer votre niveau avant le jour du concours.">
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="ProInsertion" />
-    <meta property="og:title" content="Examen Blanc — ProInsertion" />
-    <meta property="og:description" content="Passe des examens blancs en conditions réelles pour évaluer ton niveau avant le jour du concours." />
-    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-    <meta property="og:url" content="https://educoncoursci.netlify.app/simulateur.html" />
+    <meta property="og:site_name" content="ProInsertion CI" />
+    <meta property="og:title" content="Examen Blanc — ProInsertion CI" />
+    <meta property="og:description" content="Passe des examens blancs en conditions réelles pour évaluer votre niveau avant le jour du concours." />
+    <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://proinsertionci.netlify.app/simulateur.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Examen Blanc — ProInsertion" />
-    <meta name="twitter:description" content="Passe des examens blancs en conditions réelles pour évaluer ton niveau avant le jour du concours." />
-    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta name="twitter:title" content="Examen Blanc — ProInsertion CI" />
+    <meta name="twitter:description" content="Passe des examens blancs en conditions réelles pour évaluer votre niveau avant le jour du concours." />
+    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -165,6 +165,9 @@
         }
       }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <!-- ÉCRAN ACCUEIL -->
@@ -199,7 +202,7 @@
             line-height: 1.7;
           "
         >
-          Simule les conditions réelles du concours. Timer, toutes les matières,
+          Simulez les conditions réelles du concours. Timer, toutes les matières,
           correction automatique avec score détaillé.
         </p>
 
@@ -329,8 +332,8 @@
               padding-left: 16px;
             "
           >
-            <li>Le timer démarre dès que tu cliques sur "Démarrer"</li>
-            <li>Tu peux naviguer librement entre les questions</li>
+            <li>Le timer démarre dès que vous cliquez sur "Démarrer"</li>
+            <li>Vous pouvez naviguer librement entre les questions</li>
             <li>La correction n'est disponible qu'à la fin</li>
             <li>L'examen se termine automatiquement si le temps est écoulé</li>
           </ul>
@@ -362,7 +365,7 @@
       <!-- Navbar examen -->
       <div class="sim-navbar">
         <div style="font-weight: 900; font-size: 1rem">
-          <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Examen Blanc — ProInsertion
+          <span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Examen Blanc — ProInsertion CI
         </div>
         <div id="timer-exam" class="timer" style="font-size: 1.1rem">
           ⏱ 00:00
@@ -767,7 +770,7 @@
 
           if (questionsExam.length === 0) {
             alert(
-              "Aucune question disponible. Assure-toi d'avoir des QCM publiés.",
+              "Aucune question disponible. Assurez-vous d'avoir des QCM publiés.",
             );
             btn.textContent = "🚀 Démarrer l'examen";
             btn.disabled = false;
@@ -866,7 +869,7 @@
         if (restantes > 0) {
           if (
             !confirm(
-              `Il te reste ${restantes} question(s) sans réponse. Veux-tu remettre la copie quand même ?`,
+              `Il vous reste ${restantes} question(s) sans réponse. Voulez-vous remettre la copie quand même ?`,
             )
           )
             return;
@@ -900,31 +903,35 @@
         document.getElementById("ecran-examen").classList.add("hidden");
         document.getElementById("ecran-resultats").classList.remove("hidden");
 
-        // Correction locale
+        // Correction par le serveur : le navigateur n'envoie que les réponses
+        // choisies, il ne connaît pas les bonnes réponses et ne calcule pas le score.
         let score = 0;
-        const corrections = [];
+        let corrections = [];
         const statsMat = {};
-
-        questionsExam.forEach((q, i) => {
-          const rep = reponsesExam[i];
-          const ok = rep === q.correct;
-          if (ok) score++;
-          corrections.push({
-            question: q.question,
-            rep,
-            correct: q.correct,
-            ok,
-            options: q.options,
-            explication: q.explication,
-            matiere: q.matiere,
-          });
-          if (!statsMat[q.matiere])
-            statsMat[q.matiere] = { total: 0, bonnes: 0 };
-          statsMat[q.matiere].total++;
-          if (ok) statsMat[q.matiere].bonnes++;
+        try {
+          const rep = await window.API.QCM.corrigerExamenBlanc(
+            questionsExam.map((q, i) => ({
+              qcmId: q.qcmId,
+              index: q.index,
+              reponse: reponsesExam[i] === undefined ? null : reponsesExam[i],
+            })),
+          );
+          score = rep.score;
+          corrections = rep.corrections;
+        } catch (err) {
+          document.getElementById("ecran-resultats").classList.add("hidden");
+          document.getElementById("ecran-examen").classList.remove("hidden");
+          examTermine = false;
+          alert("Correction impossible pour le moment : " + (err.message || "erreur réseau") + "\nVos réponses sont conservées, réessayez.");
+          return;
+        }
+        corrections.forEach((c) => {
+          if (!statsMat[c.matiere]) statsMat[c.matiere] = { total: 0, bonnes: 0 };
+          statsMat[c.matiere].total++;
+          if (c.ok) statsMat[c.matiere].bonnes++;
         });
 
-        const total = questionsExam.length;
+        const total = corrections.length;
         const pct = Math.round((score / total) * 100);
         const emoji = pct >= 75 ? "🏆" : pct >= 50 ? "👍" : "📚";
         const mention =
@@ -948,15 +955,6 @@
         document.getElementById("res-bonnes").textContent = score;
         document.getElementById("res-mauvaises").textContent = total - score;
         document.getElementById("res-temps").textContent = `${m}:${s}`;
-
-        // Enregistre le résultat pour le suivi de progression (Module 7),
-        // si l'utilisateur est connecté — sans bloquer l'affichage des
-        // résultats en cas d'erreur réseau.
-        if (window.Auth?.estConnecte()) {
-          window.API.QCM.soumettreExamenBlanc(score, total).catch((err) =>
-            console.error("Erreur enregistrement examen blanc :", err.message),
-          );
-        }
 
         // Par matière
         document.getElementById("res-par-matiere").innerHTML = Object.entries(

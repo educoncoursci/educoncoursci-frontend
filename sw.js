@@ -1,9 +1,9 @@
 // ============================================================
-//  sw.js — Service Worker ProInsertion
+//  sw.js — Service Worker ProInsertion CI
 //  Cache statique + stratégie network-first pour l'API
 // ============================================================
 
-const CACHE_NOM     = "proinsertion-v12"; // ⚠️ Incrémente ce numéro (v3, v4…) à
+const CACHE_NOM     = "proinsertion-v24"; // ⚠️ Incrémente ce numéro (v3, v4…) à
 // chaque déploiement qui touche un fichier de CACHE_STATIQUE (surtout
 // js/api.js) — c'est ce qui force le Service Worker à jeter l'ancien
 // cache et retélécharger les fichiers à jour. Sans ça, un visiteur
@@ -58,7 +58,7 @@ if (url.pathname.startsWith("/api/")) {
 event.respondWith(
 fetch(event.request).catch(() =>
 new Response(
-JSON.stringify({ error: "Hors ligne. Vérifie ta connexion." }),
+JSON.stringify({ error: "Hors ligne. Vérifiez votre connexion." }),
 { headers: { "Content-Type": "application/json" } }
 )
 )
@@ -94,7 +94,7 @@ if (event.data?.action === "skipWaiting") self.skipWaiting();
 
 // ── Notifications Push (Lot 11) ───────────────────────────────
 self.addEventListener("push", event => {
-let data = { titre: "ProInsertion", message: "Nouvelle notification.", url: "/" };
+let data = { titre: "ProInsertion CI", message: "Nouvelle notification.", url: "/" };
 try {
 if (event.data) data = { ...data, ...event.data.json() };
 } catch {

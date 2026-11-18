@@ -4,21 +4,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Documents Administratifs — ProInsertion</title>
+    <title>Documents Administratifs — ProInsertion CI</title>
     <meta
       name="description"
-      content="Génère tes documents administratifs avec l'IA : demandes, attestations, courriers, comptes rendus, procès-verbaux."
+      content="Générez vos documents administratifs en ligne : demandes, attestations, courriers, comptes rendus, procès-verbaux."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="ProInsertion" />
-    <meta property="og:title" content="Documents Administratifs — ProInsertion" />
-    <meta property="og:description" content="Génère tes documents administratifs avec l'IA : demandes, attestations, courriers, comptes rendus, procès-verbaux." />
-    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-    <meta property="og:url" content="https://educoncoursci.netlify.app/documents-admin.html" />
+    <meta property="og:site_name" content="ProInsertion CI" />
+    <meta property="og:title" content="Documents Administratifs — ProInsertion CI" />
+    <meta property="og:description" content="Générez vos documents administratifs en ligne : demandes, attestations, courriers, comptes rendus, procès-verbaux." />
+    <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://proinsertionci.netlify.app/documents-admin.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Documents Administratifs — ProInsertion" />
-    <meta name="twitter:description" content="Génère tes documents administratifs avec l'IA : demandes, attestations, courriers, comptes rendus, procès-verbaux." />
-    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta name="twitter:title" content="Documents Administratifs — ProInsertion CI" />
+    <meta name="twitter:description" content="Générez vos documents administratifs en ligne : demandes, attestations, courriers, comptes rendus, procès-verbaux." />
+    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -29,7 +29,6 @@
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
     <link rel="stylesheet" href="/css/recherche.css" />
-    <link rel="stylesheet" href="/css/flash-info.css" />
     <style>
       .types-grille {
         display: grid;
@@ -116,66 +115,19 @@
         margin-top: 16px;
       }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
 
-    <!-- ── FLASH INFO ──────────────────────────────────────────── -->
-    <div class="flash-info">
-      <div class="flash-info__label">
-        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-        <span>Flash info</span>
-      </div>
-      <div class="flash-info__piste">
-        <div class="flash-info__track">
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Résultats</span>
-            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">CAFOP</span>
-            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Résultats</span>
-            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">CAFOP</span>
-            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
-          </a>
-        </div>
-      </div>
-    </div>
+    
 
-    <div class="page-header page-header--apres-flash" style="background: linear-gradient(135deg, #0a2540, #0a6ebd)">
+    <div class="page-header page-header--standard" style="background: linear-gradient(135deg, #0a2540, #0a6ebd)">
       <div class="container">
         <h1><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Documents Administratifs</h1>
-        <p>Demandes, attestations, courriers, comptes rendus et procès-verbaux — générés par l'IA.</p>
+        <p>Demandes, attestations, courriers, comptes rendus et procès-verbaux — générés en quelques minutes.</p>
       </div>
     </div>
 
@@ -183,7 +135,7 @@
 
       <!-- Zone non connecté -->
       <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
-        <p style="margin-bottom:16px; color:var(--gris-texte);">Connecte-toi pour créer tes documents administratifs.</p>
+        <p style="margin-bottom:16px; color:var(--gris-texte);">Connectez-vous pour créer vos documents administratifs.</p>
         <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
       </div>
 
@@ -196,10 +148,10 @@
         <!-- ═══════════════ FORMULAIRE DEMANDE ═══════════════ -->
         <div id="form-demande" class="form-doc hidden">
           <h3 style="margin-top:0;">Demande officielle</h3>
-          <div class="form-groupe"><label class="form-label">Toi (expéditeur)</label><textarea id="demande-expediteur" class="form-textarea" rows="2" placeholder="Nom, adresse, téléphone…"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Vous (expéditeur)</label><textarea id="demande-expediteur" class="form-textarea" rows="2" placeholder="Nom, adresse, téléphone…"></textarea></div>
           <div class="form-groupe"><label class="form-label">Destinataire *</label><input type="text" id="demande-destinataire" class="form-input" placeholder="Ex: Monsieur le Directeur Général de..." /></div>
           <div class="form-groupe"><label class="form-label">Objet *</label><input type="text" id="demande-objet" class="form-input" placeholder="Ex: Demande de stage" /></div>
-          <div class="form-groupe"><label class="form-label">Motif détaillé *</label><textarea id="demande-motif" class="form-textarea" rows="4" placeholder="Explique ta demande en détail…"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Motif détaillé *</label><textarea id="demande-motif" class="form-textarea" rows="4" placeholder="Expliquez votre demande en détail…"></textarea></div>
           <div class="form-groupe"><label class="form-label">Ville</label><input type="text" id="demande-ville" class="form-input" placeholder="Abidjan" /></div>
           <button onclick="genererDocument('demande')" class="btn btn--primaire btn--full btn--lg" id="btn-generer-demande">Générer ma Demande</button>
         </div>
@@ -218,7 +170,7 @@
         <!-- ═══════════════ FORMULAIRE COURRIER ═══════════════ -->
         <div id="form-courrier" class="form-doc hidden">
           <h3 style="margin-top:0;">Courrier administratif</h3>
-          <div class="form-groupe"><label class="form-label">Toi (expéditeur)</label><textarea id="courrier-expediteur" class="form-textarea" rows="2"></textarea></div>
+          <div class="form-groupe"><label class="form-label">Vous (expéditeur)</label><textarea id="courrier-expediteur" class="form-textarea" rows="2"></textarea></div>
           <div class="form-groupe"><label class="form-label">Destinataire *</label><input type="text" id="courrier-destinataire" class="form-input" /></div>
           <div class="form-groupe"><label class="form-label">Objet *</label><input type="text" id="courrier-objet" class="form-input" /></div>
           <div class="form-groupe"><label class="form-label">Éléments à inclure *</label><textarea id="courrier-contenu" class="form-textarea" rows="4" placeholder="Que doit contenir le courrier ?"></textarea></div>
@@ -242,7 +194,7 @@
         <div id="form-proces_verbal" class="form-doc hidden">
           <h3 style="margin-top:0;">Procès-verbal</h3>
           <div style="background:#fff8e6; border:1px solid #f5d98a; border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:0.82rem; color:#7a5c00;">
-            Ce document est un modèle indicatif. Fais-le toujours valider par les instances compétentes.
+            Ce document est un modèle indicatif. Faites-le toujours valider par les instances compétentes.
           </div>
           <div class="form-groupe"><label class="form-label">Type de procès-verbal *</label><input type="text" id="pv-type" class="form-input" placeholder="Ex: PV d'Assemblée Générale" /></div>
           <div class="form-groupe"><label class="form-label">Date *</label><input type="text" id="pv-date" class="form-input" placeholder="jj/mm/aaaa" /></div>
@@ -376,7 +328,7 @@
         const btn = document.getElementById(`btn-generer-${type}`);
         const texteOriginal = btn.textContent;
         btn.disabled = true;
-        btn.textContent = "⏳ L'IA rédige ton document…";
+        btn.textContent = "⏳ Rédaction de votre document…";
 
         try {
           const res = await window.API.DocumentsAdmin.generer(donnees);

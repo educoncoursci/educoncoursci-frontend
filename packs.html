@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Packs — ProInsertion</title>
+    <title>Packs — ProInsertion CI</title>
     <meta name="description" content="Un CV et une lettre de motivation assortis, à prix réduit : packs Essentiel, Professionnel, International et Recherche d'emploi." />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,6 +33,9 @@
       .doc-pack__flou { filter: blur(5px); user-select: none; pointer-events: none; color: #555; max-height: 200px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 40%, transparent); mask-image: linear-gradient(#000 40%, transparent); }
       @media (max-width: 640px) { .grille-2 { grid-template-columns: 1fr; } }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -46,21 +49,21 @@
 
     <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
       <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
-        <p style="margin-bottom:16px; color:var(--gris-texte);">Connecte-toi pour commander un pack.</p>
+        <p style="margin-bottom:16px; color:var(--gris-texte);">Connectez-vous pour commander un pack.</p>
         <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
       </div>
 
       <div id="zone-generateur">
         <div class="carte-bloc">
-          <h3 style="margin:0 0 12px;">1. Choisis ton pack</h3>
+          <h3 style="margin:0 0 12px;">1. Choisissez votre pack</h3>
           <div id="liste-packs" class="packs-grille" style="color: var(--gris-texte);">Chargement…</div>
         </div>
 
         <div id="zone-formulaire" class="carte-bloc hidden">
-          <h3 style="margin:0 0 4px;">2. Renseigne tes informations</h3>
+          <h3 style="margin:0 0 4px;">2. Renseignez vos informations</h3>
           <div style="color:var(--gris-texte); font-size:.85rem;">Une seule saisie pour tous les documents du pack.</div>
 
-          <div class="titre-section">Ton profil</div>
+          <div class="titre-section">Votre profil</div>
           <div class="grille-2">
             <div class="form-groupe"><label class="form-label">Nom complet <span>*</span></label><input id="p-nom" class="form-input" /></div>
             <div class="form-groupe"><label class="form-label">Poste recherché <span>*</span></label><input id="p-poste" class="form-input" /></div>
@@ -68,7 +71,7 @@
             <div class="form-groupe"><label class="form-label">Téléphone</label><input id="p-tel" class="form-input" /></div>
             <div class="form-groupe"><label class="form-label">Ville</label><input id="p-ville" class="form-input" placeholder="Abidjan" /></div>
             <div class="form-groupe"><label class="form-label">Pays</label><input id="p-pays" class="form-input" placeholder="Côte d'Ivoire" /></div>
-            <div class="form-groupe pleine"><label class="form-label">Profil (quelques lignes sur toi)</label><textarea id="p-profil" class="form-textarea" rows="3"></textarea></div>
+            <div class="form-groupe pleine"><label class="form-label">Profil (quelques lignes sur vous)</label><textarea id="p-profil" class="form-textarea" rows="3"></textarea></div>
           </div>
 
           <div id="bloc-cv">
@@ -90,10 +93,10 @@
           </div>
 
           <div id="bloc-entretien" class="hidden">
-            <div class="titre-section">Pour ton entretien</div>
+            <div class="titre-section">Pour votre entretien</div>
             <div class="grille-2">
               <div class="form-groupe pleine"><label class="form-label">Organisation (facultatif)</label><input id="p-org2" class="form-input" /></div>
-              <div class="form-groupe pleine"><label class="form-label">Ce qui t'inquiète pour cet entretien (facultatif)</label><textarea id="p-inq" class="form-textarea" rows="2"></textarea></div>
+              <div class="form-groupe pleine"><label class="form-label">Ce qui vous inquiète pour cet entretien (facultatif)</label><textarea id="p-inq" class="form-textarea" rows="2"></textarea></div>
             </div>
           </div>
 
@@ -102,7 +105,7 @@
             <div class="grille-2">
               <div class="form-groupe"><label class="form-label">Organisation visée <span>*</span></label><input id="p-org" class="form-input" /></div>
               <div class="form-groupe"><label class="form-label">Destinataire</label><input id="p-dest" class="form-input" placeholder="Madame, Monsieur le Directeur des Ressources Humaines" /></div>
-              <div class="form-groupe pleine"><label class="form-label">Ta motivation principale <span>*</span></label><textarea id="p-motivation" class="form-textarea" rows="3"></textarea></div>
+              <div class="form-groupe pleine"><label class="form-label">Votre motivation principale <span>*</span></label><textarea id="p-motivation" class="form-textarea" rows="3"></textarea></div>
               <div class="form-groupe pleine"><label class="form-label">Expérience ou formation clé</label><textarea id="p-experience" class="form-textarea" rows="2"></textarea></div>
               <div class="form-groupe"><label class="form-label">Atout 1</label><input id="p-atout1" class="form-input" /></div>
               <div class="form-groupe"><label class="form-label">Atout 2</label><input id="p-atout2" class="form-input" /></div>
@@ -171,7 +174,7 @@
               <div style="margin-top:8px;"><span class="pack__prix">${Number(p.prix_fcfa).toLocaleString("fr-FR")} FCFA</span>${p.economie_fcfa ? `<span class="pack__eco">−${Number(p.economie_fcfa).toLocaleString("fr-FR")} F</span>` : ""}</div>
             </div>`).join("");
           zone.querySelectorAll(".pack").forEach((el) => (el.onclick = () => choisir(el.dataset.id)));
-        } catch { zone.textContent = "Impossible de charger les packs. Réessaie dans un instant."; }
+        } catch { zone.textContent = "Impossible de charger les packs. Réessayez dans un instant."; }
       }
 
       function choisir(id) {
@@ -220,21 +223,21 @@
       }
 
       async function generer() {
-        if (!packChoisi) { window.afficherToast("Choisis d'abord un pack.", "warn"); return; }
+        if (!packChoisi) { window.afficherToast("Choisissez d'abord un pack.", "warn"); return; }
         const data = collecter();
         if (!data.nom || !data.poste) { window.afficherToast("Nom et poste recherché sont requis.", "warn"); return; }
         const entretien = !document.getElementById("bloc-entretien").classList.contains("hidden");
-        if (entretien) { delete data.experiences; delete data.formations; if (!data.profil) { window.afficherToast("Décris ton profil pour personnaliser l'entretien.", "warn"); return; } }
+        if (entretien) { delete data.experiences; delete data.formations; if (!data.profil) { window.afficherToast("Décrivez votre profil pour personnaliser l'entretien.", "warn"); return; } }
         const avecLettre = !document.getElementById("bloc-lettre").classList.contains("hidden");
         if (avecLettre && (!data.organisation || !data.motivation)) { window.afficherToast("Organisation visée et motivation sont requises.", "warn"); return; }
 
         const btn = document.getElementById("btn-generer");
-        btn.classList.add("btn--chargement"); btn.disabled = true; btn.textContent = "⏳ Rédaction de ton pack…";
+        btn.classList.add("btn--chargement"); btn.disabled = true; btn.textContent = "⏳ Rédaction de votre pack…";
         try {
           const res = await window.API.CVLM.creerPack(data);
           groupeCourant = res.groupe_id;
           rendrePack(res.documents);
-          window.afficherToast("Ton pack est prêt. Voici l'aperçu.", "succes");
+          window.afficherToast("Votre pack est prêt. Voici l'aperçu.", "succes");
         } catch (e) {
           window.afficherToast(e.message || "Erreur de génération.", "erreur");
         } finally {

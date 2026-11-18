@@ -4,7 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sujet — Communauté ProInsertion</title>
+    <title>Sujet — Communauté ProInsertion CI</title>
+    <meta name="description" content="Discussion du forum ProInsertion CI." />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -38,6 +39,9 @@
       .message-carte__date { font-size: 0.76rem; color: var(--gris-texte); }
       .message-carte__contenu { margin-top: 10px; font-size: 0.92rem; line-height: 1.7; white-space: pre-wrap; }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -54,12 +58,12 @@
 
       <div id="zone-repondre" class="message-carte hidden" style="margin-top:16px;">
         <div class="form-groupe" style="margin-bottom:10px;">
-          <textarea id="reponse-contenu" class="form-textarea" rows="3" placeholder="Écris ta réponse…"></textarea>
+          <textarea id="reponse-contenu" class="form-textarea" rows="3" placeholder="Écrivez votre réponse…"></textarea>
         </div>
         <button onclick="publierReponse()" class="btn btn--primaire btn--sm" id="btn-repondre">Répondre</button>
       </div>
       <div id="zone-connexion-requise" class="hidden" style="text-align:center;margin-top:16px;">
-        <a href="/auth/login.html" class="btn btn--outline-vert">Connecte-toi pour répondre</a>
+        <a href="/auth/login.html" class="btn btn--outline-vert">Connectez-vous pour répondre</a>
       </div>
     </main>
 
@@ -95,7 +99,7 @@
       async function chargerSujet() {
         try {
           const { sujet, reponses } = await window.API.Forum.detailSujet(sujetId);
-          document.title = `${sujet.titre} — Communauté ProInsertion`;
+          document.title = `${sujet.titre} — Communauté ProInsertion CI`;
 
           const session = window.Auth?.getSession();
           const peutSupprimer = session && (session.id === sujet.user_id || session.role === "admin");

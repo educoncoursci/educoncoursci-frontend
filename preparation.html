@@ -4,21 +4,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Préparation aux Concours — ProInsertion</title>
+    <title>Préparation aux Concours — ProInsertion CI</title>
     <meta
       name="description"
       content="QCM chronométrés, examens blancs, cours et vidéos pour préparer les concours CI."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="ProInsertion" />
-    <meta property="og:title" content="Préparation aux Concours — ProInsertion" />
+    <meta property="og:site_name" content="ProInsertion CI" />
+    <meta property="og:title" content="Préparation aux Concours — ProInsertion CI" />
     <meta property="og:description" content="QCM chronométrés, examens blancs, cours et vidéos pour préparer les concours CI." />
-    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-    <meta property="og:url" content="https://educoncoursci.netlify.app/preparation.html" />
+    <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://proinsertionci.netlify.app/preparation.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Préparation aux Concours — ProInsertion" />
+    <meta name="twitter:title" content="Préparation aux Concours — ProInsertion CI" />
     <meta name="twitter:description" content="QCM chronométrés, examens blancs, cours et vidéos pour préparer les concours CI." />
-    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -29,7 +29,6 @@
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
-    <link rel="stylesheet" href="/css/flash-info.css" />
     <style>
       .qcm-grille {
         display: grid;
@@ -87,106 +86,18 @@
         }
       }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
-        <!-- ── FLASH INFO ──────────────────────────────────────────── -->
-    <div class="flash-info">
-      <div class="flash-info__label">
-        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-        <span>Flash info</span>
-      </div>
-      <div class="flash-info__piste">
-        <div class="flash-info__track">
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Résultats</span>
-            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">CAFOP</span>
-            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">ENA</span>
-            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Vigilance</span>
-            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
-          </a>
-          <!-- Duplication pour un défilement continu sans interruption -->
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Résultats</span>
-            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">CAFOP</span>
-            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">ENA</span>
-            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Vigilance</span>
-            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
-          </a>
-        </div>
-      </div>
-    </div>
+        
 
-    <div class="page-header page-header--apres-flash">
+    <div class="page-header page-header--standard">
       <div class="container">
         <h1><span data-icone="diplome" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Préparation</h1>
-        <p>QCM et cours par matière pour réviser efficacement ton concours.</p>
+        <p>QCM et cours par matière pour réviser efficacement votre concours.</p>
       </div>
     </div>
 
@@ -248,7 +159,7 @@
             <div>
               <h2 style="margin-bottom: 4px"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> QCM de préparation</h2>
               <p style="color: var(--gris-texte); font-size: 0.9rem; margin: 0">
-                Questions corrigées par l'IA avec explications détaillées.
+                Questions corrigées avec explications détaillées.
               </p>
             </div>
             <div style="display: flex; gap: 8px; align-items: center">
@@ -334,8 +245,8 @@
             <div>
               <h2 style="color: #fff; margin-bottom: 8px">⏱️ Examen Blanc</h2>
               <p style="opacity: 0.85; max-width: 480px; margin: 0">
-                Simule les conditions réelles du concours : toutes les matières,
-                timer, correction automatique. Identifie tes points faibles.
+                Simulez les conditions réelles du concours : toutes les matières,
+                timer, correction automatique. Identifie vos points faibles.
               </p>
               <div
                 style="
@@ -373,7 +284,7 @@
                     font-size: 0.88rem;
                   "
                 >
-                  <span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Correction IA
+                  <span data-icone="etoile" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Correction détaillée
                 </div>
               </div>
             </div>
@@ -452,10 +363,10 @@
                 align-items: flex-start;
               "
             >
-              <div style="font-size: 2.5rem; flex-shrink: 0"><span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
+              <div style="font-size: 2.5rem; flex-shrink: 0"><span data-icone="etoile" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
               <div>
                 <h3 style="font-size: 1rem; margin-bottom: 6px">
-                  Générateur CV/LM IA
+                  Générateur CV/LM
                 </h3>
                 <p
                   style="

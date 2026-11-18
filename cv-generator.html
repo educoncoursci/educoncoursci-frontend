@@ -4,21 +4,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Générateur CV & LM — ProInsertion</title>
+    <title>Générateur CV & LM — ProInsertion CI</title>
     <meta
       name="description"
-      content="Génère un CV professionnel et une lettre de motivation adaptés au marché ivoirien grâce à l'IA Claude."
+      content="Générez un CV professionnel et une lettre de motivation adaptés au marché ivoirien en quelques minutes."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="ProInsertion" />
-    <meta property="og:title" content="Générateur CV & LM — ProInsertion" />
-    <meta property="og:description" content="Génère un CV professionnel et une lettre de motivation adaptés au marché ivoirien grâce à l'IA Claude." />
-    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-    <meta property="og:url" content="https://educoncoursci.netlify.app/cv-generator.html" />
+    <meta property="og:site_name" content="ProInsertion CI" />
+    <meta property="og:title" content="Générateur CV & LM — ProInsertion CI" />
+    <meta property="og:description" content="Générez un CV professionnel et une lettre de motivation adaptés au marché ivoirien en quelques minutes." />
+    <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://proinsertionci.netlify.app/cv-generator.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Générateur CV & LM — ProInsertion" />
-    <meta name="twitter:description" content="Génère un CV professionnel et une lettre de motivation adaptés au marché ivoirien grâce à l'IA Claude." />
-    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta name="twitter:title" content="Générateur CV & LM — ProInsertion CI" />
+    <meta name="twitter:description" content="Générez un CV professionnel et une lettre de motivation adaptés au marché ivoirien en quelques minutes." />
+    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -181,6 +181,9 @@
         }
       }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -198,11 +201,11 @@
             margin-bottom: 12px;
             display: inline-block;
           "
-          ><span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> IA Claude</span
+          ><span data-icone="etoile" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Assistant ProInsertion CI</span
         >
         <h1>Générateur CV & Lettre de Motivation</h1>
         <p>
-          Génère en 30 secondes un document professionnel adapté aux recruteurs
+          Générez en 30 secondes un document professionnel adapté aux recruteurs
           ivoiriens (entreprises, ONG, Fonction Publique).
         </p>
         <div
@@ -228,7 +231,7 @@
               font-weight: 600;
             "
           >
-            <span data-icone="robot" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Propulsé par Claude AI
+            <span data-icone="etoile" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Une solution ProInsertion CI
           </div>
           <div
             style="
@@ -261,7 +264,7 @@
           <div style="font-size: 3.5rem; margin-bottom: 16px"><span data-icone="cadenas" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
           <h2 style="margin-bottom: 10px">Connexion requise</h2>
           <p style="color: var(--gris-texte); margin-bottom: 24px">
-            Connecte-toi pour utiliser le générateur CV & LM.
+            Connectez-vous pour utiliser le générateur CV & LM.
           </p>
           <a
             href="/auth/login.html?retour=/cv-generator.html"
@@ -393,7 +396,7 @@
                   ><textarea
                     id="cv-profil"
                     class="form-textarea"
-                    placeholder="Décris-toi en 2-3 phrases : ta formation, tes points forts, tes objectifs…"
+                    placeholder="Décrivez-vous en 2-3 phrases : votre formation, vos points forts, vos objectifs…"
                     rows="3"
                   ></textarea>
                 </div>
@@ -472,7 +475,7 @@
                       <label class="form-label">Missions et réalisations</label
                       ><textarea
                         class="form-textarea exp-desc"
-                        placeholder="Décris tes missions, réalisations, outils utilisés…"
+                        placeholder="Décrivez vos missions, réalisations, outils utilisés…"
                         rows="2"
                       ></textarea>
                     </div>
@@ -610,7 +613,7 @@
               <div style="margin-top: 28px">
                 <label class="form-label" style="margin-bottom: 12px; display: block;">
                   <span data-icone="graphique" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
-                  Choisis ton type de CV
+                  Choisissez votre type de CV
                 </label>
                 <div id="types-cv-conteneur" class="types-cv-grille" style="color: var(--gris-texte); font-size: 0.85rem;">
                   Chargement…
@@ -657,7 +660,7 @@
                     margin-bottom: 14px;
                   "
                 >
-                  <span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Tes coordonnées
+                  <span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Vos coordonnées
                 </div>
                 <div class="cv-layout">
                   <div class="form-groupe">
@@ -768,7 +771,7 @@
                     margin-bottom: 14px;
                   "
                 >
-                  <span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Tes arguments
+                  <span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Vos arguments
                 </div>
                 <div class="form-groupe">
                   <label class="form-label"
@@ -776,7 +779,7 @@
                   ><textarea
                     id="lm-motivation"
                     class="form-textarea"
-                    placeholder="Pourquoi ce poste, cette organisation ? Qu'est-ce qui t'attire ?"
+                    placeholder="Pourquoi ce poste, cette organisation ? Qu'est-ce qui vous attire ?"
                     rows="2"
                   ></textarea>
                 </div>
@@ -785,7 +788,7 @@
                   ><textarea
                     id="lm-experience"
                     class="form-textarea"
-                    placeholder="Ton diplôme, ton stage ou ta formation la plus pertinente…"
+                    placeholder="Votre diplôme, votre stage ou votre formation la plus pertinente…"
                     rows="2"
                   ></textarea>
                 </div>
@@ -833,7 +836,7 @@
           <!-- ═══════════════ CV COMMANDÉ (aperçu → paiement → PDF) ═══════════════ -->
           <div id="zone-commande" class="hidden">
             <div style="background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm);">
-              <h3 style="color: var(--vert); margin: 0 0 4px" id="cmd-titre">Ton CV</h3>
+              <h3 style="color: var(--vert); margin: 0 0 4px" id="cmd-titre">Votre CV</h3>
               <div id="cmd-sous-titre" style="color: var(--gris-texte); font-size: .9rem; margin-bottom: 16px;"></div>
 
               <div class="cmd-doc">
@@ -844,16 +847,16 @@
               <!-- Paiement -->
               <div id="cmd-paiement" class="cmd-pay hidden">
                 <div style="font-weight:800; font-size:1.05rem; margin-bottom:6px;">
-                  Débloque ton document complet : <span id="cmd-prix"></span>
+                  Débloquez votre document complet : <span id="cmd-prix"></span>
                 </div>
                 <ol style="margin:0 0 14px 18px; padding:0; line-height:1.8; font-size:.9rem;">
-                  <li>Envoie le montant exact par <strong>Wave</strong> ou <strong>Orange Money</strong> :
+                  <li>Envoyez le montant exact par <strong>Wave</strong> ou <strong>Orange Money</strong> :
                     <div id="cmd-numeros" style="margin-top:4px;"></div></li>
-                  <li>Note l'identifiant de transaction reçu par SMS.</li>
-                  <li>Saisis-le ci-dessous. Un même identifiant ne peut servir qu'une seule fois.</li>
+                  <li>Notez l'identifiant de transaction reçu par SMS.</li>
+                  <li>Saisissez-le ci-dessous. Un même identifiant ne peut servir qu'une seule fois.</li>
                 </ol>
                 <div id="cmd-rejet" class="hidden" style="background:#fef2f2;color:#991b1b;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:.88rem;">
-                  Ton précédent paiement n'a pas pu être confirmé. Vérifie l'identifiant et réessaie.
+                  Votre précédent paiement n'a pas pu être confirmé. Vérifiez l'identifiant et réessayez.
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 2fr; gap:10px;">
                   <select id="cmd-moyen" class="form-input">
@@ -870,7 +873,7 @@
               <!-- Vérification en cours -->
               <div id="cmd-verification" class="cmd-pay hidden">
                 <strong>Paiement reçu, vérification en cours.</strong>
-                <p style="margin:6px 0 12px; font-size:.9rem;">Notre équipe confirme la réception des fonds (24 h maximum). Ton document sera téléchargeable dès la validation.</p>
+                <p style="margin:6px 0 12px; font-size:.9rem;">Notre équipe confirme la réception des fonds (24 h maximum). Votre document sera téléchargeable dès la validation.</p>
                 <button onclick="rafraichirCommande()" class="btn btn--outline-vert btn--sm">Actualiser le statut</button>
               </div>
 
@@ -959,7 +962,7 @@
                   <span data-icone="fusee" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span>
                   Adapter ce CV à une offre d'emploi précise (optionnel)
                 </label>
-                <textarea id="texte-offre-emploi" class="form-textarea" rows="4" placeholder="Colle ici le texte de l'offre d'emploi…"></textarea>
+                <textarea id="texte-offre-emploi" class="form-textarea" rows="4" placeholder="Collez ici le texte de l'offre d'emploi…"></textarea>
                 <div style="display:flex; gap:10px; margin-top:10px; flex-wrap: wrap;">
                   <button onclick="adapterAOffre()" class="btn btn--primaire btn--sm" id="btn-adapter-offre">
                     <span data-icone="actualiser" data-taille="16" style="display:inline-flex;vertical-align:-3px;"></span> Adapter mon CV à cette offre
@@ -1006,7 +1009,7 @@
                     <div
                       style="font-weight: 900; font-size: 0.95rem; color: #fff"
                     >
-                      ProInsertion
+                      ProInsertion CI
                     </div>
                     <div
                       style="
@@ -1034,11 +1037,11 @@
                 "
               >
                 <strong><span data-icone="aide" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Comment utiliser ce document :</strong><br />
-                1. Clique <strong>"Copier"</strong> → colle dans Word, Google
+                1. Cliquez <strong>"Copier"</strong> → collez dans Word, Google
                 Docs ou LibreOffice<br />
                 2. Ou clique <strong>"Télécharger PDF"</strong> pour un fichier
                 prêt à l'envoi<br />
-                3. Ajuste selon tes préférences avant d'envoyer
+                3. Ajustez selon vos préférences avant d'envoyer
               </div>
             </div>
           </div>
@@ -1081,7 +1084,7 @@
         mettre("texte-offre-emploi", o.resume);
         const bandeau = document.createElement("div");
         bandeau.style.cssText = "background:#f0fdf4;border-left:4px solid var(--vert);border-radius:10px;padding:12px 16px;margin:0 0 16px;font-size:.9rem;";
-        bandeau.innerHTML = "🎯 Document ciblé sur l'offre <strong></strong>. Complète ton parcours réel : rien n'est inventé à ta place." + (o.mots_cles && o.mots_cles.length ? "<br><span style='color:var(--gris-texte)'>Mots-clés à intégrer si ils correspondent à ton parcours : " + "</span><span class='mots'></span>" : "");
+        bandeau.innerHTML = "🎯 Document ciblé sur l'offre <strong></strong>. Complétez votre parcours réel : rien n'est inventé à votre place." + (o.mots_cles && o.mots_cles.length ? "<br><span style='color:var(--gris-texte)'>Mots-clés à intégrer si ils correspondent à votre parcours : " + "</span><span class='mots'></span>" : "");
         bandeau.querySelector("strong").textContent = o.poste;
         const m = bandeau.querySelector(".mots"); if (m) m.textContent = o.mots_cles.join(", ");
         const zone = document.getElementById("zone-generateur"); if (zone) zone.prepend(bandeau);
@@ -1089,6 +1092,7 @@
       }
 
       document.addEventListener("DOMContentLoaded", () => {
+        if (new URLSearchParams(location.search).get("type") === "lm") { const b = document.querySelectorAll(".onglet-btn")[1]; if (b) changerOnglet("lm", b); }
         if (!window.Auth?.estConnecte()) {
           document.getElementById("zone-non-connecte").classList.remove("hidden");
           document.getElementById("zone-generateur").classList.add("hidden");
@@ -1164,7 +1168,7 @@
         const session = window.Auth?.getSession?.();
         if (modele?.premium && !session?.premium) {
           window.afficherToast(
-            `"${modele.nom}" est un modèle Premium — l'export sera bloqué tant que ton compte n'est pas Premium.`,
+            `"${modele.nom}" est un modèle Premium — l'export sera bloqué tant que votre compte n'est pas Premium.`,
             "info",
           );
         }
@@ -1193,7 +1197,7 @@
             <div class="form-groupe"><label class="form-label">Début</label><input type="text" class="form-input exp-debut" placeholder="Jan 2024"></div>
             <div class="form-groupe"><label class="form-label">Fin (vide si actuel)</label><input type="text" class="form-input exp-fin" placeholder="Déc 2024"></div>
           </div>
-          <div class="form-groupe"><label class="form-label">Missions et réalisations</label><textarea class="form-textarea exp-desc" placeholder="Tes missions, résultats, outils…" rows="2"></textarea></div>`;
+          <div class="form-groupe"><label class="form-label">Missions et réalisations</label><textarea class="form-textarea exp-desc" placeholder="Vos missions, résultats, outils…" rows="2"></textarea></div>`;
 
       document.getElementById("liste-exp").appendChild(div);
       }
@@ -1201,7 +1205,7 @@
       function supprimerExp(btn) {
       const items = document.querySelectorAll("#liste-exp .exp-item");
       if (items.length > 1) btn.closest(".exp-item").remove();
-      else window.afficherToast("Garde au moins une expérience.", "warn");
+      else window.afficherToast("Gardez au moins une expérience.", "warn");
       }
 
       function ajouterFor() {
@@ -1214,7 +1218,7 @@
       function supprimerFor(btn) {
       const items = document.querySelectorAll("#liste-for .exp-item");
       if (items.length > 1) btn.closest(".exp-item").remove();
-      else window.afficherToast("Garde au moins une formation.", "warn");
+      else window.afficherToast("Gardez au moins une formation.", "warn");
       }
 
       // ── Collecte données formulaire CV ────────────────────────────
@@ -1296,18 +1300,18 @@
           window.afficherToast("Nom et poste recherché sont requis.", "warn"); return;
         }
         if (!typeCvChoisi) {
-          window.afficherToast("Choisis d'abord un type de CV.", "warn"); return;
+          window.afficherToast("Choisissez d'abord un type de CV.", "warn"); return;
         }
 
         const btn = document.getElementById("btn-generer-cv");
         btn.classList.add("btn--chargement"); btn.disabled = true;
-        btn.textContent = "⏳ Rédaction de ton CV…";
+        btn.textContent = "⏳ Rédaction de votre CV…";
 
         try {
           const res = await window.API.CVLM.creerCommande({ ...data, type: typeCvChoisi });
           afficherCommande(res.commande);
           chargerMesCv();
-          window.afficherToast("Ton CV est prêt. Voici l'aperçu.", "succes");
+          window.afficherToast("Votre CV est prêt. Voici l'aperçu.", "succes");
         } catch (err) {
           window.afficherToast(err.message || "Erreur de génération.", "erreur");
         } finally {
@@ -1322,8 +1326,8 @@
         const montrer = (id, oui) => document.getElementById(id).classList.toggle("hidden", !oui);
         document.getElementById("cmd-titre").textContent = c.nom;
         document.getElementById("cmd-sous-titre").textContent =
-          c.etat === "valide" ? "Paiement confirmé : ton document complet est disponible."
-                              : "Aperçu partiel : la suite de ton document est masquée jusqu'au paiement.";
+          c.etat === "valide" ? "Paiement confirmé : votre document complet est disponible."
+                              : "Aperçu partiel : la suite de votre document est masquée jusqu'au paiement.";
         const texte = document.getElementById("cmd-texte");
         const flou = document.getElementById("cmd-flou");
         if (c.etat === "valide") {
@@ -1354,7 +1358,7 @@
       async function envoyerPaiementCv() {
         if (!commandeActive) return;
         const txId = document.getElementById("cmd-txid").value.trim();
-        if (!txId) { window.afficherToast("Saisis l'identifiant de transaction.", "warn"); return; }
+        if (!txId) { window.afficherToast("Saisissez l'identifiant de transaction.", "warn"); return; }
         const btn = document.getElementById("cmd-btn-payer");
         btn.disabled = true;
         try {
@@ -1444,21 +1448,21 @@
       window.afficherToast("Nom, poste et organisation sont requis.", "warn"); return;
       }
       if (!data.motivation) {
-      window.afficherToast("Indique ta motivation principale.", "warn"); return;
+      window.afficherToast("Indiquez votre motivation principale.", "warn"); return;
       }
       if (!typeLmChoisi) {
-      window.afficherToast("Choisis d'abord un type de lettre.", "warn"); return;
+      window.afficherToast("Choisissez d'abord un type de lettre.", "warn"); return;
       }
 
       const btn = document.getElementById("btn-generer-lm");
       btn.classList.add("btn--chargement"); btn.disabled = true;
-      btn.textContent = "⏳ Rédaction de ta lettre…";
+      btn.textContent = "⏳ Rédaction de votre lettre…";
 
       try {
       const res = await window.API.CVLM.creerCommande({ ...data, type: typeLmChoisi });
       afficherCommande(res.commande);
       chargerMesCv();
-      window.afficherToast("Ta lettre est prête. Voici l'aperçu.", "succes");
+      window.afficherToast("Votre lettre est prête. Voici l'aperçu.", "succes");
       } catch (err) {
       window.afficherToast(err.message || "Erreur de génération.", "erreur");
       } finally {
@@ -1530,7 +1534,7 @@
           </div>
           <div>
             <div style="font-weight:700; font-family:var(--font-titre); margin-bottom:4px;">Score de compatibilité ATS</div>
-            <div style="font-size:0.88rem; color:var(--gris-texte);">${a.resume || ""}</div>
+            <div style="font-size:0.88rem; color:var(--gris-texte);">${echapperHtml(a.resume || "")}</div>
           </div>
         </div>
         ${a.pointsForts?.length ? `
@@ -1569,7 +1573,7 @@
       async function adapterAOffre() {
       const offre = document.getElementById("texte-offre-emploi")?.value?.trim();
       if (!offre) {
-      window.afficherToast("Colle d'abord le texte de l'offre d'emploi.", "warn");
+      window.afficherToast("Collez d'abord le texte de l'offre d'emploi.", "warn");
       return;
       }
 
@@ -1580,7 +1584,7 @@
       try {
       const res = await window.API.CVLM.adapterOffre(contenuGenere, offre);
       contenuGenere = res.cv;
-      afficherResultat("📄 Ton CV Adapté à l'offre");
+      afficherResultat("📄 Votre CV Adapté à l'offre");
       window.afficherToast("CV adapté avec succès à l'offre !", "succes");
       } catch (err) {
       window.afficherToast(err.message || "Erreur lors de l'adaptation.", "erreur");

@@ -4,8 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Analyser une offre d'emploi — ProInsertion</title>
-    <meta name="description" content="Collez ou importez une offre d'emploi : ProInsertion l'analyse comme un recruteur, vous dit ce qui est attendu et prépare votre CV et votre lettre." />
+    <title>Analyser une offre d'emploi — ProInsertion CI</title>
+    <meta name="description" content="Collez ou importez une offre d'emploi : ProInsertion CI l'analyse comme un recruteur, vous dit ce qui est attendu et prépare votre CV et votre lettre." />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -47,6 +47,9 @@
       @keyframes tourne { to { transform: rotate(360deg); } }
       @media (max-width: 640px) { .etapes { grid-template-columns: 1fr; } .actions .btn { width: 100%; } }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -60,7 +63,7 @@
 
     <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
       <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
-        <p style="margin-bottom:16px; color:var(--gris-texte);">Crée un compte gratuit ou connecte-toi pour analyser une offre.</p>
+        <p style="margin-bottom:16px; color:var(--gris-texte);">Créez un compte gratuit ou connectez-vous pour analyser une offre.</p>
         <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
       </div>
 
@@ -79,17 +82,17 @@
             <button class="mode" data-mode="image" type="button">📷 Capture d'écran</button>
             <button class="mode" data-mode="pdf" type="button">📄 Document PDF</button>
           </div>
-          <div id="mode-texte"><textarea id="offre-texte" class="form-textarea" rows="9" maxlength="15000" placeholder="Colle ici l'offre d'emploi complète (intitulé, missions, profil recherché…)"></textarea></div>
+          <div id="mode-texte"><textarea id="offre-texte" class="form-textarea" rows="9" maxlength="15000" placeholder="Collez ici l'offre d'emploi complète (intitulé, missions, profil recherché…)"></textarea></div>
           <div id="mode-fichier" class="hidden">
             <label class="depot" id="depot-offre" for="offre-fichier">
               <div style="font-size:2rem;" id="depot-icone">📷</div>
-              <div id="depot-texte"><strong>Touche ici pour choisir un fichier</strong><br /><span style="color:var(--gris-texte);font-size:.85rem;" id="depot-aide">Image JPG, PNG ou WEBP — 5 Mo maximum</span></div>
+              <div id="depot-texte"><strong>Touchez ici pour choisir un fichier</strong><br /><span style="color:var(--gris-texte);font-size:.85rem;" id="depot-aide">Image JPG, PNG ou WEBP — 5 Mo maximum</span></div>
               <div class="depot__nom" id="offre-nom"></div>
             </label>
             <input type="file" id="offre-fichier" class="hidden" />
           </div>
           <div class="actions"><button id="btn-analyser" class="btn btn--primaire btn--lg" type="button">🔍 Analyser cette offre</button></div>
-          <p style="margin:10px 0 0;font-size:.8rem;color:var(--gris-texte);">Gratuit avec un compte (nombre d'analyses limité par jour sans abonnement Premium). Tes fichiers ne sont pas conservés : seul le résultat de l'analyse est enregistré, et tu peux le supprimer à tout moment.</p>
+          <p style="margin:10px 0 0;font-size:.8rem;color:var(--gris-texte);">Gratuit avec un compte (nombre d'analyses limité par jour sans abonnement Premium). Vos fichiers ne sont pas conservés : seul le résultat de l'analyse est enregistré, et vous pouvez le supprimer à tout moment.</p>
         </div>
 
         <div id="zone-attente" class="carte-bloc attente hidden"><div class="rond"></div>Analyse en cours… cela prend en général 10 à 30 secondes.</div>
@@ -101,7 +104,7 @@
         <!-- 3. Comparaison avec le CV -->
         <div id="zone-comparer" class="carte-bloc hidden">
           <h3 style="margin:0 0 4px;">Comparer avec mon CV actuel <span class="puce puce--cle" style="font-size:.7rem;">⭐ Premium</span></h3>
-          <p style="margin:0 0 14px;font-size:.9rem;color:var(--gris-texte);">Importe ton CV en PDF : tu obtiens un score de correspondance, les compétences à mieux montrer et des mots-clés à ajouter.</p>
+          <p style="margin:0 0 14px;font-size:.9rem;color:var(--gris-texte);">Importez votre CV en PDF : vous obtenez un score de correspondance, les compétences à mieux montrer et des mots-clés à ajouter.</p>
           <label class="depot" for="cv-fichier"><div style="font-size:1.6rem;">📎</div><div><strong>Choisir mon CV (PDF)</strong></div><div class="depot__nom" id="cv-nom-fichier"></div></label>
           <input type="file" id="cv-fichier" accept="application/pdf" class="hidden" />
           <div class="actions"><button id="btn-comparer" class="btn btn--secondaire" type="button">📊 Comparer mon CV à l'offre</button></div>
@@ -133,7 +136,7 @@
         const token = localStorage.getItem("ecc_token");
         let r;
         try { r = await fetch(window.API_URL + chemin, { ...options, headers: { Authorization: "Bearer " + token } }); }
-        catch { throw Object.assign(new Error("Impossible de contacter le serveur. Vérifie ta connexion."), {}); }
+        catch { throw Object.assign(new Error("Impossible de contacter le serveur. Vérifiez votre connexion."), {}); }
         let d = {}; try { d = await r.json(); } catch {}
         if (r.status === 401) { location.href = "/auth/login.html?session=expiree"; throw new Error("Session expirée."); }
         if (r.ok && d.error) throw new Error(d.error);
@@ -164,8 +167,8 @@
       $("cv-fichier").addEventListener("change", (e) => { const f = e.target.files[0]; $("cv-nom-fichier").textContent = f ? "✅ " + f.name : ""; });
 
       function verifierFichier(f) {
-        if (!f) return "Choisis d'abord un fichier.";
-        if (f.size > MAX) return "Ce fichier dépasse 5 Mo. Réduis sa taille ou colle le texte de l'offre.";
+        if (!f) return "Choisissez d'abord un fichier.";
+        if (f.size > MAX) return "Ce fichier dépasse 5 Mo. Réduisez sa taille ou collez le texte de l'offre.";
         return null;
       }
 
@@ -175,7 +178,7 @@
         const fd = new FormData();
         if (mode === "texte") {
           const t = $("offre-texte").value.trim();
-          if (t.length < 80) return afficherMessage("Colle l'offre complète (au moins quelques lignes) pour pouvoir l'analyser.");
+          if (t.length < 80) return afficherMessage("Collez l'offre complète (au moins quelques lignes) pour pouvoir l'analyser.");
           fd.append("texte", t);
         } else {
           const f = $("offre-fichier").files[0]; const e = verifierFichier(f);
@@ -260,7 +263,7 @@
           rendreComparaison(d.comparaison);
         } catch (err) {
           $("zone-comparaison").innerHTML = err.premiumRequis
-            ? `<div class="premium-note">⭐ La comparaison approfondie avec ton CV est réservée aux comptes Premium. <a href="/boutique.html" style="font-weight:700;">Découvrir Premium →</a></div>`
+            ? `<div class="premium-note">⭐ La comparaison approfondie avec votre CV est réservée aux comptes Premium. <a href="/boutique.html" style="font-weight:700;">Découvrir Premium →</a></div>`
             : `<div style="background:#fef2f2;color:#991b1b;border-radius:12px;padding:14px 16px;font-size:.92rem;">${esc(err.message)}</div>`;
         } finally { $("btn-comparer").disabled = false; }
       }
@@ -271,12 +274,12 @@
             <div style="font-weight:700;">Score de correspondance</div>
             <div class="jauge"><span style="width:${r.score}%;background:${couleur}"></span></div>
             ${r.verdict ? `<p style="margin:12px 0 0;font-size:.92rem;line-height:1.6;">${esc(r.verdict)}</p>` : ""}</div>
-          <div class="groupe"><h4 style="margin-top:0">Points forts de ton CV</h4>${puces(r.points_forts)}
+          <div class="groupe"><h4 style="margin-top:0">Points forts de votre CV</h4>${puces(r.points_forts)}
             <h4>Compétences manquantes ou insuffisantes</h4>${puces(r.competences_manquantes, "puce--manque")}
             <h4>À mieux valoriser</h4>${puce(r.a_mieux_valoriser)}
-            <h4>Mots-clés à ajouter (si cela correspond à ton parcours)</h4>${puces(r.mots_cles_a_ajouter, "puce--cle")}
+            <h4>Mots-clés à ajouter (si cela correspond à votre parcours)</h4>${puces(r.mots_cles_a_ajouter, "puce--cle")}
             <h4>Améliorations concrètes</h4>${puce(r.ameliorations)}
-            <p style="margin:12px 0 0;font-size:.8rem;color:var(--gris-texte);">N'ajoute jamais une compétence, un diplôme ou une expérience que tu n'as pas : montre mieux ce que tu as déjà.</p></div>`;
+            <p style="margin:12px 0 0;font-size:.8rem;color:var(--gris-texte);">N'ajoute jamais une compétence, un diplôme ou une expérience que vous n'avez pas : montre mieux ce que vous avez déjà.</p></div>`;
       }
 
       // ── Historique ──

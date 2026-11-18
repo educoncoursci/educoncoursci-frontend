@@ -1,7 +1,7 @@
-# ProInsertion — robots.txt
+# ProInsertion CI — robots.txt
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /dashboard/
 
-Sitemap: https://educoncoursci.netlify.app/sitemap.xml
+Sitemap: https://proinsertionci.netlify.app/sitemap.xml

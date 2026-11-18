@@ -4,21 +4,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Suis-je éligible ? — ProInsertion</title>
+    <title>Suis-je éligible ? — ProInsertion CI</title>
     <meta
       name="description"
-      content="Indique ton âge, ton sexe et ton diplôme : découvre en un clic les concours en Côte d'Ivoire auxquels tu peux candidater, avec un score de compatibilité."
+      content="Indiquez votre âge, votre sexe et votre diplôme : découvrez en un clic les concours en Côte d'Ivoire auxquels vous pouvez candidater, avec un score de compatibilité."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="ProInsertion" />
-    <meta property="og:title" content="Suis-je éligible ? — ProInsertion" />
-    <meta property="og:description" content="Indique ton âge, ton sexe et ton diplôme : découvre en un clic les concours en Côte d'Ivoire auxquels tu peux candidater, avec un score de compatibilité." />
-    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-    <meta property="og:url" content="https://educoncoursci.netlify.app/eligibilite.html" />
+    <meta property="og:site_name" content="ProInsertion CI" />
+    <meta property="og:title" content="Suis-je éligible ? — ProInsertion CI" />
+    <meta property="og:description" content="Indiquez votre âge, votre sexe et votre diplôme : découvrez en un clic les concours en Côte d'Ivoire auxquels vous pouvez candidater, avec un score de compatibilité." />
+    <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://proinsertionci.netlify.app/eligibilite.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Suis-je éligible ? — ProInsertion" />
-    <meta name="twitter:description" content="Indique ton âge, ton sexe et ton diplôme : découvre en un clic les concours en Côte d'Ivoire auxquels tu peux candidater, avec un score de compatibilité." />
-    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta name="twitter:title" content="Suis-je éligible ? — ProInsertion CI" />
+    <meta name="twitter:description" content="Indiquez votre âge, votre sexe et votre diplôme : découvrez en un clic les concours en Côte d'Ivoire auxquels vous pouvez candidater, avec un score de compatibilité." />
+    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
-    <link rel="stylesheet" href="/css/flash-info.css" />
     <style>
       .elig-hero {
         background: linear-gradient(135deg, var(--vert) 0%, #0e4a28 100%);
@@ -86,6 +85,9 @@
         gap: 8px;
       }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -93,20 +95,20 @@
     <div class="elig-hero">
       <h1><span data-icone="coche" data-taille="26" style="display:inline-flex;vertical-align:-5px;"></span> Suis-je éligible ?</h1>
       <p>
-        Indique quelques informations sur ta situation : on te dit
-        immédiatement à quels concours tu peux candidater en Côte d'Ivoire,
+        Indiquez quelques informations sur votre situation : on vous dit
+        immédiatement à quels concours vous pouvez candidater en Côte d'Ivoire,
         avec un score de compatibilité pour chacun.
       </p>
     </div>
 
     <div class="elig-form">
       <div class="form-groupe">
-        <label class="form-label">Ton âge</label>
+        <label class="form-label">Votre âge</label>
         <input type="number" id="elig-age" class="form-input" placeholder="Ex: 24" min="10" max="80" />
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
         <div class="form-groupe">
-          <label class="form-label">Ton sexe</label>
+          <label class="form-label">Votre sexe</label>
           <select id="elig-sexe" class="form-input">
             <option value="">Je préfère ne pas préciser</option>
             <option value="hommes">Homme</option>
@@ -114,15 +116,15 @@
           </select>
         </div>
         <div class="form-groupe">
-          <label class="form-label">Ton diplôme</label>
+          <label class="form-label">Votre diplôme</label>
           <select id="elig-diplome" class="form-input">
             <option value="">Sélectionner…</option>
           </select>
         </div>
       </div>
       <div style="font-size:0.8rem;color:var(--gris-texte);margin-bottom:16px;">
-        Aucune information n'est obligatoire — plus tu en donnes, plus le
-        résultat est précis. Rien n'est enregistré, ni lié à ton compte.
+        Aucune information n'est obligatoire — plus vous en donnez, plus le
+        résultat est précis. Rien n'est enregistré, ni lié à votre compte.
       </div>
       <button class="btn btn--primaire" style="width:100%;" id="btn-verifier" onclick="verifierEligibilite()">
         <span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Vérifier mon éligibilité
@@ -130,7 +132,7 @@
     </div>
 
     <div class="elig-resultats hidden" id="zone-resultats">
-      <div class="elig-section-titre"><span data-icone="etoile" data-taille="20" style="display:inline-flex;vertical-align:-3px;color:var(--vert);"></span> Recommandés pour toi</div>
+      <div class="elig-section-titre"><span data-icone="etoile" data-taille="20" style="display:inline-flex;vertical-align:-3px;color:var(--vert);"></span> Recommandés pour vous</div>
       <div id="liste-recommandations"></div>
 
       <div class="elig-section-titre">🔴 Concours accessibles maintenant</div>
@@ -140,7 +142,7 @@
       <div id="liste-bientot"></div>
 
       <div class="elig-section-titre" id="titre-incompatibles" style="cursor:pointer;">
-        ⚫ Concours non compatibles <span style="font-size:0.8rem;font-weight:400;color:var(--gris-texte);">(clique pour voir pourquoi)</span>
+        ⚫ Concours non compatibles <span style="font-size:0.8rem;font-weight:400;color:var(--gris-texte);">(cliquez pour voir pourquoi)</span>
       </div>
       <div id="liste-incompatibles" class="hidden"></div>
     </div>
@@ -202,7 +204,7 @@
           document.getElementById("liste-recommandations").innerHTML =
             data.recommandations.length > 0
               ? data.recommandations.map((c) => carteConcours(c)).join("")
-              : `<p style="color:var(--gris-texte);font-size:0.9rem;">Renseigne au moins un critère pour affiner tes recommandations.</p>`;
+              : `<p style="color:var(--gris-texte);font-size:0.9rem;">Renseignez au moins un critère pour affiner vos recommandations.</p>`;
 
           document.getElementById("liste-accessibles").innerHTML =
             data.accessibles.length > 0

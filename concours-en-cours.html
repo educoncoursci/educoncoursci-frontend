@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Concours en cours en Côte d'Ivoire — ProInsertion</title>
+    <title>Concours en cours en Côte d'Ivoire — ProInsertion CI</title>
     <meta
       name="description"
       content="Tous les concours actuellement ouverts en Côte d'Ivoire : fonction publique, grandes écoles, ministères. Dates, conditions, pièces à fournir — mis à jour automatiquement."
@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <div id="site-header"></div>
@@ -68,7 +71,7 @@
       <div class="empty-state">
         <div class="empty-state__icone">🔴</div>
         <div class="empty-state__titre">Aucun concours ouvert pour le moment</div>
-        <p class="empty-state__texte">Consulte les <a href="/concours-a-venir.html">concours à venir</a> pour ne rien manquer, ou active les alertes pour être notifié dès l'ouverture d'un nouveau concours.</p>
+        <p class="empty-state__texte">Consultez les <a href="/concours-a-venir.html">concours à venir</a> pour ne rien manquer, ou active les alertes pour être notifié dès l'ouverture d'un nouveau concours.</p>
       </div>`;
             return;
           }

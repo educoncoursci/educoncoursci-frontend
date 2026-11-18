@@ -4,18 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vidéos de formation — ProInsertion</title>
+  <title>Vidéos de formation — ProInsertion CI</title>
   <meta name="description" content="Cours en vidéo pour préparer les concours CI. Formateurs ivoiriens, explications claires.">
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="ProInsertion" />
-    <meta property="og:title" content="Vidéos de formation — ProInsertion" />
+    <meta property="og:site_name" content="ProInsertion CI" />
+    <meta property="og:title" content="Vidéos de formation — ProInsertion CI" />
     <meta property="og:description" content="Cours en vidéo pour préparer les concours CI. Formateurs ivoiriens, explications claires." />
-    <meta property="og:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
-    <meta property="og:url" content="https://educoncoursci.netlify.app/videos.html" />
+    <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <meta property="og:url" content="https://proinsertionci.netlify.app/videos.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Vidéos de formation — ProInsertion" />
+    <meta name="twitter:title" content="Vidéos de formation — ProInsertion CI" />
     <meta name="twitter:description" content="Cours en vidéo pour préparer les concours CI. Formateurs ivoiriens, explications claires." />
-    <meta name="twitter:image" content="https://educoncoursci.netlify.app/assets/og-image.jpg" />
+    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
   <link rel="icon" href="/assets/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,6 @@
   <link rel="stylesheet" href="/css/components.css">
   <link rel="stylesheet" href="/css/recherche.css">
   <link rel="stylesheet" href="/css/responsive.css">
-  <link rel="stylesheet" href="/css/flash-info.css">
   <style>
     .videos-grille { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
     .modal-video   { position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;padding:20px; }
@@ -34,107 +33,19 @@
     @media(max-width:900px){ .videos-grille{grid-template-columns:1fr 1fr;} }
     @media(max-width:600px){ .videos-grille{grid-template-columns:1fr;} }
   </style>
-</head>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  </head>
 <body>
 
 <div id="site-header"></div>
-        <!-- ── FLASH INFO ──────────────────────────────────────────── -->
-    <div class="flash-info">
-      <div class="flash-info__label">
-        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-        <span>Flash info</span>
-      </div>
-      <div class="flash-info__piste">
-        <div class="flash-info__track">
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Résultats</span>
-            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">CAFOP</span>
-            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">ENA</span>
-            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Vigilance</span>
-            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
-          </a>
-          <!-- Duplication pour un défilement continu sans interruption -->
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="attention" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Résultats</span>
-            <span class="flash-info__titre">Concours administratifs 2026 : 1ère vague de résultats publiée le 21 juillet, consultable sur GUCA-CI</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="livre" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">CAFOP</span>
-            <span class="flash-info__titre">CAFOP 2026 : plus de 67 800 candidats en compétition pour seulement 7 000 places</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="institution" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">ENA</span>
-            <span class="flash-info__titre">ENA 2027 : six concours ouverts pour environ 600 places, inscriptions du 12 mars au 7 avril</span>
-          </a>
-          <a href="/actualites.html" class="flash-info__item">
-            <span data-icone="croixCercle" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Vigilance</span>
-            <span class="flash-info__titre">La Fonction publique rappelle qu'aucun intermédiaire ne peut garantir la réussite à un concours — numéro vert anti-fraude : 1364</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="portefeuille" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">PNSAR 2026 : 152 000 opportunités professionnelles lancées, dont 100 000 stages d'immersion en entreprise</span>
-          </a>
-          <a href="/emploi.html" class="flash-info__item">
-            <span data-icone="loupe" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Emploi</span>
-            <span class="flash-info__titre">Foire Nationale de l'Emploi (FNER) : plus de 86 000 opportunités (emplois, stages, formations, financements) pour la jeunesse</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">CMU : plus de 25 millions de personnes enrôlées, extension récente aux planteurs</span>
-          </a>
-          <a href="/assistance-sociale.html" class="flash-info__item">
-            <span data-icone="coeur" data-taille="15" class="flash-info__icone"></span>
-            <span class="flash-info__tag">Social</span>
-            <span class="flash-info__titre">Protection de l'enfance : plus de 177 000 orphelins et enfants vulnérables soutenus par le Ministère de la Femme, Famille et Enfant</span>
-          </a>
-        </div>
-      </div>
-    </div>
+        
 
-<div class="page-header page-header--apres-flash">
+<div class="page-header page-header--standard">
   <div class="container">
     <h1><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Vidéos</h1>
-    <p>Cours en vidéo et actualités pour préparer ton concours.</p>
+    <p>Cours en vidéo et actualités pour préparer votre concours.</p>
   </div>
 </div>
 
@@ -173,6 +84,7 @@
   <div class="skeleton" style="height:240px;border-radius:16px;"></div>
   <div class="skeleton" style="height:240px;border-radius:16px;"></div>
 </div>
+<div id="zone-plus" style="text-align:center;margin:28px 0 8px;"></div>
 
   </div>
 </main>
@@ -202,27 +114,47 @@
 <script src="/js/main.js"></script>
 
 <script>
-let toutesVideos  = [];
-let catActive     = "";
+const PAR_PAGE = 24;
+let videosAffichees = [];
+let totalVideos     = 0;
+let catActive       = "";
+let chargement      = false;
+let minuteur        = null;
+let numRequete      = 0;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await chargerVideos();
+  document.getElementById("recherche-video")?.addEventListener("input", () => {
+    clearTimeout(minuteur);
+    minuteur = setTimeout(() => chargerVideos(true), 350);
+  });
+  await chargerVideos(true);
 });
 
-async function chargerVideos() {
+async function chargerVideos(remiseAZero) {
+  if (chargement && !remiseAZero) return;
+  chargement = true;
+  const moi = ++numRequete;
+  const decalage = remiseAZero ? 0 : videosAffichees.length;
   try {
-    const data = await window.API.Videos.liste({ limit:100 });
-    toutesVideos = data.videos || [];
+    const params = { limit: PAR_PAGE, offset: decalage, tri: document.getElementById("tri-videos")?.value || "recent" };
+    const q = (document.getElementById("recherche-video")?.value || "").trim();
+    if (q) params.q = q;
+    if (catActive) params.categorie = catActive;
+    const data = await window.API.Videos.liste(params);
+    if (moi !== numRequete) return;
+    totalVideos = data.total || 0;
+    videosAffichees = remiseAZero ? (data.videos || []) : videosAffichees.concat(data.videos || []);
 
-    // Onglets catégories
-    const cats   = [...new Set(toutesVideos.map(v => v.categorie).filter(Boolean))];
-    const onglets = document.getElementById("onglets-videos");
-    onglets.innerHTML = `<button class="filtre-btn actif" data-cat="" onclick="changerCat(this,'')">🎬 Toutes</button>` +
-      cats.map(c => `<button class="filtre-btn" data-cat="${c}" onclick="changerCat(this,'${c}')">${c}</button>`).join("");
-
-    filtrerVideos();
+    if (data.categories) {
+      const onglets = document.getElementById("onglets-videos");
+      onglets.innerHTML = `<button class="filtre-btn ${catActive ? "" : "actif"}" data-cat="" onclick="changerCat(this,'')">🎬 Toutes</button>` +
+        data.categories.map(c => `<button class="filtre-btn ${c === catActive ? "actif" : ""}" data-cat="${echapperHtml(c)}" onclick="changerCat(this,${echapperHtml(JSON.stringify(c))})">${echapperHtml(c)}</button>`).join("");
+    }
+    afficherVideos(videosAffichees);
   } catch {
     window.afficherToast("Erreur de chargement des vidéos.", "erreur");
+  } finally {
+    if (moi === numRequete) chargement = false;
   }
 }
 
@@ -230,30 +162,23 @@ function changerCat(btn, cat) {
   catActive = cat;
   document.querySelectorAll(".filtres .filtre-btn").forEach(b => b.classList.remove("actif"));
   btn.classList.add("actif");
-  filtrerVideos();
+  chargerVideos(true);
 }
 
-function filtrerVideos() {
-  const recherche = (document.getElementById("recherche-video")?.value || "").toLowerCase().trim();
-  const tri       = document.getElementById("tri-videos")?.value || "recent";
+function filtrerVideos() { chargerVideos(true); }
 
-  let liste = toutesVideos.filter(v => {
-    if (catActive && v.categorie !== catActive) return false;
-    if (recherche && !v.titre.toLowerCase().includes(recherche)) return false;
-    return true;
-  });
-
-  liste.sort((a, b) => {
-    if (tri === "vues")    return (b.vues||0) - (a.vues||0);
-    if (tri === "gratuit") return (a.premium?1:0) - (b.premium?1:0);
-    return b.id - a.id;
-  });
-
-  afficherVideos(liste);
+function majBoutonPlus() {
+  const z = document.getElementById("zone-plus");
+  if (!z) return;
+  const reste = totalVideos - videosAffichees.length;
+  z.innerHTML = reste > 0
+    ? `<button class="btn btn--outline-vert" onclick="chargerVideos(false)">Voir plus de vidéos (${reste} restante${reste>1?"s":""})</button>`
+    : "";
 }
 
 function afficherVideos(liste) {
-  document.getElementById("compteur-videos").textContent = `${liste.length} vidéo${liste.length!==1?"s":""} trouvée${liste.length!==1?"s":""}`;
+  majBoutonPlus();
+  document.getElementById("compteur-videos").textContent = `${totalVideos} vidéo${totalVideos!==1?"s":""} trouvée${totalVideos!==1?"s":""}`;
   const grille  = document.getElementById("grille-videos");
   const session = window.Auth?.getSession();
 
