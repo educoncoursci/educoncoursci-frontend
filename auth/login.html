@@ -4,10 +4,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Connexion — ProInsertion</title>
+    <title>Connexion — ProInsertion CI</title>
     <meta
       name="description"
-      content="Connecte-toi à ton compte ProInsertion pour accéder à tes cours, QCM et sujets corrigés."
+      content="Connectez-vous à votre compte ProInsertion CI pour accéder à vos cours, QCM et sujets corrigés."
     />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
@@ -72,6 +72,8 @@
         display: none;
       }
     </style>
+      <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div class="auth-wrapper">
@@ -81,9 +83,9 @@
           <span>Pro<span style="color: var(--vert, #1a8c4a)">Insertion</span></span>
         </a>
 
-        <h1 class="auth-card__titre">Content de te revoir</h1>
+        <h1 class="auth-card__titre">Content de vous revoir</h1>
         <p class="auth-card__sous-titre">
-          Connecte-toi pour continuer ta préparation.
+          Connectez-vous pour continuer votre préparation.
         </p>
 
         <div id="erreur-connexion" class="form-erreur hidden"></div>
@@ -96,7 +98,7 @@
               id="email"
               name="email"
               class="form-input"
-              placeholder="toi@exemple.com"
+              placeholder="nom@exemple.com"
               autocomplete="email"
               required
             />
@@ -109,7 +111,7 @@
               id="password"
               name="password"
               class="form-input"
-              placeholder="Ton mot de passe"
+              placeholder="Votre mot de passe"
               autocomplete="current-password"
               data-toggle-oeil
               required
@@ -136,7 +138,7 @@
         <div id="zone-2fa" class="hidden">
           <div id="erreur-2fa" class="form-erreur hidden"></div>
           <p style="font-size:0.88rem;color:var(--gris-texte);margin-bottom:14px;">
-            🔒 Ce compte est protégé par la 2FA. Entre le code à 6 chiffres de ton application d'authentification, ou l'un de tes codes de récupération.
+            🔒 Ce compte est protégé par la 2FA. Entre le code à 6 chiffres de votre application d'authentification, ou l'un de vos codes de récupération.
           </p>
           <div class="form-groupe">
             <input type="text" id="code-2fa" class="form-input" placeholder="123456 ou XXXXX-XXXXX" autocomplete="one-time-code" inputmode="numeric" />

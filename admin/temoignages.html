@@ -4,20 +4,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Témoignages — Admin ProInsertion</title>
+    <title>Témoignages — Admin ProInsertion CI</title>
     <meta name="description" content="Gestion des témoignages affichés sur la page d'accueil.">
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/admin.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav class="navbar" style="background: #0a1628; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
       <div class="navbar__inner">
         <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
-          ><div class="navbar__logo-icon" style="background: rgba(255, 255, 255, 0.1)"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
-          <span style="color: #fff">ProInsertion Admin</span></a
+          ><img src="/assets/logo-icon.png" alt="" width="32" height="32" style="width:32px;height:32px;border-radius:8px;display:block;" />
+          <span style="color: #fff">ProInsertion CI Admin</span></a
         >
         <button onclick="window.Auth?.deconnecter?.()" class="btn btn--gris btn--sm">Déconnexion</button>
       </div>
@@ -115,7 +118,7 @@
                 </td>
                 <td><button class="btn btn--gris btn--sm" onclick="supprimerTemoignage(${t.id})">Supprimer</button></td>
               </tr>`).join("")
-            : `<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun témoignage. Ajoute le premier ci-dessus.</td></tr>`;
+            : `<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun témoignage. Ajoutez le premier ci-dessus.</td></tr>`;
         } catch (err) {
           window.afficherToast("Erreur : " + err.message, "erreur");
         }

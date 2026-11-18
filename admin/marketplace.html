@@ -4,20 +4,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Marketplace — Admin ProInsertion</title>
+    <title>Marketplace — Admin ProInsertion CI</title>
     <meta name="description" content="Gestion des partenaires et des offres de la marketplace.">
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/admin.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav class="navbar" style="background: #0a1628; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
       <div class="navbar__inner">
         <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
-          ><div class="navbar__logo-icon" style="background: rgba(255, 255, 255, 0.1)"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
-          <span style="color: #fff">ProInsertion Admin</span></a
+          ><img src="/assets/logo-icon.png" alt="" width="32" height="32" style="width:32px;height:32px;border-radius:8px;display:block;" />
+          <span style="color: #fff">ProInsertion CI Admin</span></a
         >
         <button onclick="window.Auth?.deconnecter?.()" class="btn btn--gris btn--sm">Déconnexion</button>
       </div>
@@ -165,7 +168,7 @@
                 <td><button class="badge ${p.statut === "actif" ? "badge--vert" : "badge--gris"}" style="border:none;cursor:pointer;" onclick="basculerStatutPartenaire(${p.id}, '${p.statut}')">${p.statut === "actif" ? "✓ Actif" : "Inactif"}</button></td>
                 <td><button class="btn btn--gris btn--sm" onclick="supprimerPartenaire(${p.id})">Supprimer</button></td>
               </tr>`).join("")
-            : `<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun partenaire. Ajoute-en un ci-dessus.</td></tr>`;
+            : `<tr><td colspan="4" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun partenaire. Ajoutez-en un ci-dessus.</td></tr>`;
         } catch (err) {
           window.afficherToast("Erreur : " + err.message, "erreur");
         }
@@ -228,7 +231,7 @@
                 </td>
                 <td><button class="btn btn--gris btn--sm" onclick="supprimerOffre(${o.id})">Supprimer</button></td>
               </tr>`).join("")
-            : `<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune offre. Ajoute-en une ci-dessus (un partenaire doit exister au préalable).</td></tr>`;
+            : `<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune offre. Ajoutez-en une ci-dessus (un partenaire doit exister au préalable).</td></tr>`;
         } catch (err) {
           window.afficherToast("Erreur : " + err.message, "erreur");
         }
@@ -242,7 +245,7 @@
         const prixUnite = document.getElementById("offre-prix-unite").value.trim();
         const description = document.getElementById("offre-description").value.trim();
 
-        if (!partenaireId) return window.afficherToast("Choisis un partenaire.", "warn");
+        if (!partenaireId) return window.afficherToast("Choisissez un partenaire.", "warn");
         if (!titre || !description) return window.afficherToast("Titre et description requis.", "warn");
 
         try {

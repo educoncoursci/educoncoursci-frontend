@@ -4,10 +4,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inscription — ProInsertion</title>
+    <title>Inscription — ProInsertion CI</title>
     <meta
       name="description"
-      content="Crée ton compte gratuit sur ProInsertion et commence à préparer ton concours dès aujourd'hui."
+      content="Créez votre compte gratuit sur ProInsertion CI et commencez à préparer votre concours dès aujourd'hui."
     />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
@@ -64,6 +64,8 @@
         display: none;
       }
     </style>
+      <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body>
     <div class="auth-wrapper">
@@ -73,9 +75,9 @@
           <span>Pro<span style="color: var(--vert, #1a8c4a)">Insertion</span></span>
         </a>
 
-        <h1 class="auth-card__titre">Crée ton compte gratuit</h1>
+        <h1 class="auth-card__titre">Créez votre compte gratuit</h1>
         <p class="auth-card__sous-titre">
-          Rejoins des milliers de candidats qui préparent leur concours avec ProInsertion.
+          Rejoignez des milliers de candidats qui préparent leur concours avec ProInsertion CI.
         </p>
 
         <div id="erreur-inscription" class="form-erreur hidden"></div>
@@ -101,7 +103,7 @@
               id="email"
               name="email"
               class="form-input"
-              placeholder="toi@exemple.com"
+              placeholder="nom@exemple.com"
               autocomplete="email"
               required
             />
@@ -120,7 +122,7 @@
               data-toggle-oeil
               required
             />
-            <div class="form-hint">Utilise au moins 8 caractères.</div>
+            <div class="form-hint">Utilisez au moins 8 caractères.</div>
           </div>
 
           <div class="form-groupe">
@@ -130,7 +132,7 @@
               id="confirm"
               name="confirm"
               class="form-input"
-              placeholder="Retape ton mot de passe"
+              placeholder="Retapez votre mot de passe"
               autocomplete="new-password"
               minlength="8"
               data-toggle-oeil
@@ -141,6 +143,11 @@
           <button type="submit" class="btn btn--primaire btn--full">
             Créer mon compte
           </button>
+          <p style="font-size:.78rem;color:var(--gris-texte);text-align:center;margin-top:12px;line-height:1.5;">
+            En créant un compte, vous acceptez nos
+            <a href="/conditions.html" target="_blank" rel="noopener" style="text-decoration:underline">conditions d'utilisation</a> et notre
+            <a href="/confidentialite.html" target="_blank" rel="noopener" style="text-decoration:underline">politique de confidentialité</a>.
+          </p>
         </form>
 
         <p class="auth-card__pied">

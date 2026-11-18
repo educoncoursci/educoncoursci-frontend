@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard — ProInsertion</title>
+    <title>Admin Dashboard — ProInsertion CI</title>
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/admin.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav
@@ -27,14 +30,9 @@
     >
       <div class="navbar__inner">
         <a href="/admin/index.html" class="navbar__logo" style="color: #fff">
-          <div
-            class="navbar__logo-icon"
-            style="background: rgba(255, 255, 255, 0.1)"
-          >
-            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
-          </div>
+          <img src="/assets/logo-icon.png" alt="" width="32" height="32" style="width:32px;height:32px;border-radius:8px;display:block;" />
           <span style="color: #fff"
-            >ProInsertion
+            >ProInsertion CI
             <span style="color: rgba(255, 255, 255, 0.4); font-size: 0.8rem"
               >Admin</span
             ></span
@@ -82,6 +80,9 @@
             ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
           >
           <a href="/admin/actualites.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Actualités</a>
+          <a href="/admin/referentiels.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a>
+          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
+          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
           <a href="/admin/pdfs.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
           >
@@ -131,9 +132,6 @@
                 >+ Concours</a
               >
               <a href="/admin/pdfs.html" class="btn btn--bleu btn--sm">+ PDF</a>
-          <a href="/admin/referentiels.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a>
-          <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
-          <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
             </div>
           </div>
 

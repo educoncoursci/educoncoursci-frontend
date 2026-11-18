@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Offres soumises — Admin ProInsertion</title>
+    <title>Offres soumises — Admin ProInsertion CI</title>
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -78,6 +78,9 @@
       .os-carte span { color:var(--gris-texte); font-size:.85rem; }
       .os-detail { white-space:pre-wrap; background:var(--gris-clair); border-radius:10px; padding:10px 12px; margin:4px 0 10px; }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav
@@ -89,13 +92,8 @@
     >
       <div class="navbar__inner">
         <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
-          ><div
-            class="navbar__logo-icon"
-            style="background: rgba(255, 255, 255, 0.1)"
-          >
-            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
-          </div>
-          <span style="color: #fff">ProInsertion Admin</span></a
+          ><img src="/assets/logo-icon.png" alt="" width="32" height="32" style="width:32px;height:32px;border-radius:8px;display:block;" />
+          <span style="color: #fff">ProInsertion CI Admin</span></a
         >
         <button
           onclick="window.Auth?.deconnecter?.()"
@@ -135,7 +133,7 @@
           <a href="/admin/qcm.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
           >
-          <a href="/admin/qcm-ia.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM par IA</a>
+          <a href="/admin/qcm-auto.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM automatiques</a>
           <a href="/admin/academie.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="diplome" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Académie</a>
           <a href="/admin/offres-soumises.html" class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres soumises</a>
           <a href="/admin/tarifs.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tarifs</a>
@@ -169,7 +167,7 @@
           <div class="admin-topbar">
             <div>
               <div class="admin-topbar__titre"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Offres soumises par les entreprises</div>
-              <div class="admin-topbar__sous">Étudie chaque demande, convient du tarif avec l'entreprise, puis publie.</div>
+              <div class="admin-topbar__sous">Étudie chaque demande, convient du tarif avec l'entreprise, puis publiez.</div>
             </div>
             <a href="/emploi.html" target="_blank" rel="noopener" class="btn btn--gris btn--sm">Voir la page Emploi</a>
           </div>
@@ -374,7 +372,7 @@
 
       async function refuser() {
         const motif = document.getElementById("d-motif").value.trim();
-        if (motif.length < 3) return toast("Indique un motif de refus.", "erreur");
+        if (motif.length < 3) return toast("Indiquez un motif de refus.", "erreur");
         if (!confirm("Refuser cette demande ? L'entreprise recevra le motif par e-mail.")) return;
         try {
           await api("/admin/offres/" + courant.id + "/refuser", { methode: "POST", corps: { motif } });

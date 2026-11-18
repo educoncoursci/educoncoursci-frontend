@@ -1,0 +1,121 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confirmation de l'adresse e-mail — ProInsertion CI</title>
+    <meta
+      name="description"
+      content="Confirmez votre adresse e-mail pour activer votre compte ProInsertion CI."
+    />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .auth-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: var(--gris-fond, #f7f8fa);
+      }
+      .auth-card {
+        width: 100%;
+        max-width: 440px;
+        padding: 40px 32px;
+      }
+      .auth-card__logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 24px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 800;
+        font-size: 1.4rem;
+        text-decoration: none;
+        color: inherit;
+      }
+      .auth-card__titre {
+        text-align: center;
+        margin-bottom: 4px;
+      }
+      .auth-card__sous-titre {
+        text-align: center;
+        color: var(--gris-texte, #666);
+        margin-bottom: 24px;
+        font-size: 0.95rem;
+      }
+      .auth-card__pied {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9rem;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+      <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  </head>
+  <body>
+    <div class="auth-wrapper">
+      <div class="card auth-card" style="text-align:center;">
+        <a href="/" class="auth-card__logo">
+          <span>Pro<span style="color: var(--vert, #1a8c4a)">Insertion</span> <span style="font-weight:600;color:#6b7280;">CI</span></span>
+        </a>
+        <div id="etat-icone" style="font-size:2.4rem;margin-bottom:12px;">⏳</div>
+        <h1 class="auth-card__titre" id="etat-titre">Confirmation en cours…</h1>
+        <p class="auth-card__sous-titre" id="etat-texte">Un instant, nous vérifions votre lien.</p>
+        <div id="etat-actions"></div>
+        <p class="auth-card__pied">
+          <a href="/" style="color: var(--vert, #1a8c4a); font-weight: 600;">← Retour à l'accueil</a>
+        </p>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      (async () => {
+        const jeton = new URLSearchParams(window.location.search).get("token");
+        const $ = (id) => document.getElementById(id);
+        const echec = (texte) => {
+          $("etat-icone").textContent = "⚠️";
+          $("etat-titre").textContent = "Lien invalide ou expiré";
+          $("etat-texte").textContent = texte;
+          $("etat-actions").innerHTML = window.Auth && window.Auth.estConnecte()
+            ? '<button class="btn btn--primaire btn--full" id="btn-renvoi">Recevoir un nouveau lien</button>'
+            : '<a href="/auth/login.html" class="btn btn--primaire btn--full">Se connecter pour demander un nouveau lien</a>';
+          const b = $("btn-renvoi");
+          if (b) b.onclick = async () => {
+            b.disabled = true;
+            try { const r = await window.API.Auth.renvoyerVerification(); $("etat-texte").textContent = r.message; b.remove(); }
+            catch (e) { $("etat-texte").textContent = e.message || "Envoi impossible pour le moment."; b.disabled = false; }
+          };
+        };
+        if (!jeton) return echec("Aucun code n'a été trouvé dans ce lien.");
+        try {
+          await window.API.Auth.verifierEmail(jeton);
+          $("etat-icone").textContent = "✅";
+          $("etat-titre").textContent = "Adresse e-mail confirmée";
+          $("etat-texte").textContent = "Merci ! Votre compte est entièrement activé.";
+          $("etat-actions").innerHTML = '<a href="/dashboard/index.html" class="btn btn--primaire btn--full">Accéder à mon espace</a>';
+        } catch (e) {
+          echec(e.message || "Ce lien n'est plus valable.");
+        }
+      })();
+    </script>
+  </body>
+</html>

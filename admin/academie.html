@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Académie — Admin ProInsertion</title>
+    <title>Académie — Admin ProInsertion CI</title>
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -72,6 +72,9 @@
       .ac-barre-actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
       textarea.form-textarea { font-family:inherit; }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav
@@ -83,13 +86,8 @@
     >
       <div class="navbar__inner">
         <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
-          ><div
-            class="navbar__logo-icon"
-            style="background: rgba(255, 255, 255, 0.1)"
-          >
-            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
-          </div>
-          <span style="color: #fff">ProInsertion Admin</span></a
+          ><img src="/assets/logo-icon.png" alt="" width="32" height="32" style="width:32px;height:32px;border-radius:8px;display:block;" />
+          <span style="color: #fff">ProInsertion CI Admin</span></a
         >
         <button
           onclick="window.Auth?.deconnecter?.()"
@@ -129,7 +127,7 @@
           <a href="/admin/qcm.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</a
           >
-          <a href="/admin/qcm-ia.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM par IA</a>
+          <a href="/admin/qcm-auto.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM automatiques</a>
           <a href="/admin/academie.html" class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="diplome" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Académie</a>
           <a href="/admin/offres-soumises.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres soumises</a>
           <a href="/admin/tarifs.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tarifs</a>
@@ -163,13 +161,13 @@
           <div class="admin-topbar">
             <div>
               <div class="admin-topbar__titre"><span data-icone="diplome" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Académie</div>
-              <div class="admin-topbar__sous">Crée des cours avec l'IA, relis chaque leçon, puis publie.</div>
+              <div class="admin-topbar__sous">Créez des cours, relisez chaque leçon, puis publiez.</div>
             </div>
             <a href="/academie.html" target="_blank" rel="noopener" class="btn btn--gris btn--sm">Voir le catalogue public</a>
           </div>
 
           <div class="admin-card" style="margin-bottom:20px;">
-            <div class="admin-card__header"><div class="admin-card__titre">1. Créer un cours (plan généré par l'IA)</div></div>
+            <div class="admin-card__header"><div class="admin-card__titre">1. Créer un cours (plan proposé automatiquement)</div></div>
             <div class="admin-card__corps">
               <div class="ia-grille">
                 <div class="form-groupe"><label class="form-label" for="p-matiere">Matière <span>*</span></label>
@@ -185,7 +183,7 @@
                   <input id="p-nb" class="form-input" type="number" min="3" max="10" value="6" /></div>
               </div>
               <button id="btn-plan" class="btn btn--primaire" onclick="creerPlan()">Générer le plan du cours</button>
-              <div class="ia-note">Le plan est un brouillon : tu rédigeras ensuite chaque leçon avec l'IA (une par une), puis tu relis. Rien n'est visible du public avant ta publication.</div>
+              <div class="ia-note">Le plan est un brouillon : vous rédigerez ensuite chaque leçon (une par une), puis vous relirez. Rien n'est visible du public avant votre publication.</div>
             </div>
           </div>
 
@@ -253,7 +251,7 @@
         return data;
       }
 
-      // DOM sûr : le contenu généré par l'IA n'est jamais injecté en HTML.
+      // DOM sûr : le contenu généré automatiquement n'est jamais injecté en HTML.
       function el(tag, attrs = {}, ...enfants) {
         const n = document.createElement(tag);
         for (const [k, v] of Object.entries(attrs)) {
@@ -279,7 +277,7 @@
           document.getElementById("nb-cours").textContent = "(" + cours.length + ")";
           tbody.replaceChildren();
           if (!cours.length) {
-            tbody.appendChild(el("tr", {}, el("td", { colspan: "4", style: "text-align:center;padding:30px;color:var(--gris-texte);", text: "Aucun cours. Génère ton premier plan ci-dessus." })));
+            tbody.appendChild(el("tr", {}, el("td", { colspan: "4", style: "text-align:center;padding:30px;color:var(--gris-texte);", text: "Aucun cours. Générez votre premier plan ci-dessus." })));
             return;
           }
           cours.forEach((c) => {
@@ -299,7 +297,7 @@
 
       async function creerPlan() {
         const matiere = document.getElementById("p-matiere").value.trim();
-        if (matiere.length < 2) return toast("Indique la matière.", "erreur");
+        if (matiere.length < 2) return toast("Indiquez la matière.", "erreur");
         const btn = document.getElementById("btn-plan");
         btn.disabled = true; btn.textContent = "Génération du plan…";
         try {
@@ -404,10 +402,10 @@
             }}),
           )));
         carte.appendChild(el("div", { class: "form-groupe" }, el("label", { class: "form-label", text: "Titre" }), titre));
-        carte.appendChild(champ(carte, l, "objectifs", "Objectifs (guide pour l'IA)", 2));
+        carte.appendChild(champ(carte, l, "objectifs", "Objectifs (consignes de rédaction)", 2));
         carte.appendChild(el("div", { class: "ac-barre-actions", style: "margin-bottom:10px;" },
-          el("button", { class: "btn btn--primaire btn--sm", text: "✨ Rédiger avec l'IA", onclick: (e) => genererLecon(i, e.currentTarget) }),
-          el("span", { class: "ia-note", text: "Enregistre le cours d'abord automatiquement. Dure 20 à 60 secondes." }),
+          el("button", { class: "btn btn--primaire btn--sm", text: "Rédiger la leçon", onclick: (e) => genererLecon(i, e.currentTarget) }),
+          el("span", { class: "ia-note", text: "Enregistrez le cours d'abord automatiquement. Dure 20 à 60 secondes." }),
         ));
         carte.appendChild(champ(carte, l, "contenu", "Contenu de la leçon", 12,
           "Balisage : ## Titre, ### Sous-titre, - puce, 1. liste numérotée, **gras**."));
@@ -475,7 +473,7 @@
         dessiner();
       }
 
-      // ── Enregistrement / IA / publication ─────────────────────
+      // ── Enregistrement / génération / publication ─────────────────────
       function charge() {
         return {
           titre: document.getElementById("e-titre").value.trim(),

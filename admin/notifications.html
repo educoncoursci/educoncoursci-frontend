@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Notifications — Admin ProInsertion</title>
+    <title>Notifications — Admin ProInsertion CI</title>
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/admin.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+  <style>@media (max-width: 900px){ .grille-notifs{ grid-template-columns: 1fr !important; } }</style>    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav
@@ -26,13 +29,8 @@
     >
       <div class="navbar__inner">
         <a href="/admin/index.html" class="navbar__logo" style="color: #fff"
-          ><div
-            class="navbar__logo-icon"
-            style="background: rgba(255, 255, 255, 0.1)"
-          >
-            <span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span>
-          </div>
-          <span style="color: #fff">ProInsertion Admin</span></a
+          ><img src="/assets/logo-icon.png" alt="" width="32" height="32" style="width:32px;height:32px;border-radius:8px;display:block;" />
+          <span style="color: #fff">ProInsertion CI Admin</span></a
         >
         <button
           onclick="window.Auth?.deconnecter?.()"
@@ -100,7 +98,7 @@
             <div>
               <div class="admin-topbar__titre"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Notifications</div>
               <div class="admin-topbar__sous">
-                Envoie des e-mails à tes utilisateurs
+                Envoyez des e-mails à vos utilisateurs
               </div>
             </div>
             <button onclick="envoyerRappels()" class="btn btn--gris btn--sm">
@@ -108,7 +106,7 @@
             </button>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px">
+          <div class="grille-notifs" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px">
             <!-- Formulaire envoi -->
             <div>
               <div class="admin-card">
@@ -409,7 +407,7 @@
               <div style="border:1px solid var(--gris-bordure);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:10px;">
                 <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;">
                   <div>
-                    <div style="font-weight:700;font-size:0.88rem;">${e.numero}</div>
+                    <div style="font-weight:700;font-size:0.88rem;">${echapperHtml(e.numero)}</div>
                     <div style="font-size:0.82rem;color:var(--gris-texte);margin-top:4px;white-space:pre-wrap;">${echapperHtml(e.message)}</div>
                   </div>
                   <button class="btn btn--vert btn--sm" onclick="marquerWhatsappEnvoye(${e.id})" style="white-space:nowrap;">✓ Envoyé</button>
@@ -440,7 +438,7 @@
               <div style="border:1px solid var(--gris-bordure);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:10px;">
                 <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;">
                   <div>
-                    <div style="font-weight:700;font-size:0.88rem;">${e.numero}</div>
+                    <div style="font-weight:700;font-size:0.88rem;">${echapperHtml(e.numero)}</div>
                     <div style="font-size:0.82rem;color:var(--gris-texte);margin-top:4px;white-space:pre-wrap;">${echapperHtml(e.message)}</div>
                   </div>
                   <button class="btn btn--vert btn--sm" onclick="marquerSmsEnvoye(${e.id})" style="white-space:nowrap;">✓ Envoyé</button>
