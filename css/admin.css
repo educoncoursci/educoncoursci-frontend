@@ -413,3 +413,10 @@
   font-size: 0.75rem;
   color: var(--gris-texte);
 }
+
+/* Mobile : barres d'actions et en-têtes qui doivent passer à la ligne */
+@media (max-width: 640px) {
+  .admin-topbar { flex-wrap: wrap; gap: 12px; }
+  .admin-topbar__actions { flex-wrap: wrap; }
+  .admin-topbar > div:last-child > .btn { flex: 1 1 auto; }
+}

@@ -44,7 +44,7 @@ try {
   data = await response.json();
 } catch {
   console.error(`[API] Réponse non-JSON de ${endpoint} (statut ${response.status})`);
-  throw new Error(`Réponse invalide du serveur (statut ${response.status}). Vérifie que le backend est bien démarré.`);
+  throw new Error(`Réponse invalide du serveur (statut ${response.status}). Vérifiez que le backend est bien démarré.`);
 }
 
 // Token expiré → déconnexion automatique
@@ -71,8 +71,8 @@ return data;
 // (souvent visible juste au-dessus dans la console, ex: une ligne
 // "blocked by CORS policy") reste repérable facilement.
 if (err.name === "TypeError" && err.message.includes("fetch")) {
-console.error(`[API] Impossible de contacter ${API_URL}${endpoint} — vérifie que le backend est démarré et que CORS l'autorise. Détail :`, err.message);
-throw new Error("Impossible de contacter le serveur. Vérifie ta connexion.");
+console.error(`[API] Impossible de contacter ${API_URL}${endpoint} — vérifiez que le backend est démarré et que CORS l'autorise. Détail :`, err.message);
+throw new Error("Impossible de contacter le serveur. Vérifiez votre connexion.");
 }
 throw err;
 }
@@ -106,10 +106,13 @@ return apiCall("/auth/me");
 },
 
 async changePassword(ancienPassword, nouveauPassword) {
-return apiCall("/auth/change-password", {
+const d = await apiCall("/auth/change-password", {
 method: "POST",
 body: JSON.stringify({ ancienPassword, nouveauPassword }),
 });
+// Le serveur renvoie un nouveau jeton : les anciennes sessions sont invalidées
+if (d && d.token) localStorage.setItem("ecc_token", d.token);
+return d;
 },
 
 async forgotPassword(email) {
@@ -142,6 +145,32 @@ return apiCall("/auth/2fa/disable", {
 method: "POST",
 body: JSON.stringify({ password }),
 });
+},
+
+async supprimerMonCompte(password, confirmation) {
+const d = await apiCall("/auth/account", {
+method: "DELETE",
+body: JSON.stringify({ password, confirmation }),
+});
+["ecc_token", "ecc_user"].forEach((k) => localStorage.removeItem(k));
+return d;
+},
+
+async deconnecterPartout() {
+const d = await apiCall("/auth/logout-all", { method: "POST" });
+if (d && d.token) localStorage.setItem("ecc_token", d.token);
+return d;
+},
+
+async verifierEmail(token) {
+return apiCall("/auth/verify-email", {
+method: "POST",
+body: JSON.stringify({ token }),
+});
+},
+
+async renvoyerVerification() {
+return apiCall("/auth/resend-verification", { method: "POST" });
 },
 
 async resetPassword(token, password) {
@@ -263,12 +292,36 @@ return apiCall(`/pdfs/${id}`);
 },
 
 // Téléchargement (redirige vers l'URL du fichier)
-telecharger(id) {
-const token = getToken();
-window.open(
-`${API_URL}/pdfs/${id}/download?token=${token || ""}`,
-"_blank"
-);
+// Le jeton de connexion est envoyé dans l'en-tête Authorization (jamais dans
+// l'adresse, où il finirait dans l'historique et les journaux des serveurs).
+async telecharger(id) {
+// Fenêtre ouverte tout de suite (clic de l'utilisateur) pour ne pas être
+// bloquée par le navigateur, puis dirigée vers le fichier une fois reçu.
+const fenetre = window.open("", "_blank");
+try {
+  const rep = await fetch(`${API_URL}/pdfs/${id}/download?format=json`, { headers: headersAuth() });
+  const type = rep.headers.get("content-type") || "";
+  if (!rep.ok) {
+    let msg = "Téléchargement impossible.";
+    try { msg = (await rep.json()).error || msg; } catch {}
+    throw new Error(msg);
+  }
+  if (type.includes("application/json")) {
+    const d = await rep.json();
+    if (fenetre) fenetre.location.href = d.url; else window.location.href = d.url;
+  } else {
+    const blob = await rep.blob();
+    const lien = document.createElement("a");
+    lien.href = URL.createObjectURL(blob);
+    lien.download = "document.pdf";
+    document.body.appendChild(lien); lien.click(); lien.remove();
+    setTimeout(() => URL.revokeObjectURL(lien.href), 10000);
+    if (fenetre) fenetre.close();
+  }
+} catch (err) {
+  if (fenetre) fenetre.close();
+  window.afficherToast ? window.afficherToast(err.message, "erreur") : alert(err.message);
+}
 },
 
 // Admin — upload avec FormData (pas JSON)
@@ -390,10 +443,10 @@ body: JSON.stringify({ reponses }),
 });
 },
 
-async soumettreExamenBlanc(score, total) {
-return apiCall(`/qcm/examen-blanc/score`, {
+async corrigerExamenBlanc(reponses) {
+return apiCall(`/qcm/examen-blanc/corriger`, {
 method: "POST",
-body: JSON.stringify({ score, total }),
+body: JSON.stringify({ reponses }),
 });
 },
 
@@ -1206,9 +1259,19 @@ const qs = new URLSearchParams(params).toString();
 return apiCall(`/admin/scores${qs ? "?" + qs : ""}`);
 },
 
-exportUsers() {
-const token = getToken();
-window.open(`${API_URL}/admin/export/users?token=${token}`, "_blank");
+async exportUsers() {
+try {
+  const rep = await fetch(`${API_URL}/admin/export/users`, { headers: headersAuth() });
+  if (!rep.ok) throw new Error("Export impossible (" + rep.status + ").");
+  const blob = await rep.blob();
+  const lien = document.createElement("a");
+  lien.href = URL.createObjectURL(blob);
+  lien.download = "utilisateurs.csv";
+  document.body.appendChild(lien); lien.click(); lien.remove();
+  setTimeout(() => URL.revokeObjectURL(lien.href), 10000);
+} catch (err) {
+  window.afficherToast ? window.afficherToast(err.message, "erreur") : alert(err.message);
+}
 },
 
 // Notifications
@@ -1270,7 +1333,12 @@ return false;
 }
 
 // ── Exporte tout en global (utilisable dans les pages HTML) ──
+const Offres = {
+async lister() { return apiCall("/offres"); },
+async lire(id) { return apiCall("/offres/" + encodeURIComponent(id)); },
+};
+
 window.API = {
-Auth, Concours, ConcoursSources, PDFs, Videos, QCM, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites, Referentiels, Eligibilite, Alertes, Users, Progression, Vitrine, CandidaturesConcours, AssistantConcours, Push, Forum, Marketplace, Messages,
+Offres, Auth, Concours, ConcoursSources, PDFs, Videos, QCM, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites, Referentiels, Eligibilite, Alertes, Users, Progression, Vitrine, CandidaturesConcours, AssistantConcours, Push, Forum, Marketplace, Messages,
 verifierBackend, getToken,
 };

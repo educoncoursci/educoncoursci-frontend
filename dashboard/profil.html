@@ -4,7 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mon Profil — ProInsertion</title>
+    <title>Mon Profil — ProInsertion CI</title>
+    <meta name="description" content="Gérez votre profil, votre mot de passe et la sécurité de votre compte ProInsertion CI." />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -16,13 +17,16 @@
     <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion" /></div>
-          <span class="navbar__logo-texte">Pro<span>Insertion</span></span></a
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion CI" /></div>
+          <span class="navbar__logo-texte">Pro<span>Insertion</span> <span class="navbar__ci">CI</span></span></a
         >
         <div class="navbar__actions" id="navbar-actions"></div>
       </div>
@@ -38,35 +42,23 @@
             <div id="sidebar-badge"></div>
           </div>
           <nav class="sidebar__nav">
-            <div class="sidebar__titre">Menu</div>
-            <a href="/dashboard/index.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a
-            >
-            <a href="/dashboard/progression.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a
-            >
+            <div class="sidebar__titre">Mes outils</div>
+            <a href="/dashboard/index.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a>
+            <a href="/cv-generator.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon CV et mes lettres</a>
+            <a href="/analyse-offre.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Analyser une offre</a>
+            <a href="/emploi.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres d'emploi</a>
+            <a href="/simulation-entretien.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Simulation d'entretien</a>
+            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a>
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes documents</a>
+            <div class="sidebar__titre">Concours</div>
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
             <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
-            <a href="/dashboard/mes-scores.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a
-            >
-            <a href="/dashboard/mes-concours.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a
-            >
-            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a
-            >
-            <a href="/dashboard/messages.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a
-            >
-            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a
-            >
-            <a href="/dashboard/paiements.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
-            >
-            <a href="/dashboard/profil.html" class="sidebar__lien actif"
-              ><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a
-            >
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a>
+            <a href="/dashboard/progression.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a>
+            <div class="sidebar__titre">Mon compte</div>
+            <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
+            <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+            <a href="/dashboard/profil.html" class="sidebar__lien actif"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a>
           </nav>
           <div class="sidebar__deconnexion">
             <button
@@ -89,7 +81,7 @@
                   font-size: 0.9rem;
                 "
               >
-                Gérer tes informations personnelles et ton mot de passe
+                Gérer vos informations personnelles et votre mot de passe
               </p>
             </div>
           </div>
@@ -161,7 +153,7 @@
                   type="text"
                   id="p-nom"
                   class="form-input"
-                  placeholder="Ton nom complet"
+                  placeholder="Votre nom complet"
                 />
               </div>
               <div class="form-groupe">
@@ -170,7 +162,7 @@
                   type="email"
                   id="p-email"
                   class="form-input"
-                  placeholder="ton@email.com"
+                  placeholder="votre@email.com"
                 />
               </div>
             </div>
@@ -214,7 +206,7 @@
                   type="password"
                   id="mdp-confirm"
                   class="form-input"
-                  placeholder="Répète le nouveau mot de passe"
+                  placeholder="Répétez le nouveau mot de passe"
                   data-toggle-oeil
                 />
               </div>
@@ -224,13 +216,32 @@
             </div>
           </div>
 
+          <!-- Appareils connectés -->
+          <div class="dash-section" style="margin-bottom: 20px">
+            <div class="dash-section__titre" style="margin-bottom: 8px">
+              <span data-icone="cadenas" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Appareils connectés
+            </div>
+            <p style="font-size: 0.85rem; color: var(--gris-texte); margin-bottom: 16px;">
+              Vous avez utilisé un ordinateur ou un téléphone partagé, ou perdu un appareil ? Déconnectez tous les autres appareils d'un clic. Vous restez connecté ici.
+            </p>
+            <button type="button" class="btn btn--bleu" id="btn-deconnecter-partout">Déconnecter les autres appareils</button>
+          </div>
+
+          <div class="dash-section" style="margin-bottom: 20px">
+            <div class="dash-section__titre" style="margin-bottom: 8px">Supprimer mon compte</div>
+            <p style="font-size: 0.85rem; color: var(--gris-texte); margin-bottom: 16px;">
+              Supprimez définitivement votre compte et vos données personnelles.
+            </p>
+            <a class="btn btn--sm" href="/supprimer-compte.html" style="background:#b91c1c;color:#fff">Supprimer mon compte</a>
+          </div>
+
           <!-- 2FA (Lot 16) -->
           <div class="dash-section" style="margin-bottom: 20px">
             <div class="dash-section__titre" style="margin-bottom: 8px">
               <span data-icone="cle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Authentification à deux facteurs (2FA)
             </div>
             <p style="font-size: 0.85rem; color: var(--gris-texte); margin-bottom: 16px;">
-              Ajoute une couche de sécurité supplémentaire avec une application comme Google Authenticator ou Authy.
+              Ajoutez une couche de sécurité supplémentaire avec une application comme Google Authenticator ou Authy.
             </p>
             <div id="zone-2fa-statut">
               <div class="skeleton" style="height: 36px; width: 200px; border-radius: 10px;"></div>
@@ -238,25 +249,25 @@
 
             <!-- Étape configuration (masquée par défaut) -->
             <div id="zone-2fa-setup" class="hidden" style="max-width: 420px; margin-top: 16px;">
-              <p style="font-size: 0.85rem; margin-bottom: 12px;">1. Scanne ce QR code avec ton application :</p>
-              <img id="qrcode-2fa" style="max-width: 200px; border-radius: 10px; border: 1px solid var(--gris-bordure);" />
-              <p style="font-size: 0.78rem; color: var(--gris-texte); margin: 10px 0;">Ou entre ce code manuellement : <code id="secret-2fa" style="background:var(--gris-clair);padding:2px 8px;border-radius:6px;"></code></p>
-              <p style="font-size: 0.85rem; margin: 14px 0 8px;">2. Entre le code à 6 chiffres généré :</p>
+              <p style="font-size: 0.85rem; margin-bottom: 12px;">1. Scanne ce QR code avec votre application :</p>
+              <img id="qrcode-2fa" alt="QR code pour l'authentification à deux facteurs" style="max-width: 200px; border-radius: 10px; border: 1px solid var(--gris-bordure);" />
+              <p style="font-size: 0.78rem; color: var(--gris-texte); margin: 10px 0;">Ou entrez ce code manuellement : <code id="secret-2fa" style="background:var(--gris-clair);padding:2px 8px;border-radius:6px;"></code></p>
+              <p style="font-size: 0.85rem; margin: 14px 0 8px;">2. Entrez le code à 6 chiffres généré :</p>
               <input type="text" id="code-confirmer-2fa" class="form-input" placeholder="123456" inputmode="numeric" style="max-width:180px;" />
               <button onclick="confirmer2FASetup()" class="btn btn--vert btn--sm mt-1">Activer la 2FA</button>
             </div>
 
             <!-- Codes de récupération (affichés une seule fois) -->
             <div id="zone-2fa-codes" class="hidden" style="max-width: 420px; margin-top: 16px; background: #fefce8; border: 1px solid #fde68a; border-radius: 12px; padding: 16px;">
-              <p style="font-weight: 700; font-size: 0.88rem; margin-bottom: 8px;">⚠️ Sauvegarde ces codes de récupération</p>
-              <p style="font-size: 0.8rem; color: var(--gris-texte); margin-bottom: 10px;">Ils ne seront plus jamais affichés. Utilise-en un si tu perds l'accès à ton application.</p>
+              <p style="font-weight: 700; font-size: 0.88rem; margin-bottom: 8px;">⚠️ Sauvegardez ces codes de récupération</p>
+              <p style="font-size: 0.8rem; color: var(--gris-texte); margin-bottom: 10px;">Ils ne seront plus jamais affichés. Utilisez-en un si vous perdez l'accès à votre application.</p>
               <div id="liste-codes-2fa" style="font-family: monospace; font-size: 0.85rem; line-height: 1.9;"></div>
               <button onclick="document.getElementById('zone-2fa-codes').classList.add('hidden')" class="btn btn--gris btn--sm mt-1">J'ai bien noté mes codes</button>
             </div>
 
             <!-- Désactivation -->
             <div id="zone-2fa-disable" class="hidden" style="max-width: 420px; margin-top: 16px;">
-              <input type="password" id="mdp-2fa-disable" class="form-input" placeholder="Ton mot de passe" style="margin-bottom: 8px;" />
+              <input type="password" id="mdp-2fa-disable" class="form-input" placeholder="Votre mot de passe" style="margin-bottom: 8px;" />
               <button onclick="desactiver2FA()" class="btn btn--danger btn--sm">Confirmer la désactivation</button>
               <button onclick="document.getElementById('zone-2fa-disable').classList.add('hidden')" class="btn btn--gris btn--sm">Annuler</button>
             </div>
@@ -283,7 +294,7 @@
                 margin-bottom: 16px;
               "
             >
-              La suppression de compte est irréversible. Toutes tes données
+              La suppression de compte est irréversible. Toutes vos données
               seront définitivement effacées.
             </p>
             <button
@@ -365,7 +376,7 @@
       async function definirPhotoParUrl() {
         const url = document.getElementById("photo-url").value.trim();
         const msg = document.getElementById("msg-photo");
-        if (!url) return affMsg(msg, "Colle un lien d'image.", "erreur");
+        if (!url) return affMsg(msg, "Collez un lien d'image.", "erreur");
         try {
           const session = window.Auth.getSession();
           await window.API.Users.definirPhotoUrl(session.id, url);
@@ -380,7 +391,7 @@
       async function uploaderPhotoFichier() {
         const fichier = document.getElementById("photo-fichier").files[0];
         const msg = document.getElementById("msg-photo");
-        if (!fichier) return affMsg(msg, "Choisis une image.", "erreur");
+        if (!fichier) return affMsg(msg, "Choisissez une image.", "erreur");
         try {
           const session = window.Auth.getSession();
           const fd = new FormData();
@@ -448,11 +459,11 @@
       function confirmerSuppression() {
         if (
           confirm(
-            "Es-tu sûr(e) de vouloir supprimer ton compte ? Cette action est irréversible.",
+            "Es-vous sûr(e) de vouloir supprimer votre compte ? Cette action est irréversible.",
           )
         ) {
           window.afficherToast(
-            "Contacte le support pour supprimer ton compte.",
+            "Contactez le support pour supprimer votre compte.",
             "info",
             6000,
           );
@@ -475,7 +486,7 @@
             ? `<span class="badge badge--vert">✓ 2FA activée</span> <button onclick="document.getElementById('zone-2fa-disable').classList.remove('hidden')" class="btn btn--gris btn--sm" style="margin-left:10px;">Désactiver</button>`
             : `<button onclick="demarrerSetup2FA()" class="btn btn--vert btn--sm">Activer la 2FA</button>`;
         } catch (err) {
-          zone.innerHTML = `<p style="color:#dc2626;font-size:0.85rem;">Erreur : ${err.message}</p>`;
+          zone.innerHTML = `<p style="color:#dc2626;font-size:0.85rem;">Erreur : ${echapperHtml(err.message)}</p>`;
         }
       }
 
@@ -518,6 +529,17 @@
           window.afficherToast(err.message, "erreur");
         }
       }
-    </script>
+    
+      document.getElementById("btn-deconnecter-partout")?.addEventListener("click", async (e) => {
+        if (!confirm("Déconnecter tous les autres appareils ?")) return;
+        e.target.disabled = true;
+        try {
+          const d = await window.API.Auth.deconnecterPartout();
+          window.afficherToast?.(d.message, "succes");
+        } catch (err) {
+          window.afficherToast?.(err.message || "Action impossible.", "erreur");
+        } finally { e.target.disabled = false; }
+      });
+</script>
   </body>
 </html>

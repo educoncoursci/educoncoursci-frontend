@@ -34,13 +34,13 @@
         <div class="cmd-doc" data-r="doc"><div class="cmd-doc__texte" data-r="texte"></div><div class="cmd-doc__flou" data-r="flou" aria-hidden="true"></div></div>
 
         <div class="cmd-pay hidden" data-r="paiement">
-          <div style="font-weight:800;font-size:1.05rem;margin-bottom:6px;">Débloque ton document complet : <span data-r="prix"></span></div>
+          <div style="font-weight:800;font-size:1.05rem;margin-bottom:6px;">Débloquez votre document complet : <span data-r="prix"></span></div>
           <ol style="margin:0 0 14px 18px;padding:0;line-height:1.8;font-size:.9rem;">
-            <li>Envoie le montant exact par <strong>Wave</strong> ou <strong>Orange Money</strong> :<div data-r="numeros" style="margin-top:4px;"></div></li>
-            <li>Note l'identifiant de transaction reçu par SMS.</li>
-            <li>Saisis-le ci-dessous. Un même identifiant ne peut servir qu'une seule fois.</li>
+            <li>Envoyez le montant exact par <strong>Wave</strong> ou <strong>Orange Money</strong> :<div data-r="numeros" style="margin-top:4px;"></div></li>
+            <li>Notez l'identifiant de transaction reçu par SMS.</li>
+            <li>Saisissez-le ci-dessous. Un même identifiant ne peut servir qu'une seule fois.</li>
           </ol>
-          <div class="hidden" data-r="rejet" style="background:#fef2f2;color:#991b1b;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:.88rem;">Ton précédent paiement n'a pas pu être confirmé. Vérifie l'identifiant et réessaie.</div>
+          <div class="hidden" data-r="rejet" style="background:#fef2f2;color:#991b1b;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:.88rem;">Votre précédent paiement n'a pas pu être confirmé. Vérifiez l'identifiant et réessayez.</div>
           <div style="display:grid;grid-template-columns:1fr 2fr;gap:10px;">
             <select class="form-input" data-r="moyen"><option value="wave">Wave</option><option value="orange">Orange Money</option></select>
             <input class="form-input" data-r="txid" placeholder="Identifiant de transaction" autocomplete="off" />
@@ -50,7 +50,7 @@
 
         <div class="cmd-pay hidden" data-r="verification">
           <strong>Paiement reçu, vérification en cours.</strong>
-          <p style="margin:6px 0 12px;font-size:.9rem;">Notre équipe confirme la réception des fonds (24 h maximum). Ton document sera téléchargeable dès la validation.</p>
+          <p style="margin:6px 0 12px;font-size:.9rem;">Notre équipe confirme la réception des fonds (24 h maximum). Votre document sera téléchargeable dès la validation.</p>
           <button class="btn btn--outline-vert btn--sm" data-r="actualiser">Actualiser le statut</button>
         </div>
 
@@ -72,8 +72,8 @@
   function afficher(c) {
     courante = c;
     el("titre").textContent = c.nom;
-    el("sous").textContent = c.etat === "valide" ? "Paiement confirmé : ton document complet est disponible."
-      : "Aperçu partiel : la suite de ton document est masquée jusqu'au paiement.";
+    el("sous").textContent = c.etat === "valide" ? "Paiement confirmé : votre document complet est disponible."
+      : "Aperçu partiel : la suite de votre document est masquée jusqu'au paiement.";
     if (c.etat === "valide") { el("texte").textContent = c.contenu || ""; el("flou").textContent = ""; montrer("flou", false); }
     else { el("texte").textContent = c.apercu?.visible || ""; el("flou").textContent = c.apercu?.flou || ""; montrer("flou", true); }
     montrer("paiement", c.etat === "a_payer" || c.etat === "rejete");
@@ -98,7 +98,7 @@
   async function envoyerPaiement() {
     if (!courante) return;
     const txId = el("txid").value.trim();
-    if (!txId) { toast("Saisis l'identifiant de transaction.", "warn"); return; }
+    if (!txId) { toast("Saisissez l'identifiant de transaction.", "warn"); return; }
     const b = el("payer"); b.disabled = true;
     try {
       const res = await window.API.CVLM.payerCommande(courante.id, el("moyen").value, txId);

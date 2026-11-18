@@ -113,9 +113,6 @@ select {
   flex: 1;
   padding-top: var(--navbar-h) !important;
 }
-.main-content--apres-flash {
-  padding-top: calc(var(--navbar-h) + var(--flash-info-h));
-}
 
 /* ── Typographie ─────────────────────────────────────────────── */
 h1,
@@ -415,8 +412,8 @@ p {
   overflow: hidden;
   padding: calc(var(--navbar-h) + 40px) 0 60px;
 }
-.hero--apres-flash {
-  padding-top: calc(var(--navbar-h) + var(--flash-info-h) + 40px);
+.hero--standard {
+  padding-top: calc(var(--navbar-h) + 40px);
 }
 .hero::before {
   content: "";
@@ -523,8 +520,8 @@ p {
   padding: calc(var(--navbar-h) + 40px) 0 50px;
   color: var(--blanc);
 }
-.page-header--apres-flash {
-  padding-top: calc(var(--navbar-h) + var(--flash-info-h) + 40px);
+.page-header--standard {
+  padding-top: calc(var(--navbar-h) + 40px);
 }
 .page-header--bleu {
   background: var(--gradient-bleu);
@@ -918,9 +915,19 @@ p {
   font-size: 0.92rem;
   font-weight: 600;
 }
+/* Le bandeau est sous la barre du haut (fixe) : il ne doit pas passer derrière */
+.bandeau-premium:not(.hidden) {
+  margin-top: var(--navbar-h);
+}
+.bandeau-premium:not(.hidden) ~ .hero {
+  padding-top: 40px;
+}
 .bandeau-premium a {
   color: var(--blanc);
   text-decoration: underline;
   font-weight: 700;
   margin-left: 8px;
 }
+
+/* Marque : « CI » après le nom */
+.navbar__ci { color: var(--orange); font-weight: 800; }

@@ -27,10 +27,11 @@
 // ============================================================
 window.SITE_CONFIG = {
   reseaux: {
-    whatsappChaine: "", // ex : "https://whatsapp.com/channel/XXXXXXXX"
-    facebook: "",       // ex : "https://www.facebook.com/educoncoursci"
+    whatsappChaine: "https://whatsapp.com/channel/0029VbDzIDO1SWssN1HvpR31", // ex : "https://whatsapp.com/channel/XXXXXXXX"
+    linkedin: "https://www.linkedin.com/in/proinsertion-ci-137226450/",
+    facebook: "https://www.facebook.com/share/1MBFGVBjf5/",       // ex : "https://www.facebook.com/proinsertionci"
     instagram: "",
-    tiktok: "",         // ex : "https://www.tiktok.com/@educoncoursci"
+    tiktok: "",         // ex : "https://www.tiktok.com/@proinsertionci"
     youtube: "",
   },
   // Statistiques de visite (une seule des deux) :
@@ -42,8 +43,8 @@ window.SITE_CONFIG = {
 const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo">
-          <div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion" /></div>
-          <span class="navbar__logo-texte">Pro<span>Insertion</span></span>
+          <div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion CI" /></div>
+          <span class="navbar__logo-texte">Pro<span>Insertion</span> <span class="navbar__ci">CI</span></span>
         </a>
 
                 <ul class="navbar__links">
@@ -88,7 +89,7 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
             </button>
             <div class="navbar__sous-menu">
               <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
-              <a href="/assistant-concours.html" class="navbar__sous-lien"><span data-icone="etoile" data-taille="16"></span> Assistant IA Concours</a>
+              <a href="/assistant-concours.html" class="navbar__sous-lien"><span data-icone="etoile" data-taille="16"></span> Assistant Concours</a>
               <a href="/communaute.html" class="navbar__sous-lien"><span data-icone="aide" data-taille="16"></span> Communauté</a>
               <a href="/marketplace.html" class="navbar__sous-lien"><span data-icone="panier" data-taille="16"></span> Marketplace</a>
               <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
@@ -135,7 +136,7 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
         <a href="/preparation.html" class="navbar__link"><span data-icone="quiz" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Préparation</a>
         <a href="/classement.html" class="navbar__link"><span data-icone="trophee" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Classement</a>
         <a href="/bibliotheque.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Bibliothèque</a>
-        <a href="/assistant-concours.html" class="navbar__link"><span data-icone="etoile" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Assistant IA Concours</a>
+        <a href="/assistant-concours.html" class="navbar__link"><span data-icone="etoile" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Assistant Concours</a>
         <a href="/communaute.html" class="navbar__link"><span data-icone="aide" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Communauté</a>
         <a href="/marketplace.html" class="navbar__link"><span data-icone="panier" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Marketplace</a>
         <a href="/videos.html" class="navbar__link"><span data-icone="video" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Vidéos</a>
@@ -166,6 +167,7 @@ function construireReseaux() {
   const r = window.SITE_CONFIG.reseaux || {};
   const liste = [
     ["Facebook", "facebook", r.facebook],
+    ["LinkedIn", "linkedin", r.linkedin],
     ["Instagram", "instagram", r.instagram],
     ["WhatsApp", "whatsapp", r.whatsappChaine],
     ["TikTok", "tiktok", r.tiktok],
@@ -188,7 +190,7 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
       <div class="container">
         <div class="footer__grille">
           <div>
-            <div class="footer__logo" style="display:flex;align-items:center;gap:10px;"><img src="/assets/logo-icon.png" alt="ProInsertion" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" />ProInsertion</div>
+            <div class="footer__logo" style="display:flex;align-items:center;gap:10px;"><img src="/assets/logo-icon.png" alt="ProInsertion CI" style="width:22px;height:22px;vertical-align:-6px;object-fit:contain;" />ProInsertion CI</div>
             <p class="footer__desc">
               Votre avenir professionnel commence ici. CV, lettres de motivation,
               documents professionnels, offres d'emploi, préparation aux
@@ -240,7 +242,8 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
       </div>
       <div class="footer__bas">
         <div class="container">
-          © 2026 ProInsertion — Tous droits réservés · Abidjan, Côte d'Ivoire
+          <p style="margin:0 0 8px"><a href="#" data-installer-app style="color:inherit;text-decoration:underline;font-weight:600">📲 Installer l'application</a></p>
+          © 2026 ProInsertion CI — Tous droits réservés · Abidjan, Côte d'Ivoire · <a href="/conditions.html" style="color:inherit;text-decoration:underline">Conditions</a> · <a href="/supprimer-compte.html" style="color:inherit;text-decoration:underline">Supprimer mon compte</a> · <a href="/confidentialite.html" style="color:inherit;text-decoration:underline">Confidentialité</a>
         </div>
       </div>
     </footer>`;
@@ -270,7 +273,7 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
   lien.textContent = "Rejoindre la chaîne WhatsApp";
   const texte = document.createElement("p");
   texte.style.cssText = "margin:0 0 12px;font-weight:700;";
-  texte.textContent = "Reçois chaque jour un QCM, les concours à surveiller et des conseils emploi.";
+  texte.textContent = "Recevez chaque jour un QCM, les concours à surveiller et des conseils emploi.";
   zone.style.cssText = "text-align:center;padding:22px 16px;background:#f0fdf4;border-bottom:1px solid #bbf7d0;";
   zone.appendChild(texte);
   zone.appendChild(lien);

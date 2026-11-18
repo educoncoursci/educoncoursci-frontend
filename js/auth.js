@@ -207,7 +207,7 @@ if (!zoneDesktop && !zoneMobile) return;
 
 let htmlDesktop, htmlMobile;
 if (user) {
-const prenom = user.nom.split(" ")[0];
+const prenom = String(user.nom || "Mon compte").split(" ")[0];
 const badgePremium = user.premium ? '<span class="badge-premium">⭐</span>' : "";
 const lienAdmin = estAdmin()
   ? '<a href="/admin/index.html" class="navbar__sous-lien">⚙️ Administration</a>'
@@ -318,7 +318,7 @@ btn.disabled = true;
 
 try {
   await inscrire(nom, email, password);
-  afficherToast("Compte créé avec succès ! Bienvenue 🎓", "succes");
+  afficherToast("Compte créé ! Consultez votre boîte e-mail pour confirmer votre adresse 🎓", "succes");
 
   // Redirige vers la page demandée ou le dashboard.
   // Un compte fraîchement créé n'est jamais admin : on ignore tout
@@ -327,7 +327,7 @@ try {
   const params  = new URLSearchParams(window.location.search);
   const demande = params.get("retour") || "/dashboard/index.html";
   const retour  = demande.startsWith("/admin/") ? "/dashboard/index.html" : demande;
-  setTimeout(() => window.location.href = retour, 1000);
+  setTimeout(() => window.location.href = retour, 1800);
 
 } catch (err) {
   errDiv.textContent = err.message || "Erreur lors de la création du compte.";
@@ -351,7 +351,7 @@ if (!form) return;
 // Message si session expirée
 const params = new URLSearchParams(window.location.search);
 if (params.get("session") === "expiree") {
-afficherToast("Ta session a expiré. Reconnecte-toi.", "info");
+afficherToast("Votre session a expiré. Reconnectez-vous.", "info");
 }
 
 form.addEventListener("submit", async (e) => {

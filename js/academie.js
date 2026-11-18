@@ -1,10 +1,10 @@
 // ============================================================
-//  js/academie.js — Académie ProInsertion (pages publiques)
+//  js/academie.js — Académie ProInsertion CI (pages publiques)
 //  Fonctions communes : appel API, construction DOM sûre,
 //  affichage du contenu d'une leçon.
 //
 //  Sécurité : tout contenu venant de la base (y compris rédigé
-//  par l'IA) est inséré avec textContent / createTextNode,
+//  automatiquement) est inséré avec textContent / createTextNode,
 //  jamais avec innerHTML.
 // ============================================================
 

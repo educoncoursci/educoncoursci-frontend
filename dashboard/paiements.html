@@ -4,7 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mes Paiements — ProInsertion</title>
+    <title>Mes Paiements — ProInsertion CI</title>
+    <meta name="description" content="Historique de vos paiements et de votre abonnement ProInsertion CI." />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -16,13 +17,16 @@
     <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion" /></div>
-          <span class="navbar__logo-texte">Pro<span>Insertion</span></span></a
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion CI" /></div>
+          <span class="navbar__logo-texte">Pro<span>Insertion</span> <span class="navbar__ci">CI</span></span></a
         >
         <div class="navbar__actions" id="navbar-actions"></div>
       </div>
@@ -38,35 +42,23 @@
             <div id="sidebar-badge"></div>
           </div>
           <nav class="sidebar__nav">
-            <div class="sidebar__titre">Menu</div>
-            <a href="/dashboard/index.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a
-            >
-            <a href="/dashboard/progression.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a
-            >
+            <div class="sidebar__titre">Mes outils</div>
+            <a href="/dashboard/index.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a>
+            <a href="/cv-generator.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon CV et mes lettres</a>
+            <a href="/analyse-offre.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Analyser une offre</a>
+            <a href="/emploi.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres d'emploi</a>
+            <a href="/simulation-entretien.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Simulation d'entretien</a>
+            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a>
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes documents</a>
+            <div class="sidebar__titre">Concours</div>
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
             <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
-            <a href="/dashboard/mes-scores.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a
-            >
-            <a href="/dashboard/mes-concours.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a
-            >
-            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a
-            >
-            <a href="/dashboard/messages.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a
-            >
-            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a
-            >
-            <a href="/dashboard/paiements.html" class="sidebar__lien actif"
-              ><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
-            >
-            <a href="/dashboard/profil.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a
-            >
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a>
+            <a href="/dashboard/progression.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a>
+            <div class="sidebar__titre">Mon compte</div>
+            <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
+            <a href="/dashboard/paiements.html" class="sidebar__lien actif"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+            <a href="/dashboard/profil.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a>
           </nav>
           <div class="sidebar__deconnexion">
             <button
@@ -89,7 +81,7 @@
                   font-size: 0.9rem;
                 "
               >
-                Historique de tes abonnements Premium
+                Historique de vos abonnements Premium
               </p>
             </div>
             <a href="/boutique.html" class="btn btn--primaire btn--sm"
@@ -161,9 +153,9 @@
         const paramsUrl = new URLSearchParams(window.location.search);
         const statutRetour = paramsUrl.get("statut");
         if (statutRetour === "succes") {
-          window.afficherToast("Paiement reçu ! Ton Premium sera activé dans quelques instants — actualise la page si besoin.", "succes");
+          window.afficherToast("Paiement reçu ! Votre Premium sera activé dans quelques instants — actualise la page si besoin.", "succes");
         } else if (statutRetour === "echec") {
-          window.afficherToast("Le paiement n'a pas abouti. Tu peux réessayer depuis la page Paiement.", "erreur");
+          window.afficherToast("Le paiement n'a pas abouti. Vous pouvez réessayer depuis la page Paiement.", "erreur");
         }
         // Nettoie l'URL pour éviter que le message ne réapparaisse à
         // chaque rechargement de la page.
@@ -218,7 +210,7 @@
       <div style="background:rgba(245,130,13,0.06);border:1.5px dashed var(--orange);border-radius:16px;padding:20px;text-align:center;">
         <div style="font-size:2rem;margin-bottom:8px;">⭐</div>
         <div style="font-weight:800;font-size:1rem;color:var(--orange);margin-bottom:6px;">Aucun abonnement Premium actif</div>
-        <p style="color:var(--gris-texte);font-size:0.88rem;margin-bottom:16px;">Passe en Premium pour accéder à tous les contenus.</p>
+        <p style="color:var(--gris-texte);font-size:0.88rem;margin-bottom:16px;">Passez en Premium pour accéder à tous les contenus.</p>
         <a href="/boutique.html" class="btn btn--orange btn--sm">Voir les offres →</a>
       </div>`;
         }
@@ -233,7 +225,7 @@
         <div class="empty-state">
           <div class="empty-state__icone">💳</div>
           <div class="empty-state__titre">Aucune transaction</div>
-          <p class="empty-state__texte">Tes paiements apparaîtront ici après ton premier abonnement.</p>
+          <p class="empty-state__texte">Vos paiements apparaîtront ici après votre premier abonnement.</p>
           <a href="/boutique.html" class="btn btn--primaire btn--sm">Voir les plans</a>
         </div>`;
             return;

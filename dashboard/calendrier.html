@@ -4,8 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mon Calendrier — ProInsertion</title>
-    <meta name="description" content="Les dates importantes des concours que tu suis, en un coup d'œil.">
+    <title>Mon Calendrier — ProInsertion CI</title>
+    <meta name="description" content="Les dates importantes des concours que vous suivez, en un coup d'œil.">
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -51,13 +51,16 @@
         bottom: 4px;
       }
     </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion" /></div>
-          <span class="navbar__logo-texte">Pro<span>Insertion</span></span></a
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion CI" /></div>
+          <span class="navbar__logo-texte">Pro<span>Insertion</span> <span class="navbar__ci">CI</span></span></a
         >
         <div class="navbar__actions" id="navbar-actions"></div>
       </div>
@@ -73,15 +76,21 @@
             <div id="sidebar-badge"></div>
           </div>
           <nav class="sidebar__nav">
-            <div class="sidebar__titre">Menu</div>
+            <div class="sidebar__titre">Mes outils</div>
             <a href="/dashboard/index.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a>
-            <a href="/dashboard/progression.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a>
+            <a href="/cv-generator.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon CV et mes lettres</a>
+            <a href="/analyse-offre.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Analyser une offre</a>
+            <a href="/emploi.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres d'emploi</a>
+            <a href="/simulation-entretien.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Simulation d'entretien</a>
+            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a>
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes documents</a>
+            <div class="sidebar__titre">Concours</div>
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
             <a href="/dashboard/calendrier.html" class="sidebar__lien actif"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
             <a href="/dashboard/mes-scores.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a>
-            <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
-            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a>
+            <a href="/dashboard/progression.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a>
+            <div class="sidebar__titre">Mon compte</div>
             <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
-            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a>
             <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
             <a href="/dashboard/profil.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a>
           </nav>
@@ -95,7 +104,7 @@
             <div>
               <h1><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Mon calendrier</h1>
               <p style="color: var(--gris-texte); margin: 4px 0 0; font-size: 0.9rem;">
-                Les dates importantes des concours que tu suis
+                Les dates importantes des concours que vous suivez
               </p>
             </div>
           </div>
@@ -155,7 +164,7 @@
           const { favoris } = await window.API.Users.favoris(userId);
           if (!favoris || favoris.length === 0) {
             document.getElementById("liste-echeances").innerHTML =
-              `<p style="color:var(--gris-texte);font-size:0.9rem;">Tu ne suis encore aucun concours. <a href="/concours.html">Explore les concours ouverts →</a></p>`;
+              `<p style="color:var(--gris-texte);font-size:0.9rem;">Vous ne suivez encore aucun concours. <a href="/concours.html">Explorez les concours ouverts →</a></p>`;
             return;
           }
 
@@ -224,7 +233,7 @@
 
         if (futurs.length === 0) {
           zone.innerHTML = evenements.length
-            ? `<p style="color:var(--gris-texte);font-size:0.9rem;">Aucune échéance à venir pour les concours que tu suis.</p>`
+            ? `<p style="color:var(--gris-texte);font-size:0.9rem;">Aucune échéance à venir pour les concours que vous suivez.</p>`
             : zone.innerHTML;
           return;
         }
@@ -236,7 +245,7 @@
             return `
       <a href="/concours-detail.html?id=${e.concoursId}" style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--gris-bordure);text-decoration:none;color:inherit;">
         <div>
-          <div style="font-weight:700;font-size:0.9rem;">${e.titre}</div>
+          <div style="font-weight:700;font-size:0.9rem;">${echapperHtml(e.titre)}</div>
           <div style="font-size:0.78rem;color:var(--gris-texte);">${e.type} — ${e.date.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</div>
         </div>
         <span class="badge ${jours <= 3 ? "badge--rouge" : "badge--orange"}" style="white-space:nowrap;">${jours >= 0 ? `J-${jours}` : "Passé"}</span>

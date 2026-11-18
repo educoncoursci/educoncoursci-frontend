@@ -65,7 +65,7 @@ function creerModaleRecherche() {
         <button class="recherche-fermer" onclick="fermerRecherche()">✕</button>
       </div>
       <div class="recherche-resultats" id="recherche-resultats">
-        <div class="recherche-etat">Tape au moins 2 caractères pour commencer.</div>
+        <div class="recherche-etat">Tapez au moins 2 caractères pour commencer.</div>
       </div>
     </div>
   `;
@@ -95,7 +95,7 @@ async function lancerRecherche(terme) {
   if (!zone) return;
 
   if (terme.length < 2) {
-    zone.innerHTML = `<div class="recherche-etat">Tape au moins 2 caractères pour commencer.</div>`;
+    zone.innerHTML = `<div class="recherche-etat">Tapez au moins 2 caractères pour commencer.</div>`;
     return;
   }
 
@@ -126,7 +126,7 @@ async function lancerRecherche(terme) {
     }
     zone.innerHTML = html;
   } catch (err) {
-    zone.innerHTML = `<div class="recherche-etat">Erreur lors de la recherche. Réessaie.</div>`;
+    zone.innerHTML = `<div class="recherche-etat">Erreur lors de la recherche. Réessayez.</div>`;
   }
 }
 

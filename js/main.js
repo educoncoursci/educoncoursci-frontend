@@ -1,5 +1,5 @@
 // ============================================================
-//  js/main.js — Script global ProInsertion
+//  js/main.js — Script global ProInsertion CI
 //  Navbar, toast, sidebar mobile, utilitaires communs.
 //  Chargé sur toutes les pages.
 // ============================================================
@@ -429,6 +429,87 @@ wrapper.appendChild(btn);
 }
 document.addEventListener("DOMContentLoaded", initTogglePasswords);
 window.initTogglePasswords = initTogglePasswords;
+
+// ════════════════════════════════════════════════════════════
+//  INSTALLATION DE L'APPLICATION (Android, ordinateur, iPhone)
+//  - Android / ordinateur : fenêtre d'installation native du navigateur
+//  - iPhone / iPad : explications (Safari n'a pas de fenêtre native)
+//  Les boutons marqués data-installer-app sont masqués si l'application
+//  est déjà installée ou ouverte depuis Google Play.
+// ════════════════════════════════════════════════════════════
+(function initInstallationApp() {
+  let evenement = null;
+  const dejaInstallee =
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true ||
+    (document.referrer || "").startsWith("android-app://");
+  const estIOS =
+    /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+  function majBoutons() {
+    document.querySelectorAll("[data-installer-app]").forEach((b) => {
+      b.hidden = dejaInstallee;
+    });
+  }
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    evenement = e;
+  });
+  window.addEventListener("appinstalled", () => {
+    evenement = null;
+    dejaInstallee || window.afficherToast?.("Application installée. Retrouvez-la sur votre écran d'accueil.", "succes");
+  });
+
+  function fenetreAide(titre, etapes) {
+    document.getElementById("aide-installation")?.remove();
+    const fond = document.createElement("div");
+    fond.id = "aide-installation";
+    fond.setAttribute("role", "dialog");
+    fond.setAttribute("aria-modal", "true");
+    fond.style.cssText = "position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px;";
+    const carte = document.createElement("div");
+    carte.style.cssText = "background:#fff;color:#1f2937;border-radius:16px;max-width:420px;width:100%;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.3);margin-bottom:8px;";
+    const h = document.createElement("h3");
+    h.textContent = titre; h.style.cssText = "margin:0 0 12px;font-size:1.05rem;";
+    const ol = document.createElement("ol");
+    ol.style.cssText = "margin:0 0 16px;padding-left:20px;line-height:1.7;font-size:.92rem;";
+    etapes.forEach((t) => { const li = document.createElement("li"); li.textContent = t; ol.appendChild(li); });
+    const ok = document.createElement("button");
+    ok.type = "button"; ok.textContent = "J'ai compris"; ok.className = "btn btn--primaire btn--full";
+    ok.onclick = () => fond.remove();
+    fond.onclick = (e) => { if (e.target === fond) fond.remove(); };
+    carte.append(h, ol, ok); fond.appendChild(carte); document.body.appendChild(fond);
+  }
+
+  window.installerPWA = async function () {
+    if (evenement) {
+      evenement.prompt();
+      await evenement.userChoice;
+      evenement = null;
+      return;
+    }
+    if (estIOS) {
+      fenetreAide("Installer ProInsertion CI sur votre iPhone", [
+        "Ouvrez ce site dans Safari (pas dans une autre application).",
+        "Touchez le bouton Partager (le carré avec une flèche vers le haut).",
+        "Choisissez « Sur l'écran d'accueil », puis touchez « Ajouter ».",
+      ]);
+      return;
+    }
+    fenetreAide("Installer ProInsertion CI", [
+      "Ouvrez le menu de votre navigateur (les trois points en haut à droite).",
+      "Choisissez « Installer l'application » ou « Ajouter à l'écran d'accueil ».",
+      "Confirmez : l'icône apparaît sur votre écran d'accueil.",
+    ]);
+  };
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-installer-app]");
+    if (b) { e.preventDefault(); window.installerPWA(); }
+  });
+  document.addEventListener("DOMContentLoaded", majBoutons);
+  window.addEventListener("load", majBoutons);
+})();
 
 // ════════════════════════════════════════════════════════════
 //  SERVICE WORKER (PWA + notifications push — Lot 11)

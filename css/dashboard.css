@@ -398,3 +398,84 @@
   max-width: 340px;
   margin: 0 auto 20px;
 }
+
+/* ── Espace client v2 : CV, lettre, offres, entretien ───────── */
+.dash-hero {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  background: linear-gradient(135deg, #0a2e18 0%, #14532d 55%, #0a5c9e 130%);
+  color: #fff; border-radius: var(--radius-lg); padding: 28px 32px; margin-bottom: 20px;
+  box-shadow: var(--ombre-md);
+}
+.dash-hero__salut { font-size: .85rem; opacity: .8; font-weight: 600; letter-spacing: .3px; }
+.dash-hero h1 { font-family: var(--font-titre); font-size: 1.9rem; margin: 2px 0 8px; color: #fff; }
+.dash-hero p { margin: 0 0 16px; max-width: 520px; opacity: .9; font-size: .95rem; line-height: 1.5; }
+.dash-hero__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.dash-hero__compte { text-align: center; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22); border-radius: var(--radius-md); padding: 14px 22px; flex-shrink: 0; }
+.dash-hero__compte-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .8px; opacity: .8; }
+.dash-hero__compte-val { font-size: 1.25rem; font-weight: 800; margin-top: 2px; }
+
+.dash-outils { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.outil { --c: var(--vert); display: flex; flex-direction: column; gap: 6px; background: #fff; border: 1px solid var(--gris-bordure); border-top: 3px solid var(--c); border-radius: var(--radius-md); padding: 18px; transition: var(--transition); color: var(--texte); }
+.outil:hover { transform: translateY(-3px); box-shadow: var(--ombre-md); }
+.outil--vert { --c: var(--vert-clair); } .outil--bleu { --c: var(--bleu); } .outil--orange { --c: var(--orange); } .outil--violet { --c: var(--violet); } .outil--rouge { --c: var(--rouge); }
+.outil__ico { width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--c) 12%, #fff); color: var(--c); margin-bottom: 4px; }
+.outil__titre { font-weight: 800; font-size: 1rem; }
+.outil__texte { font-size: .82rem; color: var(--gris-texte); line-height: 1.4; flex: 1; }
+.outil__go { font-size: .85rem; font-weight: 700; color: var(--c); margin-top: 6px; }
+
+.dash-stats { grid-template-columns: repeat(3, 1fr); }
+.dash-stat { background: #fff; border-radius: var(--radius-md); padding: 16px; text-align: center; box-shadow: var(--ombre-sm); }
+.dash-stat__val { font-family: var(--font-titre); font-size: 1.8rem; font-weight: 700; color: var(--vert); }
+.dash-stat__lib { font-size: .82rem; color: var(--gris-texte); margin-top: 2px; }
+
+.parcours { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.parcours__etape { display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; border: 1px solid var(--gris-bordure); border-radius: var(--radius-md); padding: 14px; background: var(--gris-clair); }
+.parcours__etape > div { flex: 1; min-width: 120px; display: flex; flex-direction: column; gap: 2px; }
+.parcours__etape strong { font-size: .92rem; }
+.parcours__etape span:not(.parcours__num) { font-size: .78rem; color: var(--gris-texte); }
+.parcours__etape a { width: 100%; font-size: .82rem; font-weight: 700; color: var(--vert); }
+.parcours__num { width: 28px; height: 28px; border-radius: 50%; background: var(--vert); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: .85rem; flex-shrink: 0; }
+.parcours__etape--fait { background: #eefaf2; border-color: #b7e2c6; }
+.parcours__etape--fait .parcours__num::after { content: ""; }
+
+.dash-duo { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-lg); }
+.dash-duo > .dash-section { margin-bottom: var(--gap-lg); min-width: 0; }
+.dash-ligne { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--gris-bordure); color: var(--texte); }
+.dash-ligne:last-child { border-bottom: 0; }
+.dash-ligne > div { display: flex; flex-direction: column; min-width: 0; }
+.dash-ligne strong { font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dash-ligne span { font-size: .78rem; color: var(--gris-texte); }
+.dash-ligne:hover strong { color: var(--vert); }
+.dash-vide { color: var(--gris-texte); font-size: .88rem; text-align: center; padding: 14px 0; line-height: 1.8; }
+.dash-vide a { font-weight: 700; color: var(--vert); }
+.pastille { font-style: normal; font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+.pastille--ok { background: #e3f6ea; color: #14532d; } .pastille--att { background: #fff3df; color: #9c4108; } .pastille--ko { background: #fde7e5; color: #b3261e; }
+
+.dash-concours__grille { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.dash-mini { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 14px 8px; border-radius: var(--radius-md); background: var(--gris-clair); color: var(--texte); text-align: center; }
+.dash-mini strong { font-family: var(--font-titre); font-size: 1.4rem; color: var(--bleu); }
+.dash-mini span { font-size: .78rem; color: var(--gris-texte); }
+.dash-mini:hover { background: #eaf2fa; }
+.dash-mini--action strong { color: var(--vert); }
+
+@media (max-width: 900px) { .dash-duo { grid-template-columns: 1fr; } .dash-concours__grille { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) {
+  .dash-hero { flex-direction: column; align-items: flex-start; padding: 22px 20px; }
+  .dash-hero h1 { font-size: 1.5rem; }
+  .dash-hero__compte { align-self: stretch; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; }
+  .dash-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .dash-stat { padding: 12px 6px; } .dash-stat__val { font-size: 1.35rem; } .dash-stat__lib { font-size: .7rem; }
+}
+
+/* Ajustements v2 */
+.dash-hero .btn--primaire { background: #fff; color: var(--vert); border-color: #fff; }
+.dash-hero .btn--primaire:hover { background: #eefaf2; }
+@media (min-width: 1100px) { .dash-outils { grid-template-columns: repeat(5, 1fr); } }
+.dash-stats { grid-template-columns: repeat(3, 1fr) !important; }
+@media (max-width: 600px) {
+  .dash-outils { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .outil { padding: 14px; }
+  .outil:last-child { grid-column: 1 / -1; }
+  .outil__texte { display: none; }
+  .dash-section__header { flex-wrap: wrap; gap: 6px; }
+}

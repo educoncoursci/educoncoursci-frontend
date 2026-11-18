@@ -4,7 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mon tableau de bord — ProInsertion</title>
+    <title>Mon tableau de bord — ProInsertion CI</title>
+    <meta name="description" content="Votre espace ProInsertion CI : CV, lettres de motivation, offres d'emploi et préparation aux entretiens." />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -16,13 +17,16 @@
     <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
         <a href="/" class="navbar__logo"
-          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion" /></div>
-          <span class="navbar__logo-texte">Pro<span>Insertion</span></span></a
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion CI" /></div>
+          <span class="navbar__logo-texte">Pro<span>Insertion</span> <span class="navbar__ci">CI</span></span></a
         >
         <div class="navbar__actions" id="navbar-actions"></div>
       </div>
@@ -38,35 +42,23 @@
             <div id="sidebar-badge"></div>
           </div>
           <nav class="sidebar__nav">
-            <div class="sidebar__titre">Menu</div>
-            <a href="/dashboard/index.html" class="sidebar__lien actif"
-              ><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a
-            >
-            <a href="/dashboard/progression.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a
-            >
+            <div class="sidebar__titre">Mes outils</div>
+            <a href="/dashboard/index.html" class="sidebar__lien actif"><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a>
+            <a href="/cv-generator.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon CV et mes lettres</a>
+            <a href="/analyse-offre.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Analyser une offre</a>
+            <a href="/emploi.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres d'emploi</a>
+            <a href="/simulation-entretien.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Simulation d'entretien</a>
+            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a>
+            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes documents</a>
+            <div class="sidebar__titre">Concours</div>
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
             <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
-            <a href="/dashboard/mes-scores.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a
-            >
-            <a href="/dashboard/mes-concours.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a
-            >
-            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a
-            >
-            <a href="/dashboard/messages.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a
-            >
-            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Téléchargements</a
-            >
-            <a href="/dashboard/paiements.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a
-            >
-            <a href="/dashboard/profil.html" class="sidebar__lien"
-              ><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a
-            >
+            <a href="/dashboard/mes-scores.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a>
+            <a href="/dashboard/progression.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a>
+            <div class="sidebar__titre">Mon compte</div>
+            <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
+            <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+            <a href="/dashboard/profil.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a>
           </nav>
           <div class="sidebar__deconnexion">
             <button
@@ -79,74 +71,120 @@
         </aside>
 
         <main class="dashboard__contenu">
-          <div class="dashboard__header">
-            <div>
-              <h1 id="titre-bienvenue">👋 Bienvenue</h1>
-              <p
-                style="
-                  color: var(--gris-texte);
-                  margin: 4px 0 0;
-                  font-size: 0.9rem;
-                "
-              >
-                Voici un résumé de ta progression.
-              </p>
-            </div>
+          <!-- Bandeau d'accueil -->
+          <div id="bandeau-email" hidden style="display:none;margin-bottom:16px;padding:14px 16px;border-radius:12px;background:#fff7e6;border:1px solid #f5c26b;color:#7a4b00;font-size:0.92rem;line-height:1.5;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between;">
+            <span><strong>Confirmez votre adresse e-mail.</strong> Un lien vous a été envoyé à l'inscription ; il est nécessaire pour effectuer un paiement.</span>
+            <button type="button" class="btn btn--sm btn--primaire" id="btn-renvoi-email">Renvoyer l'e-mail</button>
           </div>
+          <section class="dash-hero">
+            <div class="dash-hero__texte">
+              <div class="dash-hero__salut" id="salut">Bonjour</div>
+              <h1 id="titre-bienvenue">Bienvenue</h1>
+              <p>Préparez votre candidature de A à Z : un CV soigné, une lettre qui convainc, les bonnes offres et un entretien maîtrisé.</p>
+              <div class="dash-hero__actions">
+                <a href="/cv-generator.html" class="btn btn--primaire btn--sm">Créer mon CV</a>
+                <a href="/analyse-offre.html" class="btn btn--outline-blanc btn--sm">Analyser une offre</a>
+              </div>
+            </div>
+            <div class="dash-hero__compte">
+              <div class="dash-hero__compte-label">Mon compte</div>
+              <div class="dash-hero__compte-val" id="stat-statut">—</div>
+            </div>
+          </section>
 
-          <!-- Stats principales -->
-          <div class="dash-stats" id="dash-stats">
-            <div class="dash-section" style="margin-bottom: 0; text-align: center">
-              <div style="font-size: 1.8rem; font-weight: 900; color: var(--vert)" id="stat-tentatives">—</div>
-              <div style="font-size: 0.82rem; color: var(--gris-texte); margin-top: 4px">QCM réalisés</div>
-            </div>
-            <div class="dash-section" style="margin-bottom: 0; text-align: center">
-              <div style="font-size: 1.8rem; font-weight: 900; color: var(--bleu)" id="stat-moyenne">—</div>
-              <div style="font-size: 0.82rem; color: var(--gris-texte); margin-top: 4px">Moyenne générale</div>
-            </div>
-            <div class="dash-section" style="margin-bottom: 0; text-align: center">
-              <div style="font-size: 1.8rem; font-weight: 900; color: var(--violet)" id="stat-qcm-disponibles">—</div>
-              <div style="font-size: 0.82rem; color: var(--gris-texte); margin-top: 4px">Concours disponibles</div>
-            </div>
-            <div class="dash-section" style="margin-bottom: 0; text-align: center">
-              <div style="font-size: 1.8rem; font-weight: 900" id="stat-statut">—</div>
-              <div style="font-size: 0.82rem; color: var(--gris-texte); margin-top: 4px">Statut du compte</div>
-            </div>
-          </div>
-
-          <!-- Promo Premium (affichée seulement si compte gratuit) -->
-          <div class="premium-promo hidden" id="promo-premium">
-            <div class="premium-promo__icone">⭐</div>
-            <div class="premium-promo__titre">Passe à ProInsertion Premium</div>
-            <div class="premium-promo__texte">
-              Accède à tous les packs PDF, sujets corrigés et QCM illimités.
-            </div>
-            <a href="/boutique.html" class="btn btn--primaire btn--sm" style="margin-top: 12px">
-              Découvrir Premium →
+          <!-- Outils principaux -->
+          <div class="dash-outils">
+            <a href="/cv-generator.html" class="outil outil--vert">
+              <span class="outil__ico"><span data-icone="document" data-taille="24"></span></span>
+              <span class="outil__titre">Mon CV</span>
+              <span class="outil__texte">Un CV moderne, prêt à télécharger en PDF.</span>
+              <span class="outil__go">Créer →</span>
+            </a>
+            <a href="/cv-generator.html?type=lm" class="outil outil--bleu">
+              <span class="outil__ico"><span data-icone="enveloppeFermee" data-taille="24"></span></span>
+              <span class="outil__titre">Lettre de motivation</span>
+              <span class="outil__texte">Une lettre adaptée au poste visé.</span>
+              <span class="outil__go">Rédiger →</span>
+            </a>
+            <a href="/emploi.html" class="outil outil--orange">
+              <span class="outil__ico"><span data-icone="portefeuille" data-taille="24"></span></span>
+              <span class="outil__titre">Offres d'emploi</span>
+              <span class="outil__texte">Emplois et stages en Côte d'Ivoire.</span>
+              <span class="outil__go">Parcourir →</span>
+            </a>
+            <a href="/analyse-offre.html" class="outil outil--violet">
+              <span class="outil__ico"><span data-icone="loupe" data-taille="24"></span></span>
+              <span class="outil__titre">Analyse d'offre</span>
+              <span class="outil__texte">Comprenez ce que le recruteur attend.</span>
+              <span class="outil__go">Analyser →</span>
+            </a>
+            <a href="/simulation-entretien.html" class="outil outil--rouge">
+              <span class="outil__ico"><span data-icone="utilisateurs" data-taille="24"></span></span>
+              <span class="outil__titre">Entretien</span>
+              <span class="outil__texte">Entraînez-vous aux vraies questions.</span>
+              <span class="outil__go">S'entraîner →</span>
             </a>
           </div>
 
-          <!-- Derniers scores -->
+          <!-- Chiffres personnels -->
+          <div class="dash-stats" id="dash-stats">
+            <div class="dash-stat"><div class="dash-stat__val" id="stat-docs">—</div><div class="dash-stat__lib">Documents créés</div></div>
+            <div class="dash-stat"><div class="dash-stat__val" id="stat-analyses">—</div><div class="dash-stat__lib">Offres analysées</div></div>
+            <div class="dash-stat"><div class="dash-stat__val" id="stat-candidatures">—</div><div class="dash-stat__lib">Candidatures envoyées</div></div>
+          </div>
+
+          <!-- Parcours conseillé -->
           <div class="dash-section">
             <div class="dash-section__header">
-              <div class="dash-section__titre"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Tes derniers scores</div>
-              <a href="/dashboard/mes-scores.html" class="dash-section__voir">Voir tout →</a>
+              <div class="dash-section__titre">Votre parcours candidature</div>
+              <span class="dash-section__voir" id="parcours-avance" style="cursor:default">0/4</span>
             </div>
-            <div id="derniers-scores">
-              <div style="color: var(--gris-texte); font-size: 0.9rem">Chargement…</div>
+            <ol class="parcours" id="parcours">
+              <li class="parcours__etape" data-etape="analyse"><span class="parcours__num">1</span><div><strong>Analysez l'offre</strong><span>Repérez les attentes du recruteur.</span></div><a href="/analyse-offre.html">Commencer</a></li>
+              <li class="parcours__etape" data-etape="cv"><span class="parcours__num">2</span><div><strong>Créez votre CV</strong><span>Mettez en avant vos atouts.</span></div><a href="/cv-generator.html">Commencer</a></li>
+              <li class="parcours__etape" data-etape="lm"><span class="parcours__num">3</span><div><strong>Rédigez votre lettre</strong><span>Personnalisée pour le poste.</span></div><a href="/cv-generator.html?type=lm">Commencer</a></li>
+              <li class="parcours__etape" data-etape="entretien"><span class="parcours__num">4</span><div><strong>Préparez l'entretien</strong><span>Questions et conseils.</span></div><a href="/simulation-entretien.html">Commencer</a></li>
+            </ol>
+          </div>
+
+          <!-- Promo Premium (compte gratuit uniquement) -->
+          <div class="premium-promo hidden" id="promo-premium">
+            <div class="premium-promo__titre">Passez à ProInsertion CI Premium</div>
+            <div class="premium-promo__texte">
+              Comparez votre CV à chaque offre, obtenez des documents ciblés et profitez de l'accompagnement complet.
+            </div>
+            <a href="/boutique.html" class="btn btn--primaire btn--sm">Découvrir Premium →</a>
+          </div>
+
+          <!-- Activité récente -->
+          <div class="dash-duo">
+            <div class="dash-section">
+              <div class="dash-section__header">
+                <div class="dash-section__titre">Mes derniers documents</div>
+                <a href="/dashboard/mes-downloads.html" class="dash-section__voir">Voir tout →</a>
+              </div>
+              <div id="liste-docs"><div class="dash-vide">Chargement…</div></div>
+            </div>
+            <div class="dash-section">
+              <div class="dash-section__header">
+                <div class="dash-section__titre">Mes dernières analyses d'offres</div>
+                <a href="/analyse-offre.html" class="dash-section__voir">Nouvelle analyse →</a>
+              </div>
+              <div id="liste-analyses"><div class="dash-vide">Chargement…</div></div>
             </div>
           </div>
 
-          <!-- Actions rapides -->
-          <div class="dash-section">
+          <!-- Concours : complément -->
+          <div class="dash-section dash-concours">
             <div class="dash-section__header">
-              <div class="dash-section__titre"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Actions rapides</div>
+              <div class="dash-section__titre">Concours et préparation</div>
+              <a href="/concours.html" class="dash-section__voir">Voir les concours →</a>
             </div>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap">
-              <a href="/analyse-offre.html" class="btn btn--secondaire btn--sm"><span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Analyser une offre</a>
-              <a href="/cv-generator.html" class="btn btn--primaire btn--sm"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Générer un CV</a>
-              <a href="/preparation.html" class="btn btn--bleu btn--sm"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Faire un QCM</a>
-              <a href="/bibliotheque.html" class="btn btn--gris btn--sm"><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Voir la bibliothèque</a>
+            <div class="dash-concours__grille">
+              <a href="/concours.html" class="dash-mini"><strong id="stat-qcm-disponibles">—</strong><span>concours ouverts</span></a>
+              <a href="/dashboard/mes-scores.html" class="dash-mini"><strong id="stat-tentatives">—</strong><span>QCM réalisés</span></a>
+              <a href="/dashboard/mes-scores.html" class="dash-mini"><strong id="stat-moyenne">—</strong><span>moyenne générale</span></a>
+              <a href="/preparation.html" class="dash-mini dash-mini--action"><strong>QCM</strong><span>S'entraîner</span></a>
             </div>
           </div>
         </main>
@@ -165,95 +203,138 @@
           return;
         }
         if (new URLSearchParams(window.location.search).get("raison") === "acces-refuse") {
-          window.afficherToast?.("Tu n'as pas les autorisations nécessaires pour accéder à cette page.", "erreur", 4500);
+          window.afficherToast?.("Vous n'avez pas les autorisations nécessaires pour accéder à cette page.", "erreur", 4500);
         }
         const session = window.Auth.getSession();
+        const $ = (id) => document.getElementById(id);
+        const esc = (t) => String(t == null ? "" : t).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+        const dateFr = (d) => { try { return new Date(d).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric", timeZone: "Africa/Abidjan" }); } catch { return ""; } };
 
-        // Sidebar
+        // Barre latérale
+        const av = $("sidebar-avatar");
         if (session.photo_url) {
-          document.getElementById("sidebar-avatar").style.backgroundImage = `url('${session.photo_url}')`;
-          document.getElementById("sidebar-avatar").style.backgroundSize = "cover";
-          document.getElementById("sidebar-avatar").style.backgroundPosition = "center";
-          document.getElementById("sidebar-avatar").textContent = "";
+          av.style.backgroundImage = `url('${String(session.photo_url).replace(/['"()\\]/g, "")}')`;
+          av.style.backgroundSize = "cover";
+          av.style.backgroundPosition = "center";
+          av.textContent = "";
         } else {
-          document.getElementById("sidebar-avatar").textContent = session.nom?.[0]?.toUpperCase() || "?";
+          av.textContent = session.nom?.[0]?.toUpperCase() || "?";
         }
-        document.getElementById("sidebar-nom").textContent = session.nom || "";
-        document.getElementById("sidebar-email").textContent = session.email || "";
-        document.getElementById("sidebar-badge").innerHTML = session.premium
-          ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
-          : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
+        $("sidebar-nom").textContent = session.nom || "";
+        $("sidebar-email").textContent = session.email || "";
+        $("sidebar-badge").innerHTML = session.premium
+          ? '<div class="sidebar__badge-premium">Premium</div>'
+          : '<div class="sidebar__badge-gratuit">Compte gratuit</div>';
 
         // En-tête
         const prenom = session.nom ? session.nom.split(" ")[0] : "";
-        document.getElementById("titre-bienvenue").textContent = `👋 Bienvenue, ${prenom}`;
-
-        // Statut du compte
-        const statutEl = document.getElementById("stat-statut");
+        const h = Number(new Intl.DateTimeFormat("fr-FR", { hour: "numeric", hour12: false, timeZone: "Africa/Abidjan" }).format(new Date()));
+        $("salut").textContent = h >= 18 || h < 5 ? "Bonsoir" : "Bonjour";
+        $("titre-bienvenue").textContent = prenom ? prenom : "Bienvenue";
+        const statut = $("stat-statut");
         if (session.premium) {
-          statutEl.textContent = "Premium";
-          statutEl.style.color = "#f59e0b";
+          statut.textContent = "Premium";
         } else {
-          statutEl.textContent = "Gratuit";
-          statutEl.style.color = "var(--gris-texte)";
-          document.getElementById("promo-premium").classList.remove("hidden");
+          statut.textContent = "Gratuit";
+          $("promo-premium").classList.remove("hidden");
         }
 
-        // Scores (depuis la session, déjà présents dans le JWT/profil)
-        const scores = JSON.parse(session.scores_json || "[]");
-        const nbTentatives = scores.length;
-        document.getElementById("stat-tentatives").textContent = nbTentatives;
+        // Concours (complément) : données de la session
+        let scores = [];
+        try { scores = JSON.parse(session.scores_json || "[]"); } catch { scores = []; }
+        $("stat-tentatives").textContent = scores.length;
+        $("stat-moyenne").textContent = scores.length
+          ? `${Math.round(scores.reduce((a, s) => a + (s.pourcentage || 0), 0) / scores.length)}%`
+          : "—";
 
-        if (nbTentatives > 0) {
-          const moyenne = Math.round(
-            scores.reduce((acc, s) => acc + (s.pourcentage || 0), 0) / nbTentatives,
-          );
-          document.getElementById("stat-moyenne").textContent = `${moyenne}%`;
-        } else {
-          document.getElementById("stat-moyenne").textContent = "—";
-        }
+        const faits = { analyse: false, cv: false, lm: false, entretien: false };
+        const majParcours = () => {
+          let n = 0;
+          document.querySelectorAll(".parcours__etape").forEach((li) => {
+            const ok = faits[li.dataset.etape];
+            li.classList.toggle("parcours__etape--fait", !!ok);
+            const lien = li.querySelector("a");
+            if (ok) { n++; lien.textContent = "Refaire"; } else { lien.textContent = "Commencer"; }
+          });
+          $("parcours-avance").textContent = `${n}/4`;
+        };
 
-        // Affiche les 5 derniers scores
-        const derniersEl = document.getElementById("derniers-scores");
-        if (nbTentatives === 0) {
-          derniersEl.innerHTML = `
-            <div class="empty-state">
-              <div class="empty-state__icone">📝</div>
-              <div class="empty-state__titre">Aucun QCM réalisé pour le moment</div>
-              <div class="empty-state__texte">Commence ta préparation dès maintenant.</div>
-              <a href="/preparation.html" class="btn btn--primaire btn--sm" style="margin-top: 12px">Faire un QCM →</a>
-            </div>`;
-        } else {
-          derniersEl.innerHTML = scores
-            .slice()
-            .reverse()
-            .slice(0, 5)
-            .map((sc) => {
-              const p = sc.pourcentage || 0;
-              const c = p >= 75 ? "var(--vert)" : p >= 50 ? "var(--orange)" : "var(--rouge)";
-              return `
-                <div class="score-item">
-                  <div class="score-item__cercle" style="border-color:${c};">
-                    <div class="score-item__pct" style="color:${c};">${p}%</div>
-                  </div>
-                  <div class="score-item__info">
-                    <div class="score-item__titre">${sc.qcmTitre || "QCM"}</div>
-                    <div class="score-item__meta">${sc.score || 0}/${sc.total || 0} bonnes réponses · ${sc.date || ""}</div>
-                  </div>
-                </div>`;
-            })
-            .join("");
-        }
+        const vide = (texte, lien, lib) => `<div class="dash-vide">${texte}<br><a href="${lien}">${lib}</a></div>`;
 
-        // Concours disponibles (donnée réelle du catalogue)
-        try {
-          const concoursData = await window.API.Concours.ouverts();
-          document.getElementById("stat-qcm-disponibles").textContent =
-            (concoursData.concours || []).length;
-        } catch {
-          document.getElementById("stat-qcm-disponibles").textContent = "—";
-        }
+        // Documents (CV, lettres, simulations)
+        const chargerDocs = async () => {
+          try {
+            const d = await window.API.CVLM.mesCommandes();
+            const l = d.commandes || [];
+            $("stat-docs").textContent = l.length;
+            faits.cv = l.some((c) => /^cv/.test(c.type || ""));
+            faits.lm = l.some((c) => /^lm/.test(c.type || ""));
+            faits.entretien = l.some((c) => /simulation|entretien/i.test(c.type || ""));
+            $("liste-docs").innerHTML = l.length
+              ? l.slice(0, 4).map((c) => {
+                  const etats = { valide: ["Prêt", "ok"], a_payer: ["À régler", "att"], en_verification: ["En vérification", "att"], rejete: ["Refusé", "ko"] };
+                  const [lib, cl] = etats[c.etat] || ["", "att"];
+                  return `<a class="dash-ligne" href="/dashboard/mes-downloads.html"><div><strong>${esc(c.nom)}</strong><span>${dateFr(c.date)}</span></div><em class="pastille pastille--${cl}">${lib}</em></a>`;
+                }).join("")
+              : vide("Vous n'avez pas encore créé de document.", "/cv-generator.html", "Créer mon premier CV →");
+          } catch {
+            $("stat-docs").textContent = "—";
+            $("liste-docs").innerHTML = '<div class="dash-vide">Impossible de charger vos documents pour le moment.</div>';
+          }
+        };
+
+        // Analyses d'offres
+        const chargerAnalyses = async () => {
+          try {
+            const d = await window.API.Offres.lister();
+            const l = d.analyses || [];
+            $("stat-analyses").textContent = l.length;
+            faits.analyse = l.length > 0;
+            $("liste-analyses").innerHTML = l.length
+              ? l.slice(0, 4).map((a) => `<a class="dash-ligne" href="/analyse-offre.html?id=${encodeURIComponent(a.id)}"><div><strong>${esc(a.intitule || "Offre analysée")}</strong><span>${esc(a.organisation || "")}${a.organisation ? " · " : ""}${dateFr(a.created_at)}</span></div>${a.compare ? '<em class="pastille pastille--ok">Comparée</em>' : ""}</a>`).join("")
+              : vide("Aucune offre analysée pour le moment.", "/analyse-offre.html", "Analyser une offre →");
+          } catch {
+            $("stat-analyses").textContent = "—";
+            $("liste-analyses").innerHTML = '<div class="dash-vide">Impossible de charger vos analyses pour le moment.</div>';
+          }
+        };
+
+        // Candidatures
+        const chargerCandidatures = async () => {
+          try {
+            const d = await window.API.Emploi.mesCandidatures();
+            $("stat-candidatures").textContent = d.total ?? (d.candidatures || []).length;
+          } catch { $("stat-candidatures").textContent = "—"; }
+        };
+
+        const chargerConcours = async () => {
+          try {
+            const d = await window.API.Concours.ouverts();
+            $("stat-qcm-disponibles").textContent = (d.concours || []).length;
+          } catch { $("stat-qcm-disponibles").textContent = "—"; }
+        };
+
+        await Promise.allSettled([chargerDocs(), chargerAnalyses(), chargerCandidatures(), chargerConcours()]);
+        majParcours();
+        window.initIcones?.();
       });
-    </script>
+
+    
+  // Bandeau « confirmez votre e-mail » (comptes créés après l'activation de la vérification)
+  (async () => {
+    try {
+      const d = await window.API.Auth.me();
+      if (!d || !d.user || d.user.email_verifie !== false) return;
+      const b = document.getElementById("bandeau-email");
+      b.hidden = false; b.style.display = "flex";
+      document.getElementById("btn-renvoi-email").onclick = async (e) => {
+        e.target.disabled = true;
+        try { const r = await window.API.Auth.renvoyerVerification(); window.afficherToast?.(r.message, "succes"); }
+        catch (err) { window.afficherToast?.(err.message || "Envoi impossible.", "erreur"); }
+        setTimeout(() => { e.target.disabled = false; }, 60000);
+      };
+    } catch {}
+  })();
+</script>
   </body>
 </html>

@@ -148,7 +148,7 @@
   .grille-2,
   .grille-3,
   .grille-4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   /* ── Barre recherche ───────────────────────────────────────── */
@@ -445,4 +445,10 @@
   .main-content {
     padding-top: 0;
   }
+}
+
+
+/* Très petits écrans (320 px) : boutons et pastilles à texte long passent à la ligne */
+@media (max-width: 480px) {
+  .btn, .badge { max-width: 100%; white-space: normal; text-align: center; }
 }

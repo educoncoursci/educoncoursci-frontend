@@ -12,7 +12,7 @@
 //  âge requis, places, frais, date d'ouverture, date limite,
 //  lieu(x), un extrait des conditions d'accès, et un lien direct
 //  vers l'inscription officielle quand il est renseigné — en plus
-//  du lien vers la fiche détaillée du concours sur ProInsertion.
+//  du lien vers la fiche détaillée du concours sur ProInsertion CI.
 // ============================================================
 
 // ⚠️ Changement de convention couleur/emoji (LOT21) : le site utilisait
