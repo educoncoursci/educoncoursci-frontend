@@ -359,10 +359,10 @@
           `${liste.length} / ${toutesVids.length} vidéos`;
         const tbody = document.getElementById("tbody-vids");
         if (liste.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          window.paginer("vids", [], tbody, filtrerVids); tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
           return;
         }
-        tbody.innerHTML = liste
+        tbody.innerHTML = window.paginer("vids", liste, tbody, filtrerVids)
           .map(
             (v) => `
     <tr>

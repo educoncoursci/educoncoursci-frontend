@@ -187,12 +187,12 @@
       async function chargerUsers() {
         try {
           const [allData, premData] = await Promise.all([
-            window.API.Admin.users({ limit: 500 }),
+            window.API.Admin.users({ limit: 1000 }),
             window.API.Admin.abonnes(),
           ]);
           tousUsers = allData.utilisateurs || [];
           document.getElementById("sub-abonnes").textContent =
-            `${tousUsers.length} utilisateurs · ${premData.total} abonnés Premium · ${premData.revenus} de revenus`;
+            `${allData.total ?? tousUsers.length} utilisateurs${(allData.total || 0) > tousUsers.length ? ` (les ${tousUsers.length} plus récents affichés)` : ""} · ${premData.total} abonnés Premium · ${premData.revenus} de revenus`;
           afficherUsers();
         } catch (err) {
           window.afficherToast("Erreur : " + err.message, "erreur");
@@ -233,11 +233,11 @@
 
         const tbody = document.getElementById("tbody-users");
         if (liste.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun utilisateur trouvé.</td></tr>`;
+          window.paginer("users", [], tbody, afficherUsers); tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun utilisateur trouvé.</td></tr>`;
           return;
         }
 
-        tbody.innerHTML = liste
+        tbody.innerHTML = window.paginer("users", liste, tbody, afficherUsers)
           .map(
             (u) => `
     <tr>

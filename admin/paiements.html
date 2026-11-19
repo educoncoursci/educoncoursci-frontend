@@ -227,13 +227,13 @@
       async function charger() {
         try {
           const data = await window.API.Paiement.toutesTransactions({
-            limit: 500,
+            limit: 1000,
           });
           toutesTx = data.transactions || [];
 
           // Stats
           document.getElementById("sub-paiements").textContent =
-            `${toutesTx.length} transactions · Revenus totaux : ${(data.revenus_total || 0).toLocaleString("fr-CI")} FCFA`;
+            `${data.total ?? toutesTx.length} transactions${(data.total || 0) > toutesTx.length ? ` (les ${toutesTx.length} plus récentes affichées)` : ""} · Revenus totaux : ${(data.revenus_total || 0).toLocaleString("fr-CI")} FCFA`;
 
           const parMoyen = (motCle) => toutesTx.filter((t) => t.moyen?.includes(motCle));
           const revenus = (liste) => liste.reduce((s, t) => s + Number(t.montant || 0), 0);
@@ -276,10 +276,10 @@
         });
         const tbody = document.getElementById("tbody-tx");
         if (liste.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune transaction</td></tr>`;
+          window.paginer("tx", [], tbody, filtrerTx); tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucune transaction</td></tr>`;
           return;
         }
-        tbody.innerHTML = liste
+        tbody.innerHTML = window.paginer("tx", liste, tbody, filtrerTx)
           .map(
             (t) => `
     <tr>

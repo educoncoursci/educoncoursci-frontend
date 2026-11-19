@@ -400,9 +400,9 @@
         });
         document.getElementById("compteur-qcm").textContent=`${liste.length} / ${tousQCM.length} QCM`;
         const tbody=document.getElementById("tbody-qcm");
-        if (liste.length===0) { tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`; return; }
+        if (liste.length===0) { window.paginer("qcm", [], tbody, filtrerQCM); tbody.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`; return; }
         const DIFF_C={"Facile":"badge--vert","Moyen":"badge--orange","Difficile":"badge--rouge"};
-        tbody.innerHTML = liste.map(q=>`
+        tbody.innerHTML = window.paginer("qcm", liste, tbody, filtrerQCM).map(q=>`
           <tr>
             <td style="font-weight:700;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${echapperHtml(q.titre)}</td>
             <td style="font-size:0.85rem;">${echapperHtml(q.matiere||"—")}</td>

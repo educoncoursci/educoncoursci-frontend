@@ -395,10 +395,10 @@
           `${liste.length} / ${tousPDFs.length} PDFs`;
         const tbody = document.getElementById("tbody-pdfs");
         if (liste.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          window.paginer("pdfs", [], tbody, filtrerPDFs); tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
           return;
         }
-        tbody.innerHTML = liste
+        tbody.innerHTML = window.paginer("pdfs", liste, tbody, filtrerPDFs)
           .map(
             (p) => `
     <tr>

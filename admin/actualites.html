@@ -271,10 +271,10 @@
           `${liste.length} / ${toutesActusAdmin.length} actualité(s)`;
         const tbody = document.getElementById("tbody-actu");
         if (liste.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          window.paginer("actu", [], tbody, filtrerActus); tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
           return;
         }
-        tbody.innerHTML = liste
+        tbody.innerHTML = window.paginer("actu", liste, tbody, filtrerActus)
           .map((a) => `
     <tr>
       <td style="font-weight:700;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${echapperHtml(a.titre)}</td>

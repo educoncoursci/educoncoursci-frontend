@@ -591,10 +591,10 @@
           `${liste.length} / ${toutesOffresAdmin.length} offres`;
         const tbody = document.getElementById("tbody-emp");
         if (liste.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          window.paginer("emp", [], tbody, filtrerOffres); tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
           return;
         }
-        tbody.innerHTML = liste
+        tbody.innerHTML = window.paginer("emp", liste, tbody, filtrerOffres)
           .map((o) => {
             // "Statut réel" = statut manuel (fermé/brouillon) OU expiration
             // calculée depuis date_limite_date — voir models/Emploi.js.

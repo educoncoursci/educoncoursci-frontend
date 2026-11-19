@@ -691,10 +691,10 @@
           `${liste.length} / ${tousConcoursAdmin.length} concours`;
         const tbody = document.getElementById("tbody-conc");
         if (liste.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
+          window.paginer("conc", [], tbody, filtrerConcours); tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--gris-texte);">Aucun résultat</td></tr>`;
           return;
         }
-        tbody.innerHTML = liste
+        tbody.innerHTML = window.paginer("conc", liste, tbody, filtrerConcours)
           .map(
             (c) => `
     <tr>
