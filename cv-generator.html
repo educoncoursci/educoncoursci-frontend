@@ -88,6 +88,19 @@
         flex-wrap: wrap;
         margin-top: 16px;
       }
+      .photo-cv { display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+      .photo-cv__apercu { width:84px; height:84px; border-radius:50%; background:#eceaf2 center/cover no-repeat; border:2px dashed #b9b4c9; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#8a85a0; font-size:0.72rem; font-weight:700; }
+      .photo-cv__apercu.avec { border-style:solid; border-color:var(--vert); }
+      .photo-cv__actions { flex:1; min-width:200px; }
+      .palette-cv { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+      .palette-cv__label { font-weight:700; font-size:0.85rem; }
+      .palette-cv__pastille { width:30px; height:30px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1px #c9c5d6; cursor:pointer; padding:0; }
+      .palette-cv__pastille.actif { box-shadow:0 0 0 3px var(--vert); }
+      .palette-cv__nom { font-size:0.82rem; color:var(--gris-texte); margin-left:4px; }
+      .modele-ats { display:inline-block; margin-top:3px; font-size:0.66rem; font-weight:700; color:#7a6a3a; background:#f6efd9; border-radius:6px; padding:1px 6px; }
+      .modele-ats--oui { color:#1a6b3c; background:#e3f2e9; }
+      .modele-carte__mini { position:relative; height:112px; background:#fff; overflow:hidden; }
+      .modele-carte__mini i { position:absolute; display:block; }
       .modeles-categorie-titre {
         font-size: 0.78rem;
         font-weight: 700;
@@ -609,6 +622,27 @@
                 </div>
               </div>
 
+              <!-- Photo (facultative) et présentation -->
+              <div style="margin-top: 28px">
+                <label class="form-label" style="margin-bottom: 10px; display: block;">Photo (facultative)</label>
+                <div class="photo-cv">
+                  <div id="photo-apercu" class="photo-cv__apercu" aria-hidden="true"></div>
+                  <div class="photo-cv__actions">
+                    <input type="file" id="photo-fichier" accept="image/jpeg,image/png" hidden onchange="choisirPhoto(event)" />
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                      <button type="button" class="btn btn--gris btn--sm" onclick="document.getElementById('photo-fichier').click()">Ajouter une photo</button>
+                      <button type="button" id="btn-photo-retirer" class="btn btn--gris btn--sm hidden" onclick="retirerPhoto()">Retirer</button>
+                    </div>
+                    <div class="form-hint" style="margin-top:8px;">Portrait de face, fond uni, au format JPEG ou PNG. La photo est recadrée et réduite sur votre appareil, et n'apparaît que sur les modèles « avec photo ».</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 24px">
+                <label class="form-label" style="margin-bottom: 6px; display: block;">Choisissez la présentation de votre CV</label>
+                <div id="modeles-cv-conteneur" style="color: var(--gris-texte); font-size: 0.85rem;">Chargement…</div>
+              </div>
+
               <!-- Choix du type de CV -->
               <div style="margin-top: 28px">
                 <label class="form-label" style="margin-bottom: 12px; display: block;">
@@ -1064,7 +1098,7 @@
       let typeActuel = "cv";
       let contenuGenere = null;
       let dataFormulaire = null;
-      let modeleChoisi = "ats_classique_1";
+      let modeleChoisi = "bandeau_marine";
       let modelesCatalogue = {};
       let commandeActive = null;
       let typeCvChoisi = null;
@@ -1109,69 +1143,162 @@
         }
 
         chargerTypesCv();
+        chargerModelesCv();
         chargerMesCv();
       });
 
-      // ── Chargement et affichage des modèles de CV ──────────────────
+      // ── Photo et présentation (modèles de CV) ──────────────────────
+      let photoCV = "";
+      let modeleManuel = false;
+      const TYPES_SOBRES = ["cv-ats", "cv-international", "cv-bilingue"];
+
+      function majApercuPhoto() {
+        const el = document.getElementById("photo-apercu");
+        el.style.backgroundImage = photoCV ? `url(${photoCV})` : "";
+        el.textContent = photoCV ? "" : "Photo";
+        el.classList.toggle("avec", !!photoCV);
+        document.getElementById("btn-photo-retirer").classList.toggle("hidden", !photoCV);
+      }
+
+      async function choisirPhoto(ev) {
+        const f = ev.target.files && ev.target.files[0];
+        ev.target.value = "";
+        if (!f) return;
+        if (!/^image\/(jpeg|png)$/.test(f.type)) {
+          window.afficherToast("Format non pris en charge : utilisez une photo JPEG ou PNG.", "warn"); return;
+        }
+        if (f.size > 12 * 1024 * 1024) {
+          window.afficherToast("Cette photo est trop lourde (12 Mo maximum).", "warn"); return;
+        }
+        const url = URL.createObjectURL(f);
+        try {
+          const img = await new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = url; });
+          const cote = Math.min(img.naturalWidth, img.naturalHeight);
+          const c = document.createElement("canvas");
+          c.width = c.height = 360;
+          const ctx = c.getContext("2d");
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, 360, 360);
+          // Recadrage carré, légèrement vers le haut (les portraits ont le visage en haut)
+          ctx.drawImage(img, (img.naturalWidth - cote) / 2, (img.naturalHeight - cote) * 0.3, cote, cote, 0, 0, 360, 360);
+          photoCV = c.toDataURL("image/jpeg", 0.85);
+          majApercuPhoto();
+        } catch {
+          window.afficherToast("Cette image n'a pas pu être lue. Essayez une autre photo (JPEG ou PNG).", "erreur");
+        } finally {
+          URL.revokeObjectURL(url);
+        }
+      }
+
+      function retirerPhoto() { photoCV = ""; majApercuPhoto(); }
+
+      // Miniature dessinée en CSS (couleurs de la palette choisie)
+      function miniatureModele(layout, co) {
+        const p = co.primaire, a = co.accent, g = "#d9d6e2", k = "#2b2740";
+        const i = (st) => `<i style="${st}"></i>`;
+        const lignes = (x, y, n, w) => Array.from({ length: n }, (_, j) => i(`left:${x}px;top:${y + j * 6}px;width:${w - (j % 2) * 14}px;height:2px;background:${g}`)).join("");
+        let h = "";
+        if (layout === "lateral") {
+          h += i(`left:0;right:0;top:0;height:30px;background:${p}`) + i(`left:0;top:30px;bottom:0;width:44px;background:${co.clair}`)
+            + i(`left:6px;top:5px;width:30px;height:30px;background:#e9e5f0;border:1.5px solid ${co.trait};box-sizing:border-box`)
+            + i(`left:52px;top:9px;width:56px;height:5px;border-radius:2px;background:#fff`)
+            + i(`left:6px;top:44px;width:30px;height:2px;background:${co.trait}`) + i(`left:6px;top:49px;width:22px;height:2px;background:${co.trait};opacity:.55`)
+            + i(`left:6px;top:58px;width:30px;height:2px;background:${co.trait}`) + i(`left:6px;top:63px;width:26px;height:2px;background:${co.trait};opacity:.55`) + i(`left:6px;top:80px;width:12px;height:3px;background:${co.trait}`) + i(`left:20px;top:80px;width:12px;height:3px;background:${co.trait}`) + i(`left:34px;top:80px;width:8px;height:3px;background:${co.clair}`)
+            + [38, 70].map((y) => i(`left:52px;top:${y}px;right:10px;height:3px;background:${p}`) + lignes(52, y + 8, 3, 70)).join("");
+        } else if (layout === "bandeau") {
+          h += i(`left:0;right:0;top:0;height:42px;background:${p}`) + i(`left:10px;top:7px;width:20px;height:20px;border-radius:50%;background:#efe9f7`) + i(`left:10px;top:31px;width:50px;height:4px;border-radius:2px;background:#fff`);
+          [50, 82].forEach((y) => { h += i(`left:10px;top:${y}px;width:44px;height:4px;border-radius:2px;background:${p}`) + i(`left:10px;top:${y + 7}px;width:16px;height:2px;background:${a}`) + lignes(10, y + 13, 3, 110); });
+        } else if (layout === "classique") {
+          h += i(`left:10px;top:8px;width:20px;height:20px;border-radius:50%;background:#e4e1ec`) + i(`left:10px;top:32px;width:62px;height:5px;border-radius:2px;background:${k}`) + i(`left:10px;right:10px;top:42px;height:2px;background:${p}`);
+          [52, 82].forEach((y) => { h += i(`left:10px;top:${y}px;width:30px;height:3px;background:${p}`) + i(`left:10px;right:10px;top:${y + 7}px;height:1px;background:${g}`) + lignes(10, y + 12, 3, 112); });
+        } else if (layout === "centre") {
+          h += i(`left:50%;margin-left:-11px;top:6px;width:22px;height:22px;border-radius:50%;border:1.5px solid ${p};box-sizing:border-box;background:#efe9f7`) + i(`left:50%;margin-left:-32px;top:32px;width:64px;height:5px;border-radius:2px;background:${k}`) + i(`left:50%;margin-left:-8px;top:42px;width:16px;height:1px;background:${p}`);
+          [52, 82].forEach((y) => { h += i(`left:50%;margin-left:-20px;top:${y}px;width:40px;height:3px;background:${p}`) + i(`left:50%;margin-left:-44px;top:${y + 1}px;width:18px;height:1px;background:${p}`) + i(`left:50%;margin-left:26px;top:${y + 1}px;width:18px;height:1px;background:${p}`) + lignes(10, y + 10, 3, 112); });
+        } else {
+          h += i(`left:0;right:0;top:0;height:42px;background:${p}`) + i(`right:0;top:0;width:30px;height:28px;border-radius:0 0 0 14px;background:${a}`) + i(`left:10px;top:7px;width:20px;height:20px;border-radius:5px;background:#efe9f7;border:1.5px solid ${a};box-sizing:border-box`) + i(`left:10px;top:31px;width:42px;height:7px;border-radius:4px;background:${a}`);
+          [52, 82].forEach((y) => { h += i(`left:10px;top:${y}px;width:46px;height:9px;border-radius:5px;background:${p}`) + i(`left:15px;top:${y + 3}px;width:3px;height:3px;border-radius:50%;background:${a}`) + lignes(10, y + 15, 2, 112); });
+        }
+        return `<div class="modele-carte__mini">${h}</div>`;
+      }
+
+      function miniatureSobre(co) {
+        const i = (st) => `<i style="${st}"></i>`;
+        return `<div class="modele-carte__mini">${i(`left:10px;top:12px;width:70px;height:5px;background:${co.primaire};border-radius:2px`)}${i(`left:10px;top:22px;right:10px;height:1px;background:${co.secondaire}`)}${[34, 46, 58, 70, 82].map((y) => i(`left:10px;top:${y}px;width:${y % 24 ? 100 : 80}px;height:2px;background:#d9d6e2`)).join("")}</div>`;
+      }
+
+      function carteModele(id, nom, desc, mini, estSelectionne, ats) {
+        return `
+          <div class="modele-carte ${estSelectionne ? "selectionne" : ""}" data-modele-id="${echapperHtml(id)}" onclick="choisirModele('${echapperHtml(id)}', true)" title="${echapperHtml(desc)}">
+            <div class="modele-carte__check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            ${mini}
+            <div class="modele-carte__info"><div class="modele-carte__nom">${echapperHtml(nom)}</div>${ats === "oui" ? '<div class="modele-ats modele-ats--oui">ATS ✓</div>' : ats === "prudence" ? '<div class="modele-ats">2 colonnes</div>' : ""}</div>
+          </div>`;
+      }
+
+      // Disposition (layout) et couleur (palette) se choisissent séparément ; l'identifiant du modèle est « disposition_palette ».
+      let layoutChoisi = "bandeau";
+      let paletteChoisie = "marine";
+      let designs = { layouts: {}, palettes: {} };
+
+      function majModeleChoisi() { modeleChoisi = layoutChoisi ? `${layoutChoisi}_${paletteChoisie}` : ""; }
+
+      function dessinerGalerie() {
+        const conteneur = document.getElementById("modeles-cv-conteneur");
+        const co = designs.palettes[paletteChoisie]?.couleurs;
+        if (!co) return;
+        const pastilles = Object.entries(designs.palettes).map(([id, pal]) =>
+          `<button type="button" class="palette-cv__pastille ${id === paletteChoisie ? "actif" : ""}" data-palette="${echapperHtml(id)}" onclick="choisirPalette('${echapperHtml(id)}')" title="${echapperHtml(pal.nom)}" aria-label="Couleur ${echapperHtml(pal.nom)}" style="background:linear-gradient(135deg, ${pal.couleurs.primaire} 55%, ${pal.couleurs.accent} 55%)"></button>`).join("");
+        let cartes = carteModele("", "Sobre", "Mise en page simple et très lisible, sans photo : la plus sûre pour les logiciels de tri automatique (ATS).", miniatureSobre(co), layoutChoisi === "", "oui");
+        for (const [id, l] of Object.entries(designs.layouts)) cartes += carteModele(id, l.nom, l.description, miniatureModele(id, co), id === layoutChoisi, l.ats);
+        conteneur.innerHTML = `
+          <div class="palette-cv"><span class="palette-cv__label">Couleur :</span>${pastilles}<span class="palette-cv__nom" id="palette-nom">${echapperHtml(designs.palettes[paletteChoisie].nom)}</span></div>
+          <div class="modeles-grille">${cartes}</div>
+          <p class="form-hint" style="margin-top:10px;">La couleur s'applique à toutes les présentations. Elle ne change rien à la lecture par un logiciel de tri (ATS) : ce qui compte, c'est un texte réel, une structure simple et des titres classiques. « ATS ✓ » indique les mises en page à une seule colonne ; pour les candidatures déposées en ligne, préférez Sobre, Classique ou Prestige. Aucun modèle ne garantit à lui seul d'être retenu.</p>`;
+      }
+
       async function chargerModelesCv() {
         const conteneur = document.getElementById("modeles-cv-conteneur");
         try {
           const data = await window.API.CVLM.modeles();
           modelesCatalogue = data.modeles || {};
-
-          let html = "";
-          for (const [categorie, modeles] of Object.entries(modelesCatalogue)) {
-            html += `<div class="modeles-categorie-titre">${categorie}</div><div class="modeles-grille">`;
-            for (const m of modeles) {
-              const estSelectionne = m.id === modeleChoisi;
-              html += `
-                <div class="modele-carte ${estSelectionne ? "selectionne" : ""}" data-modele-id="${m.id}" onclick="choisirModele('${m.id}')" title="${echapperHtml(m.description)}">
-                  ${m.premium ? '<div class="modele-carte__badge">⭐ Premium</div>' : ""}
-                  <div class="modele-carte__check">
-                    <span data-icone="coche" data-taille="12"></span>
-                  </div>
-                  <div class="modele-carte__apercu">
-                    <div class="modele-carte__corps">
-                      <div class="modele-carte__ligne" style="width:80%; background:${m.couleurs.primaire};"></div>
-                      <div class="modele-carte__ligne" style="width:60%;"></div>
-                      <div class="modele-carte__ligne" style="width:70%;"></div>
-                      <div class="modele-carte__ligne" style="width:40%; background:${m.couleurs.accent};"></div>
-                      <div class="modele-carte__ligne" style="width:55%;"></div>
-                    </div>
-                  </div>
-                  <div class="modele-carte__info">
-                    <div class="modele-carte__nom">${echapperHtml(m.nom)}</div>
-                  </div>
-                </div>`;
+          designs = { layouts: {}, palettes: {} };
+          for (const modeles of Object.values(modelesCatalogue)) {
+            for (const m of modeles.filter((x) => x.design)) {
+              const [nomLayout, nomPalette] = m.nom.split(" — ");
+              if (!designs.layouts[m.layout]) designs.layouts[m.layout] = { nom: nomLayout, description: m.description, ats: m.ats };
+              if (!designs.palettes[m.palette]) designs.palettes[m.palette] = { nom: nomPalette || m.palette, couleurs: m.couleurs };
             }
-            html += `</div>`;
           }
-          conteneur.innerHTML = html;
+          if (!designs.palettes[paletteChoisie]) paletteChoisie = Object.keys(designs.palettes)[0];
+          if (layoutChoisi && !designs.layouts[layoutChoisi]) layoutChoisi = Object.keys(designs.layouts)[0] || "";
+          majModeleChoisi();
+          dessinerGalerie();
         } catch (err) {
-          conteneur.innerHTML = `<span style="color: var(--rouge, #c0392b);">Impossible de charger les modèles. Un modèle par défaut sera utilisé.</span>`;
+          conteneur.innerHTML = `<span style="color: var(--rouge, #c0392b);">Impossible de charger les modèles. La mise en page sobre sera utilisée.</span>`;
+          layoutChoisi = ""; majModeleChoisi();
         }
       }
 
-      function choisirModele(id) {
-        modeleChoisi = id;
-        document.querySelectorAll(".modele-carte").forEach((carte) => {
-          carte.classList.toggle("selectionne", carte.dataset.modeleId === id);
-        });
+      function choisirModele(layout, manuel) {
+        layoutChoisi = layout;
+        if (manuel) modeleManuel = true;
+        majModeleChoisi();
+        dessinerGalerie();
+      }
 
-        // Avertit immédiatement si le modèle choisi est premium et que le
-        // compte ne l'est pas — avant, l'utilisateur ne le découvrait
-        // qu'au moment de l'export final (après avoir rempli tout son
-        // CV), ce qui est frustrant. La sélection reste possible (pour
-        // prévisualiser), seul l'export est réellement bloqué côté
-        // serveur — ce message informe simplement plus tôt.
-        const modele = Object.values(modelesCatalogue).flat().find((m) => m.id === id);
-        const session = window.Auth?.getSession?.();
-        if (modele?.premium && !session?.premium) {
-          window.afficherToast(
-            `"${modele.nom}" est un modèle Premium — l'export sera bloqué tant que votre compte n'est pas Premium.`,
-            "info",
-          );
-        }
+      function choisirPalette(id) {
+        paletteChoisie = id;
+        modeleManuel = true;
+        majModeleChoisi();
+        dessinerGalerie();
+      }
+
+      // Tant que l'utilisateur n'a pas choisi lui-même : présentation soignée, sauf pour les types « sobres » (ATS, international)
+      function appliquerModeleParDefaut() {
+        if (modeleManuel) return;
+        layoutChoisi = TYPES_SOBRES.includes(typeCvChoisi) ? "" : "bandeau";
+        majModeleChoisi();
+        if (designs.palettes[paletteChoisie]) dessinerGalerie();
       }
 
       // ── Onglets ───────────────────────────────────────────────────
@@ -1286,6 +1413,7 @@
 
       function choisirTypeCv(id) {
         typeCvChoisi = id;
+        appliquerModeleParDefaut();
         document.querySelectorAll("#types-cv-conteneur .type-cv").forEach((el) => el.classList.toggle("selectionne", el.dataset.type === id));
       }
       function choisirTypeLm(id) {
@@ -1308,7 +1436,7 @@
         btn.textContent = "⏳ Rédaction de votre CV…";
 
         try {
-          const res = await window.API.CVLM.creerCommande({ ...data, type: typeCvChoisi });
+          const res = await window.API.CVLM.creerCommande({ ...data, type: typeCvChoisi, palette: paletteChoisie, ...(modeleChoisi ? { modele: modeleChoisi } : {}), ...(photoCV ? { photo: photoCV } : {}) });
           afficherCommande(res.commande);
           chargerMesCv();
           window.afficherToast("Votre CV est prêt. Voici l'aperçu.", "succes");
