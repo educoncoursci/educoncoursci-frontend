@@ -195,6 +195,7 @@
     top: var(--navbar-h);
     width: 280px;
     height: calc(100vh - var(--navbar-h));
+    height: calc(100dvh - var(--navbar-h));
     z-index: 500;
     transition: left 0.3s ease;
     box-shadow: var(--ombre-xl);

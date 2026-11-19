@@ -521,3 +521,62 @@ console.error("Erreur enregistrement service worker :", err.message);
 });
 });
 }
+/* ── Pagination des listes d'administration ───────────────────
+   window.paginer(cle, liste, tbody, rerendre) renvoie les lignes de la page
+   courante (25 par défaut) et affiche la navigation sous le tableau. */
+(function () {
+  const etats = {};
+  function conteneur(cle, tbody) {
+    let c = document.getElementById("pag-" + cle);
+    if (!c) {
+      c = document.createElement("div");
+      c.id = "pag-" + cle;
+      c.className = "pagination-admin";
+      const table = tbody && tbody.closest ? tbody.closest("table") : null;
+      const hote = table && table.parentElement ? table.parentElement : (tbody && tbody.parentElement);
+      if (hote) hote.insertAdjacentElement("afterend", c);
+    }
+    return c;
+  }
+  function numeros(page, pages) {
+    const s = new Set([1, pages, page - 1, page, page + 1]);
+    const l = [...s].filter((n) => n >= 1 && n <= pages).sort((a, b) => a - b);
+    const r = [];
+    l.forEach((n, i) => { if (i && n - l[i - 1] > 1) r.push("…"); r.push(n); });
+    return r;
+  }
+  window.paginer = function (cle, liste, tbody, rerendre, parPageDefaut) {
+    const e = etats[cle] || (etats[cle] = { page: 1, n: -1, parPage: parPageDefaut || 25, nav: false });
+    const total = liste.length;
+    if (total !== e.n && !e.nav) e.page = 1;
+    e.nav = false;
+    e.n = total;
+    const pages = Math.max(1, Math.ceil(total / e.parPage));
+    if (e.page > pages) e.page = pages;
+    const c = conteneur(cle, tbody);
+    if (!c) return liste;
+    if (total <= Math.min(e.parPage, 25) && e.parPage === 25) { c.innerHTML = ""; return liste.slice(0, e.parPage); }
+    const debut = (e.page - 1) * e.parPage;
+    const fin = Math.min(total, debut + e.parPage);
+    c.innerHTML =
+      `<div class="pagination-admin__info">${total ? debut + 1 : 0}–${fin} sur ${total}</div>` +
+      `<div class="pagination-admin__nav">` +
+      `<button type="button" data-p="${e.page - 1}" ${e.page <= 1 ? "disabled" : ""}>Préc.</button>` +
+      numeros(e.page, pages).map((n) => n === "…" ? `<span>…</span>` : `<button type="button" data-p="${n}" class="${n === e.page ? "actif" : ""}">${n}</button>`).join("") +
+      `<button type="button" data-p="${e.page + 1}" ${e.page >= pages ? "disabled" : ""}>Suiv.</button></div>` +
+      `<label class="pagination-admin__taille">Par page <select>${[25, 50, 100].map((n) => `<option ${n === e.parPage ? "selected" : ""}>${n}</option>`).join("")}</select></label>`;
+    c.querySelectorAll("button[data-p]").forEach((b) => b.addEventListener("click", () => {
+      e.page = Number(b.dataset.p); e.nav = true; rerendre();
+      const t = tbody.closest("table"); if (t) t.scrollIntoView({ block: "start", behavior: "smooth" });
+    }));
+    c.querySelector("select").addEventListener("change", (ev) => { e.parPage = Number(ev.target.value); e.page = 1; e.nav = true; rerendre(); });
+    return liste.slice(debut, fin);
+  };
+})();
+
+/* Colonne admin : place le lien de la page courante dans la zone visible. */
+document.addEventListener("DOMContentLoaded", () => {
+  const a = document.querySelector(".admin-sidebar__lien.actif");
+  const s = a && a.closest(".admin-sidebar");
+  if (s) s.scrollTop = Math.max(0, a.offsetTop - s.clientHeight / 2);
+});

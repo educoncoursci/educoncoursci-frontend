@@ -420,3 +420,33 @@
   .admin-topbar__actions { flex-wrap: wrap; }
   .admin-topbar > div:last-child > .btn { flex: 1 1 auto; }
 }
+
+/* ── Pagination des listes ───────────────────────────────────── */
+.pagination-admin { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; margin:14px 0 4px; font-size:.85rem; color:var(--gris-texte); }
+.pagination-admin:empty { display:none; }
+.pagination-admin__nav { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.pagination-admin__nav button { min-width:38px; min-height:38px; padding:0 10px; border:1px solid var(--gris-bordure, #d9dee7); background:#fff; border-radius:8px; font-weight:700; cursor:pointer; color:inherit; }
+.pagination-admin__nav button.actif { background:var(--vert, #1a6b3c); border-color:var(--vert, #1a6b3c); color:#fff; }
+.pagination-admin__nav button:disabled { opacity:.4; cursor:default; }
+.pagination-admin__taille select { margin-left:6px; min-height:38px; border:1px solid var(--gris-bordure, #d9dee7); border-radius:8px; padding:0 8px; }
+
+/* ── Colonne de gauche : toujours atteignable ────────────────── */
+.admin-sidebar {
+  height: calc(100vh - var(--navbar-h));
+  height: calc(100dvh - var(--navbar-h));
+  padding: 16px 0 40px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.3) transparent;
+  background:
+    linear-gradient(#0a1628 30%, rgba(10,22,40,0)) 0 0 / 100% 36px no-repeat local,
+    linear-gradient(rgba(10,22,40,0), #0a1628 70%) 0 100% / 100% 36px no-repeat local,
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,0)) 0 0 / 100% 14px no-repeat scroll,
+    linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.55)) 0 100% / 100% 18px no-repeat scroll,
+    #0a1628;
+}
+.admin-sidebar::-webkit-scrollbar { display:block; width:6px; }
+.admin-sidebar::-webkit-scrollbar-thumb { background:rgba(255,255,255,.28); border-radius:6px; }
+.admin-sidebar__header { padding-bottom: 12px; margin-bottom: 8px; }
+.admin-sidebar__section { padding: 8px 20px 4px; }
+.admin-sidebar__lien { padding: 7px 20px; }
