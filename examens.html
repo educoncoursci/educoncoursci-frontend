@@ -44,6 +44,7 @@
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+      <link rel="stylesheet" href="/css/ui-pro.css" />
   </head>
 <body>
 
@@ -57,7 +58,7 @@
   <div class="container">
     <span class="section__tag" style="background:rgba(255,255,255,0.2);color:#fff;margin-bottom:12px;display:inline-block;"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Examens nationaux</span>
     <h1>Examens Nationaux CI</h1>
-    <p>Préparez le BAC, BEPC, CEPE et BTS avec des cours, sujets corrigés et QCM spécialisés.</p>
+    <p>Préparez le BAC, BEPC, CEPE et BTS avec des sujets corrigés et des annales.</p>
   </div>
 </div>
 
@@ -76,7 +77,7 @@
   <div class="examen-card examen-card--bac">
     <div class="examen-icone"><span data-icone="diplome" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></div>
     <div class="examen-titre" style="color:#1A6B3C;">Baccalauréat (BAC)</div>
-    <div class="examen-desc">L'examen national de fin de lycée. Préparez toutes les séries (A, B, C, D, E) avec des sujets corrigés officiels et des QCM par matière.</div>
+    <div class="examen-desc">L'examen national de fin de lycée. Préparez toutes les séries (A, B, C, D, E) avec des sujets corrigés officiels.</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
       <span class="matiere-tag"><span data-icone="regle" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Maths</span>
       <span class="matiere-tag"><span data-icone="microscope" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sciences</span>
@@ -87,11 +88,8 @@
     </div>
     <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
       <div class="stat-examen"><span><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Sujets corrigés</div>
-      <div class="stat-examen"><span><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM par série</div>
-      <div class="stat-examen"><span><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Cours vidéo</div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="/preparation.html?matiere=BAC" class="btn btn--primaire btn--sm"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> QCM BAC</a>
       <a href="/bibliotheque.html?categorie=BAC" class="btn btn--outline-vert btn--sm"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sujets corrigés</a>
     </div>
   </div>
@@ -111,11 +109,9 @@
     </div>
     <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
       <div class="stat-examen"><span><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Annales</div>
-      <div class="stat-examen"><span><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</div>
       <div class="stat-examen"><span><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Fiches révision</div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="/preparation.html?matiere=BEPC" class="btn btn--bleu btn--sm"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> QCM BEPC</a>
       <a href="/bibliotheque.html?categorie=BEPC" class="btn btn--sm" style="background:rgba(10,110,189,0.1);color:var(--bleu);border:1.5px solid rgba(10,110,189,0.3);"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Annales</a>
     </div>
   </div>
@@ -139,7 +135,6 @@
       <div class="stat-examen"><span><span data-icone="livre" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Leçons</div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="/preparation.html?matiere=CEPE" class="btn btn--sm" style="background:var(--gradient-orange);color:#fff;border:none;"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Exercices CEPE</a>
       <a href="/bibliotheque.html?categorie=CEPE" class="btn btn--sm" style="background:rgba(245,130,13,0.1);color:var(--orange);border:1.5px solid rgba(245,130,13,0.3);"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sujets types</a>
     </div>
   </div>
@@ -159,11 +154,8 @@
     </div>
     <div style="display:flex;gap:20px;padding-top:8px;border-top:1px solid var(--gris-bordure);">
       <div class="stat-examen"><span><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Sujets corrigés</div>
-      <div class="stat-examen"><span><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> QCM</div>
-      <div class="stat-examen"><span><span data-icone="video" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Cours vidéo</div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <a href="/preparation.html?matiere=BTS" class="btn btn--sm" style="background:var(--violet);color:#fff;border:none;"><span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> QCM BTS</a>
       <a href="/bibliotheque.html?categorie=BTS" class="btn btn--sm" style="background:rgba(123,47,190,0.1);color:var(--violet);border:1.5px solid rgba(123,47,190,0.3);"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sujets BTS</a>
     </div>
   </div>

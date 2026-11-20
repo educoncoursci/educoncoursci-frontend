@@ -66,6 +66,7 @@
       <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+      <link rel="stylesheet" href="/css/ui-pro.css" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -192,7 +193,7 @@
     <a href="/sujet-detail.html?id=${s.id}" class="forum-sujet">
       <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;">
         <div style="min-width:0;">
-          <span class="forum-tag forum-tag--${echapperHtml(s.categorie)}">${LABELS_CAT[s.categorie] || s.categorie}</span>
+          <span class="forum-tag forum-tag--${LABELS_CAT[s.categorie] ? s.categorie : "general"}">${LABELS_CAT[s.categorie] || "Général"}</span>
           ${s.epingle ? '<span class="forum-tag" style="background:#fde68a;color:#78350f;">📌 Épinglé</span>' : ""}
           ${s.concours_titre ? `<span class="forum-tag" style="background:var(--gris-clair);color:var(--gris-texte);">${echapperHtml(s.concours_titre)}</span>` : ""}
           <div style="font-weight:800;font-size:0.98rem;margin-top:6px;">${echapperHtml(s.titre)}</div>

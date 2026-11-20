@@ -42,6 +42,7 @@
       <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+      <link rel="stylesheet" href="/css/ui-pro.css" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -107,7 +108,7 @@
 
           document.getElementById("zone-sujet").innerHTML = `
       <div class="message-carte">
-        <span class="forum-tag forum-tag--${echapperHtml(sujet.categorie)}">${LABELS_CAT[sujet.categorie] || sujet.categorie}</span>
+        <span class="forum-tag forum-tag--${LABELS_CAT[sujet.categorie] ? sujet.categorie : "general"}">${LABELS_CAT[sujet.categorie] || "Général"}</span>
         ${sujet.concours_titre ? `<span class="forum-tag" style="background:var(--gris-clair);color:var(--gris-texte);">📌 ${echapperHtml(sujet.concours_titre)}</span>` : ""}
         <h1 style="font-size:1.4rem;margin:12px 0 8px;">${echapperHtml(sujet.titre)}</h1>
         <div class="message-carte__auteur">${echapperHtml(sujet.auteur_nom)} <span class="message-carte__date">· ${date} · 👁️ ${sujet.vues} vues</span></div>

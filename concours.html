@@ -4,21 +4,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Concours CI — ProInsertion CI</title>
+    <title>Concours en Côte d'Ivoire — ProInsertion CI</title>
     <meta
       name="description"
-      content="Tous les concours de la Fonction Publique, grandes écoles et sécurité en Côte d'Ivoire. Filtres par catégorie, statut et niveau."
+      content="Concours de recrutement et concours administratifs en Côte d'Ivoire : concours en cours et concours à venir (ouverture dans les 30 jours), avec dates, conditions, dossier à fournir et source officielle."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ProInsertion CI" />
-    <meta property="og:title" content="Concours CI — ProInsertion CI" />
-    <meta property="og:description" content="Tous les concours de la Fonction Publique, grandes écoles et sécurité en Côte d'Ivoire. Filtres par catégorie, statut et niveau." />
+    <meta property="og:title" content="Concours en Côte d'Ivoire — ProInsertion CI" />
+    <meta property="og:description" content="Concours en cours et à venir en Côte d'Ivoire, avec dates officielles, conditions et lien vers la source." />
     <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
     <meta property="og:url" content="https://proinsertionci.netlify.app/concours.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Concours CI — ProInsertion CI" />
-    <meta name="twitter:description" content="Tous les concours de la Fonction Publique, grandes écoles et sécurité en Côte d'Ivoire. Filtres par catégorie, statut et niveau." />
-    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -29,496 +26,96 @@
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
-    <style>
-      .concours-grille {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-      }
-      .concours-sidebar {
-        width: 260px;
-        flex-shrink: 0;
-      }
-      .concours-layout {
-        display: flex;
-        gap: 28px;
-        align-items: flex-start;
-      }
-      .concours-main {
-        flex: 1;
-        min-width: 0;
-      }
-      .filtre-groupe {
-        margin-bottom: 20px;
-      }
-      .filtre-groupe__titre {
-        font-size: 0.8rem;
-        font-weight: 800;
-        color: var(--gris-texte);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 10px;
-      }
-      .filtre-check {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 0;
-        cursor: pointer;
-        font-size: 0.9rem;
-      }
-      .filtre-check input {
-        accent-color: var(--vert);
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
-      }
-      .filtre-compteur {
-        font-size: 0.78rem;
-        color: var(--gris-texte);
-        font-weight: 600;
-      }
-      .tri-select {
-        padding: 8px 14px;
-        border: 1.5px solid var(--gris-bordure);
-        border-radius: var(--radius-md);
-        font-size: 0.88rem;
-        font-family: inherit;
-        outline: none;
-        cursor: pointer;
-        background: var(--blanc);
-      }
-      .compteur-resultats {
-        font-size: 0.88rem;
-        color: var(--gris-texte);
-        font-weight: 600;
-      }
-      .recherche-concours {
-        width: 100%;
-        padding: 10px 14px;
-        margin-bottom: 20px;
-        border: 1.5px solid var(--gris-bordure);
-        border-radius: var(--radius-md);
-        font-size: 0.9rem;
-        font-family: inherit;
-        outline: none;
-        box-sizing: border-box;
-      }
-      .recherche-concours:focus {
-        border-color: var(--vert);
-      }
-      @media (max-width: 900px) {
-        .concours-layout {
-          flex-direction: column;
-        }
-        .concours-sidebar {
-          width: 100%;
-        }
-        .concours-grille {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-      @media (max-width: 600px) {
-        .concours-grille {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-      <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <style>
+      .cc-page { max-width: 1100px; margin: 0 auto; padding: calc(var(--navbar-h) + 28px) 16px 64px; }
+      .cc-entete { text-align: center; margin-bottom: 22px; }
+      .cc-entete h1 { margin: 0 0 8px; }
+      .cc-entete p { color: var(--gris-texte); max-width: 720px; margin: 0 auto; }
+      .cc-fiabilite { display: flex; gap: 10px; align-items: flex-start; background: #fff; border: 1px solid #dfe6e1; border-left: 4px solid var(--vert); border-radius: 12px; padding: 12px 16px; font-size: 0.88rem; color: #3b4a42; margin: 0 auto 22px; max-width: 860px; }
+      .cc-onglets { display: flex; gap: 8px; justify-content: center; margin-bottom: 22px; flex-wrap: wrap; }
+      .cc-onglet { appearance: none; border: 1.5px solid #cfd8d2; background: #fff; color: #24352c; font: inherit; font-weight: 700; padding: 11px 20px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+      .cc-onglet[aria-selected="true"] { background: var(--vert); border-color: var(--vert); color: #fff; }
+      .cc-onglet__n { background: rgba(0,0,0,0.08); border-radius: 999px; padding: 1px 9px; font-size: 0.82rem; }
+      .cc-onglet[aria-selected="true"] .cc-onglet__n { background: rgba(255,255,255,0.25); }
+      .cc-note { text-align: center; color: var(--gris-texte); font-size: 0.86rem; margin: -8px auto 18px; max-width: 640px; }
+      .cc-grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+      .cc-carte { background: #fff; border: 1px solid #e3e9e5; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+      .cc-carte__haut { display: flex; gap: 12px; align-items: flex-start; }
+      .cc-logo { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; object-fit: contain; background: #f3f6f4; border: 1px solid #e3e9e5; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--vert); font-size: 0.8rem; }
+      .cc-carte h3 { font-size: 1.02rem; line-height: 1.3; margin: 0 0 4px; overflow-wrap: anywhere; }
+      .cc-orga { color: var(--gris-texte); font-size: 0.86rem; overflow-wrap: anywhere; }
+      .cc-statut { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 800; padding: 4px 11px; border-radius: 999px; width: fit-content; }
+      .cc-statut--cours { background: #e3f4ea; color: #12663a; }
+      .cc-statut--venir { background: #e3eefb; color: #1b5aa6; }
+      .cc-statut--urgent { background: #fdeaea; color: #b42318; }
+      .cc-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .cc-date { background: #f6f8f7; border-radius: 10px; padding: 9px 11px; }
+      .cc-date small { display: block; color: var(--gris-texte); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em; }
+      .cc-date strong { font-size: 0.9rem; }
+      .cc-meta { font-size: 0.86rem; color: #3b4a42; display: grid; gap: 4px; }
+      .cc-actions { display: flex; gap: 8px; margin-top: auto; flex-wrap: wrap; }
+      .cc-actions .btn { flex: 1 1 130px; text-align: center; justify-content: center; min-height: 42px; }
+      .cc-vide { text-align: center; background: #fff; border: 1px dashed #c5d0c9; border-radius: 16px; padding: 38px 20px; color: #3b4a42; }
+      .cc-vide h3 { margin: 0 0 8px; }
+      .cc-source-mini { font-size: 0.76rem; color: var(--gris-texte); }
+
+      .cc-fond { position: fixed; inset: 0; background: rgba(15,25,20,0.55); z-index: 3000; display: none; align-items: flex-end; justify-content: center; }
+      .cc-fond.ouvert { display: flex; }
+      .cc-modal { background: #fff; width: 100%; max-width: 760px; max-height: 92vh; max-height: 92dvh; overflow-y: auto; border-radius: 20px 20px 0 0; padding: 22px 20px 28px; position: relative; }
+      @media (min-width: 720px) { .cc-fond { align-items: center; padding: 20px; } .cc-modal { border-radius: 20px; } }
+      .cc-fermer { position: sticky; top: 0; float: right; margin: -6px -6px 0 8px; width: 40px; height: 40px; border-radius: 50%; border: none; background: #eef2ef; font-size: 1.3rem; cursor: pointer; }
+      .cc-modal h2 { font-size: 1.25rem; margin: 4px 0 6px; overflow-wrap: anywhere; }
+      .cc-infos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+      @media (max-width: 560px) { .cc-infos, .cc-dates { grid-template-columns: 1fr; } }
+      .cc-info { background: #f6f8f7; border-radius: 10px; padding: 10px 12px; overflow-wrap: anywhere; }
+      .cc-info--large { grid-column: 1 / -1; }
+      .cc-info small { display: block; color: var(--gris-texte); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 2px; }
+      .cc-info .nc { color: #8a6d1d; font-style: italic; }
+      .cc-info ul { margin: 4px 0 0 18px; padding: 0; }
+      .cc-source { border: 1px solid #cfe3d7; background: #f2faf5; border-radius: 12px; padding: 12px 14px; margin-top: 8px; font-size: 0.9rem; }
+      .cc-source a { font-weight: 700; color: var(--vert); overflow-wrap: anywhere; }
+      .cc-avert { font-size: 0.8rem; color: var(--gris-texte); margin-top: 12px; }
+    </style>
+      <link rel="stylesheet" href="/css/ui-pro.css" />
   </head>
-  <body>
-    <!-- NAVBAR -->
-
+  <body style="background: var(--gris-clair)">
     <div id="site-header"></div>
-        
 
-    <div class="page-header page-header--standard">
-      <div class="container">
-        <h1><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Concours</h1>
-        <p>Trouvez et suivez les concours administratifs de Côte d'Ivoire.</p>
+    <main class="cc-page">
+      <div class="cc-entete">
+        <h1>Concours</h1>
+        <p>Concours de recrutement et concours administratifs en Côte d'Ivoire. Chaque fiche renvoie à sa source officielle.</p>
       </div>
-    </div>
 
-    <main style="padding: calc(var(--navbar-h) + 36px) 0 60px">
-      <div class="container">
-        <!-- MOTEUR "CHERCHER PAR DIPLÔME" -->
-        <div class="card" style="padding:20px 22px;margin-bottom:20px;">
-          <div style="font-weight:800;font-size:1rem;margin-bottom:12px;">
-            🎯 Trouvez les concours accessibles avec votre diplôme
-          </div>
-          <div id="niveaux-rapides" style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="btn btn--outline-vert btn--sm" onclick="filtrerParNiveauRapide('CEPE')">CEPE</button>
-            <button class="btn btn--outline-vert btn--sm" onclick="filtrerParNiveauRapide('BEPC')">BEPC</button>
-            <button class="btn btn--outline-vert btn--sm" onclick="filtrerParNiveauRapide('BAC')">BAC</button>
-            <button class="btn btn--outline-vert btn--sm" onclick="filtrerParNiveauRapide('BAC+2')">BAC+2</button>
-            <button class="btn btn--outline-vert btn--sm" onclick="filtrerParNiveauRapide('Licence')">Licence</button>
-          </div>
-        </div>
-
-        <!-- RACCOURCIS VERS LES PAGES DÉDIÉES — chacune a sa propre URL
-             indexable (meilleur pour le SEO qu'un système d'onglets JS) et
-             sa logique déjà en place : /concours-en-cours.html,
-             /concours-a-venir.html (compte à rebours J-X),
-             /concours-termines.html (archives classées par année). Cette
-             page-ci reste le hub de recherche avancée avec tous les
-             filtres ; le filtre "Statut" de la sidebar permet de la
-             restreindre sans changer de page si besoin. -->
-        <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
-          <a href="/concours-en-cours.html" class="btn btn--gris btn--sm">🔴 En cours</a>
-          <a href="/concours-a-venir.html" class="btn btn--gris btn--sm">🔵 À venir</a>
-          <a href="/concours-termines.html" class="btn btn--gris btn--sm">⚫ Terminés (archives par année)</a>
-        </div>
-
-        <div class="concours-layout">
-          <!-- SIDEBAR FILTRES -->
-          <aside class="concours-sidebar">
-            <div
-              class="card"
-              style="
-                padding: 20px;
-                position: sticky;
-                top: calc(var(--navbar-h)+16px);
-              "
-            >
-              <div
-                style="
-                  font-weight: 800;
-                  font-size: 1rem;
-                  margin-bottom: 18px;
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                "
-              >
-                <span data-icone="cle_outil" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Filtres
-                <button
-                  onclick="reinitialiserFiltres()"
-                  style="
-                    font-size: 0.78rem;
-                    color: var(--vert);
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    font-weight: 700;
-                  "
-                >
-                  Réinitialiser
-                </button>
-              </div>
-
-              <!-- Recherche -->
-              <input
-                type="text"
-                id="input-recherche"
-                class="recherche-concours"
-                placeholder="Rechercher un concours..."
-              />
-
-              <!-- Statut -->
-              <div class="filtre-groupe">
-                <div class="filtre-groupe__titre">Statut</div>
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="statut"
-                    value=""
-                    onchange="appliquerFiltres()"
-                  />
-                  Tous <span class="filtre-compteur" id="cpt-tous"></span></label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="statut"
-                    value="ouvert"
-                    checked
-                    onchange="appliquerFiltres()"
-                  />
-                  🟢 En cours <span class="filtre-compteur" id="cpt-ouvert"></span></label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="statut"
-                    value="à venir"
-                    onchange="appliquerFiltres()"
-                  />
-                  🔵 À venir <span class="filtre-compteur" id="cpt-a-venir"></span></label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="statut"
-                    value="fermé"
-                    onchange="appliquerFiltres()"
-                  />
-                  ⚫ Clôturés <span class="filtre-compteur" id="cpt-cloture"></span></label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="statut"
-                    value="en attente de résultats"
-                    onchange="appliquerFiltres()"
-                  />
-                  ⏳ En attente de résultats <span class="filtre-compteur" id="cpt-attente"></span></label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="statut"
-                    value="résultats"
-                    onchange="appliquerFiltres()"
-                  />
-                  🏆 Résultats disponibles <span class="filtre-compteur" id="cpt-resultats"></span></label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="statut"
-                    value="information non confirmée"
-                    onchange="appliquerFiltres()"
-                  />
-                  🟡 Date non définie <span class="filtre-compteur" id="cpt-non-definie"></span></label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="statut"
-                    value="suspendu"
-                    onchange="appliquerFiltres()"
-                  />
-                  🔴 Suspendu / Annulé <span class="filtre-compteur" id="cpt-suspendu"></span></label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="statut"
-                    value="archives"
-                    onchange="appliquerFiltres()"
-                  />
-                  🗄️ Archives <span class="filtre-compteur" id="cpt-archives"></span></label
-                >
-              </div>
-
-              <!-- Catégorie -->
-              <div class="filtre-groupe">
-                <div class="filtre-groupe__titre">Catégorie</div>
-                <div id="filtres-categories">
-                  <label class="filtre-check"
-                    ><input
-                      type="radio"
-                      name="categorie"
-                      value=""
-                      checked
-                      onchange="appliquerFiltres()"
-                    />
-                    Toutes</label
-                  >
-                </div>
-              </div>
-
-              <!-- Structure organisatrice (Module 2) -->
-              <div class="filtre-groupe" id="groupe-filtre-structure" style="display:none;">
-                <div class="filtre-groupe__titre">Structure organisatrice</div>
-                <div id="filtres-structures">
-                  <label class="filtre-check"
-                    ><input
-                      type="radio"
-                      name="structure"
-                      value=""
-                      checked
-                      onchange="appliquerFiltres()"
-                    />
-                    Toutes</label
-                  >
-                </div>
-              </div>
-
-              <!-- Niveau -->
-              <div class="filtre-groupe">
-                <div class="filtre-groupe__titre">Niveau requis</div>
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="niveau"
-                    value=""
-                    checked
-                    onchange="appliquerFiltres()"
-                  />
-                  Tous</label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="niveau"
-                    value="CEPE"
-                    onchange="appliquerFiltres()"
-                  />
-                  CEPE</label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="niveau"
-                    value="BEPC"
-                    onchange="appliquerFiltres()"
-                  />
-                  BEPC</label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="niveau"
-                    value="BAC"
-                    onchange="appliquerFiltres()"
-                  />
-                  BAC</label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="niveau"
-                    value="BAC+2"
-                    onchange="appliquerFiltres()"
-                  />
-                  BAC+2</label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="niveau"
-                    value="Licence"
-                    onchange="appliquerFiltres()"
-                  />
-                  Licence</label
-                >
-              </div>
-
-              <!-- Accès -->
-              <div class="filtre-groupe">
-                <div class="filtre-groupe__titre">Accès</div>
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="premium"
-                    value=""
-                    checked
-                    onchange="appliquerFiltres()"
-                  />
-                  Tous</label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="premium"
-                    value="false"
-                    onchange="appliquerFiltres()"
-                  />
-                  🆓 Gratuits</label
-                >
-                <label class="filtre-check"
-                  ><input
-                    type="radio"
-                    name="premium"
-                    value="true"
-                    onchange="appliquerFiltres()"
-                  />
-                  ⭐ Premium</label
-                >
-              </div>
-
-              <!-- Alertes -->
-              <div
-                style="
-                  border-top: 1px solid var(--gris-bordure);
-                  padding-top: 16px;
-                  margin-top: 4px;
-                "
-              >
-                <a
-                  href="/alertes.html"
-                  class="btn btn--outline-vert btn--sm btn--full"
-                >
-                  <span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Activer les alertes
-                </a>
-              </div>
-            </div>
-          </aside>
-
-          <!-- LISTE DES CONCOURS -->
-          <div class="concours-main">
-            <!-- Tri et compteur -->
-            <div
-              style="
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 16px;
-                flex-wrap: wrap;
-                gap: 10px;
-              "
-            >
-              <span class="compteur-resultats" id="compteur">Chargement…</span>
-              <select
-                class="tri-select"
-                id="tri-select"
-                onchange="changerTri()"
-              >
-                <option value="recent">Plus récents</option>
-                <option value="cloture">Date de clôture</option>
-                <option value="frais-asc">Frais croissants</option>
-                <option value="frais-desc">Frais décroissants</option>
-              </select>
-            </div>
-
-            <!-- Grille des concours -->
-            <div class="concours-grille" id="liste-concours">
-              <div
-                class="skeleton"
-                style="height: 220px; border-radius: 16px"
-              ></div>
-              <div
-                class="skeleton"
-                style="height: 220px; border-radius: 16px"
-              ></div>
-              <div
-                class="skeleton"
-                style="height: 220px; border-radius: 16px"
-              ></div>
-              <div
-                class="skeleton"
-                style="height: 220px; border-radius: 16px"
-              ></div>
-              <div
-                class="skeleton"
-                style="height: 220px; border-radius: 16px"
-              ></div>
-              <div
-                class="skeleton"
-                style="height: 220px; border-radius: 16px"
-              ></div>
-            </div>
-
-            <!-- Pagination -->
-            <div
-              id="pagination"
-              style="
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 8px;
-                margin-top: 28px;
-              "
-            ></div>
-          </div>
-        </div>
+      <div class="cc-fiabilite" role="note">
+        <span aria-hidden="true">🛡️</span>
+        <span>
+          <strong>Informations vérifiées.</strong> Nous ne publions un concours que s'il est appuyé par une source officielle (ministère, institution organisatrice) et une date d'ouverture précise.
+          Quand une information n'est pas communiquée officiellement, nous l'indiquons au lieu de l'inventer. Vérifiez toujours auprès de la source avant de postuler.
+        </span>
       </div>
+
+      <div class="cc-onglets" role="tablist" aria-label="Rubriques des concours">
+        <button class="cc-onglet" role="tab" id="onglet-en_cours" aria-selected="true" aria-controls="panneau" data-onglet="en_cours">
+          Concours en cours <span class="cc-onglet__n" id="n-en_cours">…</span>
+        </button>
+        <button class="cc-onglet" role="tab" id="onglet-a_venir" aria-selected="false" aria-controls="panneau" data-onglet="a_venir">
+          Concours à venir <span class="cc-onglet__n" id="n-a_venir">…</span>
+        </button>
+      </div>
+      <p class="cc-note" id="cc-note"></p>
+
+      <section id="panneau" role="tabpanel" aria-live="polite">
+        <div class="cc-grille"><div class="skeleton" style="height:230px;border-radius:16px"></div><div class="skeleton" style="height:230px;border-radius:16px"></div><div class="skeleton" style="height:230px;border-radius:16px"></div></div>
+      </section>
     </main>
 
-    <!-- FOOTER -->
+    <div class="cc-fond" id="cc-fond" aria-hidden="true">
+      <div class="cc-modal" role="dialog" aria-modal="true" aria-labelledby="cc-titre-modal" id="cc-modal" tabindex="-1"></div>
+    </div>
 
     <div id="site-footer"></div>
 
@@ -526,296 +123,179 @@
     <script src="/js/icons.js"></script>
     <script src="/js/recherche.js"></script>
     <script src="/js/api.js"></script>
-
     <script src="/js/auth.js"></script>
-
     <script src="/js/main.js"></script>
-    <script src="/js/concours-cartes.js"></script>
-
     <script>
-      // ── État de la page ───────────────────────────────────────────
-      let tousConcours = [];
-      let concoursFiltres = [];
-      let pageActuelle = 1;
-      const PAR_PAGE = 9;
+      (function () {
+        const NC = "Information non communiquée officiellement";
+        const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+        const esc = (v) => (window.echapperHtml ? window.echapperHtml(String(v ?? "")) : String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])));
+        const dateFr = (iso) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ""); return m ? `${Number(m[3])}${m[3] === "01" ? "er" : ""} ${MOIS[Number(m[2]) - 1]} ${m[1]}` : null; };
+        const lienSur = (u) => (/^https?:\/\//i.test(u || "") ? u : null);
+        const nc = `<span class="nc">${NC}</span>`;
 
-      // ── Chargement initial ────────────────────────────────────────
-      document.addEventListener("DOMContentLoaded", async () => {
-        await chargerConcours();
-        chargerCompteurs(); // en parallèle, n'a pas besoin d'être attendu avant d'afficher les concours
+        let donnees = { en_cours: [], a_venir: [] };
+        let onglet = "en_cours";
+        let jourCharge = null;
+        let dernierFocus = null;
 
-        // Pré-applique les paramètres URL
-        const params = new URLSearchParams(window.location.search);
-        if (params.get("statut")) {
-          const radio = document.querySelector(
-            `input[name="statut"][value="${params.get("statut")}"]`,
-          );
-          if (radio) {
-            radio.checked = true;
+        function ongletInitial() {
+          const p = new URLSearchParams(location.search);
+          const o = (p.get("onglet") || location.hash.replace("#", "")).replace("-", "_");
+          return o === "a_venir" ? "a_venir" : "en_cours";
+        }
+
+        function badgeStatut(c) {
+          if (c.statut_public === "a_venir") {
+            const j = c.jours_avant_ouverture;
+            return `<span class="cc-statut cc-statut--venir">🔵 À venir · ${j === 1 ? "ouverture demain" : "dans " + j + " jours"}</span>`;
+          }
+          const j = c.jours_restants;
+          if (j !== null && j <= 7) return `<span class="cc-statut cc-statut--urgent">⏳ En cours · ${j === 0 ? "dernier jour" : j === 1 ? "1 jour restant" : j + " jours restants"}</span>`;
+          return `<span class="cc-statut cc-statut--cours">🟢 En cours${j !== null ? " · " + j + " jours restants" : ""}</span>`;
+        }
+
+        function carte(c) {
+          const logo = c.logo && lienSur(c.logo) ? `<img class="cc-logo" src="${esc(c.logo)}" alt="" loading="lazy" />` : `<div class="cc-logo" aria-hidden="true">${esc((c.sigle || c.organisme || "CI").slice(0, 3).toUpperCase())}</div>`;
+          const postuler = c.statut_public === "en_cours" && c.lien_inscription
+            ? `<a class="btn btn--primaire btn--sm" href="${esc(c.lien_inscription)}" target="_blank" rel="noopener noreferrer">Postuler sur le site officiel ↗</a>` : "";
+          return `
+          <article class="cc-carte">
+            <div class="cc-carte__haut">${logo}<div><h3>${esc(c.titre)}</h3><div class="cc-orga">${c.organisme ? esc(c.organisme) : nc}</div></div></div>
+            ${badgeStatut(c)}
+            <div class="cc-dates">
+              <div class="cc-date"><small>Ouverture</small><strong>${esc(dateFr(c.date_ouverture) || NC)}</strong></div>
+              <div class="cc-date"><small>Date limite</small><strong>${c.date_cloture ? esc(dateFr(c.date_cloture)) : "Non communiquée"}</strong></div>
+            </div>
+            <div class="cc-meta">
+              <div><strong>Poste / corps :</strong> ${c.poste ? esc(c.poste) : "Non communiqué"}</div>
+              <div><strong>Places :</strong> ${c.places !== null ? esc(c.places) : "Non communiqué"}</div>
+            </div>
+            <div class="cc-actions">
+              <button type="button" class="btn btn--gris btn--sm" data-detail="${c.id}">Voir les détails</button>
+              ${postuler}
+            </div>
+          </article>`;
+        }
+
+        function rendre() {
+          const liste = donnees[onglet];
+          document.getElementById("n-en_cours").textContent = donnees.en_cours.length;
+          document.getElementById("n-a_venir").textContent = donnees.a_venir.length;
+          document.querySelectorAll(".cc-onglet").forEach((b) => {
+            const actif = b.dataset.onglet === onglet;
+            b.setAttribute("aria-selected", actif ? "true" : "false");
+          });
+          document.getElementById("panneau").setAttribute("aria-labelledby", "onglet-" + onglet);
+          document.getElementById("cc-note").textContent = onglet === "a_venir"
+            ? "Uniquement les concours dont l'ouverture officielle est datée dans les 30 prochains jours. Ils passent automatiquement dans « Concours en cours » à leur date d'ouverture."
+            : "Concours officiellement ouverts aux candidatures. Ils disparaissent automatiquement après leur date limite.";
+          const p = document.getElementById("panneau");
+          if (!liste.length) {
+            p.innerHTML = onglet === "en_cours"
+              ? `<div class="cc-vide"><h3>Aucun concours en cours confirmé pour le moment</h3><p>Nous ne publions que les concours confirmés par une source officielle. Consultez les <a href="#a_venir" data-vers="a_venir">concours à venir</a> et revenez régulièrement.</p></div>`
+              : `<div class="cc-vide"><h3>Aucun concours à venir dans les 30 prochains jours</h3><p>Aucune ouverture n'est officiellement datée dans cette période. Revenez régulièrement : cette liste est mise à jour automatiquement.</p></div>`;
+          } else {
+            p.innerHTML = `<div class="cc-grille">${liste.map(carte).join("")}</div>`;
           }
         }
-        if (params.get("recherche")) {
-          const champRecherche = document.getElementById("input-recherche");
-          if (champRecherche) champRecherche.value = params.get("recherche");
+
+        function ligne(titre, valeur, large) {
+          return `<div class="cc-info${large ? " cc-info--large" : ""}"><small>${esc(titre)}</small>${valeur || nc}</div>`;
         }
-        if (params.get("categorie")) {
-          const radioCat = document.querySelector(
-            `input[name="categorie"][value="${params.get("categorie")}"]`,
-          );
-          if (radioCat) radioCat.checked = true;
+
+        function agePlage(c) {
+          if (c.age_min != null && c.age_max != null) return `De ${c.age_min} à ${c.age_max} ans`;
+          if (c.age_max != null) return `${c.age_max} ans maximum`;
+          if (c.age_min != null) return `${c.age_min} ans minimum`;
+          return null;
         }
-        appliquerFiltres();
-      });
 
-      // ── Compteurs dynamiques par statut (jamais codés en dur) ───────
-      // "fermé" et "résultats" sont additionnés sous le même compteur
-      // "Terminés", cohérent avec le filtre qui les fusionne déjà (voir
-      // Concours.findAll côté backend) et avec le badge visuel identique
-      // affiché sur les cartes pour les deux statuts.
-      async function chargerCompteurs() {
-        try {
-          const n = await window.API.Concours.compteurs();
-          const cibles = {
-            "cpt-tous": n.total,
-            "cpt-ouvert": n.en_cours,
-            "cpt-a-venir": n.a_venir,
-            "cpt-cloture": n.cloture,
-            "cpt-attente": n.attente_resultats,
-            "cpt-resultats": n.resultats,
-            "cpt-non-definie": n.non_confirme,
-            "cpt-suspendu": n.suspendu_annule,
-            "cpt-archives": n.archives,
-          };
-          for (const [id, valeur] of Object.entries(cibles)) {
-            const el = document.getElementById(id);
-            if (el) el.textContent = `(${valeur})`;
-          }
-        } catch (err) {
-          // Non bloquant : les filtres restent utilisables sans les nombres.
-          console.warn("Compteurs concours indisponibles :", err.message);
+        function fraisTexte(c) {
+          if (c.frais === null && !c.frais_detail) return null;
+          const base = c.frais === 0 ? "Gratuit" : c.frais !== null ? `${Number(c.frais).toLocaleString("fr-FR")} FCFA` : "";
+          return esc([base, c.frais_detail && c.frais_detail !== base ? c.frais_detail : ""].filter(Boolean).join(" — "));
         }
-      }
 
-      // ── Sélection rapide par niveau de diplôme ──────────────────────
-      function filtrerParNiveauRapide(niveau) {
-        const radio = document.querySelector(`input[name="niveau"][value="${niveau}"]`);
-        if (radio) radio.checked = true;
-        appliquerFiltres();
-        document.querySelector(".concours-main")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+        function ouvrirDetail(id) {
+          const c = [...donnees.en_cours, ...donnees.a_venir].find((x) => String(x.id) === String(id));
+          if (!c) return;
+          dernierFocus = document.activeElement;
+          const dossier = c.dossier && c.dossier.length ? `<ul>${c.dossier.map((d) => `<li>${esc(d)}</li>`).join("")}</ul>` : null;
+          const src = c.source_url || c.lien_inscription;
+          const verif = dateFr(c.verifie_le);
+          document.getElementById("cc-modal").innerHTML = `
+            <button class="cc-fermer" type="button" aria-label="Fermer" data-fermer>×</button>
+            ${badgeStatut(c)}
+            <h2 id="cc-titre-modal">${esc(c.titre)}</h2>
+            <div class="cc-orga">${c.organisme ? esc(c.organisme) : nc}</div>
+            <div class="cc-infos">
+              ${ligne("Ministère / institution", c.organisme ? esc(c.organisme) : null)}
+              ${ligne("Corps de métier / poste", c.poste ? esc(c.poste) : null)}
+              ${ligne("Nombre de places", c.places !== null ? esc(c.places) : null)}
+              ${ligne("Niveau d'études / diplômes requis", c.niveau ? esc(c.niveau) : null)}
+              ${ligne("Ouverture des inscriptions", dateFr(c.date_ouverture) ? `<strong>${esc(dateFr(c.date_ouverture))}</strong>` : null)}
+              ${ligne("Date limite de candidature", dateFr(c.date_cloture) ? `<strong>${esc(dateFr(c.date_cloture))}</strong>` : null)}
+              ${ligne("Âge limite", agePlage(c) ? esc(agePlage(c)) : null)}
+              ${ligne("Frais d'inscription", fraisTexte(c))}
+              ${ligne("Conditions de candidature", c.conditions ? esc(c.conditions).replace(/\n/g, "<br>") : null, true)}
+              ${ligne("Dossier à fournir", dossier, true)}
+              ${ligne("Procédure d'inscription", c.procedure ? esc(c.procedure).replace(/\n/g, "<br>") : null, true)}
+            </div>
+            <div class="cc-source">
+              <strong>Source officielle</strong><br />
+              ${src ? `<a href="${esc(src)}" target="_blank" rel="noopener noreferrer">${esc(src)}</a>` : ""}
+              ${c.source_mention ? `<div>${esc(c.source_mention)}</div>` : ""}
+              ${verif ? `<div class="cc-source-mini">Source vérifiée le ${esc(verif)}</div>` : ""}
+            </div>
+            <div class="cc-actions" style="margin-top:16px">
+              ${c.statut_public === "en_cours" && c.lien_inscription ? `<a class="btn btn--primaire" href="${esc(c.lien_inscription)}" target="_blank" rel="noopener noreferrer">Postuler sur le site officiel ↗</a>` : ""}
+              <a class="btn btn--gris" href="/concours-detail.html?id=${encodeURIComponent(c.id)}">Fiche complète</a>
+            </div>
+            <p class="cc-avert">Les dates et conditions peuvent être modifiées par l'organisateur : en cas de doute, la source officielle fait foi.</p>`;
+          const fond = document.getElementById("cc-fond");
+          fond.classList.add("ouvert"); fond.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+          document.getElementById("cc-modal").focus();
+          history.replaceState(null, "", `?id=${encodeURIComponent(c.id)}&onglet=${onglet}`);
+        }
 
-      // ── Charge tous les concours ──────────────────────────────────
-      async function chargerConcours() {
-        try {
-          // Chargement par lots de 200 jusqu'à épuisement : aucun concours n'est
-          // tronqué, et les compteurs correspondent toujours à ce qui est listé.
-          let data = await window.API.Concours.liste({ limit: 200, offset: 0, archive: "tous" });
-          tousConcours = data.concours || [];
-          for (let lot = (data.concours || []).length, tours = 0; lot === 200 && tours < 25; tours++) {
-            const suite = await window.API.Concours.liste({ limit: 200, offset: tousConcours.length, archive: "tous" });
-            lot = (suite.concours || []).length;
-            tousConcours = tousConcours.concat(suite.concours || []);
-          }
+        function fermerDetail() {
+          const fond = document.getElementById("cc-fond");
+          fond.classList.remove("ouvert"); fond.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+          history.replaceState(null, "", `?onglet=${onglet}`);
+          if (dernierFocus && dernierFocus.focus) dernierFocus.focus();
+        }
 
-          // Charge les catégories dans les filtres
-          const categories = [
-            ...new Set(tousConcours.map((c) => c.categorie).filter(Boolean)),
-          ];
-          const divCats = document.getElementById("filtres-categories");
-          divCats.innerHTML =
-            `<label class="filtre-check"><input type="radio" name="categorie" value="" checked onchange="appliquerFiltres()"> Toutes</label>` +
-            categories
-              .map(
-                (cat) =>
-                  `<label class="filtre-check"><input type="radio" name="categorie" value="${cat}" onchange="appliquerFiltres()"> ${cat}</label>`,
-              )
-              .join("");
-
-          // Filtre par structure organisatrice (Module 2) — n'affiche que
-          // les structures effectivement utilisées par au moins un concours
+        async function charger(silencieux) {
           try {
-            const { structures } = await window.API.Referentiels.structures();
-            const idsUtilises = new Set(
-              tousConcours.map((c) => c.structure_id).filter(Boolean),
-            );
-            const structuresUtilisees = structures.filter((s) => idsUtilises.has(s.id));
-            if (structuresUtilisees.length > 0) {
-              document.getElementById("groupe-filtre-structure").style.display = "";
-              const divStruct = document.getElementById("filtres-structures");
-              divStruct.innerHTML =
-                `<label class="filtre-check"><input type="radio" name="structure" value="" checked onchange="appliquerFiltres()"> Toutes</label>` +
-                structuresUtilisees
-                  .map(
-                    (s) =>
-                      `<label class="filtre-check"><input type="radio" name="structure" value="${s.id}" onchange="appliquerFiltres()"> ${s.sigle || s.nom}</label>`,
-                  )
-                  .join("");
-            }
+            const r = await window.API.Concours.rubriques();
+            donnees = { en_cours: r.en_cours || [], a_venir: r.a_venir || [] };
+            jourCharge = r.aujourdhui;
+            rendre();
           } catch (err) {
-            // Non bloquant : le filtre par structure reste simplement masqué
-            console.error("Erreur chargement structures :", err.message);
+            if (!silencieux) document.getElementById("panneau").innerHTML = `<div class="cc-vide"><h3>Chargement impossible</h3><p>${esc(err.message || "Veuillez réessayer dans un instant.")}</p></div>`;
           }
-        } catch (err) {
-          window.afficherToast("Erreur de chargement des concours.", "erreur");
-          tousConcours = [];
         }
-      }
 
-      // ── Applique les filtres et la recherche ──────────────────────
-      function appliquerFiltres() {
-        const recherche = (
-          document.getElementById("input-recherche")?.value || ""
-        )
-          .toLowerCase()
-          .trim();
-        const statut =
-          document.querySelector('input[name="statut"]:checked')?.value || "";
-
-        const categorie =
-          document.querySelector('input[name="categorie"]:checked')?.value ||
-          "";
-        const niveau =
-          document.querySelector('input[name="niveau"]:checked')?.value || "";
-        const structure =
-          document.querySelector('input[name="structure"]:checked')?.value || "";
-        const premium =
-          document.querySelector('input[name="premium"]:checked')?.value || "";
-        const tri = document.getElementById("tri-select")?.value || "recent";
-
-        concoursFiltres = tousConcours.filter((c) => {
-          if (
-            recherche &&
-            !c.titre.toLowerCase().includes(recherche) &&
-            !c.organisme.toLowerCase().includes(recherche)
-          )
-            return false;
-          // Les archives restent consultables mais ne polluent pas les autres vues
-          if (statut === "archives") { if (!c.archive) return false; }
-          else if (c.archive) return false;
-          if (statut === "suspendu") { if (c.statut !== "suspendu" && c.statut !== "annulé") return false; }
-          else if (statut && statut !== "archives" && c.statut !== statut) return false;
-          if (categorie && c.categorie !== categorie) return false;
-          if (niveau && c.niveau !== niveau) return false;
-          if (structure && String(c.structure_id) !== structure) return false;
-          if (premium && String(c.premium) !== premium) return false;
-          return true;
+        document.addEventListener("DOMContentLoaded", async () => {
+          onglet = ongletInitial();
+          document.querySelectorAll(".cc-onglet").forEach((b) => b.addEventListener("click", () => { onglet = b.dataset.onglet; history.replaceState(null, "", `?onglet=${onglet}`); rendre(); }));
+          document.addEventListener("click", (e) => {
+            const d = e.target.closest("[data-detail]"); if (d) return ouvrirDetail(d.dataset.detail);
+            const v = e.target.closest("[data-vers]"); if (v) { e.preventDefault(); onglet = v.dataset.vers; rendre(); return; }
+            if (e.target.closest("[data-fermer]") || e.target.id === "cc-fond") fermerDetail();
+          });
+          document.addEventListener("keydown", (e) => { if (e.key === "Escape" && document.getElementById("cc-fond").classList.contains("ouvert")) fermerDetail(); });
+          await charger(false);
+          const id = new URLSearchParams(location.search).get("id");
+          if (id) ouvrirDetail(id);
+          // Toujours à jour : rechargement quand l'onglet redevient visible (changement de jour, retour sur la page)
+          document.addEventListener("visibilitychange", () => { if (!document.hidden) charger(true); });
+          setInterval(() => charger(true), 10 * 60 * 1000);
         });
-
-        // Tri
-        concoursFiltres.sort((a, b) => {
-          if (tri === "cloture")
-            return (a.cloture || "").localeCompare(b.cloture || "");
-          if (tri === "frais-asc") return (a.frais || 0) - (b.frais || 0);
-          if (tri === "frais-desc") return (b.frais || 0) - (a.frais || 0);
-          // Vue "Terminés" : classement par année décroissante par défaut
-          // (les plus récents en premier), à partir de la vraie date de
-          // clôture — le badge année sur chaque card reste cohérent avec
-          // l'ordre d'affichage.
-          if (["fermé", "en attente de résultats", "résultats", "archives"].includes(statut) && tri === "recent") {
-            const anneeA = a.date_cloture ? new Date(a.date_cloture).getFullYear() : 0;
-            const anneeB = b.date_cloture ? new Date(b.date_cloture).getFullYear() : 0;
-            if (anneeA !== anneeB) return anneeB - anneeA;
-          }
-          return b.id - a.id;
-        });
-
-        pageActuelle = 1;
-        afficherPage();
-      }
-
-      function lancerRecherche() {
-        appliquerFiltres();
-      }
-      function changerTri() {
-        appliquerFiltres();
-      }
-
-      function reinitialiserFiltres() {
-        const champRecherche = document.getElementById("input-recherche");
-        if (champRecherche) champRecherche.value = "";
-        const radioOuvert = document.querySelector(
-          'input[name="statut"][value="ouvert"]',
-        );
-        if (radioOuvert) radioOuvert.checked = true;
-        document.querySelectorAll('input[name="categorie"]')[0].checked = true;
-        document.querySelectorAll('input[name="niveau"]')[0].checked = true;
-        document.querySelectorAll('input[name="premium"]')[0].checked = true;
-        appliquerFiltres();
-      }
-
-      // ── Affiche la page courante ──────────────────────────────────
-      function afficherPage() {
-        const debut = (pageActuelle - 1) * PAR_PAGE;
-        const page = concoursFiltres.slice(debut, debut + PAR_PAGE);
-        const conteneur = document.getElementById("liste-concours");
-        const compteur = document.getElementById("compteur");
-
-        compteur.textContent = `${concoursFiltres.length} concours trouvé${concoursFiltres.length !== 1 ? "s" : ""}`;
-
-        if (page.length === 0) {
-          conteneur.innerHTML = `
-      <div style="grid-column:1/-1;">
-        <div class="empty-state">
-          <div class="empty-state__icone">🔍</div>
-          <div class="empty-state__titre">Aucun concours trouvé</div>
-          <p class="empty-state__texte">Essayez d'autres filtres ou mots-clés.</p>
-          <button onclick="reinitialiserFiltres()" class="btn btn--outline-vert btn--sm">Réinitialiser les filtres</button>
-        </div>
-      </div>`;
-        } else {
-          conteneur.innerHTML = page.map((c) => window.construireCarteConcours(c)).join("");
-        }
-
-        afficherPagination();
-      }
-
-      // ── Génère le HTML d'une card concours ───────────────────────
-      // Déléguée à js/concours-cartes.js (window.construireCarteConcours),
-      // partagée avec index.html, concours-en-cours.html et
-      // concours-a-venir.html pour éviter que ces 4 pages divergent
-      // avec le temps.
-
-      // ── Pagination ────────────────────────────────────────────────
-      function afficherPagination() {
-        const total = Math.ceil(concoursFiltres.length / PAR_PAGE);
-        const div = document.getElementById("pagination");
-        if (total <= 1) {
-          div.innerHTML = "";
-          return;
-        }
-
-        // Pagination à fenêtre : 1 … 4 [5] 6 … 20 (ne déborde jamais, même avec 50 pages)
-        const pages = [];
-        for (let i = 1; i <= total; i++) {
-          if (i === 1 || i === total || Math.abs(i - pageActuelle) <= 1) pages.push(i);
-          else if (pages[pages.length - 1] !== "…") pages.push("…");
-        }
-        let html = "";
-        if (pageActuelle > 1)
-          html += `<button class="btn btn--gris btn--sm" onclick="changerPage(${pageActuelle - 1})" aria-label="Page précédente">← Préc.</button>`;
-        for (const i of pages) {
-          html += i === "…"
-            ? `<span style="align-self:center;color:var(--gris-texte);">…</span>`
-            : `<button class="btn btn--sm ${i === pageActuelle ? "btn--primaire" : "btn--gris"}" onclick="changerPage(${i})" ${i === pageActuelle ? 'aria-current="page"' : ""}>${i}</button>`;
-        }
-        if (pageActuelle < total)
-          html += `<button class="btn btn--gris btn--sm" onclick="changerPage(${pageActuelle + 1})">Suiv. →</button>`;
-        div.innerHTML = html;
-      }
-
-      function changerPage(n) {
-        pageActuelle = n;
-        afficherPage();
-        window.scrollTo({ top: 200, behavior: "smooth" });
-      }
-
-      // Recherche en temps réel au clavier
-      document
-        .getElementById("input-recherche")
-        ?.addEventListener(
-          "input",
-          window.Utils?.debounce?.(appliquerFiltres, 300) || appliquerFiltres,
-        );
+      })();
     </script>
   </body>
 </html>

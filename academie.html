@@ -22,6 +22,7 @@
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+      <link rel="stylesheet" href="/css/ui-pro.css" />
   </head>
 <body>
 
@@ -59,7 +60,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!cours.length) {
       zone.appendChild(el("div", { class: "academie-vide" },
         el("p", { text: "Les premiers cours arrivent bientôt." }),
-        el("p", {}, "En attendant, entraînez-vous avec les ", el("a", { href: "/preparation.html", text: "QCM de préparation" }), "."),
       ));
       return;
     }

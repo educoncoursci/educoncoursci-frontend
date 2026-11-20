@@ -57,6 +57,11 @@
     </script>
       <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+      <link rel="stylesheet" href="/css/ui-pro.css" />
+      <script>
+      /* Les photos de la page d'accueil sont réservées aux visiteurs : un membre connecté ne les voit (ni ne les télécharge) jamais. */
+      try { if (localStorage.getItem("ecc_token")) document.documentElement.classList.add("membre"); } catch (e) {}
+    </script>
   </head>
   <body>
     <!-- ── BANDEAU PREMIUM ───────────────────────────────────────── -->
@@ -104,8 +109,24 @@
             </div>
           </div>
         </div>
+        <figure class="pub-fig pub-fig--hero pub-seulement">
+            <picture>
+              <source type="image/webp" srcset="/assets/img/recherche-emploi-640.webp 640w, /assets/img/recherche-emploi-1200.webp 1200w" sizes="(max-width: 900px) 90vw, 520px" />
+              <img src="/assets/img/recherche-emploi-1200.jpg" srcset="/assets/img/recherche-emploi-640.jpg 640w, /assets/img/recherche-emploi-1200.jpg 1200w" sizes="(max-width: 900px) 90vw, 520px" width="1200" height="800" alt="Un jeune candidat lit les offres d'emploi, de recrutement, de concours et de stages" loading="lazy" decoding="async" />
+            </picture>
+          <figcaption class="pub-chip">Offres · Concours · Stages</figcaption>
+        </figure>
       </div>
     </section>
+
+    <!-- ── CONFIANCE (visiteurs) ─────────────────────────────────── -->
+    <div class="pub-confiance pub-seulement">
+      <ul class="pub-confiance__liste">
+        <li><span><span data-icone="institution" data-taille="20"></span></span><div><strong>Sources officielles</strong><small>Concours publiés avec leur source</small></div></li>
+        <li><span><span data-icone="portefeuille" data-taille="20"></span></span><div><strong>Paiement Mobile Money</strong><small>Wave, Orange Money, MTN, Moov</small></div></li>
+        <li><span><span data-icone="cadenas" data-taille="20"></span></span><div><strong>Données privées</strong><small>Suppression de compte à tout moment</small></div></li>
+      </ul>
+    </div>
 
     <!-- ── SERVICES PROINSERTION ───────────────────────────────────── -->
 
@@ -161,13 +182,13 @@
           <a href="/concours.html" class="pi-service">
             <div class="pi-service__icone"><span data-icone="institution" data-taille="24"></span></div>
             <h3>Accéder aux concours</h3>
-            <p>Concours, calendrier, préparation et QCM : toute la rubrique concours est conservée.</p>
+            <p>Concours en cours et à venir, avec dates et sources officielles.</p>
             <div class="pi-service__action">Accéder aux concours →</div>
           </a>
           <a href="/academie.html" class="pi-service">
             <div class="pi-service__icone"><span data-icone="diplome" data-taille="24"></span></div>
             <h3>Découvrir les formations</h3>
-            <p>Cours courts avec exercices, et vidéos de formation.</p>
+            <p>Cours courts avec exercices.</p>
             <div class="pi-service__action">Voir les formations →</div>
           </a>
         </div>
@@ -182,6 +203,13 @@
           <h2>Des services étudiés pour votre insertion</h2>
           <p>Des solutions professionnelles étudiées et élaborées par l'équipe ProInsertion CI pour mieux accompagner votre insertion professionnelle.</p>
         </div>
+        <div class="pub-expertise">
+          <figure class="pub-fig pub-fig--landscape pub-seulement">
+            <picture>
+              <source type="image/webp" srcset="/assets/img/accompagnement-480.webp 480w, /assets/img/accompagnement-788.webp 788w" sizes="(max-width: 900px) 90vw, 480px" />
+              <img src="/assets/img/accompagnement-788.jpg" srcset="/assets/img/accompagnement-480.jpg 480w, /assets/img/accompagnement-788.jpg 788w" sizes="(max-width: 900px) 90vw, 480px" width="788" height="525" alt="Une professionnelle ivoirienne à son bureau, devant son ordinateur" loading="lazy" decoding="async" />
+            </picture>
+          </figure>
         <div class="pi-piliers">
           <div class="pi-pilier">
             <h3>Pensé pour le marché ivoirien</h3>
@@ -195,6 +223,7 @@
             <h3>De la candidature à l'entretien</h3>
             <p>CV, lettre de motivation, offres d'emploi et de stage, préparation aux entretiens : un seul endroit pour avancer.</p>
           </div>
+        </div>
         </div>
       </div>
     </section>
@@ -234,6 +263,13 @@
           <h2>Ne laissez plus un CV mal adapté réduire vos chances</h2>
           <p>Un CV et une lettre qui correspondent au poste visé font la différence. Candidatez avec des documents professionnels, pensés pour le marché ivoirien.</p>
         </div>
+        <div class="pub-carriere">
+          <figure class="pub-fig pub-fig--portrait pub-seulement">
+            <picture>
+              <source type="image/webp" srcset="/assets/img/lettre-300.webp 300w, /assets/img/lettre-419.webp 419w" sizes="(max-width: 1000px) 60vw, 280px" />
+              <img src="/assets/img/lettre-419.jpg" srcset="/assets/img/lettre-300.jpg 300w, /assets/img/lettre-419.jpg 419w" sizes="(max-width: 1000px) 60vw, 280px" width="419" height="590" alt="Un jeune homme rédige à la main une lettre de motivation" loading="lazy" decoding="async" />
+            </picture>
+          </figure>
         <div class="grille-2" style="gap:18px;">
           <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
             <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
@@ -268,6 +304,7 @@
             </div>
           </div>
         </div>
+        </div>
 
         <div style="max-width: 780px; margin: 32px auto 0;">
           <h3 style="margin-bottom:12px; font-size:1.1rem;">Nos conseils pour votre recherche d'emploi</h3>
@@ -299,43 +336,42 @@
       </div>
     </section>
 
+    <!-- ── RECRUTEMENT ET MISE EN RELATION (visiteurs) ─────────────── -->
+
+    <section class="section pub-seulement" id="section-recrutement">
+      <div class="container">
+        <div class="pub-recrutement">
+          <div class="pub-recrutement__texte">
+            <span class="section__tag"><span data-icone="institution" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>Recrutement</span>
+            <h2>Candidats et recruteurs, mis en relation</h2>
+            <p>Que vous cherchiez un poste ou que vous recrutiez, ProInsertion CI réunit au même endroit les offres d'emploi et de stage, les concours officiels et la publication d'offres par les recruteurs.</p>
+            <ul class="pub-liste">
+              <li>Des offres d'emploi et de stage regroupées au même endroit</li>
+              <li>Des concours en Côte d'Ivoire, avec lien vers la source officielle</li>
+              <li>Un espace pour les recruteurs qui souhaitent publier une offre</li>
+            </ul>
+            <div class="pub-actions">
+              <a href="/emploi.html" class="btn btn--primaire">Voir les offres →</a>
+              <a href="/publier-offre.html" class="btn btn--outline-vert">Publier une offre</a>
+            </div>
+          </div>
+          <figure class="pub-fig pub-fig--landscape">
+            <picture>
+              <source type="image/webp" srcset="/assets/img/recrutement-480.webp 480w, /assets/img/recrutement-788.webp 788w" sizes="(max-width: 900px) 90vw, 520px" />
+              <img src="/assets/img/recrutement-788.jpg" srcset="/assets/img/recrutement-480.jpg 480w, /assets/img/recrutement-788.jpg 788w" sizes="(max-width: 900px) 90vw, 520px" width="788" height="500" alt="Deux professionnels signent un contrat de travail" loading="lazy" decoding="async" />
+            </picture>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- ── RUBRIQUE CONCOURS (conservée telle quelle) ─────────────── -->
 
     <div class="pi-separateur container">
       <h2>Concours</h2>
-      <p>Concours de la fonction publique, calendrier, préparation et QCM.</p>
+      <p>Concours en cours et à venir en Côte d'Ivoire, avec sources officielles.</p>
       <a href="/concours.html" class="btn btn--outline-vert btn--sm">Accéder à la rubrique concours →</a>
     </div>
-
-    <!-- ── CATÉGORIES ─────────────────────────────────────────────── -->
-
-    <section class="section">
-      <div class="container">
-        <div class="section__en-tete">
-          <span class="section__tag"><span data-icone="liste" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>Catégories</span>
-          <h2>Trouvez votre domaine</h2>
-          <p>Parcourez les concours par grande catégorie.</p>
-        </div>
-        <div class="grille-4" id="categories-accueil" style="gap: 16px;">
-          <a href="/concours.html?categorie=Fonction%20Publique" class="carte-categorie">
-            <span data-icone="institution" data-taille="28"></span>
-            <div>Fonction Publique</div>
-          </a>
-          <a href="/concours.html?categorie=S%C3%A9curit%C3%A9" class="carte-categorie">
-            <span data-icone="cadenas" data-taille="28"></span>
-            <div>Sécurité</div>
-          </a>
-          <a href="/concours.html?categorie=Sant%C3%A9" class="carte-categorie">
-            <span data-icone="coeur" data-taille="28"></span>
-            <div>Santé</div>
-          </a>
-          <a href="/concours.html?categorie=%C3%89ducation" class="carte-categorie">
-            <span data-icone="diplome" data-taille="28"></span>
-            <div>Éducation</div>
-          </a>
-        </div>
-      </div>
-    </section>
 
     <!-- ── PLANS PREMIUM ──────────────────────────────────────────── -->
 
@@ -389,7 +425,7 @@
         <div id="liste-faq">
           <details class="faq-item">
             <summary>ProInsertion CI est-il gratuit ?</summary>
-            <p>Oui — l'essentiel (fiches concours, alertes, moteur d'éligibilité, une partie des QCM et des cours) est gratuit. L'abonnement Premium débloque un usage illimité des outils, l'analyse ATS, l'adaptation du CV à une offre, les modèles de CV premium et les contenus Premium dès leur publication.</p>
+            <p>Oui — l'essentiel (fiches concours, alertes, moteur d'éligibilité, une partie des cours) est gratuit. L'abonnement Premium débloque un usage illimité des outils, l'analyse ATS, l'adaptation du CV à une offre, les modèles de CV premium et les contenus Premium dès leur publication.</p>
           </details>
           <details class="faq-item">
             <summary>Comment activer mon abonnement Premium ?</summary>
@@ -457,6 +493,7 @@
       document.addEventListener("DOMContentLoaded", () => {
         // Les prix ne sont affichés qu'aux membres connectés.
         const connecte = !!(window.Auth && window.Auth.estConnecte());
+        if (connecte) document.querySelectorAll(".pub-seulement").forEach((e) => e.remove());
         const invitation = document.getElementById("section-invitation");
         if (invitation) invitation.style.display = connecte ? "none" : "";
         if (connecte) window.Tarifs.charger(document.getElementById("section-tarifs"), document.getElementById("grille-tarifs"));

@@ -81,6 +81,7 @@
       <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+      <link rel="stylesheet" href="/css/ui-pro.css" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -200,7 +201,7 @@
                   text-align: center;
                   border: 2px solid var(--vert);
                   position: sticky;
-                  top: calc(var(--navbar-h)+16px);
+                  top: calc(var(--navbar-h) + 16px);
                 "
               >
                 <div style="font-size: 2.5rem; margin-bottom: 8px">🎯</div>
@@ -267,12 +268,6 @@
                     border-top: 1px solid var(--gris-bordure);
                   "
                 >
-                  <a
-                    href="/preparation.html"
-                    class="btn btn--bleu btn--full btn--sm"
-                  >
-                    <span data-icone="quiz" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Préparer ce concours →
-                  </a>
                   <a
                     href="#"
                     id="lien-assistant-ia"
@@ -681,6 +676,16 @@
           annulé: "🔴",
           "information non confirmée": "❔",
         };
+        // Statut officiel du jour (calculé par le serveur : dates + source officielle).
+        // Un concours dont l'ouverture n'est pas confirmée par une source n'est jamais présenté comme « ouvert ».
+        function statutAffiche(c) {
+          const pub = c.publication && c.publication.statut_public;
+          if (pub === "en_cours") return "🟢 En cours";
+          if (pub === "a_venir") return "🔵 À venir";
+          if (pub === "termine") return "⚫ Terminé";
+          if (["annulé", "résultats", "en attente de résultats", "suspendu"].includes(c.statut)) return `${STATUT_EMOJI[c.statut] || "📋"} ${STATUT_LABEL[c.statut] || c.statut}`;
+          return "ℹ️ Ouverture non confirmée officiellement";
+        }
         const STATUT_LABEL = {
           ouvert: "En cours",
           "à venir": "À venir",
@@ -710,7 +715,7 @@
         <div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
             <span class="badge badge--vert">${echapperHtml(c.categorie)}</span>
-            <span class="badge badge--rouge">${STATUT_EMOJI[c.statut] || "📋"} ${STATUT_LABEL[c.statut] || c.statut}</span>
+            <span class="badge badge--rouge">${statutAffiche(c)}</span>
             ${c.premium ? '<span class="badge badge--premium">⭐ Contenu Premium</span>' : '<span class="badge badge--gratuit">🆓 Accès gratuit</span>'}
           </div>
           <h1 style="font-size:1.6rem;margin-bottom:6px;">${echapperHtml(c.titre)}</h1>
@@ -738,7 +743,7 @@
             "💰 Frais",
             fraisAffiche(c),
           ],
-          ["📊 Statut", `${STATUT_EMOJI[c.statut] || ""} ${STATUT_LABEL[c.statut] || c.statut}`],
+          ["📊 Statut", statutAffiche(c)],
         ];
         const blocs = [];
         if (c.procedure_inscription) blocs.push(`<div class="detail-card"><h3 style="margin-bottom:12px">🧭 Procédure d'inscription</h3><div style="white-space:pre-line;font-size:0.92rem;">${echapperHtml(c.procedure_inscription)}</div></div>`);

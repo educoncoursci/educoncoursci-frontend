@@ -1,0 +1,18 @@
+# Anciennes adresses → nouvelle rubrique « Concours » (liens partagés, favoris, moteurs de recherche)
+/concours-en-cours.html   /concours.html?onglet=en_cours   301
+/concours-en-cours         /concours.html?onglet=en_cours   301
+/concours-a-venir.html    /concours.html?onglet=a_venir    301
+/concours-a-venir          /concours.html?onglet=a_venir    301
+/concours-termines.html   /concours.html                   301
+/concours-termines        /concours.html                   301
+# Rubriques supprimées
+/preparation.html         /examens.html                    301
+/quiz.html                /examens.html                    301
+/simulateur.html          /examens.html                    301
+/classement.html          /concours.html                   301
+/videos.html              /index.html                      301
+/dashboard/progression.html  /dashboard/index.html         301
+/dashboard/mes-scores.html   /dashboard/index.html         301
+/admin/videos.html        /admin/index.html                301
+/admin/qcm.html           /admin/index.html                301
+/admin/qcm-auto.html      /admin/index.html                301
