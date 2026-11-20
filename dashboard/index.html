@@ -20,6 +20,7 @@
       <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+      <link rel="stylesheet" href="/css/ui-pro.css" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav class="navbar" id="navbar">
@@ -53,8 +54,6 @@
             <div class="sidebar__titre">Concours</div>
             <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
             <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
-            <a href="/dashboard/mes-scores.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a>
-            <a href="/dashboard/progression.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a>
             <div class="sidebar__titre">Mon compte</div>
             <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
             <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
@@ -177,14 +176,11 @@
           <!-- Concours : complément -->
           <div class="dash-section dash-concours">
             <div class="dash-section__header">
-              <div class="dash-section__titre">Concours et préparation</div>
+              <div class="dash-section__titre">Concours</div>
               <a href="/concours.html" class="dash-section__voir">Voir les concours →</a>
             </div>
             <div class="dash-concours__grille">
               <a href="/concours.html" class="dash-mini"><strong id="stat-qcm-disponibles">—</strong><span>concours ouverts</span></a>
-              <a href="/dashboard/mes-scores.html" class="dash-mini"><strong id="stat-tentatives">—</strong><span>QCM réalisés</span></a>
-              <a href="/dashboard/mes-scores.html" class="dash-mini"><strong id="stat-moyenne">—</strong><span>moyenne générale</span></a>
-              <a href="/preparation.html" class="dash-mini dash-mini--action"><strong>QCM</strong><span>S'entraîner</span></a>
             </div>
           </div>
         </main>
@@ -238,14 +234,6 @@
           statut.textContent = "Gratuit";
           $("promo-premium").classList.remove("hidden");
         }
-
-        // Concours (complément) : données de la session
-        let scores = [];
-        try { scores = JSON.parse(session.scores_json || "[]"); } catch { scores = []; }
-        $("stat-tentatives").textContent = scores.length;
-        $("stat-moyenne").textContent = scores.length
-          ? `${Math.round(scores.reduce((a, s) => a + (s.pourcentage || 0), 0) / scores.length)}%`
-          : "—";
 
         const faits = { analyse: false, cv: false, lm: false, entretien: false };
         const majParcours = () => {

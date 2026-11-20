@@ -20,6 +20,7 @@
       <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+      <link rel="stylesheet" href="/css/ui-pro.css" />
   </head>
   <body style="background: var(--gris-clair)">
     <nav class="navbar" id="navbar">
@@ -53,8 +54,6 @@
             <div class="sidebar__titre">Concours</div>
             <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
             <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
-            <a href="/dashboard/mes-scores.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="trophee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes scores</a>
-            <a href="/dashboard/progression.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="fusee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ma progression</a>
             <div class="sidebar__titre">Mon compte</div>
             <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
             <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
@@ -164,6 +163,10 @@
                   class="form-input"
                   placeholder="votre@email.com"
                 />
+              </div>
+              <div class="form-group" id="groupe-mdp-email" style="display:none;">
+                <label class="form-label">Mot de passe actuel (requis pour changer l'e-mail)</label>
+                <input type="password" id="p-email-mdp" class="form-input" autocomplete="current-password" />
               </div>
             </div>
             <button onclick="sauvegarderProfil()" class="btn btn--primaire">
@@ -415,7 +418,21 @@
         }
         try {
           const session = window.Auth.getSession();
-          await window.API.Users.modifier(session.id, { nom, email });
+          const donnees = { nom, email };
+          // Changer d'e-mail (qui sert à récupérer le compte) exige le mot de passe actuel
+          const emailChange = String(session.email || "").toLowerCase() !== email.toLowerCase();
+          if (emailChange) {
+            const mdp = document.getElementById("p-email-mdp").value;
+            document.getElementById("groupe-mdp-email").style.display = "";
+            if (!mdp) {
+              affMsg(msg, "Saisissez votre mot de passe actuel pour changer l'e-mail.", "erreur");
+              return;
+            }
+            donnees.password = mdp;
+          }
+          await window.API.Users.modifier(session.id, donnees);
+          document.getElementById("p-email-mdp").value = "";
+          document.getElementById("groupe-mdp-email").style.display = "none";
           await window.Auth.rafraichirProfil();
           document.getElementById("sidebar-nom").textContent = nom;
           document.getElementById("profil-nom-affich").textContent = nom;

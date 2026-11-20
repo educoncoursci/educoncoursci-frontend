@@ -39,8 +39,13 @@ a.pi-service:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translat
 .pi-pilier p  { margin: 0; color: #d1e7d9; font-size: .92rem; line-height: 1.55; }
 
 /* Tarifs (alimentés par /api/catalogue) */
-.pi-tarifs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; align-items: start; }
-.pi-tarifs__carte { background: #fff; border: 1px solid var(--gris-bordure); border-radius: 16px; padding: 20px; }
+.pi-tarifs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; align-items: stretch; }
+.pi-tarifs__carte { --c: var(--vert-clair, #2f9e5c); position: relative; overflow: hidden; background: #fff; border: 1px solid #dfe7e2; border-radius: 16px; padding: 24px 20px 20px; box-shadow: 0 1px 2px rgba(16,40,28,.05), 0 2px 8px rgba(16,40,28,.04); transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease; }
+.pi-tarifs__carte::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--c); }
+.pi-tarifs__carte:nth-child(3n+2) { --c: #14532d; }
+.pi-tarifs__carte:nth-child(3n) { --c: #0e7490; }
+.pi-tarifs__carte h3 { color: var(--c); }
+@media (hover: hover) and (pointer: fine) { .pi-tarifs__carte:hover { border-color: var(--c); box-shadow: 0 10px 28px rgba(16,40,28,.12); transform: translateY(-2px); } }
 .pi-tarifs__carte h3 { font-size: 1.05rem; margin: 0 0 12px; }
 .pi-tarif { padding: 10px 0; border-top: 1px solid var(--gris-bordure); }
 .pi-tarif:first-of-type { border-top: 0; padding-top: 0; }
@@ -53,3 +58,97 @@ a.pi-service:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translat
 .pi-separateur { text-align: center; padding: 28px 0 0; }
 .pi-separateur h2 { font-size: clamp(1.3rem, 3.5vw, 1.7rem); margin: 0 0 6px; }
 .pi-separateur p { color: var(--gris-texte); margin: 0 0 10px; }
+
+/* ============================================================
+   Photos de la page d'accueil — VISITEURS UNIQUEMENT
+   (la classe .membre est posée par un script en <head> si une session existe)
+   ============================================================ */
+.membre .pub-seulement { display: none !important; }
+
+.pub-fig { margin: 0; position: relative; }
+.pub-fig picture, .pub-fig img { display: block; width: 100%; height: auto; }
+.pub-fig img {
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 18px 40px rgba(10, 46, 24, 0.22), 0 2px 6px rgba(10, 46, 24, 0.1);
+  background: #e8efe9;
+}
+.pub-chip {
+  position: absolute; left: 14px; bottom: 14px;
+  background: rgba(255, 255, 255, 0.95); color: #14532d;
+  font-weight: 800; font-size: 0.82rem;
+  padding: 7px 14px; border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(10, 46, 24, 0.18);
+}
+
+/* Hero : texte à gauche, photo à droite (ordinateur et tablette large) */
+html:not(.membre) .hero > .container {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(24px, 4vw, 56px); align-items: center;
+}
+html:not(.membre) .hero { min-height: auto; padding-bottom: 72px; }
+.pub-fig--hero { z-index: 1; max-width: 540px; justify-self: end; width: 100%; }
+
+
+/* Expertise (fond vert foncé) : photo à gauche, piliers à droite */
+html:not(.membre) .pub-expertise {
+  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(20px, 4vw, 44px); align-items: center;
+}
+html:not(.membre) .pub-expertise .pi-piliers { grid-template-columns: 1fr; }
+.pub-fig--landscape { max-width: 520px; width: 100%; }
+
+/* Carrière : portrait à gauche, cartes à droite */
+html:not(.membre) .pub-carriere {
+  display: grid; grid-template-columns: 280px minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 36px); align-items: start;
+}
+.pub-fig--portrait { max-width: 300px; width: 100%; }
+.pub-fig--portrait img { border-color: var(--ui-bord, #dfe7e2); box-shadow: 0 12px 30px rgba(16, 40, 28, 0.16); }
+
+/* Recrutement : texte + photo */
+.pub-recrutement {
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(24px, 4vw, 56px); align-items: center;
+}
+.pub-recrutement h2 { font-size: clamp(1.5rem, 3.6vw, 2.1rem); margin: 10px 0; }
+.pub-recrutement p { color: var(--gris-texte); line-height: 1.7; }
+.pub-fig--landscape img { border-color: var(--ui-bord, #dfe7e2); box-shadow: 0 14px 34px rgba(16, 40, 28, 0.16); }
+html:not(.membre) .pub-expertise .pub-fig--landscape img { border-color: rgba(255, 255, 255, 0.4); }
+.pub-liste { list-style: none; margin: 14px 0 20px; padding: 0; display: grid; gap: 8px; }
+.pub-liste li { position: relative; padding-left: 26px; font-size: 0.95rem; }
+.pub-liste li::before { content: "✓"; position: absolute; left: 0; top: 0; color: #fff; background: var(--vert-clair, #2f9e5c); width: 18px; height: 18px; border-radius: 50%; font-size: 0.7rem; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-top: 3px; }
+.pub-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Tablette / téléphone : empilement, images jamais déformées ni démesurées */
+@media (max-width: 1000px) {
+  html:not(.membre) .pub-carriere { grid-template-columns: 1fr; }
+  .pub-fig--portrait { max-width: 260px; margin: 0 auto; }
+}
+@media (max-width: 900px) {
+  html:not(.membre) .hero > .container { grid-template-columns: 1fr; }
+  .pub-fig--hero { justify-self: center; max-width: 520px; margin-top: 8px; }
+
+  html:not(.membre) .pub-expertise { grid-template-columns: 1fr; }
+  .pub-fig--landscape { margin: 0 auto; }
+  .pub-recrutement { grid-template-columns: 1fr; }
+  .pub-recrutement .pub-fig { order: -1; margin: 0 auto; }
+}
+@media (max-width: 480px) {
+  .pub-fig img { border-radius: 14px; }
+  .pub-chip { font-size: 0.74rem; padding: 6px 11px; left: 10px; bottom: 10px; }
+  .pub-actions .btn { flex: 1 1 100%; justify-content: center; }
+}
+
+/* Plans Premium (espace membre, accueil) : cartes centrées quel que soit leur nombre */
+#plans-container { grid-template-columns: repeat(auto-fit, minmax(260px, 340px)); justify-content: center; gap: 22px; align-items: stretch; }
+@media (max-width: 640px) { #plans-container { grid-template-columns: 1fr; } }
+
+/* Bandeau de confiance (visiteurs) */
+.pub-confiance { background: #fff; border-bottom: 1px solid #e3e9e5; }
+.pub-confiance__liste { list-style: none; margin: 0 auto; padding: 18px 16px; max-width: 1100px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.pub-confiance__liste li { display: flex; align-items: center; gap: 12px; font-size: .92rem; color: #24352c; }
+.pub-confiance__liste li > span:first-child { flex: 0 0 38px; height: 38px; border-radius: 10px; background: #e8f5ed; color: #14532d; display: inline-flex; align-items: center; justify-content: center; }
+.pub-confiance__liste strong { display: block; font-size: .95rem; }
+.pub-confiance__liste small { color: var(--gris-texte); }
+@media (max-width: 760px) { .pub-confiance__liste { grid-template-columns: 1fr; gap: 10px; padding: 16px; } }

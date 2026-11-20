@@ -1,0 +1,143 @@
+/* ============================================================
+   css/ui-pro.css — Système de cartes commun (présentation uniquement)
+   Chargé EN DERNIER sur toutes les pages. Ne change ni logique, ni tarifs,
+   ni structure : bordures fines, rayons réguliers, ombres douces et
+   survol émeraude. Survol « souris » uniquement (hover:hover) ; sur
+   écran tactile, retour visuel au toucher (:active) sans animation lourde.
+   ============================================================ */
+
+:root {
+  --ui-bord: #dfe7e2;
+  --ui-bord-hover: #2f9e5c;
+  --ui-radius: 14px;
+  --ui-ombre: 0 1px 2px rgba(16, 40, 28, 0.05), 0 2px 8px rgba(16, 40, 28, 0.04);
+  --ui-ombre-hover: 0 10px 28px rgba(16, 40, 28, 0.12), 0 2px 6px rgba(16, 40, 28, 0.06);
+  --ui-fondu: 0.22s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ── 1. Base commune : bordure fine, rayon et ombre régulière ── */
+.dash-section, .dash-stat, .dash-mini, .outil, .stat-card, .card, .card-emploi,
+.source-card, .candidature-item, .favori-item, .score-item, .detail-card,
+.admin-card, .moyen-card, .parcours__etape, .carte-categorie, .transaction-item,
+.step-item, .empty-state, .pricing-card:not(.pricing-card--vedette) {
+  border: 1px solid var(--ui-bord);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-ombre);
+  background-clip: padding-box;
+  transition: border-color var(--ui-fondu), box-shadow var(--ui-fondu), transform var(--ui-fondu), background-color var(--ui-fondu);
+}
+.moyen-card { border-width: 1px; }
+.pricing-card:not(.pricing-card--vedette) { border-width: 1px; }
+.pricing-card--vedette { border-radius: var(--ui-radius); }
+
+/* Listes (lignes dans une carte) : jamais de double bordure */
+.paiement-item { border-bottom: 1px solid var(--ui-bord); }
+
+/* ── 2. Bandeau coloré en haut des cartes : propre, sans bords « en pointe » ──
+   (l'ancienne bordure haute de 3px suivait l'arrondi et s'effilait aux angles) */
+.outil, .stat-card, .card-emploi {
+  position: relative;
+  overflow: hidden;
+  border-top-width: 1px;
+  border-top-color: var(--ui-bord);
+}
+.outil::before, .stat-card::before, .card-emploi::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--c, var(--vert-clair, #2f9e5c));
+  pointer-events: none;
+}
+.stat-card--bleu { --c: var(--bleu, #0a6ebd); }
+.stat-card--orange { --c: var(--orange, #c2570c); }
+.stat-card--violet { --c: var(--violet, #6d3fb2); }
+.card-emploi { --c: var(--vert-clair, #2f9e5c); }
+
+/* ── 3. Conteneurs de contenu (formulaires, sections) : pas de déplacement ── */
+.dash-section, .detail-card, .admin-card { padding-inline: clamp(16px, 3vw, 24px); }
+.dash-section__titre, .admin-card__titre { letter-spacing: -0.005em; }
+.admin-card { overflow: hidden; }
+
+/* ── 4. Mises en page : espacements réguliers ── */
+.dash-stats, .dash-outils, .parcours { gap: 14px; }
+.dash-section { margin-bottom: 20px; }
+.empty-state { padding: 32px 20px; background: #fbfdfc; border-style: dashed; box-shadow: none; }
+
+/* ── 5. Survol « souris » : bordure qui vire à l'émeraude, relief léger ── */
+@media (hover: hover) and (pointer: fine) {
+  .dash-section:hover, .detail-card:hover, .admin-card:hover {
+    border-color: #c4d8cb;
+    box-shadow: var(--ui-ombre-hover);
+  }
+  .dash-stat:hover, .dash-mini:hover, .outil:hover, .stat-card:hover, .card:hover,
+  .card-emploi:hover, .source-card:hover, .candidature-item:hover, .favori-item:hover,
+  .score-item:hover, .moyen-card:hover, .parcours__etape:hover, .carte-categorie:hover,
+  .transaction-item:hover, .pricing-card:not(.pricing-card--vedette):hover {
+    border-color: var(--ui-bord-hover);
+    box-shadow: var(--ui-ombre-hover);
+    transform: translateY(-2px);
+  }
+  /* Variété harmonieuse : la teinte du survol suit la teinte de la carte */
+  .outil:hover { border-color: var(--c); }
+  .stat-card:hover { border-color: var(--c); }
+  .dash-stats > :nth-child(3n+2):hover { border-color: #6b9a80; }
+  .dash-stats > :nth-child(3n):hover { border-color: #5b7f8f; }
+  .source-card:hover { border-color: #0e7490; }
+  .candidature-item:hover, .paiement-item:hover { border-color: var(--ui-bord-hover); }
+  .btn { transition: background-color var(--ui-fondu), border-color var(--ui-fondu), box-shadow var(--ui-fondu), transform var(--ui-fondu), color var(--ui-fondu); }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+}
+
+/* ── 6. Écrans tactiles : pas de survol collant, retour au toucher ── */
+@media (hover: none) {
+  .dash-stat:active, .dash-mini:active, .outil:active, .stat-card:active, .card:active,
+  .card-emploi:active, .source-card:active, .candidature-item:active, .favori-item:active,
+  .moyen-card:active, .carte-categorie:active, .parcours__etape:active {
+    border-color: var(--ui-bord-hover);
+    background-color: #f6fbf8;
+    transform: scale(0.985);
+  }
+  .card:hover, .outil:hover, .card-emploi:hover, .stat-card:hover { transform: none; }
+  a, button { -webkit-tap-highlight-color: rgba(47, 158, 92, 0.12); }
+}
+
+/* ── 7. Accessibilité clavier ── */
+.outil:focus-visible, .source-card:focus-visible, .card:focus-visible, .dash-mini:focus-visible,
+.carte-categorie:focus-visible, .candidature-item:focus-visible {
+  outline: 2px solid var(--ui-bord-hover);
+  outline-offset: 2px;
+}
+
+/* ── 8. Champs de formulaire : même rayon et même focus partout ── */
+.form-input, .form-select, .form-textarea, select.form-input {
+  border-radius: 10px;
+  border-color: #d3ddd7;
+  transition: border-color var(--ui-fondu), box-shadow var(--ui-fondu);
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--ui-bord-hover);
+  box-shadow: 0 0 0 3px rgba(47, 158, 92, 0.16);
+  outline: none;
+}
+
+/* ── 9. Mouvement réduit ── */
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  .outil:hover, .card:hover, .card-emploi:hover, .stat-card:hover, .dash-stat:hover { transform: none !important; }
+}
+
+/* ── 10. Petits écrans : cartes pleine largeur, marges régulières ── */
+@media (max-width: 600px) {
+  .dash-section, .detail-card { padding: 16px; border-radius: 12px; }
+  .dash-stats, .dash-outils, .parcours { gap: 10px; }
+}
+
+/* ── Filtres de la page Emploi : champs lisibles (placeholders non tronqués) ── */
+.filtres-bar { border: 1px solid var(--ui-bord); border-radius: var(--ui-radius); box-shadow: var(--ui-ombre); }
+.filtres-bar input, .filtres-bar select { min-width: 0; text-overflow: ellipsis; }
+@media (max-width: 700px) {
+  .filtres-bar { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .filtres-bar input, .filtres-bar select, .filtres-bar .btn { width: 100%; flex: none; }
+}

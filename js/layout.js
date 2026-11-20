@@ -72,14 +72,7 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
             </button>
             <div class="navbar__sous-menu">
               <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
-              <a href="/concours-en-cours.html" class="navbar__sous-lien">🔴 Concours en cours</a>
-              <a href="/concours-a-venir.html" class="navbar__sous-lien">🔵 Concours à venir</a>
-              <a href="/concours-termines.html" class="navbar__sous-lien">⚫ Concours terminés</a>
-              <a href="/calendrier.html" class="navbar__sous-lien"><span data-icone="horloge" data-taille="16"></span> Calendrier</a>
-              <a href="/eligibilite.html" class="navbar__sous-lien"><span data-icone="coche" data-taille="16"></span> Suis-je éligible ?</a>
               <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
-              <a href="/preparation.html" class="navbar__sous-lien"><span data-icone="diplome" data-taille="16"></span> Préparation</a>
-              <a href="/classement.html" class="navbar__sous-lien"><span data-icone="trophee" data-taille="16"></span> Classement</a>
             </div>
           </li>
           <li class="navbar__groupe">
@@ -92,7 +85,6 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
               <a href="/assistant-concours.html" class="navbar__sous-lien"><span data-icone="etoile" data-taille="16"></span> Assistant Concours</a>
               <a href="/communaute.html" class="navbar__sous-lien"><span data-icone="aide" data-taille="16"></span> Communauté</a>
               <a href="/marketplace.html" class="navbar__sous-lien"><span data-icone="panier" data-taille="16"></span> Marketplace</a>
-              <a href="/videos.html" class="navbar__sous-lien"><span data-icone="video" data-taille="16"></span> Vidéos</a>
               <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
               <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
             </div>
@@ -127,19 +119,11 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
         <a href="/simulation-entretien.html" class="navbar__link"><span data-icone="aide" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Simulation d'entretien</a>
         <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:8px 0;" />
         <a href="/concours.html" class="navbar__link"><span data-icone="institution" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Concours</a>
-        <a href="/concours-en-cours.html" class="navbar__link" style="padding-left:40px;">🔴 En cours</a>
-        <a href="/concours-a-venir.html" class="navbar__link" style="padding-left:40px;">🔵 À venir</a>
-        <a href="/concours-termines.html" class="navbar__link" style="padding-left:40px;">⚫ Terminés</a>
-        <a href="/calendrier.html" class="navbar__link"><span data-icone="horloge" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Calendrier</a>
-        <a href="/eligibilite.html" class="navbar__link"><span data-icone="coche" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Suis-je éligible ?</a>
         <a href="/examens.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Examens</a>
-        <a href="/preparation.html" class="navbar__link"><span data-icone="quiz" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Préparation</a>
-        <a href="/classement.html" class="navbar__link"><span data-icone="trophee" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Classement</a>
         <a href="/bibliotheque.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Bibliothèque</a>
         <a href="/assistant-concours.html" class="navbar__link"><span data-icone="etoile" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Assistant Concours</a>
         <a href="/communaute.html" class="navbar__link"><span data-icone="aide" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Communauté</a>
         <a href="/marketplace.html" class="navbar__link"><span data-icone="panier" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Marketplace</a>
-        <a href="/videos.html" class="navbar__link"><span data-icone="video" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Vidéos</a>
         <a href="/actualites.html" class="navbar__link"><span data-icone="cloche" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Actualités</a>
         <a href="/boutique.html" class="navbar__link"><span data-icone="etoile" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Premium</a>
         <hr
@@ -201,12 +185,8 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
           <div>
             <div class="footer__titre-col">Plateforme</div>
             <a href="/concours.html" class="footer__lien">Concours</a>
-            <a href="/calendrier.html" class="footer__lien">Calendrier</a>
             <a href="/examens.html" class="footer__lien">Examens</a>
-            <a href="/preparation.html" class="footer__lien">Préparation</a>
             <a href="/bibliotheque.html" class="footer__lien">Bibliothèque</a>
-            <a href="/videos.html" class="footer__lien">Vidéos</a>
-            <a href="/simulateur.html" class="footer__lien">Examen blanc</a>
           </div>
           <div>
             <div class="footer__titre-col">Services</div>
@@ -231,9 +211,6 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
             <a href="/auth/login.html" class="footer__lien">Connexion</a>
             <a href="/auth/register.html" class="footer__lien">Inscription</a>
             <a href="/dashboard/index.html" class="footer__lien">Mon espace</a>
-            <a href="/dashboard/mes-scores.html" class="footer__lien"
-              >Mes scores</a
-            >
             <a href="/dashboard/paiements.html" class="footer__lien"
               >Mes paiements</a
             >
@@ -273,7 +250,7 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
   lien.textContent = "Rejoindre la chaîne WhatsApp";
   const texte = document.createElement("p");
   texte.style.cssText = "margin:0 0 12px;font-weight:700;";
-  texte.textContent = "Recevez chaque jour un QCM, les concours à surveiller et des conseils emploi.";
+  texte.textContent = "Recevez les concours à surveiller et des conseils emploi.";
   zone.style.cssText = "text-align:center;padding:22px 16px;background:#f0fdf4;border-bottom:1px solid #bbf7d0;";
   zone.appendChild(texte);
   zone.appendChild(lien);

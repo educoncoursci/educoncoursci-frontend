@@ -199,6 +199,16 @@ async ouverts() {
 return apiCall("/concours/ouverts");
 },
 
+// Les deux rubriques publiques : { aujourdhui, en_cours[], a_venir[] } (dates et source officielle contrôlées côté serveur)
+async rubriques() {
+return apiCall("/concours/rubriques");
+},
+
+// Admin : pour chaque concours, publié ou non, et pourquoi
+async rapportPublication() {
+return apiCall("/concours/rapport-publication");
+},
+
 // Compteurs dynamiques par statut/section (jamais codés en dur)
 async stats() {
 return apiCall("/concours/stats");
@@ -349,45 +359,6 @@ return apiCall(`/pdfs/${id}`, { method: "DELETE" });
 },
 };
 
-// ════════════════════════════════════════════════════════════
-//  VIDÉOS
-// ════════════════════════════════════════════════════════════
-
-const Videos = {
-async liste(params = {}) {
-const qs = new URLSearchParams(params).toString();
-return apiCall(`/videos${qs ? "?" + qs : ""}`);
-},
-
-async detail(id) {
-return apiCall(`/videos/${id}`);
-},
-
-async creer(data) {
-return apiCall("/videos", { method: "POST", body: JSON.stringify(data) });
-},
-
-// Admin — upload d'un fichier vidéo avec FormData (pas JSON)
-async uploader(formData) {
-const token = getToken();
-const response = await fetch(`${API_URL}/videos`, {
-method: "POST",
-headers: { Authorization: `Bearer ${token}` }, // pas Content-Type (multipart)
-body: formData,
-});
-const data = await response.json();
-if (!response.ok) throw new Error(data.error || "Erreur upload");
-return data;
-},
-
-async modifier(id, data) {
-return apiCall(`/videos/${id}`, { method: "PATCH", body: JSON.stringify(data) });
-},
-
-async supprimer(id) {
-return apiCall(`/videos/${id}`, { method: "DELETE" });
-},
-};
 
 // ════════════════════════════════════════════════════════════
 //  ACTUALITÉS (carrousel dynamique, alimenté en continu)
@@ -422,46 +393,6 @@ return apiCall("/actualites/actualiser", { method: "POST" });
 },
 };
 
-// ════════════════════════════════════════════════════════════
-//  QCM
-// ════════════════════════════════════════════════════════════
-
-const QCM = {
-async liste(params = {}) {
-const qs = new URLSearchParams(params).toString();
-return apiCall(`/qcm${qs ? "?" + qs : ""}`);
-},
-
-async detail(id) {
-return apiCall(`/qcm/${id}`);
-},
-
-async soumettre(id, reponses) {
-return apiCall(`/qcm/${id}/score`, {
-method: "POST",
-body: JSON.stringify({ reponses }),
-});
-},
-
-async corrigerExamenBlanc(reponses) {
-return apiCall(`/qcm/examen-blanc/corriger`, {
-method: "POST",
-body: JSON.stringify({ reponses }),
-});
-},
-
-async creer(data) {
-return apiCall("/qcm", { method: "POST", body: JSON.stringify(data) });
-},
-
-async modifier(id, data) {
-return apiCall(`/qcm/${id}`, { method: "PATCH", body: JSON.stringify(data) });
-},
-
-async supprimer(id) {
-return apiCall(`/qcm/${id}`, { method: "DELETE" });
-},
-};
 
 // ════════════════════════════════════════════════════════════
 //  PAIEMENT
@@ -482,48 +413,6 @@ return apiCall("/vitrine/temoignages");
 },
 };
 
-const Progression = {
-async monTableauDeBord() {
-return apiCall("/progression");
-},
-async classement() {
-return apiCall("/progression/classement");
-},
-async certificatBadge(badgeId) {
-const token = getToken();
-const response = await fetch(`${API_URL}/progression/certificat/badge/${badgeId}`, {
-headers: { Authorization: `Bearer ${token}` },
-});
-if (!response.ok) {
-  const err = await response.json();
-  throw new Error(err.error || "Erreur génération du certificat");
-}
-const blob = await response.blob();
-const url  = URL.createObjectURL(blob);
-const a    = document.createElement("a");
-a.href     = url;
-a.download = `certificat-${badgeId}.pdf`;
-a.click();
-URL.revokeObjectURL(url);
-},
-async certificatExamen(scoreId) {
-const token = getToken();
-const response = await fetch(`${API_URL}/progression/certificat/examen/${scoreId}`, {
-headers: { Authorization: `Bearer ${token}` },
-});
-if (!response.ok) {
-  const err = await response.json();
-  throw new Error(err.error || "Erreur génération du certificat");
-}
-const blob = await response.blob();
-const url  = URL.createObjectURL(blob);
-const a    = document.createElement("a");
-a.href     = url;
-a.download = `certificat-examen-${scoreId}.pdf`;
-a.click();
-URL.revokeObjectURL(url);
-},
-};
 
 const CandidaturesConcours = {
 async mesCandidatures() {
@@ -1339,6 +1228,6 @@ async lire(id) { return apiCall("/offres/" + encodeURIComponent(id)); },
 };
 
 window.API = {
-Offres, Auth, Concours, ConcoursSources, PDFs, Videos, QCM, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites, Referentiels, Eligibilite, Alertes, Users, Progression, Vitrine, CandidaturesConcours, AssistantConcours, Push, Forum, Marketplace, Messages,
+Offres, Auth, Concours, ConcoursSources, PDFs, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites, Referentiels, Eligibilite, Alertes, Users, Vitrine, CandidaturesConcours, AssistantConcours, Push, Forum, Marketplace, Messages,
 verifierBackend, getToken,
 };
