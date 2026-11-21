@@ -65,27 +65,16 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
               <a href="/simulation-entretien.html" class="navbar__sous-lien"><span data-icone="aide" data-taille="16"></span> Simulation d'entretien</a>
             </div>
           </li>
-          <li class="navbar__groupe">
-            <button class="navbar__groupe-btn">
-              Concours
-              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <div class="navbar__sous-menu">
-              <a href="/concours.html" class="navbar__sous-lien"><span data-icone="institution" data-taille="16"></span> Concours</a>
-              <a href="/examens.html" class="navbar__sous-lien"><span data-icone="quiz" data-taille="16"></span> Examens</a>
-            </div>
-          </li>
+          <li><a href="/concours.html" class="navbar__link">Concours</a></li>
           <li class="navbar__groupe">
             <button class="navbar__groupe-btn">
               Ressources
               <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <div class="navbar__sous-menu">
-              <a href="/bibliotheque.html" class="navbar__sous-lien"><span data-icone="livre" data-taille="16"></span> Bibliothèque</a>
               <a href="/assistant-concours.html" class="navbar__sous-lien"><span data-icone="etoile" data-taille="16"></span> Assistant Concours</a>
               <a href="/communaute.html" class="navbar__sous-lien"><span data-icone="aide" data-taille="16"></span> Communauté</a>
               <a href="/marketplace.html" class="navbar__sous-lien"><span data-icone="panier" data-taille="16"></span> Marketplace</a>
-              <a href="/actualites.html" class="navbar__sous-lien"><span data-icone="graphique" data-taille="16"></span> Actualités</a>
               <a href="/demarches.html" class="navbar__sous-lien"><span data-icone="document" data-taille="16"></span> Démarches</a>
             </div>
           </li>
@@ -119,12 +108,9 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
         <a href="/simulation-entretien.html" class="navbar__link"><span data-icone="aide" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Simulation d'entretien</a>
         <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:8px 0;" />
         <a href="/concours.html" class="navbar__link"><span data-icone="institution" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Concours</a>
-        <a href="/examens.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Examens</a>
-        <a href="/bibliotheque.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Bibliothèque</a>
         <a href="/assistant-concours.html" class="navbar__link"><span data-icone="etoile" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Assistant Concours</a>
         <a href="/communaute.html" class="navbar__link"><span data-icone="aide" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Communauté</a>
         <a href="/marketplace.html" class="navbar__link"><span data-icone="panier" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Marketplace</a>
-        <a href="/actualites.html" class="navbar__link"><span data-icone="cloche" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Actualités</a>
         <a href="/boutique.html" class="navbar__link"><span data-icone="etoile" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Premium</a>
         <hr
           style="
@@ -185,8 +171,8 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
           <div>
             <div class="footer__titre-col">Plateforme</div>
             <a href="/concours.html" class="footer__lien">Concours</a>
-            <a href="/examens.html" class="footer__lien">Examens</a>
-            <a href="/bibliotheque.html" class="footer__lien">Bibliothèque</a>
+            <a href="/comment-ca-marche.html" class="footer__lien">Comment ça marche</a>
+            <a href="/a-propos.html" class="footer__lien">À propos</a>
           </div>
           <div>
             <div class="footer__titre-col">Services</div>
@@ -203,7 +189,6 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
             <a href="/assistance-sociale.html" class="footer__lien">Assistance Sociale</a>
             <a href="/boutique.html" class="footer__lien">Premium</a>
             <a href="/alertes.html" class="footer__lien">Alertes e-mail</a>
-            <a href="/actualites.html" class="footer__lien">Actualités</a>
             <a href="/guide.html" class="footer__lien">Guide d'utilisation</a>
           </div>
           <div>

@@ -152,3 +152,49 @@ html:not(.membre) .pub-expertise .pub-fig--landscape img { border-color: rgba(25
 .pub-confiance__liste strong { display: block; font-size: .95rem; }
 .pub-confiance__liste small { color: var(--gris-texte); }
 @media (max-width: 760px) { .pub-confiance__liste { grid-template-columns: 1fr; gap: 10px; padding: 16px; } }
+
+/* ============================================================
+   Parcours d'accueil, pages « Comment ça marche » / « À propos »
+   ============================================================ */
+.pi-parcours { padding: 36px 0 8px; }
+.pi-parcours__grille { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.pi-parcours__carte { border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 8px 24px rgba(15,61,36,.10); }
+.pi-parcours__carte h2 { margin: 0; font-size: 1.35rem; }
+.pi-parcours__carte p { margin: 0; line-height: 1.6; }
+.pi-parcours__carte ul { margin: 4px 0 8px; padding-left: 18px; line-height: 1.8; font-size: .93rem; }
+.pi-parcours__carte .btn { align-self: flex-start; margin-top: auto; }
+.pi-parcours__carte--emploi { background: linear-gradient(135deg, #14532d, #166534); color: #fff; }
+.pi-parcours__carte--emploi .btn { background: #fff; color: #14532d; border: none; }
+.pi-parcours__carte--concours { background: #fff; border: 1.5px solid #cfe3d6; color: #1c2b23; }
+.pi-parcours__badge { display: inline-block; align-self: flex-start; font-size: .72rem; font-weight: 800; letter-spacing: .4px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; }
+.pi-parcours__carte--emploi .pi-parcours__badge { background: rgba(255,255,255,.18); }
+.pi-parcours__carte--concours .pi-parcours__badge { background: #e7f5ec; color: #166534; }
+@media (max-width: 760px) { .pi-parcours__grille { grid-template-columns: 1fr; } }
+
+.pg-hero { background: linear-gradient(135deg, #0f3d24, #14532d); color: #fff; padding: 56px 0 44px; text-align: center; }
+.pg-hero h1 { color: #fff; font-size: clamp(1.7rem, 4.5vw, 2.4rem); margin: 0 0 10px; }
+.pg-hero p { max-width: 640px; margin: 0 auto; color: #d1e7d9; line-height: 1.7; }
+.pg-etapes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pg-etapes li { background: #fff; border-radius: 16px; padding: 26px; box-shadow: 0 6px 20px rgba(15,61,36,.08); display: flex; flex-direction: column; gap: 10px; }
+.pg-etapes h2 { margin: 0; font-size: 1.15rem; }
+.pg-etapes p { margin: 0; color: var(--gris-texte); line-height: 1.65; font-size: .94rem; }
+.pg-etapes .btn { align-self: flex-start; margin-top: auto; }
+.pg-num { width: 38px; height: 38px; border-radius: 50%; background: #166534; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; }
+.pg-cv { max-width: 720px; margin: 0 auto; background: #fff; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,.12); overflow: hidden; }
+.pg-cv__tete { background: #14532d; color: #fff; padding: 22px 26px; display: flex; flex-direction: column; gap: 4px; }
+.pg-cv__tete strong { font-size: 1.3rem; }
+.pg-cv__tete small { color: #cfe3d6; }
+.pg-cv__corps { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 22px 26px; font-size: .9rem; line-height: 1.55; }
+.pg-cv__corps h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .6px; color: #166534; margin: 0 0 4px; border-bottom: 1px solid #dfe9e3; padding-bottom: 3px; }
+.pg-cv__corps p { margin: 0 0 14px; }
+.pg-deux { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.pg-carte { background: #fff; border: 1.5px solid #dfe9e3; border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 10px; }
+.pg-carte h2 { margin: 0; font-size: 1.15rem; }
+.pg-carte p { margin: 0; color: var(--gris-texte); line-height: 1.65; }
+.pg-carte .btn { align-self: flex-start; margin-top: auto; }
+.pg-note { text-align: center; color: var(--gris-texte); font-size: .85rem; margin: 22px auto 0; max-width: 640px; }
+.pg-texte { max-width: 780px; line-height: 1.75; }
+.pg-texte h2 { margin: 28px 0 8px; font-size: 1.25rem; }
+.pg-texte ul { padding-left: 20px; }
+@media (max-width: 860px) { .pg-etapes, .pg-deux, .pg-cv__corps { grid-template-columns: 1fr; } }
+.pi-parcours__carte--emploi h2 { color: #fff; }

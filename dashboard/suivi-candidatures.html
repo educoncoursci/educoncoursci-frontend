@@ -1,0 +1,244 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Suivi de mes candidatures — ProInsertion CI</title>
+    <meta name="description" content="Suivez vos candidatures, vos relances et vos entretiens au même endroit." />
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/recherche.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .candidature-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        border-radius: 12px;
+        background: var(--blanc);
+        margin-bottom: 10px;
+        box-shadow: var(--ombre-sm);
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .candidature-statut {
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 20px;
+        text-transform: uppercase;
+      }
+      .statut-envoyée { background: rgba(10,110,189,0.1); color: var(--bleu); }
+      .statut-vue { background: rgba(245,158,11,0.1); color: #f59e0b; }
+      .statut-retenue { background: rgba(26,107,60,0.1); color: var(--vert); }
+      .statut-refusée { background: rgba(220,38,38,0.1); color: #dc2626; }
+    </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+      <link rel="stylesheet" href="/css/ui-pro.css" />
+  <style>
+.sv-bilan{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+.sv-bilan span{background:var(--blanc);border-radius:20px;padding:6px 14px;font-size:.82rem;font-weight:600;box-shadow:var(--ombre-sm)}
+.sv-form{background:var(--blanc);border-radius:12px;padding:16px;box-shadow:var(--ombre-sm);margin-bottom:18px;display:none}
+.sv-form.ouvert{display:block}
+.sv-grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.sv-form label{display:block;font-size:.8rem;font-weight:600;margin-bottom:4px}
+.sv-form input,.sv-form select,.sv-form textarea{width:100%;padding:9px 10px;border:1px solid #d5dbd8;border-radius:8px;font:inherit;box-sizing:border-box;background:#fff}
+.sv-item{background:var(--blanc);border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--ombre-sm);display:flex;gap:12px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.sv-item h3{margin:0;font-size:1rem}
+.sv-meta{font-size:.82rem;color:var(--gris-texte);margin-top:3px;overflow-wrap:anywhere}
+.sv-notes{font-size:.85rem;margin-top:6px;white-space:pre-wrap;overflow-wrap:anywhere}
+.sv-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sv-actions select{padding:6px 8px;border:1px solid #d5dbd8;border-radius:8px;font:inherit;font-size:.82rem}
+.sv-relance{display:inline-block;background:rgba(245,158,11,.15);color:#b45309;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:8px;text-transform:uppercase}
+.sv-st{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase}
+.sv-a_envoyer{background:#eef1f0;color:#475569}.sv-envoyee{background:rgba(10,110,189,.1);color:var(--bleu)}
+.sv-relancee{background:rgba(245,158,11,.12);color:#b45309}.sv-entretien{background:rgba(124,58,237,.1);color:#6d28d9}
+.sv-acceptee{background:rgba(26,107,60,.1);color:var(--vert)}.sv-refusee{background:rgba(220,38,38,.1);color:#dc2626}
+</style>
+  </head>
+  <body style="background: var(--gris-clair)">
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="/" class="navbar__logo"
+          ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion CI" /></div>
+          <span class="navbar__logo-texte">Pro<span>Insertion</span> <span class="navbar__ci">CI</span></span></a
+        >
+        <div class="navbar__actions" id="navbar-actions"></div>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="dashboard">
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar__profil">
+            <div class="sidebar__avatar" id="sidebar-avatar">?</div>
+            <div class="sidebar__nom" id="sidebar-nom">—</div>
+            <div class="sidebar__email" id="sidebar-email"></div>
+            <div id="sidebar-badge"></div>
+          </div>
+          <nav class="sidebar__nav">
+            <div class="sidebar__titre">Mes outils</div>
+            <a href="/dashboard/index.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tableau de bord</a>
+            <a href="/cv-generator.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon CV et mes lettres</a>
+            <a href="/analyse-offre.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="loupe" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Analyser une offre</a>
+            <a href="/emploi.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres d'emploi</a>
+            <a href="/simulation-entretien.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Simulation d'entretien</a>
+            <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a>
+            <a href="/dashboard/suivi-candidatures.html" class="sidebar__lien actif"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Suivi de mes candidatures</a>
+            <div class="sidebar__titre">Concours</div>
+            <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
+            <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
+            <div class="sidebar__titre">Mon compte</div>
+            <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
+            <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+            <a href="/dashboard/profil.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a>
+          </nav>
+          <div class="sidebar__deconnexion">
+            <button
+              onclick="window.Auth?.deconnecter?.()"
+              class="btn btn--outline-vert btn--sm btn--full"
+            >
+              Déconnexion
+            </button>
+          </div>
+        </aside>
+
+        <main class="dashboard__contenu">
+          <div class="dashboard__header">
+            <div>
+              <h1><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Suivi de mes candidatures</h1>
+              <p style="color: var(--gris-texte); margin: 4px 0 0; font-size: 0.9rem;">
+                Notez où vous avez postulé, quand relancer et où en est chaque dossier. Ce suivi est strictement personnel.
+              </p>
+            </div>
+            <button type="button" class="btn btn--primaire btn--sm" id="sv-ouvrir">+ Ajouter une candidature</button>
+          </div>
+
+          <form class="sv-form" id="sv-form" novalidate>
+            <div class="sv-grille">
+              <div><label for="sv-poste">Poste *</label><input id="sv-poste" maxlength="150" required /></div>
+              <div><label for="sv-org">Entreprise / organisme</label><input id="sv-org" maxlength="150" /></div>
+              <div><label for="sv-lien">Lien de l'offre</label><input id="sv-lien" maxlength="500" placeholder="https://…" /></div>
+              <div><label for="sv-statut">Statut</label><select id="sv-statut"></select></div>
+              <div><label for="sv-date">Date de candidature</label><input id="sv-date" type="date" /></div>
+              <div><label for="sv-relance">Me rappeler de relancer le</label><input id="sv-relance" type="date" /></div>
+            </div>
+            <div style="margin-top:12px"><label for="sv-notes">Notes (contact, échanges…)</label><textarea id="sv-notes" rows="3" maxlength="1000"></textarea></div>
+            <div id="sv-erreur" style="color:#dc2626;font-size:.85rem;margin-top:8px"></div>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button type="submit" class="btn btn--primaire btn--sm">Enregistrer</button>
+              <button type="button" class="btn btn--outline-vert btn--sm" id="sv-annuler">Annuler</button>
+            </div>
+          </form>
+
+          <div class="sv-bilan" id="sv-bilan"></div>
+          <div id="sv-liste"><div style="text-align:center;color:var(--gris-texte);padding:40px;">Chargement…</div></div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/recherche.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      const LABELS = { a_envoyer: "À envoyer", envoyee: "Envoyée", relancee: "Relancée", entretien: "Entretien", acceptee: "Acceptée", refusee: "Refusée" };
+      const AUJOURDHUI = new Date().toISOString().slice(0, 10);
+      let suivis = [];
+      const $ = (id) => document.getElementById(id);
+      const esc = (v) => window.echapperHtml(v == null ? "" : String(v));
+      const lienSur = (l) => (/^https?:\/\/[^\s'"<>\\]+$/i.test(l || "") ? l : "");
+      const fmt = (d) => (d ? d.split("-").reverse().join("/") : "");
+      const aRelancer = (s) => s.relance_le && s.relance_le <= AUJOURDHUI && (s.statut === "envoyee" || s.statut === "relancee");
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.estConnecte()) { window.location.href = "/auth/login.html"; return; }
+        const session = window.Auth.getSession();
+        const av = $("sidebar-avatar");
+        if (session.photo_url) {
+          av.style.backgroundImage = `url('${lienSur(session.photo_url)}')`;
+          av.style.backgroundSize = "cover"; av.style.backgroundPosition = "center"; av.textContent = "";
+        } else av.textContent = session.nom?.[0]?.toUpperCase() || "?";
+        $("sidebar-nom").textContent = session.nom || "";
+        $("sidebar-email").textContent = session.email || "";
+        $("sidebar-badge").innerHTML = session.premium ? '<div class="sidebar__badge-premium">⭐ Premium</div>' : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
+        $("sv-statut").innerHTML = Object.entries(LABELS).map(([k, v]) => `<option value="${k}">${v}</option>`).join("");
+        $("sv-ouvrir").onclick = () => { $("sv-form").classList.add("ouvert"); $("sv-poste").focus(); };
+        $("sv-annuler").onclick = () => { $("sv-form").reset(); $("sv-erreur").textContent = ""; $("sv-form").classList.remove("ouvert"); };
+        $("sv-form").addEventListener("submit", ajouter);
+        charger();
+      });
+
+      async function charger() {
+        try { suivis = (await window.API.SuiviCandidatures.lister()).suivis || []; afficher(); }
+        catch (e) { $("sv-liste").innerHTML = '<div style="color:#dc2626;text-align:center;padding:40px;">Erreur de chargement.</div>'; }
+      }
+
+      function afficher() {
+        const nb = (st) => suivis.filter((s) => s.statut === st).length;
+        const rel = suivis.filter(aRelancer).length;
+        $("sv-bilan").innerHTML = suivis.length
+          ? `<span>${suivis.length} suivie(s)</span><span>${nb("envoyee") + nb("relancee")} en attente</span><span>${nb("entretien")} entretien(s)</span>${rel ? `<span style="color:#b45309">${rel} à relancer</span>` : ""}`
+          : "";
+        if (!suivis.length) {
+          $("sv-liste").innerHTML = '<div class="empty-state"><div class="empty-state__titre">Aucune candidature suivie</div><div class="empty-state__texte">Ajoutez les offres auxquelles vous postulez pour ne plus oublier une relance.</div></div>';
+          return;
+        }
+        $("sv-liste").innerHTML = suivis.map((s) => {
+          const l = lienSur(s.lien);
+          return `<div class="sv-item">
+            <div style="flex:1;min-width:220px">
+              <h3>${esc(s.poste)}${aRelancer(s) ? '<span class="sv-relance">À relancer</span>' : ""}</h3>
+              <div class="sv-meta">${esc(s.organisme)}${s.organisme && s.date_candidature ? " · " : ""}${s.date_candidature ? "Envoyée le " + esc(fmt(s.date_candidature)) : ""}${s.relance_le ? " · Relance prévue le " + esc(fmt(s.relance_le)) : ""}</div>
+              ${l ? `<div class="sv-meta"><a href="${esc(l)}" target="_blank" rel="noopener noreferrer">Voir l'offre</a></div>` : ""}
+              ${s.notes ? `<div class="sv-notes">${esc(s.notes)}</div>` : ""}
+            </div>
+            <div class="sv-actions">
+              <span class="sv-st sv-${esc(s.statut)}">${esc(LABELS[s.statut] || s.statut)}</span>
+              <select data-id="${Number(s.id)}" aria-label="Changer le statut">${Object.entries(LABELS).map(([k, v]) => `<option value="${k}"${k === s.statut ? " selected" : ""}>${v}</option>`).join("")}</select>
+              <button type="button" class="btn btn--outline-vert btn--sm" data-sup="${Number(s.id)}">Supprimer</button>
+            </div>
+          </div>`;
+        }).join("");
+        $("sv-liste").querySelectorAll("select[data-id]").forEach((el) => el.onchange = () => changerStatut(el.dataset.id, el.value));
+        $("sv-liste").querySelectorAll("button[data-sup]").forEach((el) => el.onclick = () => supprimer(el.dataset.sup));
+      }
+
+      async function ajouter(e) {
+        e.preventDefault();
+        $("sv-erreur").textContent = "";
+        const lien = $("sv-lien").value.trim();
+        if (lien && !lienSur(lien)) { $("sv-erreur").textContent = "Lien invalide : il doit commencer par http:// ou https://"; return; }
+        const donnees = { poste: $("sv-poste").value, organisme: $("sv-org").value, lien, statut: $("sv-statut").value, date_candidature: $("sv-date").value, relance_le: $("sv-relance").value, notes: $("sv-notes").value };
+        try {
+          await window.API.SuiviCandidatures.creer(donnees);
+          $("sv-form").reset(); $("sv-form").classList.remove("ouvert");
+          await charger();
+        } catch (err) { $("sv-erreur").textContent = err.message || "Enregistrement impossible."; }
+      }
+
+      async function changerStatut(id, statut) {
+        try { await window.API.SuiviCandidatures.modifier(id, { statut }); await charger(); }
+        catch (err) { window.afficherToast?.(err.message || "Mise à jour impossible", "erreur"); charger(); }
+      }
+
+      async function supprimer(id) {
+        if (!confirm("Retirer cette candidature de votre suivi ?")) return;
+        try { await window.API.SuiviCandidatures.supprimer(id); await charger(); }
+        catch (err) { window.afficherToast?.(err.message || "Suppression impossible", "erreur"); }
+      }
+    </script>
+  </body>
+</html>

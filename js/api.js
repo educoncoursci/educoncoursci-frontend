@@ -288,79 +288,6 @@ return apiCall(`/admin/concours-suggestions/${id}/rejeter`, { method: "POST" });
 };
 
 // ════════════════════════════════════════════════════════════
-//  PDFs
-// ════════════════════════════════════════════════════════════
-
-const PDFs = {
-async liste(params = {}) {
-const qs = new URLSearchParams(params).toString();
-return apiCall(`/pdfs${qs ? "?" + qs : ""}`);
-},
-
-async detail(id) {
-return apiCall(`/pdfs/${id}`);
-},
-
-// Téléchargement (redirige vers l'URL du fichier)
-// Le jeton de connexion est envoyé dans l'en-tête Authorization (jamais dans
-// l'adresse, où il finirait dans l'historique et les journaux des serveurs).
-async telecharger(id) {
-// Fenêtre ouverte tout de suite (clic de l'utilisateur) pour ne pas être
-// bloquée par le navigateur, puis dirigée vers le fichier une fois reçu.
-const fenetre = window.open("", "_blank");
-try {
-  const rep = await fetch(`${API_URL}/pdfs/${id}/download?format=json`, { headers: headersAuth() });
-  const type = rep.headers.get("content-type") || "";
-  if (!rep.ok) {
-    let msg = "Téléchargement impossible.";
-    try { msg = (await rep.json()).error || msg; } catch {}
-    throw new Error(msg);
-  }
-  if (type.includes("application/json")) {
-    const d = await rep.json();
-    if (fenetre) fenetre.location.href = d.url; else window.location.href = d.url;
-  } else {
-    const blob = await rep.blob();
-    const lien = document.createElement("a");
-    lien.href = URL.createObjectURL(blob);
-    lien.download = "document.pdf";
-    document.body.appendChild(lien); lien.click(); lien.remove();
-    setTimeout(() => URL.revokeObjectURL(lien.href), 10000);
-    if (fenetre) fenetre.close();
-  }
-} catch (err) {
-  if (fenetre) fenetre.close();
-  window.afficherToast ? window.afficherToast(err.message, "erreur") : alert(err.message);
-}
-},
-
-// Admin — upload avec FormData (pas JSON)
-async uploader(formData) {
-const token = getToken();
-const response = await fetch(`${API_URL}/pdfs`, {
-method: "POST",
-headers: { Authorization: `Bearer ${token}` }, // pas Content-Type (multipart)
-body: formData,
-});
-const data = await response.json();
-if (!response.ok) throw new Error(data.error || "Erreur upload");
-return data;
-},
-
-async modifier(id, data) {
-return apiCall(`/pdfs/${id}`, {
-method: "PATCH",
-body: JSON.stringify(data),
-});
-},
-
-async supprimer(id) {
-return apiCall(`/pdfs/${id}`, { method: "DELETE" });
-},
-};
-
-
-// ════════════════════════════════════════════════════════════
 //  ACTUALITÉS (carrousel dynamique, alimenté en continu)
 // ════════════════════════════════════════════════════════════
 
@@ -433,6 +360,13 @@ body: JSON.stringify({ statut, notes }),
 async supprimer(id) {
 return apiCall(`/candidatures-concours/${id}`, { method: "DELETE" });
 },
+};
+
+const SuiviCandidatures = {
+async lister() { return apiCall("/suivi-candidatures"); },
+async creer(data) { return apiCall("/suivi-candidatures", { method: "POST", body: JSON.stringify(data) }); },
+async modifier(id, data) { return apiCall(`/suivi-candidatures/${id}`, { method: "PATCH", body: JSON.stringify(data) }); },
+async supprimer(id) { return apiCall(`/suivi-candidatures/${id}`, { method: "DELETE" }); },
 };
 
 const Users = {
@@ -1228,6 +1162,6 @@ async lire(id) { return apiCall("/offres/" + encodeURIComponent(id)); },
 };
 
 window.API = {
-Offres, Auth, Concours, ConcoursSources, PDFs, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites, Referentiels, Eligibilite, Alertes, Users, Vitrine, CandidaturesConcours, AssistantConcours, Push, Forum, Marketplace, Messages,
+Offres, Auth, Concours, ConcoursSources, Paiement, CVLM, Admin, Documents, DocumentsAdmin, Search, Emploi, AssistanceSociale, Actualites, Referentiels, Eligibilite, Alertes, Users, Vitrine, CandidaturesConcours, SuiviCandidatures, AssistantConcours, Push, Forum, Marketplace, Messages,
 verifierBackend, getToken,
 };

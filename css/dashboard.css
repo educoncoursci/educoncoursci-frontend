@@ -479,3 +479,10 @@
   .outil__texte { display: none; }
   .dash-section__header { flex-wrap: wrap; gap: 6px; }
 }
+
+/* Tableau de bord : profil complété, listes à faire */
+.dash-barre { height: 10px; background: #e5ece8; border-radius: 10px; overflow: hidden; margin: 4px 0 12px; }
+.dash-barre__rempli { height: 100%; background: linear-gradient(90deg, #16a34a, #166534); border-radius: 10px; transition: width .6s ease; }
+.dash-checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: .9rem; color: var(--gris-texte); }
+.dash-checklist li.ok { color: #166534; font-weight: 600; }
+.dash-sous-titre { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--gris-texte); margin: 16px 0 6px; }

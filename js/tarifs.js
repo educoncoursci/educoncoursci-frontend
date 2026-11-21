@@ -35,6 +35,28 @@
       p.economie_fcfa ? el("span", { class: "badge badge--vert pi-tarif__eco", text: "Vous économisez " + fcfa(p.economie_fcfa) }) : null);
   }
 
+  // Page où se commande chaque catégorie (adresses déjà existantes du site)
+  const ACTIONS = {
+    "cv": ["/cv-generator.html", "Créer mon CV"],
+    "lettres": ["/cv-generator.html", "Rédiger ma lettre"],
+    "packs": ["/packs.html", "Voir les packs"],
+    "entretiens": ["/documents-redaction.html", "Me préparer"],
+    "documents-candidature": ["/documents-redaction.html", "Rédiger un document"],
+    "documents-administratifs": ["/documents-redaction.html", "Rédiger un document"],
+    "documents-academiques": ["/documents-redaction.html", "Rédiger un document"],
+    "accompagnement": ["/documents-redaction.html", "Améliorer mon CV"],
+    "abonnement": ["/boutique.html", "Voir les formules"],
+    "recruteurs": ["/publier-offre.html", "Publier une offre"],
+  };
+
+  function carte(c) {
+    const act = ACTIONS[c.id];
+    return el("div", { class: "pi-tarifs__carte" },
+      el("h3", { text: c.nom }),
+      el("div", { class: "pi-tarifs__corps" }, c.produits.map(ligneProduit)),
+      act ? el("a", { class: "pi-tarifs__btn", href: act[0], text: act[1] }) : null);
+  }
+
   async function charger(section, grille) {
     if (!section || !grille || !window.API_URL) return;
     try {
@@ -42,8 +64,7 @@
       if (!r.ok) return;
       const { categories } = await r.json();
       if (!Array.isArray(categories) || !categories.length) return;
-      grille.replaceChildren(...categories.map((c) =>
-        el("div", { class: "pi-tarifs__carte" }, el("h3", { text: c.nom }), c.produits.map(ligneProduit))));
+      grille.replaceChildren(...categories.map(carte));
       section.style.display = "block";
     } catch (err) {
       /* les tarifs sont facultatifs sur l'accueil : en cas d'erreur, la section reste cachée */

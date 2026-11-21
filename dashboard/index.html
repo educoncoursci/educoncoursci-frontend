@@ -50,7 +50,7 @@
             <a href="/emploi.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres d'emploi</a>
             <a href="/simulation-entretien.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Simulation d'entretien</a>
             <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a>
-            <a href="/dashboard/mes-downloads.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes documents</a>
+            <a href="/dashboard/suivi-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Suivi de mes candidatures</a>
             <div class="sidebar__titre">Concours</div>
             <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
             <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
@@ -132,6 +132,28 @@
             <div class="dash-stat"><div class="dash-stat__val" id="stat-candidatures">—</div><div class="dash-stat__lib">Candidatures envoyées</div></div>
           </div>
 
+          <!-- Profil complété + rappels -->
+          <div class="dash-duo">
+            <div class="dash-section">
+              <div class="dash-section__header">
+                <div class="dash-section__titre">Votre profil</div>
+                <span class="dash-section__voir" id="profil-pct" style="cursor:default">—</span>
+              </div>
+              <div class="dash-barre" aria-hidden="true"><div class="dash-barre__rempli" id="profil-barre" style="width:0%"></div></div>
+              <ul class="dash-checklist" id="profil-liste"></ul>
+              <div id="profil-suite"></div>
+            </div>
+            <div class="dash-section">
+              <div class="dash-section__header">
+                <div class="dash-section__titre">À faire</div>
+                <a href="/dashboard/suivi-candidatures.html" class="dash-section__voir">Mon suivi →</a>
+              </div>
+              <div id="liste-relances"><div class="dash-vide">Chargement…</div></div>
+              <div class="dash-sous-titre">Clôtures de concours que vous suivez</div>
+              <div id="liste-clotures"><div class="dash-vide">Chargement…</div></div>
+            </div>
+          </div>
+
           <!-- Parcours conseillé -->
           <div class="dash-section">
             <div class="dash-section__header">
@@ -160,7 +182,7 @@
             <div class="dash-section">
               <div class="dash-section__header">
                 <div class="dash-section__titre">Mes derniers documents</div>
-                <a href="/dashboard/mes-downloads.html" class="dash-section__voir">Voir tout →</a>
+                <a href="/cv-generator.html" class="dash-section__voir">Voir tout →</a>
               </div>
               <div id="liste-docs"><div class="dash-vide">Chargement…</div></div>
             </div>
@@ -262,7 +284,7 @@
               ? l.slice(0, 4).map((c) => {
                   const etats = { valide: ["Prêt", "ok"], a_payer: ["À régler", "att"], en_verification: ["En vérification", "att"], rejete: ["Refusé", "ko"] };
                   const [lib, cl] = etats[c.etat] || ["", "att"];
-                  return `<a class="dash-ligne" href="/dashboard/mes-downloads.html"><div><strong>${esc(c.nom)}</strong><span>${dateFr(c.date)}</span></div><em class="pastille pastille--${cl}">${lib}</em></a>`;
+                  return `<a class="dash-ligne" href="/cv-generator.html"><div><strong>${esc(c.nom)}</strong><span>${dateFr(c.date)}</span></div><em class="pastille pastille--${cl}">${lib}</em></a>`;
                 }).join("")
               : vide("Vous n'avez pas encore créé de document.", "/cv-generator.html", "Créer mon premier CV →");
           } catch {
@@ -304,6 +326,48 @@
 
         await Promise.allSettled([chargerDocs(), chargerAnalyses(), chargerCandidatures(), chargerConcours()]);
         majParcours();
+        // ── Profil complété, relances et clôtures suivies ──
+        const aujourdhui = new Intl.DateTimeFormat("sv-SE", { timeZone: "Africa/Abidjan" }).format(new Date());
+        const jourFr = (d) => d ? d.split("-").reverse().join("/") : "";
+        const joursEntre = (d) => Math.round((new Date(d + "T00:00:00Z") - new Date(aujourdhui + "T00:00:00Z")) / 864e5);
+        const sur = { suivis: [], emailVerifie: null };
+        const chargerRappels = async () => {
+          try {
+            sur.suivis = (await window.API.SuiviCandidatures.lister()).suivis || [];
+            const rel = sur.suivis.filter((s) => s.relance_le && s.relance_le <= aujourdhui && (s.statut === "envoyee" || s.statut === "relancee"));
+            $("liste-relances").innerHTML = rel.length
+              ? rel.slice(0, 3).map((s) => `<a class="dash-ligne" href="/dashboard/suivi-candidatures.html"><div><strong>Relancer : ${esc(s.poste)}</strong><span>${esc(s.organisme || "")}${s.organisme ? " · " : ""}prévu le ${esc(jourFr(s.relance_le))}</span></div><em class="pastille pastille--att">À relancer</em></a>`).join("") + (rel.length > 3 ? `<div class="dash-vide">+ ${rel.length - 3} autre(s)</div>` : "")
+              : '<div class="dash-vide">Aucune relance à faire aujourd\'hui.</div>';
+          } catch { $("liste-relances").innerHTML = '<div class="dash-vide">Rappels indisponibles pour le moment.</div>'; }
+        };
+        const chargerClotures = async () => {
+          try {
+            const l = ((await window.API.CandidaturesConcours.mesCandidatures()).candidatures || [])
+              .filter((c) => c.date_cloture && c.date_cloture >= aujourdhui)
+              .sort((a, b) => (a.date_cloture < b.date_cloture ? -1 : 1)).slice(0, 3);
+            $("liste-clotures").innerHTML = l.length
+              ? l.map((c) => { const j = joursEntre(c.date_cloture); return `<a class="dash-ligne" href="/concours-detail.html?id=${encodeURIComponent(c.concours_id)}"><div><strong>${esc(c.titre)}</strong><span>Clôture le ${esc(jourFr(c.date_cloture))}</span></div><em class="pastille pastille--${j <= 7 ? "ko" : "att"}">${j === 0 ? "Aujourd'hui" : "J-" + j}</em></a>`; }).join("")
+              : '<div class="dash-vide">Aucune clôture à venir parmi vos concours suivis.</div>';
+          } catch { $("liste-clotures").innerHTML = '<div class="dash-vide">Clôtures indisponibles pour le moment.</div>'; }
+        };
+        const chargerEmail = async () => { try { const d = await window.API.Auth.me(); sur.emailVerifie = d?.user ? d.user.email_verifie !== false : null; } catch {} };
+        await Promise.allSettled([chargerRappels(), chargerClotures(), chargerEmail()]);
+
+        const items = [
+          { ok: !!session.photo_url, lib: "Ajouter une photo de profil", lien: "/dashboard/profil.html" },
+          { ok: sur.emailVerifie !== false, lib: "Confirmer votre adresse e-mail", lien: "/dashboard/profil.html" },
+          { ok: faits.cv, lib: "Créer votre CV", lien: "/cv-generator.html" },
+          { ok: faits.lm, lib: "Rédiger une lettre de motivation", lien: "/cv-generator.html?type=lm" },
+          { ok: faits.analyse, lib: "Analyser une offre d'emploi", lien: "/analyse-offre.html" },
+          { ok: sur.suivis.length > 0, lib: "Suivre une première candidature", lien: "/dashboard/suivi-candidatures.html" },
+        ];
+        const fait = items.filter((i) => i.ok).length;
+        const pct = Math.round((fait / items.length) * 100);
+        $("profil-pct").textContent = pct + " %";
+        $("profil-barre").style.width = pct + "%";
+        $("profil-liste").innerHTML = items.map((i) => `<li class="${i.ok ? "ok" : ""}">${i.ok ? "✓" : "○"} ${esc(i.lib)}</li>`).join("");
+        const suite = items.find((i) => !i.ok);
+        $("profil-suite").innerHTML = suite ? `<a class="btn btn--primaire btn--sm" href="${suite.lien}" style="margin-top:10px">Prochaine étape : ${esc(suite.lib.toLowerCase())} →</a>` : '<div class="dash-vide">Profil complet, bravo !</div>';
         window.initIcones?.();
       });
 
