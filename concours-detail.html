@@ -140,17 +140,6 @@
                 <div id="detail-pieces"></div>
               </div>
 
-              <!-- Documents disponibles (Module 6) -->
-              <div class="detail-card hidden" id="section-documents">
-                <h3 style="margin-bottom: 12px"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Documents disponibles</h3>
-                <div id="detail-documents"></div>
-              </div>
-
-              <!-- Cours recommandés (Lot 7 — réutilise les documents type "cours") -->
-              <div class="detail-card hidden" id="section-cours-recommandes">
-                <h3 style="margin-bottom: 12px">🎓 Cours recommandés pour se préparer</h3>
-                <div id="detail-cours-recommandes"></div>
-              </div>
 
               <!-- Centres de dépôt -->
               <div class="detail-card" id="section-centres" class="hidden">
@@ -255,6 +244,14 @@
                   <span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Sauvegarder
                 </button>
                 <button
+                  id="btn-agenda"
+                  type="button"
+                  class="btn btn--outline-vert btn--full mb-2"
+                  onclick="ajouterAgenda()"
+                >
+                  📅 Ajouter les dates à mon agenda
+                </button>
+                <button
                   id="btn-candidater"
                   class="btn btn--primaire btn--full"
                   onclick="candidaterConcours()"
@@ -349,6 +346,7 @@
     <script src="/js/auth.js"></script>
 
     <script src="/js/main.js"></script>
+    <script src="/js/agenda.js"></script>
 
     <script>
       let concoursActuel = null;
@@ -367,71 +365,11 @@
           const data = await window.API.Concours.detail(id);
           concoursActuel = data.concours;
           afficherDetail(concoursActuel);
-          chargerDocumentsDisponibles(concoursActuel.id);
           injecterSchemaOrg(concoursActuel);
           chargerSimilaires(concoursActuel.categorie, id);
           chargerCarteSuivi(concoursActuel.id);
         } catch (err) {
-          if (err.message.includes("Premium")) {
-            afficherPremiumRequis();
-          } else {
             afficherErreur();
-          }
-        }
-      }
-
-      const TYPE_LABELS = { cours: "📘 Cours", sujet: "📄 Sujet", corrige: "✅ Corrigé", fiche: "📝 Fiche de révision" };
-
-      async function chargerDocumentsDisponibles(concoursId) {
-        try {
-          const data = await window.API.PDFs.liste({ concoursId, limit: 50 });
-          const pdfs = data.pdfs || [];
-          if (pdfs.length === 0) return;
-
-          document.getElementById("detail-documents").innerHTML = pdfs
-            .map((p) => {
-              const verrouille = p.verrouille;
-              return `
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
-      <div style="min-width:0;">
-        <div style="font-weight:700;font-size:0.88rem;">${verrouille ? "🔒 " : ""}${echapperHtml(p.titre)}</div>
-        <div style="font-size:0.78rem;color:var(--gris-texte);">${TYPE_LABELS[p.type] || p.type || ""} ${p.matiere ? "· " + p.matiere : ""}</div>
-      </div>
-      ${
-        verrouille
-          ? `<a href="/boutique.html" class="btn btn--gris btn--sm" style="white-space:nowrap;">⭐ Premium</a>`
-          : `<button class="btn btn--vert btn--sm" onclick="window.API.PDFs.telecharger(${p.id})" style="white-space:nowrap;">⬇ Voir</button>`
-      }
-    </div>`;
-            })
-            .join("");
-          document.getElementById("section-documents").classList.remove("hidden");
-
-          // Cours recommandés (Lot 7) — réutilise les mêmes documents,
-          // filtrés sur le type "cours", pour ne pas dupliquer l'appel API.
-          const cours = pdfs.filter((p) => p.type === "cours");
-          if (cours.length > 0) {
-            document.getElementById("detail-cours-recommandes").innerHTML = cours
-              .map((p) => {
-                const verrouille = p.verrouille;
-                return `
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gris-bordure);">
-      <div style="min-width:0;">
-        <div style="font-weight:700;font-size:0.88rem;">${verrouille ? "🔒 " : ""}📘 ${echapperHtml(p.titre)}</div>
-        <div style="font-size:0.78rem;color:var(--gris-texte);">${p.matiere ? p.matiere : "Cours de préparation"}</div>
-      </div>
-      ${
-        verrouille
-          ? `<a href="/boutique.html" class="btn btn--gris btn--sm" style="white-space:nowrap;">⭐ Premium</a>`
-          : `<button class="btn btn--vert btn--sm" onclick="window.API.PDFs.telecharger(${p.id})" style="white-space:nowrap;">📖 Étudier</button>`
-      }
-    </div>`;
-              })
-              .join("");
-            document.getElementById("section-cours-recommandes").classList.remove("hidden");
-          }
-        } catch (err) {
-          console.error("Erreur chargement documents du concours :", err.message);
         }
       }
 
@@ -716,7 +654,7 @@
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
             <span class="badge badge--vert">${echapperHtml(c.categorie)}</span>
             <span class="badge badge--rouge">${statutAffiche(c)}</span>
-            ${c.premium ? '<span class="badge badge--premium">⭐ Contenu Premium</span>' : '<span class="badge badge--gratuit">🆓 Accès gratuit</span>'}
+            <span class="badge badge--gratuit">🆓 Information gratuite</span>
           </div>
           <h1 style="font-size:1.6rem;margin-bottom:6px;">${echapperHtml(c.titre)}</h1>
           <p style="color:var(--gris-texte);font-size:1rem;">🏢 ${echapperHtml(c.organisme)}</p>
@@ -882,6 +820,11 @@
         document.getElementById("contenu-detail")?.classList.remove("hidden");
       }
 
+      function ajouterAgenda() {
+        const n = window.Agenda.telecharger([concoursActuel], "concours-" + concoursActuel.id);
+        window.afficherToast?.(n ? "Fichier d'agenda téléchargé : ouvrez-le pour l'ajouter à votre calendrier." : "Aucune date officielle à ajouter pour ce concours.", n ? "succes" : "info");
+      }
+
       async function chargerSimilaires(categorie, idActuel) {
         try {
           const data = await window.API.Concours.liste({ categorie, limit: 3 });
@@ -1032,17 +975,6 @@
         document.getElementById("erreur-detail")?.classList.remove("hidden");
       }
 
-      function afficherPremiumRequis() {
-        document.getElementById("skeleton-detail")?.classList.add("hidden");
-        document.getElementById("contenu-detail")?.classList.remove("hidden");
-        document.getElementById("detail-header").innerHTML = `
-    <div class="empty-state" style="padding:40px 0;">
-      <div class="empty-state__icone">⭐</div>
-      <div class="empty-state__titre">Contenu Premium</div>
-      <p class="empty-state__texte">Ce concours est réservé aux abonnés Premium.</p>
-      <a href="/boutique.html" class="btn btn--orange">Passer Premium →</a>
-    </div>`;
-      }
     </script>
   </body>
 </html>

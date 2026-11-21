@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           el("a", { class: "academie-lecon-ligne", href: "/lecon.html?id=" + l.id },
             el("span", { class: "academie-lecon-num" + (l.terminee ? " academie-lecon-num--ok" : ""), text: l.terminee ? "✓" : String(l.ordre) }),
             el("span", { class: "academie-lecon-titre", text: l.titre }),
-            el("span", { class: "badge " + (l.gratuite ? "badge--vert" : "badge--orange"), text: l.gratuite ? "Gratuit" : "Premium" }),
+            el("span", { class: "badge badge--vert", text: "Gratuit" }),
           )),
       ),
     );

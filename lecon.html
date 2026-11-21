@@ -49,23 +49,6 @@
 "use strict";
 const { api, el, rendreContenu, idDepuisUrl, estConnecte } = window.Academie;
 
-function afficherVerrou(zone, data) {
-  document.getElementById("fil-cours-lien").textContent = data.cours.titre;
-  document.getElementById("fil-cours-lien").href = "/cours.html?id=" + data.cours.id;
-  zone.replaceChildren(el("div", { class: "academie-verrou" },
-    el("div", { style: "font-size:2rem;", text: "🔒" }),
-    el("h2", { text: data.lecon.titre }),
-    el("p", { text: data.connecte
-      ? "Cette leçon est réservée aux abonnés Premium. Les premières leçons du cours restent gratuites."
-      : "Cette leçon est réservée aux abonnés Premium. Connectez-vous si vous avez déjà un abonnement." }),
-    el("div", { style: "display:flex;gap:10px;justify-content:center;flex-wrap:wrap;" },
-      el("a", { class: "btn btn--primaire", href: "/boutique.html", text: "Voir le Premium" }),
-      data.connecte ? null : el("a", { class: "btn btn--outline-vert", href: "/auth/login.html", text: "Se connecter" }),
-      el("a", { class: "btn btn--gris", href: "/cours.html?id=" + data.cours.id, text: "Retour au cours" }),
-    ),
-  ));
-}
-
 function dessinerExercices(exercices) {
   let reponses = 0, bonnes = 0;
   const score = el("div", { class: "exo-score", style: "display:none;" });
@@ -157,7 +140,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           window.partagerWhatsApp("Je révise avec ProInsertion CI : « " + d.lecon.titre + " » (" + d.cours.titre + ").", window.location.href) })),
     );
   } catch (err) {
-    if (err.status === 403 && err.data?.premium) { afficherVerrou(zone, err.data); return; }
     zone.replaceChildren(el("div", { class: "academie-vide", text: err.message }));
   }
 });

@@ -296,6 +296,19 @@
         <button onclick="chargerOffres()" class="btn btn--primaire btn--sm">Filtrer</button>
       </div>
 
+      <div id="bloc-alertes" class="hidden" style="background:var(--blanc);border-radius:12px;padding:16px;box-shadow:var(--ombre-sm);margin-bottom:20px;">
+        <div style="font-weight:700;margin-bottom:4px;">🔔 Recevoir les nouvelles offres par e-mail</div>
+        <div style="font-size:.85rem;color:var(--gris-texte);margin-bottom:10px;">Indiquez vos critères : vous recevrez un seul e-mail récapitulatif par jour, uniquement s'il y a de nouvelles offres.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input type="text" id="al-motcle" class="form-input" maxlength="100" placeholder="Mot-clé (ex: comptable)" style="flex:1;min-width:150px;" />
+          <select id="al-type" class="form-input" style="min-width:130px;"><option value="">Tout contrat</option><option>CDI</option><option>CDD</option><option>Stage</option><option>Freelance</option><option>Alternance</option></select>
+          <input type="text" id="al-ville" class="form-input" maxlength="100" placeholder="Ville" style="flex:1;min-width:120px;" />
+          <button type="button" id="al-ajouter" class="btn btn--primaire btn--sm">Créer l'alerte</button>
+        </div>
+        <div id="al-erreur" style="color:#dc2626;font-size:.85rem;margin-top:6px;"></div>
+        <div id="al-liste" style="margin-top:8px;"></div>
+      </div>
+
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
         <div style="color: var(--gris-texte); font-size: 0.88rem;" id="total-offres">Chargement…</div>
         <a href="/dashboard/mes-candidatures.html" class="btn btn--outline-vert btn--sm">Mes candidatures</a>
@@ -497,6 +510,32 @@
         }
       }
       document.addEventListener("DOMContentLoaded", chargerSourcesDisponibles);
+      // ── Alertes e-mail (membres connectés) ──
+      (function () {
+        const $a = (id) => document.getElementById(id);
+        const e = (v) => window.echapperHtml(v == null ? "" : String(v));
+        async function listerAlertes() {
+          try {
+            const d = await window.API.Emploi.mesAlertes();
+            $a("al-liste").innerHTML = (d.alertes || []).map((a) => `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-top:1px solid #eef1ef;font-size:.88rem;"><span>${[a.mot_cle, a.type_contrat, a.ville].filter(Boolean).map(e).join(" · ")}</span><button type="button" class="btn btn--outline-vert btn--sm" data-al="${Number(a.id)}">Supprimer</button></div>`).join("");
+            $a("al-liste").querySelectorAll("button[data-al]").forEach((b) => b.onclick = async () => { try { await window.API.Emploi.supprimerAlerte(b.dataset.al); listerAlertes(); } catch (x) { $a("al-erreur").textContent = x.message; } });
+          } catch (x) { /* silencieux */ }
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+          if (!window.Auth?.estConnecte?.()) return;
+          $a("bloc-alertes").classList.remove("hidden");
+          $a("al-ajouter").onclick = async () => {
+            $a("al-erreur").textContent = "";
+            try {
+              await window.API.Emploi.creerAlerte({ motCle: $a("al-motcle").value, typeContrat: $a("al-type").value, ville: $a("al-ville").value });
+              $a("al-motcle").value = ""; $a("al-type").value = ""; $a("al-ville").value = "";
+              listerAlertes();
+            } catch (x) { $a("al-erreur").textContent = x.message || "Création impossible."; }
+          };
+          listerAlertes();
+        });
+      })();
+
 
       // Chargement initial (ou relance après changement de filtre) :
       // repart de zéro (offset 0).

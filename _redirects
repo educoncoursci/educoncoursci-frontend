@@ -6,9 +6,9 @@
 /concours-termines.html   /concours.html                   301
 /concours-termines        /concours.html                   301
 # Rubriques supprimées
-/preparation.html         /examens.html                    301
-/quiz.html                /examens.html                    301
-/simulateur.html          /examens.html                    301
+/preparation.html         /concours.html                   301
+/quiz.html                /concours.html                   301
+/simulateur.html          /concours.html                   301
 /classement.html          /concours.html                   301
 /videos.html              /index.html                      301
 /dashboard/progression.html  /dashboard/index.html         301
@@ -16,3 +16,8 @@
 /admin/videos.html        /admin/index.html                301
 /admin/qcm.html           /admin/index.html                301
 /admin/qcm-auto.html      /admin/index.html                301
+
+/examens.html              /concours.html   301
+/bibliotheque.html        /concours.html   301
+/actualites.html          /index.html      301
+/dashboard/mes-downloads.html  /dashboard/index.html  301

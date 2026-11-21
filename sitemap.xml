@@ -6,9 +6,6 @@
   <url><loc>https://proinsertionci.netlify.app/communaute.html</loc><priority>0.6</priority></url>
   <url><loc>https://proinsertionci.netlify.app/marketplace.html</loc><priority>0.6</priority></url>
   <url><loc>https://proinsertionci.netlify.app/eligibilite.html</loc><priority>0.85</priority></url>
-  <url><loc>https://proinsertionci.netlify.app/examens.html</loc><priority>0.8</priority></url>
-  <url><loc>https://proinsertionci.netlify.app/bibliotheque.html</loc><priority>0.7</priority></url>
-  <url><loc>https://proinsertionci.netlify.app/actualites.html</loc><priority>0.7</priority></url>
   <url><loc>https://proinsertionci.netlify.app/cv-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://proinsertionci.netlify.app/documents-pro.html</loc><priority>0.6</priority></url>
   <url><loc>https://proinsertionci.netlify.app/documents-admin.html</loc><priority>0.6</priority></url>
@@ -25,6 +22,8 @@
   <url><loc>https://proinsertionci.netlify.app/packs.html</loc><priority>0.7</priority></url>
   <url><loc>https://proinsertionci.netlify.app/simulation-entretien.html</loc><priority>0.7</priority></url>
   <url><loc>https://proinsertionci.netlify.app/analyse-offre.html</loc><priority>0.8</priority></url>
+  <url><loc>https://proinsertionci.netlify.app/comment-ca-marche.html</loc></url>
+  <url><loc>https://proinsertionci.netlify.app/a-propos.html</loc></url>
   <url><loc>https://proinsertionci.netlify.app/conditions.html</loc></url>
   <url><loc>https://proinsertionci.netlify.app/confidentialite.html</loc></url>
   <url><loc>https://proinsertionci.netlify.app/supprimer-compte.html</loc></url>
