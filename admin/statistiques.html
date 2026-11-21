@@ -1,0 +1,252 @@
+<!doctype html>
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audience — Admin ProInsertion CI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 20px; }
+      .kpi { background: var(--blanc); border-radius: 14px; padding: 16px; box-shadow: var(--ombre-sm); }
+      .kpi__label { font-size: .8rem; color: var(--gris-texte); font-weight: 600; }
+      .kpi__valeur { font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; font-weight: 700; margin-top: 4px; }
+      .kpi--alerte .kpi__valeur { color: #c2410c; }
+      .periodes { display: flex; gap: 8px; flex-wrap: wrap; }
+      .periode-btn.actif { background: var(--vert); color: #fff; border-color: var(--vert); }
+      .barres { display: flex; align-items: flex-end; gap: 3px; height: 160px; padding-top: 10px; }
+      .barre { flex: 1; min-width: 3px; background: var(--vert); border-radius: 3px 3px 0 0; opacity: .85; position: relative; }
+      .barre--zero { background: var(--gris-bordure); height: 2px !important; opacity: 1; }
+      .barre:hover { opacity: 1; }
+      .axe { display: flex; justify-content: space-between; font-size: .75rem; color: var(--gris-texte); margin-top: 6px; }
+      .tableau { width: 100%; min-width: 460px; border-collapse: collapse; font-size: .88rem; }
+      .tableau th { text-align: left; font-size: .75rem; color: var(--gris-texte); padding: 8px 10px; border-bottom: 2px solid var(--gris-bordure); }
+      .tableau td { padding: 9px 10px; border-bottom: 1px solid var(--gris-bordure); }
+      .tableau .num { text-align: right; white-space: nowrap; }
+      .jauge { height: 6px; background: var(--gris-bordure); border-radius: 3px; margin-top: 4px; }
+      .jauge > span { display: block; height: 100%; background: var(--vert); border-radius: 3px; }
+      .deux-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+      .lien-suivi { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+      .lien-suivi label { display: grid; gap: 4px; font-size: .8rem; font-weight: 600; color: var(--gris-texte); }
+      .lien-suivi input, .lien-suivi select, .lien-suivi__sortie input { padding: 9px 11px; border: 1px solid var(--gris-bordure); border-radius: 8px; font: inherit; font-size: .9rem; background: #fff; color: #14231b; }
+      .lien-suivi__rapides { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+      .lien-suivi__rapides button { border: 1px solid var(--gris-bordure); background: #fff; border-radius: 999px; padding: 4px 11px; font-size: .8rem; cursor: pointer; }
+      .lien-suivi__rapides button:hover { border-color: var(--vert); color: var(--vert); }
+      .lien-suivi__sortie { display: flex; gap: 8px; }
+      .lien-suivi__sortie input { flex: 1; min-width: 0; font-family: monospace; font-size: .82rem; }
+      @media (max-width: 640px) { .lien-suivi { grid-template-columns: 1fr; } .lien-suivi__sortie { flex-direction: column; } }
+      @media (max-width: 860px) { .deux-col { grid-template-columns: 1fr; } .tableau { font-size: .8rem; } .admin-card__corps { overflow-x: auto; } }
+    </style>
+      <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+      <link rel="stylesheet" href="/css/ui-pro.css" />
+  </head>
+  <body>
+    <nav class="navbar" style="background: #0a2540">
+      <div class="container navbar__inner">
+        <a href="/admin/index.html" class="navbar__logo"
+          ><img src="/assets/logo-icon.png" alt="" width="32" height="32" style="width:32px;height:32px;border-radius:8px;display:block;" />
+          <span style="color: #fff">ProInsertion CI Admin</span></a
+        >
+        <button onclick="window.Auth?.deconnecter?.()" class="btn btn--gris btn--sm">Déconnexion</button>
+      </div>
+    </nav>
+
+    <div style="padding-top: var(--navbar-h)">
+      <div class="admin-layout">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar__header"><div class="admin-sidebar__logo"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Admin Panel</div></div>
+          <div class="admin-sidebar__section">Dashboard</div>
+          <a href="/admin/index.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Dashboard</a>
+          <a href="/admin/ventes.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="graphique" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Ventes</a>
+          <a href="/admin/statistiques.html" class="admin-sidebar__lien actif"><span class="admin-sidebar__icone"><span data-icone="tendance" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Audience</a>
+          <a href="/admin/tarifs.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Tarifs</a>
+          <div class="admin-sidebar__section">Utilisateurs</div>
+          <a href="/admin/abonnes.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnés</a>
+          <a href="/admin/paiements.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+          <div class="admin-sidebar__section">Système</div>
+          <a href="/admin/journal.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Journal d'activité</a>
+          <a href="/" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="monde" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Voir le site</a>
+        </aside>
+
+        <main class="admin-contenu">
+          <div class="admin-topbar">
+            <div>
+              <div class="admin-topbar__titre"><span data-icone="tendance" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Audience</div>
+              <div class="admin-topbar__sous">Mesure intégrée, sans cookie, sans adresse IP conservée. Un visiteur est compté une fois par jour.</div>
+            </div>
+            <div class="periodes" id="periodes"></div>
+          </div>
+
+          <div class="kpis" id="kpis"></div>
+
+          <div class="admin-card" style="margin-bottom:18px;">
+            <div class="admin-card__header"><div class="admin-card__titre">Visiteurs par jour</div></div>
+            <div class="admin-card__corps"><div class="barres" id="barres"></div><div class="axe" id="axe"></div></div>
+          </div>
+
+          <div class="deux-col">
+            <div class="admin-card"><div class="admin-card__header"><div class="admin-card__titre">D'où viennent les visiteurs</div></div><div class="admin-card__corps" id="sources"></div></div>
+            <div class="admin-card"><div class="admin-card__header"><div class="admin-card__titre">Du visiteur à l'inscription</div></div><div class="admin-card__corps" id="entonnoir"></div></div>
+          </div>
+
+          <div class="admin-card" style="margin-bottom:18px;">
+            <div class="admin-card__header"><div class="admin-card__titre">Pages les plus consultées</div></div>
+            <div class="admin-card__corps" id="pages"></div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card__header"><div class="admin-card__titre">Créer un lien suivi (WhatsApp, Facebook…)</div></div>
+            <div class="admin-card__corps">
+              <p style="font-size:.88rem;line-height:1.6;color:var(--gris-texte);margin:0 0 14px;">
+                WhatsApp et la plupart des applications n'indiquent pas d'où vient la visite. Créez ici un lien avec un nom de source : partagez ce lien, et les visites qu'il amène apparaîtront sous ce nom dans « D'où viennent les visiteurs ».
+              </p>
+              <div class="lien-suivi">
+                <label>Page à partager
+                  <select id="ls-page">
+                    <option value="/">Accueil</option>
+                    <option value="/concours.html">Concours</option>
+                    <option value="/emploi.html">Offres d'emploi et de stage</option>
+                    <option value="/cv-generator.html">Création de CV</option>
+                    <option value="/analyse-offre.html">Analyse d'offre</option>
+                    <option value="/comment-ca-marche.html">Comment ça marche</option>
+                    <option value="/boutique.html">Formules et tarifs</option>
+                    <option value="/auth/register.html">Inscription</option>
+                  </select>
+                </label>
+                <label>Nom de la source
+                  <input type="text" id="ls-source" maxlength="30" value="whatsapp" autocomplete="off" />
+                </label>
+              </div>
+              <div class="lien-suivi__rapides" id="ls-rapides"></div>
+              <div class="lien-suivi__sortie">
+                <input type="text" id="ls-lien" readonly aria-label="Lien à partager" />
+                <button type="button" class="btn btn--primaire btn--sm" id="ls-copier">Copier le lien</button>
+              </div>
+              <div id="ls-aide" style="font-size:.8rem;color:var(--gris-texte);margin-top:8px;">Lettres minuscules, chiffres, tiret ou tiret bas (30 caractères maximum).</div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="/js/icons.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+      const fcfa = (n) => Number(n).toLocaleString("fr-FR") + " F";
+      const $ = (id) => document.getElementById(id);
+      let jours = 30;
+
+      // DOM sûr : aucun texte n'est injecté en HTML.
+      function el(tag, attrs = {}, ...enfants) {
+        const n = document.createElement(tag);
+        for (const [k, v] of Object.entries(attrs)) {
+          if (k === "class") n.className = v;
+          else if (k === "text") n.textContent = v;
+          else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+          else if (v !== null && v !== undefined && v !== false) n.setAttribute(k, v === true ? "" : v);
+        }
+        enfants.flat().forEach((e) => e && n.appendChild(typeof e === "string" ? document.createTextNode(e) : e));
+        return n;
+      }
+      const vide = (texte) => el("div", { style: "color:var(--gris-texte);padding:6px 0;", text: texte });
+
+      function tableau(entetes, lignes) {
+        // Conteneur défilable : sur petit écran, le tableau reste lisible sans déborder de la page
+        return el("div", { style: "overflow-x:auto;" }, el("table", { class: "tableau" },
+          el("thead", {}, el("tr", {}, entetes.map(([t, num]) => el("th", { class: num ? "num" : "", text: t })))),
+          el("tbody", {}, lignes)));
+      }
+
+      const NOMS_SOURCES = { direct: "Accès direct / lien copié", recherche: "Moteurs de recherche", facebook: "Facebook / Instagram", linkedin: "LinkedIn", whatsapp: "WhatsApp", x: "X (Twitter)", youtube: "YouTube", tiktok: "TikTok", autre: "Autres sites" };
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (!window.Auth?.protegerPageAdmin()) return;
+        $("periodes").replaceChildren(...[[7, "7 jours"], [30, "30 jours"], [90, "90 jours"]].map(([j, t]) =>
+          el("button", { class: "btn btn--gris btn--sm periode-btn" + (j === jours ? " actif" : ""), "data-j": j, text: t, onclick: () => { jours = j; charger(); } })));
+        charger();
+      });
+
+      async function charger() {
+        document.querySelectorAll(".periode-btn").forEach((b) => b.classList.toggle("actif", Number(b.dataset.j) === jours));
+        try {
+          const r = await fetch(window.API_URL + "/admin/stats?jours=" + jours, { headers: { Authorization: "Bearer " + window.API.getToken() } });
+          const d = await r.json().catch(() => ({}));
+          if (!r.ok) throw new Error(d.error || "Erreur " + r.status);
+          rendre(d);
+        } catch (err) { window.afficherToast(err.message, "erreur"); }
+      }
+
+
+      // ── Générateur de lien suivi ──
+      (function () {
+        const page = $("ls-page"), source = $("ls-source"), sortie = $("ls-lien"), aide = $("ls-aide");
+        const valide = (s) => /^[a-z0-9_-]{1,30}$/.test(s);
+        const maj = () => {
+          const s = source.value.trim().toLowerCase();
+          if (!valide(s)) { sortie.value = ""; aide.style.color = "#b91c1c"; aide.textContent = "Nom invalide : minuscules, chiffres, tiret ou tiret bas, 30 caractères maximum."; return; }
+          aide.style.color = ""; aide.textContent = "Lettres minuscules, chiffres, tiret ou tiret bas (30 caractères maximum).";
+          const u = new URL(page.value, window.location.origin); u.searchParams.set("utm_source", s); sortie.value = u.toString();
+        };
+        $("ls-rapides").replaceChildren(...["whatsapp", "facebook", "linkedin", "tiktok", "instagram", "sms", "affiche"].map((n) =>
+          el("button", { type: "button", text: n, onclick: () => { source.value = n; maj(); } })));
+        page.addEventListener("change", maj); source.addEventListener("input", maj);
+        $("ls-copier").addEventListener("click", async () => {
+          if (!sortie.value) return window.afficherToast("Corrigez d'abord le nom de la source.", "erreur");
+          try { await navigator.clipboard.writeText(sortie.value); window.afficherToast("Lien copié.", "succes"); }
+          catch { sortie.select(); window.afficherToast("Sélectionnez le lien et copiez-le (Ctrl+C).", "info"); }
+        });
+        maj();
+      })();
+
+      const nb = (n) => Number(n || 0).toLocaleString("fr-FR");
+
+      function rendre(d) {
+        const t = d.totaux, par = d.par_jour;
+        const aujourdhui = par[par.length - 1] || { visiteurs: 0, pages_vues: 0 };
+        const moy = par.length ? Math.round(t.visiteurs_jour / par.length) : 0;
+        $("kpis").replaceChildren(
+          el("div", { class: "kpi" }, el("div", { class: "kpi__label", text: "Visiteurs aujourd'hui" }), el("div", { class: "kpi__valeur", text: nb(aujourdhui.visiteurs) })),
+          el("div", { class: "kpi" }, el("div", { class: "kpi__label", text: "Moyenne par jour" }), el("div", { class: "kpi__valeur", text: nb(moy) })),
+          el("div", { class: "kpi" }, el("div", { class: "kpi__label", text: "Pages vues" }), el("div", { class: "kpi__valeur", text: nb(t.pages_vues) })),
+          el("div", { class: "kpi" }, el("div", { class: "kpi__label", text: "Inscriptions" }), el("div", { class: "kpi__valeur", text: nb(d.entonnoir.inscriptions) })));
+
+        const max = Math.max(1, ...par.map((x) => x.visiteurs));
+        $("barres").replaceChildren(...par.map((x) => {
+          const b = el("div", { class: "barre" + (x.visiteurs ? "" : " barre--zero"), title: new Date(x.jour).toLocaleDateString("fr-FR") + " : " + x.visiteurs + " visiteur" + (x.visiteurs > 1 ? "s" : "") + ", " + x.pages_vues + " page" + (x.pages_vues > 1 ? "s" : "") + " vue" + (x.pages_vues > 1 ? "s" : "") });
+          if (x.visiteurs) b.style.height = Math.max(4, Math.round((x.visiteurs / max) * 100)) + "%";
+          return b;
+        }));
+        const premier = par[0], dernier = par[par.length - 1];
+        $("axe").replaceChildren(el("span", { text: new Date(premier.jour).toLocaleDateString("fr-FR") }), el("span", { text: "Maximum : " + nb(max) + " visiteur" + (max > 1 ? "s" : "") }), el("span", { text: new Date(dernier.jour).toLocaleDateString("fr-FR") }));
+
+        const totSrc = d.sources.reduce((s, x) => s + x.visites, 0) || 1;
+        $("sources").replaceChildren(d.sources.length
+          ? tableau([["Source"], ["Visites", true]], d.sources.map((x) =>
+              el("tr", {}, el("td", {}, NOMS_SOURCES[x.source] || "Campagne : " + x.source, el("div", { class: "jauge" }, el("span", { style: "width:" + Math.round((x.visites / totSrc) * 100) + "%" }))),
+                el("td", { class: "num", text: nb(x.visites) }))))
+          : vide("Pas encore de données sur la période."));
+
+        const e = d.entonnoir, v = Math.max(1, e.visiteurs);
+        const ligne = (libelle, valeur) => el("tr", {}, el("td", {}, libelle, el("div", { class: "jauge" }, el("span", { style: "width:" + Math.min(100, Math.round((valeur / v) * 100)) + "%" }))), el("td", { class: "num", text: nb(valeur) }));
+        $("entonnoir").replaceChildren(
+          tableau([["Étape"], ["Nombre", true]], [ligne("Visiteurs non connectés", e.visiteurs), ligne("Ont ouvert la page d'inscription", e.page_inscription), ligne("Comptes créés", e.inscriptions)]),
+          el("div", { style: "font-size:.8rem;color:var(--gris-texte);margin-top:8px;", text: "Les visiteurs sont comptés par jour : une même personne revenue plusieurs jours compte plusieurs fois. Les comptes créés incluent toutes les inscriptions de la période." }));
+
+        $("pages").replaceChildren(d.pages.length
+          ? tableau([["Page"], ["Pages vues", true], ["Visiteurs", true]], d.pages.map((p) => el("tr", {}, el("td", { text: p.chemin }), el("td", { class: "num", text: nb(p.vues) }), el("td", { class: "num", text: nb(p.visiteurs) }))))
+          : vide("Pas encore de données sur la période."));
+      }
+    </script>
+  </body>
+</html>
