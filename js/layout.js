@@ -150,8 +150,17 @@ function construireReseaux() {
 }
 
 // ── Partage WhatsApp (utilisable depuis toutes les pages) ──
+// Ajoute ?utm_source=<source> à un lien du site (si absent), pour que la mesure
+// d'audience sache d'où viennent les visites (WhatsApp ne transmet pas la provenance).
+window.lienAvecSource = function (url, source) {
+  try {
+    const u = new URL(url || window.location.href, window.location.href);
+    if (u.origin === window.location.origin && !u.searchParams.has("utm_source")) u.searchParams.set("utm_source", source);
+    return u.toString();
+  } catch (e) { return url || window.location.href; }
+};
 window.partagerWhatsApp = function (texte, url) {
-  const lien = url || window.location.href;
+  const lien = window.lienAvecSource(url, "whatsapp");
   window.open("https://wa.me/?text=" + encodeURIComponent(texte + " " + lien), "_blank", "noopener");
 };
 
@@ -210,15 +219,86 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer">
       </div>
     </footer>`;
 
+// ── Variante « espace connecté » : navigation de travail (pas de vitrine) ──
+function estSessionMembre() {
+  try { return !!localStorage.getItem("ecc_token"); } catch (e) { return false; }
+}
+function lienMembre(href, libelle, icone, mobile) {
+  const actif = location.pathname === href;
+  const cls = "navbar__link";
+  return `<a href="${href}" class="${cls}${actif ? " actif" : ""}"${actif ? ' aria-current="page"' : ""}>${icone ? `<span data-icone="${icone}" data-taille="${mobile ? 18 : 16}" style="margin-right:7px;vertical-align:-3px;"></span>` : ""}${libelle}</a>`;
+}
+function construireHeaderMembre() {
+  const principaux = [
+    ["/dashboard/index.html", "Tableau de bord", "graphique"],
+    ["/cv-generator.html", "CV & lettres", "document"],
+    ["/emploi.html", "Emplois & stages", "portefeuille"],
+    ["/dashboard/suivi-candidatures.html", "Candidatures", "liste"],
+    ["/concours.html", "Concours", "institution"],
+  ];
+  const plus = [
+    ["/analyse-offre.html", "Analyser une offre", "loupe"],
+    ["/simulation-entretien.html", "Simulation d'entretien", "aide"],
+    ["/documents-redaction.html", "Courriers et documents", "document"],
+    ["/packs.html", "Packs", "fusee"],
+    ["/assistance-sociale.html", "Assistance sociale", "aide"],
+    ["/communaute.html", "Communauté", "utilisateurs"],
+    ["/marketplace.html", "Marketplace", "panier"],
+    ["/boutique.html", "Abonnement Premium", "etoile"],
+  ];
+  return `<nav class="navbar navbar--membre" id="navbar">
+      <div class="navbar__inner">
+        <a href="/dashboard/index.html" class="navbar__logo">
+          <div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion CI" /></div>
+          <span class="navbar__logo-texte">Pro<span>Insertion</span> <span class="navbar__ci">CI</span></span>
+        </a>
+        <ul class="navbar__links">
+          ${principaux.map(([h, l]) => `<li>${lienMembre(h, l, "", false)}</li>`).join("")}
+          <li class="navbar__groupe">
+            <button class="navbar__groupe-btn">Plus
+              <svg class="navbar__groupe-fleche" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="navbar__sous-menu">
+              ${plus.map(([h, l, i]) => `<a href="${h}" class="navbar__sous-lien"><span data-icone="${i}" data-taille="16"></span> ${l}</a>`).join("")}
+            </div>
+          </li>
+        </ul>
+        <div class="navbar__actions" id="navbar-actions"></div>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+      <div class="navbar__mobile" id="menu-mobile">
+        ${principaux.map(([h, l, i]) => lienMembre(h, l, i, true)).join("")}
+        <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:8px 0;" />
+        ${plus.map(([h, l, i]) => lienMembre(h, l, i, true)).join("")}
+        <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:8px 0;" />
+        <a href="/dashboard/profil.html" class="navbar__link"><span data-icone="utilisateurs" data-taille="18" style="margin-right:7px;vertical-align:-3px;"></span>Mon profil</a>
+        <a href="/dashboard/paiements.html" class="navbar__link"><span data-icone="paiement" data-taille="18" style="margin-right:7px;vertical-align:-3px;"></span>Mon abonnement</a>
+        <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:8px 0;" />
+        <div id="navbar-mobile-actions"></div>
+      </div>
+    </nav>`;
+}
+const FOOTER_MEMBRE_HTML = `<footer class="footer footer--membre">
+      <div class="container footer--membre__inner">
+        <span>© 2026 ProInsertion CI</span>
+        <nav aria-label="Aide et informations">
+          <a href="/guide.html">Aide</a>
+          <a href="/conditions.html">Conditions</a>
+          <a href="/confidentialite.html">Confidentialité</a>
+          <a href="/supprimer-compte.html">Supprimer mon compte</a>
+        </nav>
+      </div>
+    </footer>`;
+
 (function injecterLayout() {
   const zoneHeader = document.getElementById("site-header");
   if (zoneHeader) {
-    zoneHeader.outerHTML = EDUCONCOURSCI_HEADER_HTML;
+    zoneHeader.outerHTML = estSessionMembre() ? construireHeaderMembre() : EDUCONCOURSCI_HEADER_HTML;
   }
 
   const zoneFooter = document.getElementById("site-footer");
   if (zoneFooter) {
-    zoneFooter.outerHTML = EDUCONCOURSCI_FOOTER_HTML;
+    zoneFooter.outerHTML = estSessionMembre() ? FOOTER_MEMBRE_HTML : EDUCONCOURSCI_FOOTER_HTML;
   }
 })();
 

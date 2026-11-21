@@ -192,6 +192,15 @@ return getSession();
 //  Mise à jour de la navbar selon l'état de connexion
 // ════════════════════════════════════════════════════════════
 
+// ── Redirection après inscription/connexion : uniquement un chemin INTERNE
+//    du site (jamais "//site-externe", "https://…" ni "/\\…"), sinon
+//    retour au tableau de bord. Empêche une redirection vers un site tiers.
+function cheminInterneSur(demande, defaut) {
+  const d = String(demande || "");
+  if (!d.startsWith("/") || d.startsWith("//") || d.startsWith("/\\") || /[\u0000-\u001f]/.test(d)) return defaut;
+  return d;
+}
+
 function mettreAJourNavbar() {
 const user = getSession();
 // Deux zones à synchroniser : la barre desktop (.navbar__actions,
@@ -273,7 +282,7 @@ if (!zone) return;
 if (user) {
 zone.innerHTML = `<a href="/cv-generator.html" class="btn btn--primaire btn--lg">Créer mon CV →</a> <a href="/dashboard/index.html" class="btn btn--outline-blanc btn--lg">Mon tableau de bord</a> <a href="/analyse-offre.html" class="btn btn--outline-blanc btn--lg">Analyser une offre (gratuit)</a>`;
 } else {
-zone.innerHTML = `<a href="/cv-generator.html" class="btn btn--primaire btn--lg">Créer mon CV →</a> <a href="/emploi.html" class="btn btn--outline-blanc btn--lg">Trouver un emploi</a> <a href="/analyse-offre.html" class="btn btn--outline-blanc btn--lg">Analyser une offre (gratuit)</a>`;
+zone.innerHTML = `<a href="/auth/register.html" class="btn btn--primaire btn--lg">Créer mon compte gratuit</a> <a href="#section-services" class="btn btn--outline-blanc btn--lg">Découvrir les services</a> <a href="/auth/login.html" class="pi-hero-connexion">Déjà inscrit ? Se connecter</a>`;
 }
 }
 
@@ -325,7 +334,7 @@ try {
   // ?retour= qui pointerait vers /admin/ pour ne jamais y envoyer
   // un nouvel utilisateur, même si l'URL le demande.
   const params  = new URLSearchParams(window.location.search);
-  const demande = params.get("retour") || "/dashboard/index.html";
+  const demande = cheminInterneSur(params.get("retour"), "/dashboard/index.html");
   const retour  = demande.startsWith("/admin/") ? "/dashboard/index.html" : demande;
   setTimeout(() => window.location.href = retour, 1800);
 
@@ -387,7 +396,7 @@ try {
   // réellement admin (ex: admin non connecté qui visitait /admin/x).
   // Pour tout le monde d'autre, direction le tableau de bord — jamais
   // l'administration, même si l'URL le demandait.
-  const demande = params.get("retour") || "/dashboard/index.html";
+  const demande = cheminInterneSur(params.get("retour"), "/dashboard/index.html");
   const retour  = (demande.startsWith("/admin/") && !estAdmin())
     ? "/dashboard/index.html"
     : demande;

@@ -280,3 +280,23 @@
   #plans-container .pricing-card { padding-inline: 18px; }
   #plans-container .pricing-card__prix { font-size: 2.4rem; }
 }
+
+/* ============================================================
+   ESPACE CONNECTÉ — navigation de travail sobre (pas de vitrine)
+   ============================================================ */
+.navbar--membre { background: #fff; box-shadow: 0 1px 0 var(--gris-bordure); }
+.navbar--membre .navbar__links { gap: 2px; }
+.navbar--membre .navbar__link,
+.navbar--membre .navbar__groupe-btn { font-size: .9rem; font-weight: 600; padding: 8px 11px; border-radius: 8px; color: #3b4a41; }
+.navbar--membre .navbar__link:hover,
+.navbar--membre .navbar__groupe-btn:hover { background: #f1f5f2; color: #14231b; }
+.navbar--membre .navbar__link.actif { background: #e8f5ed; color: #166534; }
+.navbar--membre .navbar__link.actif::after { display: none; }
+.navbar--membre .navbar__mobile .navbar__link.actif { background: #e8f5ed; }
+@media (max-width: 1180px) { .navbar--membre .navbar__link, .navbar--membre .navbar__groupe-btn { padding: 8px 8px; font-size: .86rem; } }
+
+.footer--membre { background: #fff; color: var(--gris-texte); border-top: 1px solid var(--gris-bordure); padding: 18px 0; margin-top: 40px; }
+.footer--membre__inner { display: flex; justify-content: space-between; align-items: center; gap: 12px 24px; flex-wrap: wrap; font-size: .85rem; }
+.footer--membre nav { display: flex; gap: 8px 20px; flex-wrap: wrap; }
+.footer--membre a { color: var(--gris-texte); }
+.footer--membre a:hover { color: #166534; text-decoration: underline; }

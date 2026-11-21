@@ -3,6 +3,7 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mon Profil — ProInsertion CI</title>
     <meta name="description" content="Gérez votre profil, votre mot de passe et la sécurité de votre compte ProInsertion CI." />
@@ -25,11 +26,12 @@
   <body style="background: var(--gris-clair)">
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
-        <a href="/" class="navbar__logo"
+        <a href="/dashboard/index.html" class="navbar__logo"
           ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion CI" /></div>
           <span class="navbar__logo-texte">Pro<span>Insertion</span> <span class="navbar__ci">CI</span></span></a
         >
         <div class="navbar__actions" id="navbar-actions"></div>
+        <button class="navbar__hamburger" id="btn-sidebar" aria-label="Ouvrir le menu de mon espace" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </nav>
 
@@ -56,7 +58,7 @@
             <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
             <div class="sidebar__titre">Mon compte</div>
             <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
-            <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+            <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnement et paiements</a>
             <a href="/dashboard/profil.html" class="sidebar__lien actif"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a>
           </nav>
           <div class="sidebar__deconnexion">
@@ -217,6 +219,21 @@
                 <span data-icone="cadenas" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Mettre à jour
               </button>
             </div>
+          </div>
+
+          <!-- Rappels par e-mail -->
+          <div class="dash-section" style="margin-bottom: 20px">
+            <div class="dash-section__titre" style="margin-bottom: 8px">
+              <span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Rappels par e-mail
+            </div>
+            <p style="font-size: 0.85rem; color: var(--gris-texte); margin-bottom: 14px;">
+              Un seul e-mail par jour, et seulement s'il y a quelque chose d'utile : une candidature à relancer ou la fin prochaine de votre abonnement Premium.
+            </p>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600;">
+              <input type="checkbox" id="rappels-email" style="width:18px;height:18px;" disabled />
+              <span>Recevoir mes rappels par e-mail</span>
+            </label>
+            <div id="msg-rappels" class="hidden" style="margin-top:8px;font-size:0.85rem;"></div>
           </div>
 
           <!-- Appareils connectés -->
@@ -547,6 +564,25 @@
         }
       }
     
+      // ── Rappels par e-mail (préférence) ──
+      (async () => {
+        const caseRappels = document.getElementById("rappels-email");
+        const msg = document.getElementById("msg-rappels");
+        const s = window.Auth.getSession();
+        if (!caseRappels || !s) return;
+        const dire = (texte, ok) => { msg.textContent = texte; msg.style.color = ok ? "#166534" : "#b91c1c"; msg.classList.remove("hidden"); };
+        try {
+          caseRappels.checked = (await window.API.Users.rappels(s.id)).actif !== false;
+          caseRappels.disabled = false;
+        } catch { dire("Préférence indisponible pour le moment.", false); return; }
+        caseRappels.addEventListener("change", async () => {
+          const voulu = caseRappels.checked; caseRappels.disabled = true;
+          try { await window.API.Users.definirRappels(s.id, voulu); dire(voulu ? "Rappels activés." : "Rappels désactivés.", true); }
+          catch { caseRappels.checked = !voulu; dire("Enregistrement impossible, réessayez.", false); }
+          caseRappels.disabled = false;
+        });
+      })();
+
       document.getElementById("btn-deconnecter-partout")?.addEventListener("click", async (e) => {
         if (!confirm("Déconnecter tous les autres appareils ?")) return;
         e.target.disabled = true;

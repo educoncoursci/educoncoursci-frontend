@@ -3,8 +3,9 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mes Paiements — ProInsertion CI</title>
+    <title>Mon abonnement — ProInsertion CI</title>
     <meta name="description" content="Historique de vos paiements et de votre abonnement ProInsertion CI." />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,11 +26,12 @@
   <body style="background: var(--gris-clair)">
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
-        <a href="/" class="navbar__logo"
+        <a href="/dashboard/index.html" class="navbar__logo"
           ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion CI" /></div>
           <span class="navbar__logo-texte">Pro<span>Insertion</span> <span class="navbar__ci">CI</span></span></a
         >
         <div class="navbar__actions" id="navbar-actions"></div>
+        <button class="navbar__hamburger" id="btn-sidebar" aria-label="Ouvrir le menu de mon espace" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </nav>
 
@@ -56,7 +58,7 @@
             <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
             <div class="sidebar__titre">Mon compte</div>
             <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
-            <a href="/dashboard/paiements.html" class="sidebar__lien actif"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+            <a href="/dashboard/paiements.html" class="sidebar__lien actif"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnement et paiements</a>
             <a href="/dashboard/profil.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a>
           </nav>
           <div class="sidebar__deconnexion">
@@ -72,7 +74,7 @@
         <main class="dashboard__contenu">
           <div class="dashboard__header">
             <div>
-              <h1><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Mes paiements</h1>
+              <h1><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Mon abonnement</h1>
               <p
                 style="
                   color: var(--gris-texte);
@@ -80,12 +82,23 @@
                   font-size: 0.9rem;
                 "
               >
-                Historique de vos abonnements Premium
+                Votre formule, ses dates et l'historique de vos paiements
               </p>
             </div>
-            <a href="/boutique.html" class="btn btn--primaire btn--sm"
-              >⭐ Renouveler</a
-            >
+          </div>
+
+          <!-- Statut Premium -->
+          <div
+            id="statut-premium"
+            class="dash-section"
+            style="margin-bottom: 20px"
+          ></div>
+
+          <!-- Renouveler / prolonger -->
+          <div class="dash-section" id="zone-renouveler" style="margin-bottom: 20px">
+            <div class="dash-section__header"><div class="dash-section__titre" id="renouveler-titre">Choisir une formule</div></div>
+            <div class="abo-formules" id="abo-formules"><div class="skeleton" style="height:120px;border-radius:12px"></div></div>
+            <p class="abo-note">Paiement par Wave ou Orange Money. Votre accès est activé après vérification du paiement, sous 24 h. Si vous renouvelez avant la fin, la nouvelle durée s'ajoute à votre abonnement.</p>
           </div>
 
           <!-- Moyens de paiement acceptés -->
@@ -97,12 +110,7 @@
             />
           </div>
 
-          <!-- Statut Premium -->
-          <div
-            id="statut-premium"
-            class="dash-section"
-            style="margin-bottom: 20px"
-          ></div>
+
 
           <!-- Historique transactions -->
           <div class="dash-section">
@@ -177,41 +185,49 @@
           ? '<div class="sidebar__badge-premium">⭐ Premium</div>'
           : '<div class="sidebar__badge-gratuit">🆓 Gratuit</div>';
 
-        // Statut Premium
+        // Statut de l'abonnement (données fraîches du serveur, repli sur la session)
         const sp = document.getElementById("statut-premium");
-        if (session.premium) {
-          const expire = session.premium_expire
-            ? new Date(session.premium_expire).toLocaleDateString("fr-FR", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })
-            : "—";
-          const reste = session.premium_expire
-            ? Math.ceil(
-                (new Date(session.premium_expire) - new Date()) /
-                  (1000 * 60 * 60 * 24),
-              )
-            : null;
+        let membre = session;
+        try { const d = await window.API.Auth.me(); if (d && d.user) membre = { ...session, ...d.user }; } catch {}
+        const dateFr = (d) => new Date(d).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+        const fin = membre.premium && membre.premium_expire ? new Date(membre.premium_expire) : null;
+        const reste = fin ? Math.ceil((fin - new Date()) / 86400000) : null;
+        const echapper = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        if (membre.premium) {
+          const bientot = reste !== null && reste <= 7;
           sp.innerHTML = `
-      <div style="background:linear-gradient(135deg,rgba(26,107,60,0.08),rgba(10,110,189,0.08));border:1px solid rgba(26,107,60,0.2);border-radius:16px;padding:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
-        <div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <span class="badge badge--premium">⭐ Premium actif</span>
-            <span style="font-weight:800;font-size:0.95rem;">${session.premium_plan || "Premium"}</span>
-          </div>
-          <div style="font-size:0.88rem;color:var(--gris-texte);">Expire le <strong>${expire}</strong>${reste !== null ? " · " + reste + " jour" + (reste > 1 ? "s" : "") + " restant" + (reste > 1 ? "s" : "") : ""}</div>
+      <div class="abo-carte abo-carte--actif${bientot ? " abo-carte--bientot" : ""}">
+        <div class="abo-carte__haut">
+          <span class="abo-statut">Premium actif</span>
+          <span class="abo-plan">${echapper(membre.premium_plan || "Premium")}</span>
         </div>
-        <a href="/boutique.html" class="btn btn--orange btn--sm">Renouveler ⭐</a>
+        <div class="abo-dates">
+          <div><span>Valable jusqu'au</span><strong>${fin ? dateFr(fin) : "—"}</strong></div>
+          <div><span>Jours restants</span><strong>${reste !== null ? Math.max(reste, 0) : "—"}</strong></div>
+        </div>
+        ${bientot ? '<p class="abo-alerte">Votre abonnement se termine bientôt. Vous pouvez le renouveler ci-dessous.</p>' : ""}
+        <p class="abo-inclus">Inclus : utilisation illimitée, analyse ATS, adaptation du CV à une offre, modèles de CV premium.</p>
       </div>`;
+          document.getElementById("renouveler-titre").textContent = bientot ? "Renouveler mon abonnement" : "Prolonger mon abonnement";
         } else {
           sp.innerHTML = `
-      <div style="background:rgba(245,130,13,0.06);border:1.5px dashed var(--orange);border-radius:16px;padding:20px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:8px;">⭐</div>
-        <div style="font-weight:800;font-size:1rem;color:var(--orange);margin-bottom:6px;">Aucun abonnement Premium actif</div>
-        <p style="color:var(--gris-texte);font-size:0.88rem;margin-bottom:16px;">Passez en Premium pour profiter de tous les outils CV, lettres et candidatures.</p>
-        <a href="/boutique.html" class="btn btn--orange btn--sm">Voir les offres →</a>
+      <div class="abo-carte">
+        <div class="abo-carte__haut"><span class="abo-statut abo-statut--gratuit">Compte gratuit</span></div>
+        <p class="abo-inclus">Vous gardez l'accès aux concours, aux offres, au suivi de candidatures et à l'analyse d'offre. La création de CV et de lettres est limitée chaque jour. Premium retire cette limite.</p>
       </div>`;
+          document.getElementById("renouveler-titre").textContent = "Passer en Premium";
+        }
+        // Formules proposées (prix lus depuis le serveur)
+        try {
+          const { plans } = await window.API.Paiement.plans();
+          document.getElementById("abo-formules").innerHTML = (plans || []).map((pl, i) => `
+      <a class="abo-formule${i === 1 ? " abo-formule--vedette" : ""}" href="/paiement.html?plan=${encodeURIComponent(pl.label)}">
+        <span class="abo-formule__nom">${echapper(pl.label)}</span>
+        <span class="abo-formule__prix">${Number(pl.montant).toLocaleString("fr-FR")} <small>FCFA</small></span>
+        <span class="abo-formule__go">Choisir →</span>
+      </a>`).join("") || '<a class="btn btn--primaire btn--sm" href="/boutique.html">Voir les formules</a>';
+        } catch {
+          document.getElementById("abo-formules").innerHTML = '<a class="btn btn--primaire btn--sm" href="/boutique.html">Voir les formules</a>';
         }
 
         // Transactions

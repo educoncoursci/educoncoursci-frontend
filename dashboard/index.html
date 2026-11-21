@@ -3,6 +3,7 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mon tableau de bord — ProInsertion CI</title>
     <meta name="description" content="Votre espace ProInsertion CI : CV, lettres de motivation, offres d'emploi et préparation aux entretiens." />
@@ -25,11 +26,12 @@
   <body style="background: var(--gris-clair)">
     <nav class="navbar" id="navbar">
       <div class="navbar__inner">
-        <a href="/" class="navbar__logo"
+        <a href="/dashboard/index.html" class="navbar__logo"
           ><div class="navbar__logo-icon"><img src="/assets/logo-icon.png" alt="ProInsertion CI" /></div>
           <span class="navbar__logo-texte">Pro<span>Insertion</span> <span class="navbar__ci">CI</span></span></a
         >
         <div class="navbar__actions" id="navbar-actions"></div>
+        <button class="navbar__hamburger" id="btn-sidebar" aria-label="Ouvrir le menu de mon espace" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </nav>
 
@@ -50,13 +52,13 @@
             <a href="/emploi.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="portefeuille" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Offres d'emploi</a>
             <a href="/simulation-entretien.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Simulation d'entretien</a>
             <a href="/dashboard/mes-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes candidatures</a>
-            <a href="/dashboard/suivi-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Suivi de mes candidatures</a>
+            <a href="/dashboard/suivi-candidatures.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="liste" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Suivi et relances</a>
             <div class="sidebar__titre">Concours</div>
             <a href="/dashboard/mes-concours.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mes concours</a>
             <a href="/dashboard/calendrier.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="horloge" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon calendrier</a>
             <div class="sidebar__titre">Mon compte</div>
             <a href="/dashboard/messages.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="enveloppeFermee" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Messages</a>
-            <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paiements</a>
+            <a href="/dashboard/paiements.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="paiement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Abonnement et paiements</a>
             <a href="/dashboard/profil.html" class="sidebar__lien"><span class="sidebar__icone"><span data-icone="utilisateurs" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Mon profil</a>
           </nav>
           <div class="sidebar__deconnexion">
@@ -75,20 +77,31 @@
             <span><strong>Confirmez votre adresse e-mail.</strong> Un lien vous a été envoyé à l'inscription ; il est nécessaire pour effectuer un paiement.</span>
             <button type="button" class="btn btn--sm btn--primaire" id="btn-renvoi-email">Renvoyer l'e-mail</button>
           </div>
-          <section class="dash-hero">
-            <div class="dash-hero__texte">
-              <div class="dash-hero__salut" id="salut">Bonjour</div>
+          <section class="dash-entete">
+            <div class="dash-entete__texte">
+              <div class="dash-entete__salut" id="salut">Bonjour</div>
               <h1 id="titre-bienvenue">Bienvenue</h1>
-              <p>Préparez votre candidature de A à Z : un CV soigné, une lettre qui convainc, les bonnes offres et un entretien maîtrisé.</p>
-              <div class="dash-hero__actions">
-                <a href="/cv-generator.html" class="btn btn--primaire btn--sm">Créer mon CV</a>
-                <a href="/analyse-offre.html" class="btn btn--outline-blanc btn--sm">Analyser une offre</a>
-              </div>
+              <p>Voici votre espace de travail : vos documents, vos candidatures et vos prochaines actions.</p>
             </div>
-            <div class="dash-hero__compte">
-              <div class="dash-hero__compte-label">Mon compte</div>
-              <div class="dash-hero__compte-val" id="stat-statut">—</div>
+            <div class="dash-compte" id="carte-compte">
+              <div class="dash-compte__label">Mon abonnement</div>
+              <div class="dash-compte__val" id="stat-statut">—</div>
+              <div class="dash-compte__detail" id="compte-detail"></div>
+              <a href="/boutique.html" class="dash-compte__lien" id="compte-lien">Voir les formules →</a>
             </div>
+          </section>
+
+          <!-- Bien démarrer (compte récent : disparaît dès que les 3 étapes sont faites ou sur demande) -->
+          <section class="dash-demarrer hidden" id="bien-demarrer" aria-labelledby="demarrer-titre">
+            <div class="dash-demarrer__tete">
+              <h2 id="demarrer-titre">Bien démarrer</h2>
+              <button type="button" class="dash-demarrer__fermer" id="demarrer-fermer" aria-label="Masquer ce guide">Masquer</button>
+            </div>
+            <ol class="dash-demarrer__etapes">
+              <li data-etape="cv"><span class="dash-demarrer__num">1</span><div><strong>Créez votre CV</strong><span>La base de toutes vos candidatures.</span></div><a href="/cv-generator.html">Commencer</a></li>
+              <li data-etape="analyse"><span class="dash-demarrer__num">2</span><div><strong>Analysez une offre</strong><span>Repérez ce que le recruteur attend.</span></div><a href="/analyse-offre.html">Commencer</a></li>
+              <li data-etape="suivi"><span class="dash-demarrer__num">3</span><div><strong>Suivez votre candidature</strong><span>Notez où vous avez postulé et planifiez la relance.</span></div><a href="/dashboard/suivi-candidatures.html">Commencer</a></li>
+            </ol>
           </section>
 
           <!-- Outils principaux -->
@@ -152,29 +165,6 @@
               <div class="dash-sous-titre">Clôtures de concours que vous suivez</div>
               <div id="liste-clotures"><div class="dash-vide">Chargement…</div></div>
             </div>
-          </div>
-
-          <!-- Parcours conseillé -->
-          <div class="dash-section">
-            <div class="dash-section__header">
-              <div class="dash-section__titre">Votre parcours candidature</div>
-              <span class="dash-section__voir" id="parcours-avance" style="cursor:default">0/4</span>
-            </div>
-            <ol class="parcours" id="parcours">
-              <li class="parcours__etape" data-etape="analyse"><span class="parcours__num">1</span><div><strong>Analysez l'offre</strong><span>Repérez les attentes du recruteur.</span></div><a href="/analyse-offre.html">Commencer</a></li>
-              <li class="parcours__etape" data-etape="cv"><span class="parcours__num">2</span><div><strong>Créez votre CV</strong><span>Mettez en avant vos atouts.</span></div><a href="/cv-generator.html">Commencer</a></li>
-              <li class="parcours__etape" data-etape="lm"><span class="parcours__num">3</span><div><strong>Rédigez votre lettre</strong><span>Personnalisée pour le poste.</span></div><a href="/cv-generator.html?type=lm">Commencer</a></li>
-              <li class="parcours__etape" data-etape="entretien"><span class="parcours__num">4</span><div><strong>Préparez l'entretien</strong><span>Questions et conseils.</span></div><a href="/simulation-entretien.html">Commencer</a></li>
-            </ol>
-          </div>
-
-          <!-- Promo Premium (compte gratuit uniquement) -->
-          <div class="premium-promo hidden" id="promo-premium">
-            <div class="premium-promo__titre">Passez à ProInsertion CI Premium</div>
-            <div class="premium-promo__texte">
-              Comparez votre CV à chaque offre, obtenez des documents ciblés et profitez de l'accompagnement complet.
-            </div>
-            <a href="/boutique.html" class="btn btn--primaire btn--sm">Découvrir Premium →</a>
           </div>
 
           <!-- Activité récente -->
@@ -250,11 +240,21 @@
         $("salut").textContent = h >= 18 || h < 5 ? "Bonsoir" : "Bonjour";
         $("titre-bienvenue").textContent = prenom ? prenom : "Bienvenue";
         const statut = $("stat-statut");
+        const detail = $("compte-detail");
+        const lienCompte = $("compte-lien");
         if (session.premium) {
           statut.textContent = "Premium";
+          const exp = session.premium_expire ? new Date(session.premium_expire) : null;
+          if (exp && !isNaN(exp)) {
+            const reste = Math.ceil((exp - Date.now()) / 86400000);
+            detail.textContent = "Valable jusqu'au " + exp.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) + (reste >= 0 && reste <= 7 ? " (" + reste + " j restants)" : "");
+          }
+          lienCompte.textContent = "Gérer mon abonnement →";
+          lienCompte.href = "/dashboard/paiements.html";
         } else {
           statut.textContent = "Gratuit";
-          $("promo-premium").classList.remove("hidden");
+          detail.textContent = "CV, lettres et analyses avec limite quotidienne.";
+          lienCompte.textContent = "Passer en Premium →";
         }
 
         const faits = { analyse: false, cv: false, lm: false, entretien: false };
@@ -266,7 +266,7 @@
             const lien = li.querySelector("a");
             if (ok) { n++; lien.textContent = "Refaire"; } else { lien.textContent = "Commencer"; }
           });
-          $("parcours-avance").textContent = `${n}/4`;
+          const av = $("parcours-avance"); if (av) av.textContent = `${n}/4`;
         };
 
         const vide = (texte, lien, lib) => `<div class="dash-vide">${texte}<br><a href="${lien}">${lib}</a></div>`;
@@ -352,6 +352,23 @@
         };
         const chargerEmail = async () => { try { const d = await window.API.Auth.me(); sur.emailVerifie = d?.user ? d.user.email_verifie !== false : null; } catch {} };
         await Promise.allSettled([chargerRappels(), chargerClotures(), chargerEmail()]);
+
+        // ── Bien démarrer : 3 étapes pour un compte récent ──
+        (() => {
+          const zone = $("bien-demarrer"); if (!zone) return;
+          const cle = "ecc_demarrer_ferme_" + (session.id || "");
+          let ferme = false; try { ferme = localStorage.getItem(cle) === "1"; } catch {}
+          const etat = { cv: faits.cv, analyse: faits.analyse, suivi: sur.suivis.length > 0 };
+          let fait = 0;
+          zone.querySelectorAll("li[data-etape]").forEach((li) => {
+            const ok = !!etat[li.dataset.etape]; if (ok) fait++;
+            li.classList.toggle("dash-demarrer__fait", ok);
+            li.querySelector("a").textContent = ok ? "Refaire" : "Commencer";
+          });
+          if (ferme || fait === 3) return;
+          zone.classList.remove("hidden");
+          $("demarrer-fermer").addEventListener("click", () => { zone.classList.add("hidden"); try { localStorage.setItem(cle, "1"); } catch {} });
+        })();
 
         const items = [
           { ok: !!session.photo_url, lib: "Ajouter une photo de profil", lien: "/dashboard/profil.html" },

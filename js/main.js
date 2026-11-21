@@ -148,8 +148,6 @@ const btnOuvrir = document.getElementById("btn-sidebar");
 const sidebar   = document.querySelector(".sidebar, .admin-sidebar");
 if (!btnOuvrir || !sidebar) return;
 
-btnOuvrir.addEventListener("click", () => sidebar.classList.toggle("ouvert"));
-
 // Overlay pour fermer
 let overlay = document.querySelector(".sidebar__overlay");
 if (!overlay) {
@@ -157,7 +155,16 @@ overlay = document.createElement("div");
 overlay.className = "sidebar__overlay";
 document.body.appendChild(overlay);
 }
-overlay.addEventListener("click", () => sidebar.classList.remove("ouvert"));
+const majEtat = () => {
+const ouvert = sidebar.classList.contains("ouvert");
+overlay.style.display = ouvert ? "block" : "none";
+btnOuvrir.setAttribute("aria-expanded", ouvert ? "true" : "false");
+document.body.style.overflow = ouvert ? "hidden" : "";
+};
+btnOuvrir.addEventListener("click", () => { sidebar.classList.toggle("ouvert"); majEtat(); });
+overlay.addEventListener("click", () => { sidebar.classList.remove("ouvert"); majEtat(); });
+sidebar.addEventListener("click", (e) => { if (e.target.closest("a")) { sidebar.classList.remove("ouvert"); majEtat(); } });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") { sidebar.classList.remove("ouvert"); majEtat(); } });
 }
 
 // ════════════════════════════════════════════════════════════
@@ -580,3 +587,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const s = a && a.closest(".admin-sidebar");
   if (s) s.scrollTop = Math.max(0, a.offsetTop - s.clientHeight / 2);
 });
+
+// ── Mesure d'audience intégrée ───────────────────────────────────────────────
+// Sans cookie, sans adresse IP conservée ; « Ne pas me suivre » (DNT / GPC)
+// respecté ; jamais sur les pages d'administration. Voir confidentialite.html.
+(function mesureAudience() {
+  try {
+    if (navigator.doNotTrack === "1" || window.doNotTrack === "1" || navigator.globalPrivacyControl) return;
+    const chemin = location.pathname;
+    if (chemin.indexOf("/admin") === 0 || !window.API_URL) return;
+    let entree = false;
+    try {
+      if (!sessionStorage.getItem("ecc_session")) { sessionStorage.setItem("ecc_session", "1"); entree = true; }
+    } catch (e) { /* stockage indisponible : on ne compte pas d'entrée */ }
+    let src;
+    try {
+      const u = new URLSearchParams(location.search).get("utm_source");
+      if (u && /^[a-z0-9_-]{1,30}$/.test(u)) src = u;
+    } catch (e) {}
+    let membre = false;
+    try { membre = !!localStorage.getItem("ecc_token"); } catch (e) {}
+    fetch(window.API_URL + "/stats/visite", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chemin, entree, referent: entree ? document.referrer : "", src, membre }),
+      keepalive: true,
+      credentials: "omit",
+    }).catch(() => {});
+  } catch (e) { /* la mesure ne doit jamais gêner le site */ }
+})();

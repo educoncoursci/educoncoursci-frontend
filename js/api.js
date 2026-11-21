@@ -376,6 +376,12 @@ return apiCall(`/users/${id}/scores`);
 async modifier(id, donnees) {
 return apiCall(`/users/${id}`, { method: "PATCH", body: JSON.stringify(donnees) });
 },
+async rappels(id) {
+return apiCall(`/users/${id}/rappels`);
+},
+async definirRappels(id, actif) {
+return apiCall(`/users/${id}/rappels`, { method: "PATCH", body: JSON.stringify({ actif: !!actif }) });
+},
 async favoris(id) {
 return apiCall(`/users/${id}/favoris`);
 },
