@@ -56,15 +56,11 @@
           <a href="/admin/concours.html" class="admin-sidebar__lien actif"
             ><span class="admin-sidebar__icone"><span data-icone="institution" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Concours</a
           >
-          <a href="/admin/actualites.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="cloche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Actualités</a>
           <a href="/admin/referentiels.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Référentiels</a
           >
           <a href="/admin/temoignages.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Témoignages</a>
           <a href="/admin/marketplace.html" class="admin-sidebar__lien"><span class="admin-sidebar__icone"><span data-icone="panier" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Marketplace</a>
-          <a href="/admin/pdfs.html" class="admin-sidebar__lien"
-            ><span class="admin-sidebar__icone"><span data-icone="document" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> PDFs</a
-          >
           <a href="/admin/parametres.html" class="admin-sidebar__lien"
             ><span class="admin-sidebar__icone"><span data-icone="parametres" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span></span> Paramètres</a
           >
@@ -182,22 +178,6 @@
               <option value="annulé">🔴 Annulé</option>
               <option value="archives">🗄️ Archivés</option>
               <option value="information non confirmée">❔ Information non confirmée</option>
-            </select>
-            <select
-              id="fil-acc-conc"
-              onchange="filtrerConcours()"
-              style="
-                padding: 10px 14px;
-                border: 1.5px solid var(--gris-bordure);
-                border-radius: var(--radius-md);
-                font-size: 0.88rem;
-                outline: none;
-                background: var(--blanc);
-              "
-            >
-              <option value="">Tous les accès</option>
-              <option value="false">🆓 Gratuits</option>
-              <option value="true">⭐ Premium</option>
             </select>
             <select
               id="fil-verif-conc"
@@ -453,13 +433,6 @@
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
             <div class="form-groupe">
-              <label class="form-label">Accès</label>
-              <select id="conc-premium" class="form-input">
-                <option value="false">🆓 Gratuit</option>
-                <option value="true">⭐ Premium</option>
-              </select>
-            </div>
-            <div class="form-groupe">
               <label class="form-label">Couleur (badge)</label>
               <input
                 type="color"
@@ -654,7 +627,6 @@
       function filtrerConcours() {
         const rech = document.getElementById("rech-conc").value.toLowerCase();
         const statut = document.getElementById("fil-statut-conc").value;
-        const acc = document.getElementById("fil-acc-conc").value;
         const verif = document.getElementById("fil-verif-conc").value;
         const liste = tousConcoursAdmin.filter((c) => {
           if (
@@ -665,7 +637,6 @@
             return false;
           if (statut === "archives") { if (!c.archive) return false; }
           else if (statut && c.statut !== statut) return false;
-          if (acc !== "" && String(c.premium) !== acc) return false;
           if (verif === "false" && c.date_verifiee !== false) return false;
           return true;
         });
@@ -690,7 +661,7 @@
         ${c.date_verifiee === false ? '<span title="Date indicative — à vérifier contre un communiqué officiel" style="color:var(--orange);cursor:help;margin-left:4px;">⚠️</span>' : ""}
       </td>
       <td style="font-size:0.85rem;">${c.places || "—"}</td>
-      <td>${c.premium ? '<span class="badge badge--premium" style="font-size:0.7rem;">⭐</span>' : '<span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span>'}</td>
+      <td><span class="badge badge--gratuit" style="font-size:0.7rem;">🆓</span></td>
       <td><div class="admin-tableau__actions">
         <button class="admin-tableau__btn admin-tableau__btn--edit" onclick="editer(${c.id})" title="Modifier">✏️</button>
         ${c.statut !== "résultats" && c.statut !== "annulé" ? `<button class="admin-tableau__btn" onclick="actionRapideConcours(${c.id},'resultats')" title="Publier les résultats">🏆</button>` : ""}
@@ -806,7 +777,6 @@
         document.getElementById("conc-conditions").value = "";
         document.getElementById("conc-pieces").value = "";
         document.getElementById("conc-centres").value = "";
-        document.getElementById("conc-premium").value = "false";
         document.getElementById("conc-couleur").value = "#1A6B3C";
         document.getElementById("conc-structure").value = "";
         document.getElementById("conc-age-min").value = "";
@@ -906,9 +876,6 @@
         )
           ? c.centres.join(", ")
           : "";
-        document.getElementById("conc-premium").value = String(
-          c.premium || false,
-        );
         document.getElementById("conc-couleur").value = c.couleur || "#1A6B3C";
         document.getElementById("conc-structure").value = "";
         document.getElementById("conc-age-min").value = "";
@@ -992,7 +959,6 @@
             .value.split(",")
             .map((s) => s.trim())
             .filter(Boolean),
-          premium: document.getElementById("conc-premium").value === "true",
           couleur: document.getElementById("conc-couleur").value,
           structureId: document.getElementById("conc-structure").value
             ? parseInt(document.getElementById("conc-structure").value)
