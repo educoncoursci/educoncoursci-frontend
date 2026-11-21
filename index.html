@@ -3,21 +3,22 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <link rel="canonical" href="https://proinsertionci.netlify.app/index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ProInsertion CI — CV, lettres de motivation, emploi, entretiens et concours en Côte d'Ivoire</title>
+    <title>ProInsertion CI — CV, emploi, stages et concours en Côte d'Ivoire</title>
     <meta
       name="description"
-      content="Votre avenir professionnel commence ici. Créez votre CV et votre lettre de motivation, trouvez un emploi ou un stage, préparez vos entretiens et accédez aux concours en Côte d'Ivoire."
+      content="Créez votre CV et votre lettre de motivation, trouvez un emploi ou un stage, préparez vos entretiens et suivez les concours en Côte d'Ivoire. Inscription gratuite."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ProInsertion CI" />
-    <meta property="og:title" content="ProInsertion CI — CV, lettres de motivation, emploi, entretiens et concours en Côte d'Ivoire" />
-    <meta property="og:description" content="Votre avenir professionnel commence ici. Créez votre CV et votre lettre de motivation, trouvez un emploi ou un stage, préparez vos entretiens et accédez aux concours en Côte d'Ivoire." />
+    <meta property="og:title" content="ProInsertion CI — CV, emploi, stages et concours en Côte d'Ivoire" />
+    <meta property="og:description" content="Créez votre CV et votre lettre de motivation, trouvez un emploi ou un stage, préparez vos entretiens et suivez les concours en Côte d'Ivoire. Inscription gratuite." />
     <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
     <meta property="og:url" content="https://proinsertionci.netlify.app/index.html" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ProInsertion CI — CV, lettres de motivation, emploi, entretiens et concours en Côte d'Ivoire" />
-    <meta name="twitter:description" content="Votre avenir professionnel commence ici. Créez votre CV et votre lettre de motivation, trouvez un emploi ou un stage, préparez vos entretiens et accédez aux concours en Côte d'Ivoire." />
+    <meta name="twitter:title" content="ProInsertion CI — CV, emploi, stages et concours en Côte d'Ivoire" />
+    <meta name="twitter:description" content="Créez votre CV et votre lettre de motivation, trouvez un emploi ou un stage, préparez vos entretiens et suivez les concours en Côte d'Ivoire. Inscription gratuite." />
     <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />    <link rel="icon" href="/assets/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,7 +31,7 @@
     <link rel="stylesheet" href="/css/recherche.css" />
     <link rel="stylesheet" href="/css/proinsertion.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
-        <script type="application/ld+json">
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -39,7 +40,7 @@
       "logo": "https://proinsertionci.netlify.app/assets/logo-icon.png",
       "description": "Plateforme d'accompagnement à l'insertion professionnelle en Côte d'Ivoire : CV, lettres de motivation, documents professionnels, offres d'emploi, préparation aux entretiens et concours.",
       "areaServed": "CI",
-      "sameAs": []
+      "sameAs": ["https://www.linkedin.com/in/proinsertion-ci-137226450/", "https://www.facebook.com/share/1MBFGVBjf5/"]
     }
     </script>
     <script type="application/ld+json">
@@ -60,16 +61,10 @@
       <link rel="stylesheet" href="/css/ui-pro.css" />
       <script>
       /* Les photos de la page d'accueil sont réservées aux visiteurs : un membre connecté ne les voit (ni ne les télécharge) jamais. */
-      try { if (localStorage.getItem("ecc_token")) document.documentElement.classList.add("membre"); } catch (e) {}
+      try { if (localStorage.getItem("ecc_token")) { document.documentElement.classList.add("membre"); location.replace("/dashboard/index.html"); } } catch (e) {}
     </script>
   </head>
   <body>
-    <!-- ── BANDEAU PREMIUM ───────────────────────────────────────── -->
-
-    <div id="bandeau-premium" class="bandeau-premium hidden">
-      <span data-icone="etoile" data-taille="16" style="margin-right:6px;vertical-align:-3px;"></span>Passez en Premium pour profiter d'une utilisation illimitée : CV, lettres, analyse ATS.
-      <a href="/boutique.html">Voir les offres →</a>
-    </div>
 
     <!-- ── NAVBAR ────────────────────────────────────────────────── -->
 
@@ -90,11 +85,11 @@
             concours en complément.
           </p>
           <div class="hero__actions" id="hero-actions">
-            <a href="/cv-generator.html" class="btn btn--primaire btn--lg">Créer mon CV →</a>
-            <a href="/emploi.html" class="btn btn--outline-blanc btn--lg">Trouver un emploi</a>
-            <a href="/analyse-offre.html" class="btn btn--outline-blanc btn--lg">Analyser une offre (gratuit)</a>
+            <a href="/auth/register.html" class="btn btn--primaire btn--lg">Créer mon compte gratuit</a>
+            <a href="#section-services" class="btn btn--outline-blanc btn--lg">Découvrir les services</a>
+            <a href="/auth/login.html" class="pi-hero-connexion">Déjà inscrit ? Se connecter</a>
           </div>
-          <p style="margin:14px 0 0;font-size:.9rem"><a href="/comment-ca-marche.html" style="color:#d1e7d9;text-decoration:underline">Comment ça marche ?</a></p>
+          <p class="pi-hero-note">Inscription gratuite · Aucune carte bancaire requise · <a href="/comment-ca-marche.html">Comment ça marche ?</a></p>
           <div class="hero__stats">
             <div class="hero__stat">
               <div class="hero__stat-nombre">12+</div>
@@ -120,14 +115,6 @@
       </div>
     </section>
 
-    <!-- ── CONFIANCE (visiteurs) ─────────────────────────────────── -->
-    <div class="pub-confiance pub-seulement">
-      <ul class="pub-confiance__liste">
-        <li><span><span data-icone="institution" data-taille="20"></span></span><div><strong>Sources officielles</strong><small>Concours publiés avec leur source</small></div></li>
-        <li><span><span data-icone="portefeuille" data-taille="20"></span></span><div><strong>Paiement Mobile Money</strong><small>Wave, Orange Money, MTN, Moov</small></div></li>
-        <li><span><span data-icone="cadenas" data-taille="20"></span></span><div><strong>Données privées</strong><small>Suppression de compte à tout moment</small></div></li>
-      </ul>
-    </div>
 
     <!-- ── DEUX PARCOURS ───────────────────────────────────────────── -->
     <section class="pi-parcours" id="section-parcours" aria-label="Choisissez votre parcours">
@@ -160,96 +147,137 @@
           <p>Du CV à l'entretien, ProInsertion CI vous accompagne à chaque étape de votre recherche.</p>
         </div>
         <div class="pi-services">
-          <a href="/cv-generator.html" class="pi-service">
-            <div class="pi-service__icone"><span data-icone="fusee" data-taille="24"></span></div>
+          <a href="/cv-generator.html" class="pi-service pi-service--vert">
+            <div class="pi-service__tete">
+              <span class="pi-ic pi-ic--vert"><span data-icone="cv" data-taille="26"></span></span>
+              <span class="pi-service__cat">Candidature</span>
+            </div>
             <h3>Créer mon CV</h3>
             <p>Des modèles professionnels, lisibles par les logiciels de recrutement.</p>
-            <div class="pi-service__action">Créer mon CV →</div>
+            <span class="pi-service__action">Créer mon CV <span data-icone="flecheDroite" data-taille="16"></span></span>
           </a>
-          <a href="/cv-generator.html" class="pi-service">
-            <div class="pi-service__icone"><span data-icone="document" data-taille="24"></span></div>
+          <a href="/cv-generator.html" class="pi-service pi-service--vert">
+            <div class="pi-service__tete">
+              <span class="pi-ic pi-ic--vert"><span data-icone="lettre" data-taille="26"></span></span>
+              <span class="pi-service__cat">Candidature</span>
+            </div>
             <h3>Générer ma lettre de motivation</h3>
             <p>Une lettre adaptée au poste et à l'organisation que vous visez.</p>
-            <div class="pi-service__action">Générer ma lettre →</div>
+            <span class="pi-service__action">Générer ma lettre <span data-icone="flecheDroite" data-taille="16"></span></span>
           </a>
-          <a href="/emploi.html" class="pi-service">
-            <div class="pi-service__icone"><span data-icone="loupe" data-taille="24"></span></div>
-            <h3>Trouver un emploi</h3>
-            <p>Les offres d'emploi regroupées, avec filtres par secteur et par ville.</p>
-            <div class="pi-service__action">Voir les offres →</div>
-          </a>
-          <a href="/analyse-offre.html" class="pi-service">
-            <div class="pi-service__icone"><span data-icone="loupe" data-taille="24"></span></div>
+          <a href="/analyse-offre.html" class="pi-service pi-service--bleu">
+            <div class="pi-service__tete">
+              <span class="pi-ic pi-ic--bleu"><span data-icone="scanDoc" data-taille="26"></span></span>
+              <span class="pi-service__cat">Recherche</span>
+            </div>
             <h3>Analyser une offre d'emploi</h3>
             <p>Comprenez ce que le recruteur attend, puis créez un CV et une lettre ciblés. Gratuit avec un compte.</p>
-            <div class="pi-service__action">Analyser une offre →</div>
+            <span class="pi-service__action">Analyser une offre <span data-icone="flecheDroite" data-taille="16"></span></span>
           </a>
-          <a href="/simulation-entretien.html" class="pi-service">
-            <div class="pi-service__icone"><span data-icone="aide" data-taille="24"></span></div>
-            <h3>Simuler un entretien</h3>
-            <p>Entraînez-vous avec des questions adaptées au poste, puis recevez une analyse de vos réponses.</p>
-            <div class="pi-service__action">Lancer une simulation →</div>
+          <a href="/emploi.html" class="pi-service pi-service--bleu">
+            <div class="pi-service__tete">
+              <span class="pi-ic pi-ic--bleu"><span data-icone="mallette" data-taille="26"></span></span>
+              <span class="pi-service__cat">Recherche</span>
+            </div>
+            <h3>Trouver un emploi</h3>
+            <p>Les offres d'emploi regroupées, avec filtres par secteur et par ville.</p>
+            <span class="pi-service__action">Voir les offres <span data-icone="flecheDroite" data-taille="16"></span></span>
           </a>
-          <a href="/documents-pro.html" class="pi-service">
-            <div class="pi-service__icone"><span data-icone="portefeuille" data-taille="24"></span></div>
-            <h3>Documents professionnels</h3>
-            <p>Courriers et documents administratifs et professionnels, prêts à personnaliser.</p>
-            <div class="pi-service__action">Découvrir les documents →</div>
-          </a>
-          <a href="/emploi.html?opportunite=stage" class="pi-service">
-            <div class="pi-service__icone"><span data-icone="graphique" data-taille="24"></span></div>
+          <a href="/emploi.html?opportunite=stage" class="pi-service pi-service--bleu">
+            <div class="pi-service__tete">
+              <span class="pi-ic pi-ic--bleu"><span data-icone="tendance" data-taille="26"></span></span>
+              <span class="pi-service__cat">Recherche</span>
+            </div>
             <h3>Trouver un stage</h3>
             <p>Les offres de stage et d'alternance, mises à jour régulièrement.</p>
-            <div class="pi-service__action">Voir les stages →</div>
+            <span class="pi-service__action">Voir les stages <span data-icone="flecheDroite" data-taille="16"></span></span>
           </a>
-          <a href="/concours.html" class="pi-service">
-            <div class="pi-service__icone"><span data-icone="institution" data-taille="24"></span></div>
+          <a href="/simulation-entretien.html" class="pi-service pi-service--ambre">
+            <div class="pi-service__tete">
+              <span class="pi-ic pi-ic--ambre"><span data-icone="messages" data-taille="26"></span></span>
+              <span class="pi-service__cat">Préparation</span>
+            </div>
+            <h3>Simuler un entretien</h3>
+            <p>Entraînez-vous avec des questions adaptées au poste, puis recevez une analyse de vos réponses.</p>
+            <span class="pi-service__action">Lancer une simulation <span data-icone="flecheDroite" data-taille="16"></span></span>
+          </a>
+          <a href="/documents-pro.html" class="pi-service pi-service--ambre">
+            <div class="pi-service__tete">
+              <span class="pi-ic pi-ic--ambre"><span data-icone="dossier" data-taille="26"></span></span>
+              <span class="pi-service__cat">Préparation</span>
+            </div>
+            <h3>Documents professionnels</h3>
+            <p>Courriers et documents administratifs et professionnels, prêts à personnaliser.</p>
+            <span class="pi-service__action">Découvrir les documents <span data-icone="flecheDroite" data-taille="16"></span></span>
+          </a>
+          <a href="/concours.html" class="pi-service pi-service--violet">
+            <div class="pi-service__tete">
+              <span class="pi-ic pi-ic--violet"><span data-icone="institution" data-taille="26"></span></span>
+              <span class="pi-service__cat">Ressources</span>
+            </div>
             <h3>Accéder aux concours</h3>
-            <p>Concours en cours et à venir, avec dates et sources officielles.</p>
-            <div class="pi-service__action">Accéder aux concours →</div>
+            <p>Concours en cours et à venir, avec dates et sources officielles. Information gratuite.</p>
+            <span class="pi-service__action">Accéder aux concours <span data-icone="flecheDroite" data-taille="16"></span></span>
           </a>
-          <a href="/academie.html" class="pi-service">
-            <div class="pi-service__icone"><span data-icone="diplome" data-taille="24"></span></div>
+          <a href="/academie.html" class="pi-service pi-service--violet">
+            <div class="pi-service__tete">
+              <span class="pi-ic pi-ic--violet"><span data-icone="diplome" data-taille="26"></span></span>
+              <span class="pi-service__cat">Ressources</span>
+            </div>
             <h3>Découvrir les formations</h3>
-            <p>Cours courts avec exercices.</p>
-            <div class="pi-service__action">Voir les formations →</div>
+            <p>Cours courts avec exercices, accessibles gratuitement.</p>
+            <span class="pi-service__action">Voir les formations <span data-icone="flecheDroite" data-taille="16"></span></span>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ── TARIFS (alimentés par le catalogue ; cachés tant qu'aucun produit n'est actif) ── -->
+    <!-- ── EXPERTISE ───────────────────────────────────────────────── -->
 
-    <section class="section section-gris" id="section-tarifs" style="display: none" data-reserve-membres>
+    <section class="section pi-expertise" id="section-expertise">
       <div class="container">
         <div class="pi-titre">
-          <h2>Nos tarifs</h2>
-          <p>Prix fixes en FCFA, affichés avant tout achat.</p>
+          <h2>Des services étudiés pour votre insertion</h2>
+          <p>Des solutions professionnelles étudiées et élaborées par l'équipe ProInsertion CI pour mieux accompagner votre insertion professionnelle.</p>
         </div>
-        <div class="pi-tarifs" id="grille-tarifs"></div>
+        <div class="pub-expertise">
+          <figure class="pub-fig pub-fig--landscape pub-seulement">
+            <picture>
+              <source type="image/webp" srcset="/assets/img/accompagnement-480.webp 480w, /assets/img/accompagnement-788.webp 788w" sizes="(max-width: 900px) 90vw, 480px" />
+              <img src="/assets/img/accompagnement-788.jpg" srcset="/assets/img/accompagnement-480.jpg 480w, /assets/img/accompagnement-788.jpg 788w" sizes="(max-width: 900px) 90vw, 480px" width="788" height="525" alt="Une conseillère en insertion professionnelle à son bureau" loading="lazy" decoding="async" />
+            </picture>
+          </figure>
+          <div class="pi-piliers">
+            <div class="pi-pilier">
+              <span class="pi-ic pi-ic--clair"><span data-icone="drapeau" data-taille="24"></span></span>
+              <div><h3>Pensé pour le marché ivoirien</h3>
+              <p>Des documents et des conseils adaptés aux usages des recruteurs en Côte d'Ivoire.</p></div>
+            </div>
+            <div class="pi-pilier">
+              <span class="pi-ic pi-ic--clair"><span data-icone="cible" data-taille="24"></span></span>
+              <div><h3>Des offres claires et accessibles</h3>
+              <p>Un accompagnement de qualité, accessible et adapté à vos besoins.</p></div>
+            </div>
+            <div class="pi-pilier">
+              <span class="pi-ic pi-ic--clair"><span data-icone="mallette" data-taille="24"></span></span>
+              <div><h3>De la candidature à l'entretien</h3>
+              <p>CV, lettre de motivation, offres d'emploi et de stage, préparation aux entretiens : un seul endroit pour avancer.</p></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+
 
     <div id="bandeau-chaine"></div>
 
-    <!-- ── INVITATION À CRÉER UN COMPTE (visiteurs) : les offres et tarifs sont réservés aux membres ── -->
-    <section class="section" id="section-invitation" style="padding: 48px 0; display: none">
-      <div class="container" style="max-width: 760px; text-align: center;">
-        <h2 style="margin-bottom: 10px;">Découvrez nos offres</h2>
-        <p style="color: var(--gris-texte); margin-bottom: 24px;">
-          Créez votre compte gratuit pour accéder à l'ensemble de nos services, à leurs tarifs et à vos documents sauvegardés.
-        </p>
-        <a href="/auth/register.html" class="btn btn--primaire btn--lg">Créer mon compte gratuit</a>
-        <a href="/auth/login.html" class="btn btn--outline-vert btn--lg" style="margin-left: 8px;">Se connecter</a>
-      </div>
-    </section>
 
     <!-- ── CARRIÈRE : CV, LETTRE, EMPLOI ──────────────────────────── -->
 
-    <section class="section" id="section-carriere" style="background: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%);">
+    <section class="section" id="section-carriere">
       <div class="container">
         <div class="section__en-tete">
-          <span class="section__tag"><span data-icone="portefeuille" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>CV &amp; Emploi</span>
+          <span class="section__tag"><span data-icone="mallette" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>CV &amp; Emploi</span>
           <h2>Ne laissez plus un CV mal adapté réduire vos chances</h2>
           <p>Un CV et une lettre qui correspondent au poste visé font la différence. Candidatez avec des documents professionnels, pensés pour le marché ivoirien.</p>
         </div>
@@ -260,44 +288,44 @@
               <img src="/assets/img/lettre-419.jpg" srcset="/assets/img/lettre-300.jpg 300w, /assets/img/lettre-419.jpg 419w" sizes="(max-width: 1000px) 60vw, 280px" width="419" height="590" alt="Un jeune homme rédige à la main une lettre de motivation" loading="lazy" decoding="async" />
             </picture>
           </figure>
-        <div class="grille-2" style="gap:18px;">
-          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
-            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
-            <div>
-              <h3 style="font-size:1.05rem; margin-bottom:6px;">Un CV professionnel adapté</h3>
-              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Rédigé à partir de vos informations, avec des modèles adaptés aux entreprises, aux ONG et à la Fonction publique.</p>
-              <a href="/cv-generator.html" class="btn btn--outline-vert btn--sm mt-2">Créer mon CV →</a>
-            </div>
+          <div class="pi-carte-grille">
+            <article class="pi-carte pi-carte--vert">
+              <span class="pi-ic pi-ic--vert"><span data-icone="cv" data-taille="26"></span></span>
+              <div class="pi-carte__texte">
+                <h3>Un CV professionnel adapté</h3>
+                <p>Rédigé à partir de vos informations, avec des modèles adaptés aux entreprises, aux ONG et à la Fonction publique.</p>
+                <a href="/cv-generator.html" class="pi-carte__lien">Créer mon CV <span data-icone="flecheDroite" data-taille="16"></span></a>
+              </div>
+            </article>
+            <article class="pi-carte pi-carte--bleu">
+              <span class="pi-ic pi-ic--bleu"><span data-icone="lettre" data-taille="26"></span></span>
+              <div class="pi-carte__texte">
+                <h3>Une lettre de motivation personnalisée</h3>
+                <p>Écrite pour l'organisation et le poste que vous visez, en candidature spontanée ou en réponse à une offre.</p>
+                <a href="/cv-generator.html" class="pi-carte__lien">Rédiger ma lettre <span data-icone="flecheDroite" data-taille="16"></span></a>
+              </div>
+            </article>
+            <article class="pi-carte pi-carte--ambre">
+              <span class="pi-ic pi-ic--ambre"><span data-icone="bouclier" data-taille="26"></span></span>
+              <div class="pi-carte__texte">
+                <h3>Des outils pour renforcer vos candidatures<span class="pi-carte__badge"><span data-icone="etoile" data-taille="12"></span>Premium</span></h3>
+                <p>Analyse ATS de votre CV et adaptation à une offre d'emploi précise pour mieux correspondre à ce que le recruteur cherche.</p>
+                <a href="/boutique.html" class="pi-carte__lien">Voir le Premium <span data-icone="flecheDroite" data-taille="16"></span></a>
+              </div>
+            </article>
+            <article class="pi-carte pi-carte--violet">
+              <span class="pi-ic pi-ic--violet"><span data-icone="suivi" data-taille="26"></span></span>
+              <div class="pi-carte__texte">
+                <h3>Un suivi simple de vos candidatures</h3>
+                <p>Notez où vous avez postulé, planifiez vos relances et recevez des alertes e-mail pour les nouvelles offres.</p>
+                <a href="/dashboard/suivi-candidatures.html" class="pi-carte__lien">Suivre mes candidatures <span data-icone="flecheDroite" data-taille="16"></span></a>
+              </div>
+            </article>
           </div>
-          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
-            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
-            <div>
-              <h3 style="font-size:1.05rem; margin-bottom:6px;">Une lettre de motivation personnalisée</h3>
-              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Écrite pour l'organisation et le poste que vous visez, en candidature spontanée ou en réponse à une offre.</p>
-              <a href="/cv-generator.html" class="btn btn--outline-vert btn--sm mt-2">Rédiger ma lettre →</a>
-            </div>
-          </div>
-          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
-            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
-            <div>
-              <h3 style="font-size:1.05rem; margin-bottom:6px;">Des outils pour renforcer vos candidatures</h3>
-              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Analyse ATS de votre CV et adaptation à une offre d'emploi précise pour mieux correspondre à ce que le recruteur cherche (Premium).</p>
-              <a href="/boutique.html" class="btn btn--outline-vert btn--sm mt-2">Voir le Premium →</a>
-            </div>
-          </div>
-          <div class="card" style="padding: 24px; display:flex; gap:14px; align-items:flex-start;">
-            <span data-icone="coche" data-taille="20" style="display:inline-flex;vertical-align:-4px;color:var(--vert);flex-shrink:0;"></span>
-            <div>
-              <h3 style="font-size:1.05rem; margin-bottom:6px;">Des conseils pour mieux chercher un emploi</h3>
-              <p style="color: var(--gris-texte); font-size: 0.9rem; margin:0;">Des repères simples pour postuler plus efficacement, à retrouver juste en dessous.</p>
-              <a href="/emploi.html" class="btn btn--outline-vert btn--sm mt-2">Voir les offres d'emploi →</a>
-            </div>
-          </div>
-        </div>
         </div>
 
         <div style="max-width: 780px; margin: 32px auto 0;">
-          <h3 style="margin-bottom:12px; font-size:1.1rem;">Nos conseils pour votre recherche d'emploi</h3>
+          <h3 class="pi-conseils__titre"><span class="pi-ic pi-ic--vert pi-ic--petit"><span data-icone="ampoule" data-taille="20"></span></span>Nos conseils pour votre recherche d'emploi</h3>
           <details class="faq-item">
             <summary>Adaptez votre CV à chaque offre</summary>
             <p>Relisez l'annonce et reprenez ses mots-clés (poste, compétences, outils) là où ils décrivent réellement votre parcours. Un CV ciblé est plus lu qu'un CV générique.</p>
@@ -322,6 +350,55 @@
             <summary>Méfiez-vous des arnaques</summary>
             <p>Un recruteur sérieux ne demande jamais d'argent pour un entretien, un dossier ou une embauche. En cas de doute, vérifiez l'offre sur le site officiel de l'organisation.</p>
           </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── APERÇU DU PRODUIT : exemple de CV (fictif) ─────────────── -->
+    <section class="section section-gris" id="section-apercu">
+      <div class="container">
+        <div class="pi-apercu">
+          <div class="pi-apercu__texte">
+            <span class="cvvisible__tag">Aperçu</span>
+            <h2>Un CV clair, prêt à envoyer</h2>
+            <p>Choisissez un modèle, renseignez vos informations, puis téléchargez votre CV en PDF. La mise en page est soignée et lisible, y compris par les logiciels de tri des candidatures.</p>
+            <ul class="pi-apercu__liste">
+              <li><span data-icone="coche" data-taille="16"></span>Modèles pensés pour le marché ivoirien</li>
+              <li><span data-icone="coche" data-taille="16"></span>Lettre de motivation assortie à votre CV</li>
+              <li><span data-icone="coche" data-taille="16"></span>Téléchargement en PDF</li>
+            </ul>
+            <div class="pub-actions">
+              <a href="/auth/register.html" class="btn btn--primaire btn--lg">Créer mon compte gratuit</a>
+              <a href="/cv-generator.html" class="btn btn--outline-vert btn--lg">Voir les modèles</a>
+            </div>
+          </div>
+          <figure class="pi-cv" aria-label="Exemple de CV fictif, à titre d'illustration">
+            <div class="pi-cv__feuille">
+              <span class="pi-cv__ruban">Exemple fictif</span>
+              <aside class="pi-cv__col">
+                <div class="pi-cv__photo" aria-hidden="true">AE</div>
+                <h4>Contact</h4>
+                <p>Abidjan, Cocody<br>exemple@email.ci<br>+225 00 00 00 00 00</p>
+                <h4>Compétences</h4>
+                <ul><li>Comptabilité générale</li><li>Excel avancé</li><li>Gestion de la paie</li><li>Travail en équipe</li></ul>
+                <h4>Langues</h4>
+                <p>Français · courant<br>Anglais · intermédiaire</p>
+              </aside>
+              <div class="pi-cv__corps">
+                <h3>Aminata Exemple</h3>
+                <div class="pi-cv__poste">Comptable junior</div>
+                <h4>Profil</h4>
+                <p>Comptable diplômée, rigoureuse et organisée, à la recherche d'un poste en cabinet ou en entreprise à Abidjan.</p>
+                <h4>Expérience</h4>
+                <div class="pi-cv__ligne"><strong>Assistante comptable</strong><span>Entreprise Exemple · 2023 – 2025</span></div>
+                <ul><li>Saisie et rapprochement des écritures</li><li>Suivi des factures clients et fournisseurs</li></ul>
+                <div class="pi-cv__ligne"><strong>Stagiaire comptabilité</strong><span>Cabinet Exemple · 2022</span></div>
+                <h4>Formation</h4>
+                <div class="pi-cv__ligne"><strong>BTS Comptabilité et gestion</strong><span>Établissement Exemple · 2022</span></div>
+              </div>
+            </div>
+            <figcaption>Exemple fictif, à titre d'illustration. Votre CV reprend vos propres informations.</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -354,6 +431,54 @@
       </div>
     </section>
 
+    <!-- ── TARIFS PUBLICS ─────────────────────────────────────────── -->
+    <section class="section section-gris" id="section-plans">
+      <div class="container">
+        <div class="pi-titre">
+          <h2>Des formules simples, des prix clairs</h2>
+          <p>Commencez gratuitement. Passez en Premium quand vous voulez aller plus loin dans votre recherche d'emploi.</p>
+        </div>
+        <div class="pi-formules" id="plans-container">
+          <article class="pi-formule">
+            <div class="pi-formule__nom">Gratuit</div>
+            <div class="pi-formule__prix">0 <small>FCFA</small></div>
+            <div class="pi-formule__duree">avec un compte gratuit</div>
+            <ul class="pi-formule__liste">
+              <li>Concours : toute l'information, 100 % gratuite</li>
+              <li>Offres d'emploi et de stage, alertes e-mail</li>
+              <li>Analyse d'offre gratuite</li>
+              <li>Suivi de vos candidatures</li>
+              <li>Création de CV et de lettres, avec limite quotidienne</li>
+            </ul>
+            <a href="/auth/register.html" class="btn btn--outline-vert btn--full">Créer mon compte</a>
+          </article>
+          <div class="pi-formules__chargement">Chargement des formules Premium…</div>
+        </div>
+        <ul class="pi-paiement">
+          <li><span data-icone="cadenas" data-taille="16"></span>Paiement par Wave ou Orange Money</li>
+          <li><span data-icone="coche" data-taille="16"></span>Aucune carte bancaire requise</li>
+          <li><span data-icone="horloge" data-taille="16"></span>Accès activé après vérification, sous 24 h</li>
+        </ul>
+        <p class="pi-tarifs-lien"><a href="/boutique.html">Voir le détail de toutes les formules et services →</a></p>
+      </div>
+    </section>
+
+    <!-- ── CONFIANCE ──────────────────────────────────────────────── -->
+    <section class="section" id="section-confiance">
+      <div class="container">
+        <div class="pi-titre">
+          <h2>Une plateforme sur laquelle vous pouvez compter</h2>
+          <p>Vos informations restent les vôtres, et chaque prix est affiché avant tout achat.</p>
+        </div>
+        <ul class="pi-confiance">
+          <li><span class="pi-ic pi-ic--vert pi-ic--petit"><span data-icone="bouclier" data-taille="22"></span></span><div><strong>Données privées</strong><p>Vos documents ne sont visibles que de vous. Vous pouvez supprimer votre compte à tout moment.</p></div></li>
+          <li><span class="pi-ic pi-ic--bleu pi-ic--petit"><span data-icone="cadenas" data-taille="22"></span></span><div><strong>Paiement sans carte bancaire</strong><p>Wave ou Orange Money. Aucun accès n'est activé sans vérification de votre paiement.</p></div></li>
+          <li><span class="pi-ic pi-ic--violet pi-ic--petit"><span data-icone="institution" data-taille="22"></span></span><div><strong>Sources officielles</strong><p>Les concours sont publiés avec un lien vers la source officielle, pour vérifier chaque information.</p></div></li>
+          <li><span class="pi-ic pi-ic--ambre pi-ic--petit"><span data-icone="coche" data-taille="22"></span></span><div><strong>Des promesses honnêtes</strong><p>Un CV soigné augmente vos chances d'être remarqué ; il ne garantit pas un recrutement.</p></div></li>
+        </ul>
+      </div>
+    </section>
+
     <!-- ── RECRUTEMENT ET MISE EN RELATION (visiteurs) ─────────────── -->
 
     <section class="section pub-seulement" id="section-recrutement">
@@ -383,32 +508,6 @@
       </div>
     </section>
 
-    <!-- ── PLANS PREMIUM ──────────────────────────────────────────── -->
-
-    <section class="section-gris" id="section-plans" style="display: none" data-reserve-membres>
-      <div class="container">
-        <div class="section__en-tete">
-          <span class="section__tag"><span data-icone="etoile" data-taille="14" style="margin-right:6px;vertical-align:-2px;"></span>Premium</span>
-          <h2>Passez au Premium</h2>
-          <p>
-            Pour utiliser sans limite les services d'insertion professionnelle.
-            Paiement direct par Wave CI ou Orange Money — aucune carte bancaire requise.
-          </p>
-        </div>
-        <div class="grille-3" id="plans-container">
-          <!-- Chargé dynamiquement -->
-        </div>
-        <p
-          class="text-center mt-3"
-          style="color: var(--gris-texte); font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap;"
-        >
-          <span style="display:flex;align-items:center;gap:6px;"><span data-icone="cadenas" data-taille="16"></span>Paiement sécurisé</span>
-          <span style="display:flex;align-items:center;gap:6px;"><span data-icone="vagues" data-taille="16"></span>Wave CI</span>
-          <span style="display:flex;align-items:center;gap:6px;"><span data-icone="cercleOrange" data-taille="16"></span>Orange Money</span>
-          <span style="display:flex;align-items:center;gap:6px;"><span data-icone="coche" data-taille="16"></span>Activation sous 24h</span>
-        </p>
-      </div>
-    </section>
 
     <!-- ── TÉMOIGNAGES ──────────────────────────────────────────────
          Masquée tant qu'aucun témoignage n'est publié depuis l'admin —
@@ -453,32 +552,24 @@
       </div>
     </section>
 
-    <!-- ── NEWSLETTER + APPLICATION ─────────────────────────────────── -->
-
-    <section class="section">
+    <!-- ── APPEL FINAL ────────────────────────────────────────────── -->
+    <section class="pi-final" id="section-final">
       <div class="container">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px;" class="grille-newsletter-app">
-          <div style="background:var(--vert);border-radius:var(--radius-lg);padding:32px;color:#fff;">
-            <h3 style="margin-bottom:8px;color:#fff;"><span data-icone="email" data-taille="20" style="display:inline-flex;vertical-align:-4px;"></span> Newsletter</h3>
-            <p style="opacity:0.9;margin-bottom:16px;font-size:0.9rem;">Recevez un résumé des nouveaux concours et des actualités importantes.</p>
-            <div id="zone-newsletter">
-              <form onsubmit="event.preventDefault(); sInscrireNewsletter();" style="display:flex;gap:8px;flex-wrap:wrap;">
-                <input type="email" id="newsletter-email" placeholder="votre@email.com" required style="flex:1;min-width:180px;padding:10px 14px;border-radius:10px;border:none;font-size:0.9rem;">
-                <button type="submit" class="btn" style="background:#fff;color:var(--vert);font-weight:700;">S'inscrire</button>
-              </form>
-              <div id="msg-newsletter" class="hidden" style="margin-top:10px;font-size:0.85rem;"></div>
+        <h2>Prêt à candidater avec un dossier solide ?</h2>
+        <p>Créez votre compte gratuit en moins d'une minute et commencez dès aujourd'hui.</p>
+        <div class="pi-final__actions">
+          <a href="/auth/register.html" class="btn btn--lg pi-final__btn">Créer mon compte gratuit</a>
+          <a href="/auth/login.html" class="btn btn--lg btn--outline-blanc">Se connecter</a>
+        </div>
+        <div id="zone-newsletter" class="pi-newsletter">
+          <form onsubmit="event.preventDefault(); sInscrireNewsletter();">
+            <label for="newsletter-email">Recevoir les nouveaux concours par e-mail</label>
+            <div>
+              <input type="email" id="newsletter-email" placeholder="votre@email.com" required />
+              <button type="submit" class="btn btn--sm">S'inscrire</button>
             </div>
-          </div>
-          <div style="background:var(--blanc);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--ombre-sm);">
-            <h3 style="margin-bottom:8px;"><span data-icone="telephone" data-taille="20" style="display:inline-flex;vertical-align:-4px;"></span> Emportez ProInsertion CI partout</h3>
-            <p style="color:var(--gris-texte);margin-bottom:16px;font-size:0.9rem;">Installez l'application sur votre téléphone pour un accès rapide, même avec une connexion faible.</p>
-            <button class="btn btn--outline-vert btn--full" id="btn-installer-app" data-installer-app>
-              <span data-icone="telechargement" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Installer l'application
-            </button>
-            <p id="msg-pwa-non-dispo" class="hidden" style="font-size:0.78rem;color:var(--gris-texte);margin-top:8px;">
-              Depuis votre navigateur : menu ⋮ → "Ajouter à l'écran d'accueil".
-            </p>
-          </div>
+          </form>
+          <div id="msg-newsletter" class="hidden" style="margin-top:8px;font-size:0.85rem;"></div>
         </div>
       </div>
     </section>
@@ -498,70 +589,44 @@
     <script src="/js/recherche.js"></script>
 
     <script src="/js/main.js"></script>
-    <script src="/js/tarifs.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Les prix ne sont affichés qu'aux membres connectés.
-        const connecte = !!(window.Auth && window.Auth.estConnecte());
-        if (connecte) document.querySelectorAll(".pub-seulement").forEach((e) => e.remove());
-        const invitation = document.getElementById("section-invitation");
-        if (invitation) invitation.style.display = connecte ? "none" : "";
-        if (connecte) window.Tarifs.charger(document.getElementById("section-tarifs"), document.getElementById("grille-tarifs"));
-      });
-    </script>
-
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        // ── Plans Premium ─────────────────────────────────────────
+        // ── Formules Premium (publiques : prix fixes, lus depuis le serveur) ──
         const conteneurPlans = document.getElementById("plans-container");
         const echapperTexte = (t) => {
           const div = document.createElement("div");
           div.textContent = t || "";
           return div.innerHTML;
         };
-        const membreConnecte = !!(window.Auth && window.Auth.estConnecte());
-        if (membreConnecte) document.getElementById("section-plans").style.display = "";
         try {
-          if (!membreConnecte) throw new Error("visiteur");
           const data = await window.API.Paiement.plans();
           const plans = data.plans || [];
-
-          conteneurPlans.innerHTML = plans
-            .map(
-              (p, i) => `
-      <div class="pricing-card ${i === 1 ? "pricing-card--vedette" : ""}">
-        ${i === 1 ? `<div class="pricing-card__badge">${window.icone ? window.icone("etoile", 13) : ""} Le plus populaire</div>` : ""}
-        <div class="pricing-card__label">${p.label}</div>
-        <div class="pricing-card__prix">${p.montant.toLocaleString("fr-CI")}</div>
-        <div class="pricing-card__devise">FCFA / ${p.label.toLowerCase()}</div>
-        <ul class="pricing-card__liste">
-          ${[
+          if (!plans.length) throw new Error("vide");
+          const avantages = [
             "Utilisation illimitée, sans limite quotidienne",
             "Analyse ATS de votre CV",
             "Adaptation du CV à une offre",
             "Modèles de CV premium",
             "Comparaison CV / offre d'emploi",
-          ]
-            .map(
-              (item) =>
-                `<li class="pricing-card__item"><span class="pricing-card__check">${window.icone ? window.icone("coche", 14) : ""}</span>${item}</li>`,
-            )
-            .join("")}
-        </ul>
-        <a href="/paiement.html?plan=${encodeURIComponent(p.label)}"
-           class="btn btn--primaire btn--full ${i === 1 ? "btn--orange" : ""}"
-           style="${i === 1 ? "background:var(--gradient-orange);border:none;" : ""}">
-          Choisir ce plan
-        </a>
-      </div>
-    `,
-            )
-            .join("");
+          ];
+          const cartes = plans.map((p, i) => {
+            const cible = "/paiement.html?plan=" + encodeURIComponent(p.label);
+            const lien = "/auth/register.html?retour=" + encodeURIComponent(cible);
+            return `<article class="pi-formule ${i === 1 ? "pi-formule--vedette" : ""}">
+        ${i === 1 ? '<div class="pi-formule__badge">Le plus choisi</div>' : ""}
+        <div class="pi-formule__nom">Premium · ${echapperTexte(p.label)}</div>
+        <div class="pi-formule__prix">${Number(p.montant).toLocaleString("fr-FR")} <small>FCFA</small></div>
+        <div class="pi-formule__duree">pour ${echapperTexte(p.label.toLowerCase())}</div>
+        <ul class="pi-formule__liste">${avantages.map((x) => `<li>${x}</li>`).join("")}</ul>
+        <a href="${lien}" class="btn btn--primaire btn--full">Choisir cette formule</a>
+      </article>`;
+          });
+          conteneurPlans.querySelector(".pi-formules__chargement")?.remove();
+          conteneurPlans.insertAdjacentHTML("beforeend", cartes.join(""));
+          conteneurPlans.classList.add("pi-formules--" + (plans.length + 1));
         } catch {
-          conteneurPlans.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;color:var(--gris-texte);">
-        Impossible de charger les plans. <a href="/boutique.html" style="color:var(--vert);">Voir la boutique →</a>
-      </div>`;
+          const c = conteneurPlans.querySelector(".pi-formules__chargement");
+          if (c) c.innerHTML = 'Les formules Premium sont indiquées dans la <a href="/boutique.html">boutique</a>.';
         }
 
         // ── Témoignages (masqués si aucun n'est publié) ─────────────

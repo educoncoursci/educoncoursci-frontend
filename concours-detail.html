@@ -959,11 +959,11 @@
       }
 
       function partagerWhatsApp() {
-        const url = encodeURIComponent(window.location.href);
+        const url = encodeURIComponent(window.lienAvecSource ? window.lienAvecSource(window.location.href, "whatsapp") : window.location.href);
         const txt = encodeURIComponent(
           `📋 Concours : ${concoursActuel?.titre} — ProInsertion CI`,
         );
-        window.open(`https://wa.me/?text=${txt}%20${url}`, "_blank");
+        window.open(`https://wa.me/?text=${txt}%20${url}`, "_blank", "noopener");
       }
 
       function copierLien() {
