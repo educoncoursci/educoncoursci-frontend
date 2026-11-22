@@ -24,59 +24,48 @@
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
     <link rel="stylesheet" href="/css/recherche.css" />
-    <style>
-      .carte-bloc { background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm); margin-bottom: 20px; }
-      .packs-grille { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
-      .pack { border: 2px solid var(--gris-bordure); border-radius: 12px; padding: 14px 16px; cursor: pointer; background: #fff; }
-      .pack.selectionne { border-color: var(--vert); background: #f0fdf4; }
-      .pack__nom { font-weight: 800; }
-      .pack__desc { font-size: .82rem; color: var(--gris-texte); margin: 4px 0 8px; line-height: 1.45; }
-      .pack__prix { font-weight: 800; color: var(--vert); font-size: 1.05rem; }
-      .pack__eco { display: inline-block; margin-left: 8px; background: #fff7ed; color: #c2410c; font-weight: 700; font-size: .75rem; border-radius: 8px; padding: 2px 8px; }
-      .pack__inclus { font-size: .78rem; margin: 6px 0 0 16px; padding: 0; color: var(--gris-texte); }
-      .grille-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-      .grille-2 .pleine { grid-column: 1 / -1; }
-      .bloc-item { background: var(--gris-clair); border-radius: 12px; padding: 14px; margin-bottom: 10px; }
-      .titre-section { font-weight: 800; color: var(--bleu); margin: 22px 0 10px; }
-      .doc-pack { border: 2px solid var(--gris-bordure); border-radius: 12px; margin-top: 14px; overflow: hidden; }
-      .doc-pack__tete { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; background: var(--gris-clair); font-weight: 700; font-size: .9rem; flex-wrap: wrap; }
-      .doc-pack__corps { position: relative; white-space: pre-wrap; font-size: .84rem; line-height: 1.55; padding: 14px 16px; word-break: break-word; }
-      .doc-pack__flou { filter: blur(5px); user-select: none; pointer-events: none; color: #555; max-height: 200px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 40%, transparent); mask-image: linear-gradient(#000 40%, transparent); }
-      @media (max-width: 640px) { .grille-2 { grid-template-columns: 1fr; } }
-    </style>
       <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
       <link rel="stylesheet" href="/css/ui-pro.css" />
+      <link rel="stylesheet" href="/css/espaces-services.css" />
   </head>
-  <body>
+  <body class="svc-page">
     <div id="site-header"></div>
 
-    <div class="page-header" style="background: linear-gradient(135deg, #0a2540, #0a6ebd)">
+    <div class="svc-hero" style="--h1:#0a2e18; --h2:#14532d">
       <div class="container">
-        <h1>Packs</h1>
-        <p>Plusieurs documents ou services assortis, un seul paiement, un prix réduit.</p>
+        <div class="svc-hero__icone"><span data-icone="mallette" data-taille="26"></span></div>
+        <div>
+          <h1>Packs</h1>
+          <p>Plusieurs documents ou services assortis, un seul paiement, un prix réduit.</p>
+          <div class="svc-hero__puces">
+            <span><span data-icone="coche" data-taille="13"></span> Documents assortis</span>
+            <span><span data-icone="paiement" data-taille="13"></span> Un seul paiement</span>
+            <span><span data-icone="etoile" data-taille="13"></span> Prix réduit par rapport à l'unité</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <main class="container" style="max-width: 900px; padding: 32px 20px 60px;">
-      <div id="zone-non-connecte" class="hidden" style="text-align:center; padding:60px 20px;">
-        <p style="margin-bottom:16px; color:var(--gris-texte);">Connectez-vous pour commander un pack.</p>
+    <main class="svc svc-main">
+      <div id="zone-non-connecte" class="hidden svc-invite">
+        <div class="svc-invite__icone"><span data-icone="cadenas" data-taille="24"></span></div>
+        <p>Connectez-vous pour commander un pack.</p>
         <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
       </div>
 
       <div id="zone-generateur">
-        <div class="carte-bloc">
-          <h3 style="margin:0 0 12px;">1. Choisissez votre pack</h3>
-          <div id="liste-packs" class="packs-grille" style="color: var(--gris-texte);">Chargement…</div>
+        <div class="svc-bloc carte-bloc">
+          <h3 class="svc-etape"><span class="svc-etape__n">1</span><span>Choisissez votre pack<small>Comparez le contenu et le prix, puis touchez l'offre qui vous convient.</small></span></h3>
+          <div id="liste-packs" class="packs-grille svc-packs" style="color: var(--gris-texte);">Chargement…</div>
         </div>
 
-        <div id="zone-formulaire" class="carte-bloc hidden">
-          <h3 style="margin:0 0 4px;">2. Renseignez vos informations</h3>
-          <div style="color:var(--gris-texte); font-size:.85rem;">Une seule saisie pour tous les documents du pack.</div>
+        <div id="zone-formulaire" class="svc-bloc carte-bloc hidden">
+          <h3 class="svc-etape"><span class="svc-etape__n">2</span><span>Renseignez vos informations<small>Une seule saisie pour tous les documents du pack.</small></span></h3>
 
-          <div class="titre-section">Votre profil</div>
-          <div class="grille-2">
+          <div class="titre-section svc-sous-titre">Votre profil</div>
+          <div class="grille-2 svc-grille-2">
             <div class="form-groupe"><label class="form-label">Nom complet <span>*</span></label><input id="p-nom" class="form-input" /></div>
             <div class="form-groupe"><label class="form-label">Poste recherché <span>*</span></label><input id="p-poste" class="form-input" /></div>
             <div class="form-groupe"><label class="form-label">E-mail</label><input id="p-email" class="form-input" /></div>
@@ -87,16 +76,16 @@
           </div>
 
           <div id="bloc-cv">
-          <div class="titre-section">Expériences professionnelles</div>
+          <div class="titre-section svc-sous-titre">Expériences professionnelles</div>
           <div id="liste-exp"></div>
           <button type="button" class="btn btn--gris btn--sm" onclick="ajouterExp()">+ Ajouter une expérience</button>
 
-          <div class="titre-section">Formations</div>
+          <div class="titre-section svc-sous-titre">Formations</div>
           <div id="liste-for"></div>
           <button type="button" class="btn btn--gris btn--sm" onclick="ajouterFor()">+ Ajouter une formation</button>
 
-          <div class="titre-section">Compétences, langues, loisirs</div>
-          <div class="grille-2">
+          <div class="titre-section svc-sous-titre">Compétences, langues, loisirs</div>
+          <div class="grille-2 svc-grille-2">
             <div class="form-groupe pleine"><label class="form-label">Compétences (séparées par des virgules)</label><textarea id="p-competences" class="form-textarea" rows="2"></textarea></div>
             <div class="form-groupe"><label class="form-label">Langues</label><input id="p-langues" class="form-input" /></div>
             <div class="form-groupe"><label class="form-label">Loisirs</label><input id="p-loisirs" class="form-input" /></div>
@@ -105,16 +94,16 @@
           </div>
 
           <div id="bloc-entretien" class="hidden">
-            <div class="titre-section">Pour votre entretien</div>
-            <div class="grille-2">
+            <div class="titre-section svc-sous-titre">Pour votre entretien</div>
+            <div class="grille-2 svc-grille-2">
               <div class="form-groupe pleine"><label class="form-label">Organisation (facultatif)</label><input id="p-org2" class="form-input" /></div>
               <div class="form-groupe pleine"><label class="form-label">Ce qui vous inquiète pour cet entretien (facultatif)</label><textarea id="p-inq" class="form-textarea" rows="2"></textarea></div>
             </div>
           </div>
 
           <div id="bloc-lettre">
-            <div class="titre-section">Pour la lettre de motivation</div>
-            <div class="grille-2">
+            <div class="titre-section svc-sous-titre">Pour la lettre de motivation</div>
+            <div class="grille-2 svc-grille-2">
               <div class="form-groupe"><label class="form-label">Organisation visée <span>*</span></label><input id="p-org" class="form-input" /></div>
               <div class="form-groupe"><label class="form-label">Destinataire</label><input id="p-dest" class="form-input" placeholder="Madame, Monsieur le Directeur des Ressources Humaines" /></div>
               <div class="form-groupe pleine"><label class="form-label">Votre motivation principale <span>*</span></label><textarea id="p-motivation" class="form-textarea" rows="3"></textarea></div>
@@ -130,8 +119,8 @@
 
         <div id="zone-resultat" class="hidden">
           <div id="zone-commande"></div>
-          <div class="carte-bloc" style="margin-top:20px;">
-            <h3 style="margin:0;">Documents du pack</h3>
+          <div class="svc-bloc carte-bloc" style="margin-top:20px;">
+            <h3 class="svc-etape" style="margin:0;"><span class="svc-etape__n"><span data-icone="document" data-taille="15"></span></span>Documents du pack</h3>
             <div id="docs-pack"></div>
           </div>
         </div>
@@ -147,6 +136,13 @@
     <script src="/js/commande.js"></script>
     <script>
       const IDS_PACKS = ["pack-entretien", "pack-essentiel", "pack-professionnel", "pack-international", "pack-recherche-emploi"];
+      const META_PACK = {
+        "pack-essentiel":        { c: "#0a5c9e", i: "document" },
+        "pack-professionnel":    { c: "#14532d", i: "mallette", reco: true },
+        "pack-international":    { c: "#5b3a8e", i: "monde" },
+        "pack-recherche-emploi": { c: "#c2540a", i: "cible" },
+        "pack-entretien":        { c: "#0f766e", i: "messages" },
+      };
       let packs = [];
       let packChoisi = null;
       let groupeCourant = null;
@@ -178,13 +174,19 @@
           const data = await fetch(window.API_URL + "/catalogue").then((r) => r.json());
           packs = (data.categories || []).flatMap((c) => c.produits).filter((p) => IDS_PACKS.includes(p.id));
           if (!packs.length) { zone.textContent = "Les packs ne sont pas disponibles pour le moment."; return; }
-          zone.innerHTML = packs.map((p) => `
-            <div class="pack" data-id="${esc(p.id)}">
-              <div class="pack__nom">${esc(p.nom)}</div>
-              <div class="pack__desc">${esc(p.description)}</div>
-              ${p.composition?.length || p.inclus?.length ? `<ul class="pack__inclus">${(p.composition || []).map((c) => `<li>${esc(c.nom)}</li>`).join("")}${(p.inclus || []).map((i) => `<li>${esc(i)}</li>`).join("")}</ul>` : ""}
-              <div style="margin-top:8px;"><span class="pack__prix">${Number(p.prix_fcfa).toLocaleString("fr-FR")} FCFA</span>${p.economie_fcfa ? `<span class="pack__eco">−${Number(p.economie_fcfa).toLocaleString("fr-FR")} F</span>` : ""}</div>
-            </div>`).join("");
+          zone.innerHTML = packs.map((p) => {
+            const m = META_PACK[p.id] || { c: "#14532d", i: "mallette" };
+            const lignes = [...(p.composition || []).map((x) => x.nom), ...(p.inclus || [])];
+            return `
+            <div class="pack svc-pack" data-id="${esc(p.id)}" role="button" tabindex="0" style="--c:${m.c}">
+              ${m.reco ? '<span class="svc-pack__ruban">Recommandé</span>' : ""}
+              <div class="svc-pack__tete"><span class="svc-pack__icone"><span data-icone="${m.i}" data-taille="20"></span></span><div class="pack__nom svc-pack__nom">${esc(p.nom)}</div></div>
+              <div class="pack__desc svc-pack__desc">${esc(p.description)}</div>
+              ${lignes.length ? `<ul class="pack__inclus svc-pack__liste">${lignes.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>` : ""}
+              <div class="svc-pack__pied"><span class="pack__prix svc-prix">${Number(p.prix_fcfa).toLocaleString("fr-FR")} FCFA</span>${p.economie_fcfa ? `<span class="pack__eco svc-eco">−${Number(p.economie_fcfa).toLocaleString("fr-FR")} F</span>` : ""}</div>
+            </div>`;
+          }).join("");
+          zone.querySelectorAll(".pack").forEach((el) => (el.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); choisir(el.dataset.id); } }));
           zone.querySelectorAll(".pack").forEach((el) => (el.onclick = () => choisir(el.dataset.id)));
         } catch { zone.textContent = "Impossible de charger les packs. Réessayez dans un instant."; }
       }
@@ -203,8 +205,8 @@
       }
 
       function ajouterExp() {
-        const d = document.createElement("div"); d.className = "bloc-item exp-item";
-        d.innerHTML = `<div class="grille-2">
+        const d = document.createElement("div"); d.className = "bloc-item svc-item exp-item";
+        d.innerHTML = `<div class="grille-2 svc-grille-2">
           <input class="form-input exp-poste" placeholder="Poste" /><input class="form-input exp-entreprise" placeholder="Employeur" />
           <input class="form-input exp-debut" placeholder="Début (ex. 2022)" /><input class="form-input exp-fin" placeholder="Fin (vide = en cours)" />
           <textarea class="form-textarea exp-desc pleine" rows="2" placeholder="Missions"></textarea></div>
@@ -212,8 +214,8 @@
         document.getElementById("liste-exp").appendChild(d);
       }
       function ajouterFor() {
-        const d = document.createElement("div"); d.className = "bloc-item for-item";
-        d.innerHTML = `<div class="grille-2">
+        const d = document.createElement("div"); d.className = "bloc-item svc-item for-item";
+        d.innerHTML = `<div class="grille-2 svc-grille-2">
           <input class="form-input for-diplome" placeholder="Diplôme" /><input class="form-input for-etab" placeholder="Établissement" />
           <input class="form-input for-annee" placeholder="Année" /><input class="form-input for-mention" placeholder="Mention (facultatif)" /></div>
           <button type="button" class="btn btn--gris btn--sm" style="margin-top:8px;" onclick="this.parentElement.remove()">Supprimer</button>`;
@@ -268,12 +270,12 @@
         Commande.afficher(docs[0]);
         const valide = docs[0].etat === "valide";
         document.getElementById("docs-pack").innerHTML = docs.map((d, i) => `
-          <div class="doc-pack">
-            <div class="doc-pack__tete"><span>${esc(d.nom)}</span>
+          <div class="doc-pack svc-doc">
+            <div class="doc-pack__tete svc-doc__tete"><span>${esc(d.nom)}</span>
               ${valide && d.type === "entretien-simulation" ? "" : valide ? `<button class="btn btn--primaire btn--sm" data-dl="${d.id}" data-type="${esc(d.type)}">Télécharger (PDF)</button>` : `<span style="color:var(--gris-texte);font-weight:500;">Aperçu</span>`}</div>
-            <div class="doc-pack__corps">${valide && d.type === "entretien-simulation"
+            <div class="doc-pack__corps svc-doc__corps">${valide && d.type === "entretien-simulation"
               ? `Ta simulation est débloquée. <a class="btn btn--primaire btn--sm" href="/simulation-entretien.html?id=${Number(d.id)}">Passer la simulation</a>`
-              : esc(valide ? d.contenu : d.apercu?.visible)}${valide ? "" : `<div class="doc-pack__flou">${esc(d.apercu?.flou)}</div>`}</div>
+              : esc(valide ? d.contenu : d.apercu?.visible)}${valide ? "" : `<div class="doc-pack__flou svc-doc__flou">${esc(d.apercu?.flou)}</div>`}</div>
           </div>`).join("");
         document.querySelectorAll("[data-dl]").forEach((b) => (b.onclick = async () => {
           const t = b.dataset.type;

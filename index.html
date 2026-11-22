@@ -372,32 +372,57 @@
               <a href="/cv-generator.html" class="btn btn--outline-vert btn--lg">Voir les modèles</a>
             </div>
           </div>
-          <figure class="pi-cv" aria-label="Exemple de CV fictif, à titre d'illustration">
+          <figure class="pi-cv" aria-label="Exemple de CV créé avec ProInsertion CI">
             <div class="pi-cv__feuille">
-              <span class="pi-cv__ruban">Exemple fictif</span>
               <aside class="pi-cv__col">
-                <div class="pi-cv__photo" aria-hidden="true">AE</div>
-                <h4>Contact</h4>
-                <p>Abidjan, Cocody<br>exemple@email.ci<br>+225 00 00 00 00 00</p>
-                <h4>Compétences</h4>
-                <ul><li>Comptabilité générale</li><li>Excel avancé</li><li>Gestion de la paie</li><li>Travail en équipe</li></ul>
-                <h4>Langues</h4>
-                <p>Français · courant<br>Anglais · intermédiaire</p>
+                <img class="pi-cv__photo" src="/assets/img/cv-exemple-portrait.jpg" alt="" loading="lazy" />
+                <div class="pi-cv__panneau">
+                  <h4>Profil</h4>
+                  <p class="pi-cv__profil">Déterminé, sérieux et autonome, je suis persuadé que je serais un élément moteur au sein de votre structure !</p>
+                  <h4>Contact</h4>
+                  <ul class="pi-cv__contact">
+                    <li><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.800 7-13a7 7 0 00-7-7zm0 9.500A2.500 2.500 0 119.500 9 2.500 2.500 0 0112 11.500z"/></svg><span>Abidjan, Cocody</span></li>
+                    <li><span data-icone="email" data-taille="12"></span><span>jm.kouame@exemple.ci</span></li>
+                    <li><span data-icone="telephone" data-taille="12"></span><span>+225 07 00 00 00 00</span></li>
+                    <li><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M5 11l1.500-4.500A2 2 0 018.400 5h7.200a2 2 0 011.900 1.500L19 11a2 2 0 011.500 2v4a1 1 0 01-1 1H18a1 1 0 01-1-1v-1H7v1a1 1 0 01-1 1H4.500a1 1 0 01-1-1v-4A2 2 0 015 11zm2.600-4l-1.200 4h11.200l-1.200-4zM7 14.500a1.200 1.200 0 100 2.400 1.200 1.200 0 000-2.400zm10 0a1.200 1.200 0 100 2.400 1.200 1.200 0 000-2.400z"/></svg><span>Permis B</span></li>
+                  </ul>
+                  <h4>Intérêts</h4>
+                  <ul class="pi-cv__interets">
+                    <li><strong>Sports :</strong> football, vélo, natation</li>
+                    <li><strong>Voyages :</strong> Ghana, Sénégal, France</li>
+                  </ul>
+                </div>
               </aside>
               <div class="pi-cv__corps">
-                <h3>Aminata Exemple</h3>
-                <div class="pi-cv__poste">Comptable junior</div>
-                <h4>Profil</h4>
-                <p>Comptable diplômée, rigoureuse et organisée, à la recherche d'un poste en cabinet ou en entreprise à Abidjan.</p>
-                <h4>Expérience</h4>
-                <div class="pi-cv__ligne"><strong>Assistante comptable</strong><span>Entreprise Exemple · 2023 – 2025</span></div>
-                <ul><li>Saisie et rapprochement des écritures</li><li>Suivi des factures clients et fournisseurs</li></ul>
-                <div class="pi-cv__ligne"><strong>Stagiaire comptabilité</strong><span>Cabinet Exemple · 2022</span></div>
+                <h3>Jean-Marc Kouamé</h3>
+                <div class="pi-cv__poste">Commercial</div>
                 <h4>Formation</h4>
-                <div class="pi-cv__ligne"><strong>BTS Comptabilité et gestion</strong><span>Établissement Exemple · 2022</span></div>
+                <ul class="pi-cv__formation">
+                  <li><b>2022</b> – Master spécialisé en techniques commerciales – Institut Supérieur de Gestion</li>
+                  <li><b>2020</b> – Licence commerce et vente – Institut Supérieur de Gestion</li>
+                  <li><b>2019</b> – BTS communication – Institut Supérieur de Gestion</li>
+                  <li><b>2017</b> – Baccalauréat série D – Lycée Moderne de Cocody</li>
+                </ul>
+                <h4>Expérience</h4>
+                <div class="pi-cv__exp">
+                  <div class="pi-cv__quand"><b>2025</b><span>Durance Média</span></div>
+                  <div class="pi-cv__quoi"><strong>Chargé de communication &amp; marketing</strong><ul><li>Lancement complet d'une marque</li><li>Community manager : gestion des réseaux sociaux</li><li>Relations presse (communiqués et dossiers de presse)</li><li>Print : roll-up, adhésifs, catalogue</li></ul></div>
+                </div>
+                <div class="pi-cv__exp">
+                  <div class="pi-cv__quand"><b>2024</b><span>Bio&amp;Bon</span></div>
+                  <div class="pi-cv__quoi"><strong>Assistant marketing, service support</strong><ul><li>Salons et forums</li><li>Organisation des visites pour les chargés de recrutement</li></ul></div>
+                </div>
+                <div class="pi-cv__exp">
+                  <div class="pi-cv__quand"><b>2023</b><span>Fitissimo</span></div>
+                  <div class="pi-cv__quoi"><strong>Chargé de communication</strong><ul><li>Réalisation de kakémonos, banderoles et affiches</li><li>Mise en place d'un jeu concours : prospection des lots</li></ul></div>
+                </div>
+                <h4>Compétences</h4>
+                <div class="pi-cv__comp">
+                  <div><strong>Langues</strong><p>Français : langue maternelle<br>Anglais : niveau scolaire<br>Espagnol : niveau scolaire</p></div>
+                  <div><strong>Logiciels maîtrisés</strong><p>Word<br>Excel<br>Canva</p></div>
+                </div>
               </div>
             </div>
-            <figcaption>Exemple fictif, à titre d'illustration. Votre CV reprend vos propres informations.</figcaption>
           </figure>
         </div>
       </div>

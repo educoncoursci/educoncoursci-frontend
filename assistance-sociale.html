@@ -31,189 +31,83 @@
     <link rel="stylesheet" href="/css/responsive.css" />
     <link rel="stylesheet" href="/css/recherche.css" />
     <style>
-      .bandeau-urgence {
-        background: #7c2d12;
-        color: #fff;
-        padding: 14px 20px;
-        text-align: center;
-      }
-      .bandeau-urgence__titre {
-        font-weight: 800;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        margin-bottom: 8px;
-        letter-spacing: 0.03em;
-      }
-      .bandeau-urgence__liste {
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-        justify-content: center;
-        font-size: 0.85rem;
-      }
-      .bandeau-urgence__item {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        background: rgba(255,255,255,0.12);
-        padding: 4px 12px;
-        border-radius: 20px;
-      }
-      .bandeau-urgence__item strong { font-weight: 800; }
-
-      .onglets-nav {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-bottom: 24px;
-        border-bottom: 2px solid var(--gris-bordure);
-      }
-      .onglet-btn {
-        background: none;
-        border: none;
-        padding: 12px 18px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: var(--gris-texte);
-        cursor: pointer;
-        border-bottom: 3px solid transparent;
-        margin-bottom: -2px;
-      }
-      .onglet-btn.actif {
-        color: var(--vert);
-        border-bottom-color: var(--vert);
-      }
       .onglet-contenu { display: none; }
       .onglet-contenu.actif { display: block; }
-
-      .structure-carte {
-        background: var(--blanc);
-        border-radius: var(--radius-lg);
-        padding: 20px;
-        box-shadow: var(--ombre-sm);
-        margin-bottom: 12px;
-      }
-      .structure-carte__categorie {
-        display: inline-block;
-        font-size: 0.7rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        padding: 3px 10px;
-        border-radius: 20px;
-        background: rgba(10,110,189,0.1);
-        color: var(--bleu);
-        margin-bottom: 8px;
-      }
-
-      .chat-conteneur {
-        background: var(--blanc);
-        border-radius: var(--radius-lg);
-        box-shadow: var(--ombre-sm);
-        display: flex;
-        flex-direction: column;
-        height: 500px;
-      }
-      .chat-messages {
-        flex: 1;
-        overflow-y: auto;
-        padding: 20px;
-      }
-      .chat-message {
-        margin-bottom: 14px;
-        max-width: 85%;
-      }
-      .chat-message--user {
-        margin-left: auto;
-        background: var(--vert);
-        color: #fff;
-        padding: 10px 14px;
-        border-radius: 14px 14px 4px 14px;
-      }
-      .chat-message--assistant {
-        background: var(--gris-clair);
-        padding: 10px 14px;
-        border-radius: 14px 14px 14px 4px;
-      }
-      .chat-alerte {
-        background: #fef2f2;
-        border: 1px solid #fecaca;
-        border-radius: 12px;
-        padding: 14px;
-        margin-bottom: 14px;
-        font-size: 0.85rem;
-      }
-      .chat-input-zone {
-        display: flex;
-        gap: 10px;
-        padding: 14px;
-        border-top: 1px solid var(--gris-bordure);
-      }
-      .chat-input-zone input {
-        flex: 1;
-      }
-      .form-doc {
-        background: var(--blanc);
-        border-radius: var(--radius-lg);
-        padding: 28px;
-        box-shadow: var(--ombre-sm);
-        margin-bottom: 24px;
-      }
+      .bandeau-urgence__liste { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.85rem; }
+      .bandeau-urgence__item { display: flex; align-items: center; gap: 5px; border-radius: 20px; padding: 4px 12px; }
+      .chat-conteneur { background: var(--blanc); display: flex; flex-direction: column; height: 500px; }
+      .chat-messages { flex: 1; overflow-y: auto; padding: 20px; }
+      .chat-message { margin-bottom: 14px; max-width: 85%; }
+      .chat-message--user { margin-left: auto; color: #fff; padding: 10px 14px; border-radius: 14px 14px 4px 14px; }
+      .chat-message--assistant { padding: 10px 14px; border-radius: 14px 14px 14px 4px; }
+      .chat-alerte { background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px; padding: 14px; margin-bottom: 14px; font-size: 0.85rem; }
+      .chat-input-zone { display: flex; gap: 10px; padding: 14px; border-top: 1px solid var(--gris-bordure); }
+      .chat-input-zone input { flex: 1; min-width: 0; }
+      .form-doc { background: var(--blanc); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 24px; }
     </style>
       <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
       <link rel="stylesheet" href="/css/ui-pro.css" />
+      <link rel="stylesheet" href="/css/espaces-services.css" />
   </head>
-  <body>
+  <body class="svc-page">
     <div id="site-header"></div>
 
     
 
-    <!-- Bandeau d'urgence permanent -->
-    <div class="bandeau-urgence" style="margin-top: var(--navbar-h);">
-      <div class="bandeau-urgence__titre">En cas d'urgence, appelle immédiatement</div>
-      <div class="bandeau-urgence__liste" id="bandeau-urgence-liste">
-        <div class="bandeau-urgence__item"><strong>185</strong> SAMU</div>
-        <div class="bandeau-urgence__item"><strong>111</strong> Police</div>
-        <div class="bandeau-urgence__item"><strong>139</strong> Écoute psychologique</div>
-        <div class="bandeau-urgence__item"><strong>116</strong> Enfance en détresse</div>
-      </div>
-    </div>
-
-    <div class="page-header" style="background: linear-gradient(135deg, #7c2d12, #9a3412)">
+    <div class="svc-hero" style="--h1:#7c2d12; --h2:#9a3412">
       <div class="container">
-        <h1><span data-icone="coeur" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Assistance Sociale</h1>
-        <p>Orientation, structures d'aide, documents et accompagnement pour vous et vos proches.</p>
+        <div class="svc-hero__icone"><span data-icone="coeur" data-taille="26"></span></div>
+        <div>
+          <h1>Assistance Sociale</h1>
+          <p>Orientation, structures d'aide, documents et accompagnement pour vous et vos proches.</p>
+          <div class="svc-hero__puces">
+            <span><span data-icone="institution" data-taille="13"></span> Structures officielles</span>
+            <span><span data-icone="document" data-taille="13"></span> Documents sociaux</span>
+            <span><span data-icone="messages" data-taille="13"></span> Assistant d'orientation</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <main class="container" style="max-width: 900px; padding: calc(var(--navbar-h) + 32px) 20px 60px;">
+    <main class="svc svc--social svc-main">
 
-      <div class="onglets-nav">
-        <button class="onglet-btn actif" onclick="changerOnglet('annuaire', this)">Structures d'aide</button>
-        <button class="onglet-btn" onclick="changerOnglet('documents', this)">Documents sociaux</button>
-        <button class="onglet-btn" onclick="changerOnglet('assistant', this)">Assistant</button>
+      <!-- Bandeau d'urgence permanent -->
+      <div class="svc-urgence bandeau-urgence">
+        <div class="svc-urgence__titre bandeau-urgence__titre"><span data-icone="attention" data-taille="16"></span> En cas d'urgence, appelez immédiatement</div>
+        <div class="bandeau-urgence__liste" id="bandeau-urgence-liste">
+          <div class="bandeau-urgence__item"><strong>185</strong> SAMU</div>
+          <div class="bandeau-urgence__item"><strong>111</strong> Police</div>
+          <div class="bandeau-urgence__item"><strong>139</strong> Écoute psychologique</div>
+          <div class="bandeau-urgence__item"><strong>116</strong> Enfance en détresse</div>
+        </div>
+      </div>
+
+      <div class="onglets-nav svc-onglets">
+        <button class="onglet-btn actif" onclick="changerOnglet('annuaire', this)"><span data-icone="institution" data-taille="18"></span>Structures d'aide</button>
+        <button class="onglet-btn" onclick="changerOnglet('documents', this)"><span data-icone="document" data-taille="18"></span>Documents sociaux</button>
+        <button class="onglet-btn" onclick="changerOnglet('assistant', this)"><span data-icone="messages" data-taille="18"></span>Assistant</button>
       </div>
 
       <!-- ═══════════════ ONGLET ANNUAIRE ═══════════════ -->
       <div id="onglet-annuaire" class="onglet-contenu actif">
-        <p style="color: var(--gris-texte); font-size: 0.88rem; margin-bottom: 16px;">
-          Structures officielles et institutions d'aide en Côte d'Ivoire. Vérifiez toujours les coordonnées avant de vous déplacer.
-        </p>
-        <div id="structures-conteneur">
+        <p class="svc-intro"><span data-icone="institution" data-taille="18"></span><span>Structures officielles et institutions d'aide en Côte d'Ivoire. Vérifiez toujours les coordonnées avant de vous déplacer.</span></p>
+        <div id="structures-conteneur" class="svc-structures">
           <div style="text-align:center; color: var(--gris-texte); padding: 30px;">Chargement…</div>
         </div>
       </div>
 
       <!-- ═══════════════ ONGLET DOCUMENTS ═══════════════ -->
       <div id="onglet-documents" class="onglet-contenu">
-        <div id="zone-non-connecte-doc" class="hidden" style="text-align:center; padding:40px 20px;">
-          <p style="margin-bottom:16px; color:var(--gris-texte);">Connectez-vous pour générer vos documents sociaux.</p>
+        <div id="zone-non-connecte-doc" class="hidden svc-invite">
+          <div class="svc-invite__icone"><span data-icone="cadenas" data-taille="24"></span></div>
+          <p>Connectez-vous pour générer vos documents sociaux.</p>
           <a href="/auth/login.html" class="btn btn--primaire">Se connecter</a>
         </div>
 
         <div id="zone-generateur-doc">
-          <div id="types-doc-conteneur" class="types-grille" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; margin-bottom:24px;">
+          <div id="types-doc-conteneur" class="types-grille svc-types">
             <div style="grid-column:1/-1; color:var(--gris-texte); font-size:0.85rem;">Chargement…</div>
           </div>
 
@@ -264,7 +158,7 @@
 
           <!-- Résultat -->
           <div id="zone-resultat-doc" class="hidden">
-            <div style="background: var(--blanc); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--ombre-sm);">
+            <div class="svc-bloc" style="--c:#14532d">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
                 <h3 style="color: var(--vert); margin: 0;" id="resultat-doc-titre">Document généré</h3>
                 <div style="display:flex; gap:10px; flex-wrap:wrap;">
@@ -281,11 +175,9 @@
 
       <!-- ═══════════════ ONGLET ASSISTANT ═══════════════ -->
       <div id="onglet-assistant" class="onglet-contenu">
-        <p style="color: var(--gris-texte); font-size: 0.85rem; margin-bottom: 16px;">
-          Cet assistant vous oriente et vous informe. Il ne remplace pas un professionnel de santé, un travailleur social ou un avocat.
-          En cas d'urgence, contactez directement les numéros affichés en haut de page.
-        </p>
+        <p class="svc-intro"><span data-icone="bouclier" data-taille="18"></span><span>Cet assistant vous oriente et vous informe. Il ne remplace pas un professionnel de santé, un travailleur social ou un avocat. En cas d'urgence, contactez directement les numéros affichés en haut de page.</span></p>
         <div class="chat-conteneur">
+          <div class="svc-chat-tete"><span class="svc-chat-tete__pastille"><span data-icone="messages" data-taille="17"></span></span><span>Assistant d'orientation<small>Réponses informatives, en toute confidentialité</small></span></div>
           <div class="chat-messages" id="chat-messages">
             <div class="chat-message chat-message--assistant">
               Bonjour 👋 Je peux vous orienter sur les démarches sociales et administratives, ou répondre à vos questions. Comment puis-je vous aider ?
@@ -344,15 +236,16 @@
         const conteneur = document.getElementById("structures-conteneur");
         try {
           const data = await window.API.AssistanceSociale.structures();
+          const COUL = { "Sécurité sociale": "#0a5c9e", "Santé": "#0f766e", "Protection des femmes et enfants": "#9a3412", "Emploi & protection sociale": "#14532d", "Réinsertion & précarité": "#5b3a8e" };
           conteneur.innerHTML = data.structures.map(s => `
-            <div class="structure-carte">
-              <div class="structure-carte__categorie">${echapperHtml(s.categorie)}</div>
-              <div style="font-weight:700; margin-bottom:4px;">${echapperHtml(s.nom)}</div>
-              <div style="font-size:0.88rem; color:#444; margin-bottom:8px;">${echapperHtml(s.description)}</div>
-              <div style="display:flex; gap:14px; flex-wrap:wrap; font-size:0.82rem; color:var(--gris-texte);">
+            <div class="structure-carte svc-structure" style="--c:${COUL[s.categorie] || "#0a5c9e"}">
+              <div class="structure-carte__categorie svc-structure__cat">${echapperHtml(s.categorie)}</div>
+              <div class="svc-structure__nom">${echapperHtml(s.nom)}</div>
+              <div class="svc-structure__desc">${echapperHtml(s.description)}</div>
+              <div class="svc-structure__infos">
                 ${s.telephone ? `<span><span data-icone="telephone" data-taille="14"></span> ${echapperHtml(s.telephone)}</span>` : ""}
                 ${s.adresse ? `<span><span data-icone="institution" data-taille="14"></span> ${echapperHtml(s.adresse)}</span>` : ""}
-                <span>${s.zone}</span>
+                ${s.zone ? `<span>${echapperHtml(s.zone)}</span>` : ""}
               </div>
             </div>
           `).join("");
@@ -367,10 +260,10 @@
           const data = await window.API.AssistanceSociale.typesDocuments();
           typesDocCatalogue = data.types || [];
           conteneur.innerHTML = typesDocCatalogue.map(t => `
-            <div class="type-carte" data-type-id="${t.id}" onclick="choisirTypeDoc('${t.id}')" style="background:var(--blanc); border:2px solid var(--gris-bordure); border-radius:var(--radius-lg); padding:16px; cursor:pointer; text-align:center; position:relative;">
-              ${t.premium ? '<div style="position:absolute; top:6px; right:6px; background:#f59e0b; color:#fff; font-size:0.6rem; font-weight:800; padding:2px 7px; border-radius:20px;">⭐ Premium</div>' : ""}
-              <div style="width:40px; height:40px; border-radius:10px; background:rgba(124,45,18,0.1); color:#7c2d12; display:flex; align-items:center; justify-content:center; margin:0 auto 8px;"><span data-icone="${t.icone}" data-taille="20"></span></div>
-              <div style="font-weight:700; font-size:0.85rem;">${echapperHtml(t.nom)}</div>
+            <div class="type-carte svc-carte" data-type-id="${echapperHtml(String(t.id))}" role="button" tabindex="0" onclick="choisirTypeDoc('${t.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();choisirTypeDoc('${t.id}')}">
+              ${t.premium ? '<div class="svc-premium">⭐ Premium</div>' : ""}
+              <div class="svc-carte__icone"><span data-icone="${echapperHtml(String(t.icone))}" data-taille="22"></span></div>
+              <div class="svc-carte__nom" style="padding-right:0;">${echapperHtml(t.nom)}</div>
             </div>
           `).join("");
         } catch (err) {
@@ -381,7 +274,7 @@
       function choisirTypeDoc(id) {
         typeDocChoisi = id;
         document.querySelectorAll("#types-doc-conteneur .type-carte").forEach(c => {
-          c.style.borderColor = c.dataset.typeId === id ? "var(--vert)" : "var(--gris-bordure)";
+          c.classList.toggle("selectionne", c.dataset.typeId === id);
         });
         document.querySelectorAll("[id^='form-']").forEach(f => f.classList.add("hidden"));
         document.getElementById(`form-${id}`)?.classList.remove("hidden");
@@ -478,7 +371,7 @@
         if (!message) return;
 
         const messagesDiv = document.getElementById("chat-messages");
-        messagesDiv.innerHTML += `<div class="chat-message chat-message--user">${message}</div>`;
+        messagesDiv.innerHTML += `<div class="chat-message chat-message--user">${echapperHtml(message)}</div>`;
         input.value = "";
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
