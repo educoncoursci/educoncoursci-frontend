@@ -10,12 +10,12 @@
     <meta property="og:site_name" content="ProInsertion CI" />
     <meta property="og:title" content="Détail Concours — ProInsertion CI" />
     <meta property="og:description" content="Fiche complète d'un concours en Côte d'Ivoire : conditions, dates, documents à fournir, débouchés et préparation associée." />
-    <meta property="og:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
-    <meta property="og:url" content="https://proinsertionci.netlify.app/concours-detail.html" />
+    <meta property="og:image" content="https://proinsertion.pages.dev/assets/og-image.jpg" />
+    <meta property="og:url" content="https://proinsertion.pages.dev/concours-detail.html" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Détail Concours — ProInsertion CI" />
     <meta name="twitter:description" content="Fiche complète d'un concours en Côte d'Ivoire : conditions, dates, documents à fournir, débouchés et préparation associée." />
-    <meta name="twitter:image" content="https://proinsertionci.netlify.app/assets/og-image.jpg" />
+    <meta name="twitter:image" content="https://proinsertion.pages.dev/assets/og-image.jpg" />
     <link rel="icon" href="/assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -471,7 +471,7 @@
         const ogDesc = document.querySelector('meta[property="og:description"]');
         if (ogDesc) ogDesc.setAttribute("content", descriptionConcours);
         const ogUrl = document.querySelector('meta[property="og:url"]');
-        if (ogUrl) ogUrl.setAttribute("content", `https://proinsertionci.netlify.app/concours-detail.html?id=${c.id}`);
+        if (ogUrl) ogUrl.setAttribute("content", `https://proinsertion.pages.dev/concours-detail.html?id=${c.id}`);
         const twitterTitle = document.querySelector('meta[name="twitter:title"]');
         if (twitterTitle) twitterTitle.setAttribute("content", `${c.titre} — ProInsertion CI`);
         const twitterDesc = document.querySelector('meta[name="twitter:description"]');
@@ -493,7 +493,7 @@
         };
         const nomImage = imageParCategorie[c.categorie];
         if (nomImage) {
-          const urlImage = `https://proinsertionci.netlify.app/assets/og-categories/${nomImage}`;
+          const urlImage = `https://proinsertion.pages.dev/assets/og-categories/${nomImage}`;
           const ogImage = document.querySelector('meta[property="og:image"]');
           if (ogImage) ogImage.setAttribute("content", urlImage);
           const twitterImage = document.querySelector('meta[name="twitter:image"]');

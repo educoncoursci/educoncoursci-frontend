@@ -3,7 +3,7 @@
 //  Cache statique + stratégie network-first pour l'API
 // ============================================================
 
-const CACHE_NOM     = "proinsertion-v44"; // ⚠️ Incrémente ce numéro (v3, v4…) à
+const CACHE_NOM     = "proinsertion-v49"; // ⚠️ Incrémente ce numéro (v3, v4…) à
 // chaque déploiement qui touche un fichier de CACHE_STATIQUE (surtout
 // js/api.js) — c'est ce qui force le Service Worker à jeter l'ancien
 // cache et retélécharger les fichiers à jour. Sans ça, un visiteur
@@ -24,6 +24,7 @@ const CACHE_STATIQUE = [
 "/css/responsive.css",
 "/css/ui-pro.css",
 "/css/espaces-services.css",
+"/css/accueil-visiteurs.css",
 "/js/api.js",
 "/js/auth.js",
 "/js/main.js",

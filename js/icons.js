@@ -139,9 +139,28 @@ function icone(nom, taille = 24, couleur = "currentColor") {
 }
 
 // Remplace automatiquement tout élément portant data-icone="nom" au chargement
+// Couleur d'accent de chaque icône : sert aux pastilles dégradées (menus, services)
+// et à la teinte « duotone » ; aucune incidence sur les icônes placées dans un bouton.
+const COULEURS_ICONES = {
+  document: "#15803d", cv: "#0a5c9e", lettre: "#c2540a", portefeuille: "#7c3aed", loupe: "#dc2626",
+  utilisateurs: "#0f766e", institution: "#b45309", graphique: "#db2777", paiement: "#166534", etoile: "#0a5c9e",
+  fusee: "#c2540a", aide: "#6d28d9", coeur: "#dc2626", enveloppeFermee: "#0f766e", email: "#0f766e",
+  horloge: "#b45309", liste: "#be185d", diplome: "#166534", bouclier: "#0a5c9e", cible: "#c2540a",
+  mallette: "#6d28d9", messages: "#0a5c9e", dossier: "#b45309", tendance: "#db2777", suivi: "#be185d",
+  ampoule: "#ca8a04", parametres: "#475569", cadenas: "#475569", cloche: "#ca8a04", panier: "#c2540a",
+  trophee: "#ca8a04", quiz: "#6d28d9", video: "#dc2626", robot: "#0f766e", livre: "#0a5c9e",
+  scanDoc: "#0a5c9e", boussole: "#0f766e", monde: "#0a5c9e", batiment: "#b45309", telephone: "#15803d",
+  regle: "#b45309", microscope: "#0f766e", fete: "#db2777", drapeau: "#c2540a", oeil: "#0a5c9e", cle: "#ca8a04",
+};
+
 function initIcones(racine = document) {
   racine.querySelectorAll("[data-icone]").forEach((el) => {
     const nom = el.getAttribute("data-icone");
+    const accent = COULEURS_ICONES[nom] || "#166534";
+    el.style.setProperty("--ic", accent);
+    // Si l'icône est dans une pastille (classe « …__icone »), la pastille reprend la même couleur.
+    const parent = el.parentElement;
+    if (parent && /icone/.test(parent.className || "")) parent.style.setProperty("--ic", accent);
     const taille = el.getAttribute("data-taille") || 24;
     const couleur = el.getAttribute("data-couleur") || "currentColor";
     if (ICONS[nom]) {
@@ -185,3 +204,4 @@ if (typeof document !== "undefined") {
 
 window.ICONS = ICONS;
 window.icone = icone;
+window.initIcones = initIcones;

@@ -144,8 +144,22 @@ if (href && chemin.endsWith(href)) lien.classList.add("actif");
 // ════════════════════════════════════════════════════════════
 
 function initSidebarMobile() {
-const btnOuvrir = document.getElementById("btn-sidebar");
 const sidebar   = document.querySelector(".sidebar, .admin-sidebar");
+let btnOuvrir = document.getElementById("btn-sidebar");
+// Pages admin : le bouton « menu » n'existait pas, donc le tiroir restait inaccessible sur téléphone.
+if (!btnOuvrir && sidebar && sidebar.classList.contains("admin-sidebar")) {
+  const zone = document.querySelector(".navbar__inner");
+  if (zone) {
+    btnOuvrir = document.createElement("button");
+    btnOuvrir.type = "button";
+    btnOuvrir.id = "btn-sidebar";
+    btnOuvrir.className = "navbar__hamburger navbar__hamburger--admin";
+    btnOuvrir.setAttribute("aria-label", "Ouvrir le menu d'administration");
+    btnOuvrir.setAttribute("aria-expanded", "false");
+    btnOuvrir.innerHTML = "<span></span><span></span><span></span>";
+    zone.insertBefore(btnOuvrir, zone.firstChild);   // à gauche : la barre admin est déjà large à droite
+  }
+}
 if (!btnOuvrir || !sidebar) return;
 
 // Overlay pour fermer
@@ -165,6 +179,13 @@ btnOuvrir.addEventListener("click", () => { sidebar.classList.toggle("ouvert"); 
 overlay.addEventListener("click", () => { sidebar.classList.remove("ouvert"); majEtat(); });
 sidebar.addEventListener("click", (e) => { if (e.target.closest("a")) { sidebar.classList.remove("ouvert"); majEtat(); } });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") { sidebar.classList.remove("ouvert"); majEtat(); } });
+// Si l'écran s'élargit (rotation, tablette), on referme le tiroir et on rend le défilement à la page.
+window.addEventListener("resize", () => { if (window.innerWidth > 768 && sidebar.classList.contains("ouvert")) { sidebar.classList.remove("ouvert"); majEtat(); } });
+// À l'ouverture, on place le lien de la page courante dans la zone visible.
+btnOuvrir.addEventListener("click", () => {
+  const a = sidebar.querySelector(".sidebar__lien.actif, .admin-sidebar__lien.actif");
+  if (a && sidebar.classList.contains("ouvert")) sidebar.scrollTop = Math.max(0, a.offsetTop - sidebar.clientHeight / 2);
+});
 }
 
 // ════════════════════════════════════════════════════════════
@@ -615,4 +636,117 @@ document.addEventListener("DOMContentLoaded", () => {
       credentials: "omit",
     }).catch(() => {});
   } catch (e) { /* la mesure ne doit jamais gêner le site */ }
+})();
+
+
+// ════════════════════════════════════════════════════════════
+//  RECHERCHE GLOBALE (espace connecté) — pages, outils et services
+//  Liste locale : aucune donnée envoyée, aucune dépendance. « Entrée »
+//  sans résultat lance la recherche dans les offres d'emploi.
+// ════════════════════════════════════════════════════════════
+(function rechercheGlobale() {
+  let connecte = false;
+  try { connecte = !!localStorage.getItem("ecc_token"); } catch (e) {}
+  if (!connecte || location.pathname.indexOf("/admin") === 0) return;
+
+  const INDEX = [
+    ["Tableau de bord", "accueil espace statistiques score bienvenue", "/dashboard/index.html", "graphique"],
+    ["Créer mon CV", "cv curriculum vitae modèle générateur photo", "/cv-generator.html", "document"],
+    ["Lettre de motivation", "lettre candidature rédiger motivation", "/cv-generator.html", "lettre"],
+    ["Offres d'emploi", "emploi travail poste recrutement job cdi cdd", "/emploi.html", "portefeuille"],
+    ["Offres de stage", "stage stagiaire alternance opportunité", "/emploi.html?opportunite=stage", "portefeuille"],
+    ["Analyser une offre", "analyse offre compatibilité cv score", "/analyse-offre.html", "loupe"],
+    ["Simulation d'entretien", "entretien embauche simulation questions préparation", "/simulation-entretien.html", "aide"],
+    ["Mes candidatures", "suivi candidatures postulé relance historique", "/dashboard/suivi-candidatures.html", "liste"],
+    ["Alertes emploi", "alerte notification offres recevoir", "/dashboard/suivi-candidatures.html", "liste"],
+    ["Concours", "concours fonction publique examen recrutement", "/concours.html", "institution"],
+    ["Mes concours", "concours suivis favoris dates", "/dashboard/mes-concours.html", "institution"],
+    ["Calendrier", "agenda dates échéances rappels", "/dashboard/calendrier.html", "horloge"],
+    ["Assistant concours", "assistant aide concours conseils", "/assistant-concours.html", "etoile"],
+    ["Packs", "pack offre tarif cv lettre entretien prix", "/packs.html", "fusee"],
+    ["Courriers et documents", "courrier lettre demande rapport document rédaction démission congé", "/documents-redaction.html", "document"],
+    ["Documents professionnels", "documents pro contrat attestation professionnel", "/documents-pro.html", "portefeuille"],
+    ["Documents administratifs", "administratif administration formulaire dossier", "/documents-admin.html", "document"],
+    ["Assistance sociale", "aide sociale structures urgence assistance santé famille", "/assistance-sociale.html", "aide"],
+    ["Communauté", "communauté entraide échanger membres", "/communaute.html", "utilisateurs"],
+    ["Marketplace", "marketplace boutique vendre acheter", "/marketplace.html", "panier"],
+    ["Abonnement Premium", "premium abonnement payer wave orange money tarifs", "/boutique.html", "etoile"],
+    ["Mon abonnement", "abonnement paiements factures expiration", "/dashboard/paiements.html", "paiement"],
+    ["Mon profil", "profil compte informations mot de passe photo rappels", "/dashboard/profil.html", "utilisateurs"],
+    ["Messages", "messages notifications boîte", "/dashboard/messages.html", "enveloppeFermee"],
+    ["Aide", "aide guide assistance questions contact support", "/guide.html", "aide"],
+  ];
+  const norm = (s) => String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const esc = (s) => String(s).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+
+  function monter() {
+    const zone = document.querySelector("#navbar .navbar__inner, .navbar .navbar__inner");
+    if (!zone || document.getElementById("rg")) return;
+    const bloc = document.createElement("div");
+    bloc.className = "rg"; bloc.id = "rg";
+    bloc.innerHTML = `
+      <button type="button" class="rg__ouvrir" aria-label="Rechercher" aria-expanded="false"><span data-icone="loupe" data-taille="20"></span></button>
+      <form class="rg__form" role="search" autocomplete="off">
+        <span class="rg__loupe" aria-hidden="true"><span data-icone="loupe" data-taille="17"></span></span>
+        <input class="rg__champ" type="search" id="rg-champ" placeholder="Rechercher…" aria-label="Rechercher sur ProInsertion CI" role="combobox" aria-expanded="false" aria-controls="rg-liste" maxlength="80" />
+        <button type="button" class="rg__fermer" aria-label="Fermer la recherche">×</button>
+        <div class="rg__liste" id="rg-liste" role="listbox" hidden></div>
+      </form>`;
+    const avant = zone.querySelector(".navbar__actions");
+    zone.insertBefore(bloc, avant || zone.querySelector(".navbar__hamburger"));
+    if (window.initIcones) window.initIcones(bloc);
+    brancher(bloc);
+  }
+
+  function brancher(bloc) {
+    const champ = bloc.querySelector(".rg__champ"), liste = bloc.querySelector(".rg__liste");
+    const form = bloc.querySelector(".rg__form"), ouvrir = bloc.querySelector(".rg__ouvrir");
+    let actif = -1, items = [];
+
+    function rendre(q) {
+      const mots = norm(q).split(/\s+/).filter(Boolean);
+      items = mots.length
+        ? INDEX.filter((e) => { const t = norm(e[0] + " " + e[1]); return mots.every((m) => t.includes(m)); }).slice(0, 6).map((e) => ({ titre: e[0], href: e[2], icone: e[3], type: "Page" }))
+        : INDEX.slice(0, 6).map((e) => ({ titre: e[0], href: e[2], icone: e[3], type: "Page" }));
+      if (mots.length) items.push({ titre: "Chercher « " + q.trim() + " » dans les offres d'emploi", href: "/emploi.html?q=" + encodeURIComponent(q.trim()), icone: "loupe", type: "Emploi" });
+      actif = items.length ? 0 : -1;
+      liste.innerHTML = items.map((it, i) => `<a href="${esc(it.href)}" class="rg__item${i === actif ? " rg__item--actif" : ""}" role="option" id="rg-o${i}" data-i="${i}"><span class="rg__icone"><span data-icone="${esc(it.icone)}" data-taille="16"></span></span><span class="rg__titre">${esc(it.titre)}</span><span class="rg__type">${esc(it.type)}</span></a>`).join("")
+        || '<div class="rg__vide">Aucun résultat</div>';
+      liste.hidden = false; champ.setAttribute("aria-expanded", "true");
+      if (window.initIcones) window.initIcones(liste);
+    }
+    function fermerListe() { liste.hidden = true; champ.setAttribute("aria-expanded", "false"); }
+    function surligner(i) {
+      liste.querySelectorAll(".rg__item").forEach((a, k) => a.classList.toggle("rg__item--actif", k === i));
+      actif = i; if (items[i]) champ.setAttribute("aria-activedescendant", "rg-o" + i);
+    }
+    champ.addEventListener("input", () => rendre(champ.value));
+    champ.addEventListener("focus", () => rendre(champ.value));
+    champ.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") { e.preventDefault(); if (items.length) surligner((actif + 1) % items.length); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); if (items.length) surligner((actif - 1 + items.length) % items.length); }
+      else if (e.key === "Escape") { fermerListe(); bloc.classList.remove("rg--ouvert"); ouvrir.setAttribute("aria-expanded", "false"); champ.blur(); }
+    });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const q = champ.value.trim();
+      if (items[actif]) { location.href = items[actif].href; }
+      else if (q) { location.href = "/emploi.html?q=" + encodeURIComponent(q); }
+    });
+    document.addEventListener("click", (e) => { if (!bloc.contains(e.target)) fermerListe(); });
+    ouvrir.addEventListener("click", () => {
+      const o = bloc.classList.toggle("rg--ouvert");
+      ouvrir.setAttribute("aria-expanded", o ? "true" : "false");
+      if (o) setTimeout(() => champ.focus(), 30); else fermerListe();
+    });
+    bloc.querySelector(".rg__fermer").addEventListener("click", () => { champ.value = ""; fermerListe(); bloc.classList.remove("rg--ouvert"); ouvrir.setAttribute("aria-expanded", "false"); });
+    // Raccourci clavier « / » (ordinateur), sans gêner la saisie dans un champ.
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "/" && !/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName) && !e.ctrlKey && !e.metaKey) { e.preventDefault(); if (window.innerWidth <= 900) ouvrir.click(); else champ.focus(); }
+    });
+  }
+
+  // Le header membre est injecté par layout.js : on attend qu'il soit en place.
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => setTimeout(monter, 0));
+  else setTimeout(monter, 0);
 })();

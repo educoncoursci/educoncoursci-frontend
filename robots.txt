@@ -4,4 +4,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /dashboard/
 
-Sitemap: https://proinsertionci.netlify.app/sitemap.xml
+Sitemap: https://proinsertion.pages.dev/sitemap.xml
