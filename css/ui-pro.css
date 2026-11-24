@@ -300,3 +300,161 @@
 .footer--membre nav { display: flex; gap: 8px 20px; flex-wrap: wrap; }
 .footer--membre a { color: var(--gris-texte); }
 .footer--membre a:hover { color: #166534; text-decoration: underline; }
+
+/* ============================================================
+   Menu latéral (espace connecté + admin) — défilement indépendant
+   Cause du blocage : .sidebar était en position:fixed avec une hauteur
+   fixe mais sans overflow-y ; le bas (dont « Déconnexion ») sortait de
+   l'écran sans pouvoir être atteint. La hauteur utilise 100dvh (hauteur
+   réellement visible sur mobile, barre d'adresse comprise).
+   ============================================================ */
+.sidebar,
+.admin-sidebar {
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;          /* le défilement du menu ne « fuit » pas vers la page */
+  -webkit-overflow-scrolling: touch;     /* inertie sur iPhone */
+  touch-action: pan-y;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 110, .45) transparent;
+}
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(100, 116, 110, .4); border-radius: 6px; }
+
+/* Espace utilisateur : le bouton Déconnexion reste collé en bas du menu */
+.sidebar { display: flex; flex-direction: column; padding-bottom: 0; }
+.sidebar__profil, .sidebar__nav { flex: none; }
+.sidebar__deconnexion {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  background: #fff;
+  padding: 12px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -8px 12px -10px rgba(16, 40, 28, .18);
+  z-index: 2;
+}
+.sidebar__deconnexion .btn { min-height: 44px; }
+
+/* Ordinateur et tablette large : menu fixe à gauche, avec son propre défilement */
+@media (min-width: 769px) {
+  .sidebar {
+    position: sticky;
+    top: var(--navbar-h);
+    align-self: start;
+    height: calc(100vh - var(--navbar-h));
+    height: calc(100dvh - var(--navbar-h));
+  }
+}
+
+/* Téléphone : tiroir hors-champ, hauteur réelle de l'écran, zones tactiles confortables */
+@media (max-width: 768px) {
+  .sidebar,
+  .admin-sidebar {
+    top: var(--navbar-h);
+    width: min(300px, 86vw);
+    height: calc(100vh - var(--navbar-h));
+    height: calc(100dvh - var(--navbar-h));
+    max-height: calc(100dvh - var(--navbar-h));
+    padding-bottom: 0;
+  }
+  .admin-sidebar { padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+  .sidebar__lien { min-height: 46px; padding: 12px 14px; font-size: .95rem; }
+  .admin-sidebar__lien { min-height: 44px; padding: 10px 20px; font-size: .92rem; }
+  .sidebar__overlay { touch-action: none; }
+}
+@media (max-width: 768px) and (max-height: 500px) {
+  .sidebar__profil { padding-bottom: 12px; margin-bottom: 8px; }
+}
+
+/* ============================================================
+   Barre de recherche globale (espace connecté)
+   ============================================================ */
+.rg { position: relative; display: flex; align-items: center; margin-left: auto; margin-right: 10px; flex: 0 1 auto; }
+.rg__ouvrir { display: none; width: 40px; height: 40px; border: 0; border-radius: 10px; background: #f1f5f2; color: #166534; align-items: center; justify-content: center; cursor: pointer; transition: background .2s, transform .15s; }
+.rg__ouvrir:active { transform: scale(.94); background: #e1ece5; }
+.rg__form { position: relative; display: flex; align-items: center; }
+.rg__loupe { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #6b7f74; pointer-events: none; display: inline-flex; }
+.rg__champ { width: 250px; height: 40px; padding: 0 14px 0 38px; border: 1px solid #d7e2db; border-radius: 999px; background: #f6f9f7; font: 500 .88rem/1 var(--font-body, inherit); color: #14231b; transition: width .25s ease, border-color .2s, box-shadow .2s, background .2s; -webkit-appearance: none; appearance: none; }
+.rg__champ::-webkit-search-cancel-button { display: none; }
+.rg__champ::placeholder { color: #7a8c82; }
+.rg__champ:focus { outline: none; width: 330px; background: #fff; border-color: #1a6b3c; box-shadow: 0 0 0 3px rgba(26, 107, 60, .14); }
+.rg__fermer { display: none; }
+.rg__liste { position: absolute; top: calc(100% + 8px); left: 0; width: min(420px, 92vw); max-height: 70vh; overflow-y: auto; background: #fff; border: 1px solid #d7e2db; border-radius: 14px; box-shadow: 0 14px 34px rgba(16, 40, 28, .18); padding: 6px; z-index: 1200; overscroll-behavior: contain; }
+.rg__liste[hidden] { display: none; }
+.rg__item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: #14231b; text-decoration: none; font-size: .9rem; font-weight: 600; min-height: 44px; }
+.rg__item--actif, .rg__item:active { background: #e8f5ed; }
+.rg__icone { flex: none; width: 30px; height: 30px; border-radius: 9px; background: #eaf3ee; color: #166534; display: inline-flex; align-items: center; justify-content: center; }
+.rg__titre { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rg__type { flex: none; font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: #6b7f74; }
+.rg__vide { padding: 14px; color: #6b7f74; font-size: .88rem; }
+@media (hover: hover) { .rg__item:hover { background: #e8f5ed; } .rg__ouvrir:hover { background: #e1ece5; } }
+
+/* Écrans moyens et téléphones : une loupe qui ouvre une barre pleine largeur */
+@media (max-width: 1199px) {
+  .rg__ouvrir { display: inline-flex; }
+  .rg__form { display: none; }
+  .rg--ouvert .rg__form { display: flex; position: fixed; inset: 0 0 auto 0; height: var(--navbar-h); padding: 0 12px; background: #fff; box-shadow: 0 1px 0 #d7e2db; z-index: 1300; align-items: center; gap: 8px; }
+  .rg--ouvert .rg__loupe { left: 26px; }
+  .rg--ouvert .rg__champ, .rg--ouvert .rg__champ:focus { flex: 1; width: auto; min-width: 0; height: 44px; font-size: 16px; /* évite le zoom automatique sur iPhone */ }
+  .rg--ouvert .rg__fermer { display: inline-flex; flex: none; width: 40px; height: 40px; border: 0; border-radius: 50%; background: #f1f5f2; font-size: 1.5rem; line-height: 1; align-items: center; justify-content: center; color: #3b4a41; cursor: pointer; }
+  .rg--ouvert .rg__liste { position: fixed; top: var(--navbar-h); left: 8px; right: 8px; width: auto; max-height: calc(100dvh - var(--navbar-h) - 16px); }
+}
+
+/* Bouton menu des pages admin (fond sombre) */
+.navbar__hamburger--admin span { background: #fff; }
+@media (max-width: 768px) {
+  #admin-email-nav { display: none; }              /* libère la place sur la barre admin */
+  .navbar__hamburger--admin { display: inline-flex; margin-right: 8px; order: -1; flex: none; }
+}
+
+/* ============================================================
+   Icônes enrichies : teinte « duotone » + pastilles dégradées
+   (la couleur d'accent --ic est posée par js/icons.js)
+   ============================================================ */
+/* 1) Duotone : le trait garde sa couleur, l'intérieur reçoit une teinte douce.
+      Les icônes faites uniquement de traits et les logos de réseaux restent inchangés. */
+[data-icone] svg { fill: color-mix(in srgb, currentColor 14%, transparent); }
+[data-icone="menu"] svg, [data-icone="fermer"] svg, [data-icone="chevronDroite"] svg, [data-icone="coche"] svg,
+[data-icone="croix"] svg, [data-icone="plus"] svg, [data-icone="flecheDroite"] svg, [data-icone="copier"] svg,
+[data-icone="telechargement"] svg, [data-icone="vagues"] svg, [data-icone="actualiser"] svg, [data-icone="liste"] svg,
+[data-icone="linkedin"] svg, [data-icone="facebook"] svg, [data-icone="instagram"] svg, [data-icone="whatsapp"] svg,
+[data-icone="tiktok"] svg, [data-icone="youtube"] svg, [data-icone="logo"] svg, [data-icone="regle"] svg { fill: none; }
+
+/* 2) Pastilles dégradées « icône d'application » : menus latéraux, services, recherche */
+.sidebar__icone, .admin-sidebar__icone, .pi-service__icone, .rg__icone {
+  --ic: #166534;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--ic) 70%, #fff), var(--ic));
+  color: #fff;
+  box-shadow: 0 3px 8px color-mix(in srgb, var(--ic) 30%, transparent), inset 0 1px 0 rgba(255, 255, 255, .35);
+}
+.sidebar__icone, .admin-sidebar__icone { width: 32px; height: 32px; flex: none; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; font-size: 0; }
+.admin-sidebar__icone { width: 30px; height: 30px; border-radius: 9px; }
+.sidebar__icone [data-icone], .admin-sidebar__icone [data-icone], .pi-service__icone [data-icone], .rg__icone [data-icone] { color: #fff !important; vertical-align: 0 !important; }
+.sidebar__icone [data-icone] svg, .admin-sidebar__icone [data-icone] svg, .pi-service__icone [data-icone] svg, .rg__icone [data-icone] svg { fill: rgba(255, 255, 255, .24); }
+.sidebar__lien.actif .sidebar__icone { color: #fff; box-shadow: 0 4px 10px color-mix(in srgb, var(--ic) 40%, transparent), inset 0 1px 0 rgba(255, 255, 255, .4); }
+.sidebar__lien { gap: 12px; }
+.sidebar__lien:active .sidebar__icone { transform: scale(.94); }
+.pi-service--bientot .pi-service__icone { background: var(--gris-clair); color: var(--gris-texte); box-shadow: none; }
+.pi-service--bientot .pi-service__icone [data-icone] { color: var(--gris-texte) !important; }
+.pi-service--bientot .pi-service__icone [data-icone] svg { fill: none; }
+
+/* 3) Menus déroulants et menu mobile : pastille compacte autour de l'icône */
+.navbar__sous-lien [data-icone], .navbar__mobile .navbar__link [data-icone] {
+  box-sizing: content-box; padding: 5px; border-radius: 8px; vertical-align: -7px !important;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--ic) 70%, #fff), var(--ic));
+  color: #fff !important; margin-right: 10px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35);
+}
+.navbar__sous-lien [data-icone] svg, .navbar__mobile .navbar__link [data-icone] svg { fill: rgba(255, 255, 255, .24); }
+@media (hover: hover) { .sidebar__lien:hover .sidebar__icone { transform: translateY(-1px); } }
+.sidebar__icone { transition: transform .18s ease, box-shadow .18s ease; }
+
+/* ── Barre de navigation publique sur tablette (769–1023 px) ──
+   Le menu et les boutons débordaient de l'écran : on utilise le menu
+   « hamburger » (déjà en place sur téléphone) jusqu'à 1023 px. Les barres
+   « membre » et « admin » ne sont pas concernées. */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .navbar:not(.navbar--membre) .navbar__links,
+  .navbar:not(.navbar--membre) .navbar__actions { display: none; }
+  .navbar:not(.navbar--membre) .navbar__hamburger { display: flex; margin-left: auto; }
+}
