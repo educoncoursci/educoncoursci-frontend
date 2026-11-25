@@ -458,3 +458,33 @@
   .navbar:not(.navbar--membre) .navbar__actions { display: none; }
   .navbar:not(.navbar--membre) .navbar__hamburger { display: flex; margin-left: auto; }
 }
+
+
+/* ── Pied de page compact (pages publiques) ───────────────────── */
+.footer--compact { padding: 18px 0 0; }
+.footer--compact .footer__haut { display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; padding-bottom: 12px; }
+.footer--compact .footer__logo { margin: 0; font-size: 1.1rem; color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+.footer--compact .footer__reseaux { display: flex; gap: 8px; margin: 0; }
+.footer--compact .footer__reseau { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff; display: inline-flex; align-items: center; justify-content: center; transition: background .2s, transform .2s; }
+.footer--compact .footer__reseau svg { width: 18px; height: 18px; display: block; }
+.footer--compact .footer__reseau:hover, .footer--compact .footer__reseau:focus-visible { background: var(--vert, #1a6b3c); transform: translateY(-2px); }
+.footer--compact .footer__liens { display: flex; flex-wrap: wrap; gap: 2px 16px; padding: 12px 0 14px; border-top: 1px solid rgba(255,255,255,.1); }
+.footer--compact .footer__lien { display: inline-block; padding: 4px 0; font-size: .8rem; }
+.footer--compact .footer__lien:hover { padding-left: 0; text-decoration: underline; }
+.footer--compact .footer__bas { padding: 10px 0; font-size: .76rem; line-height: 1.6; }
+.footer--compact .footer__bas a { color: inherit; text-decoration: underline; }
+@media (max-width: 768px) {
+  .footer--compact .footer__haut { flex-wrap: nowrap; }
+  .footer--compact .footer__lien { font-size: .74rem; padding: 2px 0; }
+  .footer--compact .footer__bas { font-size: .7rem; padding: 8px 0 10px; }
+  .footer--compact .footer__liens { gap: 0 12px; padding: 8px 0 10px; }
+}
+
+
+/* ── Slogan sous le logo (en-tête public + pied de page) ───────── */
+.navbar__logo-bloc { display: inline-flex; flex-direction: column; justify-content: center; line-height: 1.1; min-width: 0; }
+.navbar__slogan { display: block; margin-top: 2px; font-size: .64rem; font-style: italic; font-weight: 600; color: #5b6a61; white-space: nowrap; letter-spacing: .01em; }
+.navbar--membre .navbar__slogan { display: none; }
+@media (max-width: 400px) { .navbar__slogan { font-size: .58rem; } }
+.footer--compact .footer__marque { display: flex; flex-direction: column; gap: 2px; }
+.footer--compact .footer__slogan { font-size: .74rem; font-style: italic; color: rgba(255,255,255,.7); padding-left: 30px; }

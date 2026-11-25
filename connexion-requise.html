@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#1A6B3C" />
+    <title>Connexion requise — ProInsertion CI</title>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body { height: 100%; margin: 0; }
+      body {
+        font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        background: #f6f5f1; color: #14231b; display: grid; place-items: center; padding: 24px 16px;
+        padding-bottom: max(24px, env(safe-area-inset-bottom)); -webkit-text-size-adjust: 100%;
+      }
+      main { width: 100%; max-width: 520px; text-align: center; }
+      .cadenas { width: 30px; height: 30px; color: #14231b; margin: 0 auto 28px; display: block; }
+      h1 { margin: 0 0 14px; font-family: "Space Grotesk", "Public Sans", system-ui, sans-serif; font-weight: 700; font-size: clamp(2rem, 8vw, 2.7rem); line-height: 1.1; letter-spacing: -.01em; }
+      p { margin: 0 0 34px; font-size: clamp(1rem, 3.8vw, 1.15rem); line-height: 1.5; color: #55615a; }
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 220px; min-height: 56px; padding: 14px 32px;
+        border-radius: 16px; background: #14573a; color: #fff; text-decoration: none; font-weight: 700; font-size: 1.1rem;
+        box-shadow: 0 10px 24px rgba(20, 87, 58, .28); transition: transform .2s ease, box-shadow .2s ease, background .2s ease; -webkit-tap-highlight-color: transparent;
+      }
+      .btn:active { transform: scale(.97); }
+      @media (hover: hover) { .btn:hover { background: #0f4a30; transform: translateY(-2px); box-shadow: 0 14px 28px rgba(20, 87, 58, .34); } }
+      .btn:focus-visible, .lien:focus-visible { outline: 3px solid #14a82f; outline-offset: 3px; }
+      .lien { display: inline-block; margin-top: 26px; padding: 6px 4px; color: #14573a; font-weight: 700; font-size: 1.05rem; text-decoration: none; }
+      .lien:hover { text-decoration: underline; text-underline-offset: 4px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <svg class="cadenas" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.5"/><path d="M8 10.5V7.500a4 4 0 018 0v3"/></svg>
+      <h1>Connexion requise</h1>
+      <p>Connectez-vous pour accéder à ProInsertion&nbsp;CI.</p>
+      <a class="btn" href="/auth/login.html">Se connecter →</a><br />
+      <a class="lien" href="/auth/register.html">Créer un compte gratuit</a>
+    </main>
+    <script>
+      // Un membre déjà connecté n'a rien à faire ici : retour à son espace.
+      try {
+        if (localStorage.getItem("ecc_token") && localStorage.getItem("ecc_user")) location.replace("/dashboard/index.html");
+      } catch (e) {}
+    </script>
+  </body>
+</html>

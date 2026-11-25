@@ -2,6 +2,7 @@
 
 <html lang="fr">
   <head>
+    <script src="/js/garde.js"></script>
     <meta charset="UTF-8" />
     <link rel="canonical" href="https://proinsertion.pages.dev/documents-redaction.html" />
     <meta property="og:type" content="website" />
@@ -121,7 +122,7 @@
         try {
           const [cat, defs] = await Promise.all([
             fetch(window.API_URL + "/catalogue").then((r) => r.json()),
-            fetch(window.API_URL + "/cv/redaction/types").then((r) => r.json()),
+            fetch(window.API_URL + "/cv/redaction/types", { headers: { Authorization: "Bearer " + (window.Auth?.getToken?.() || localStorage.getItem("ecc_token") || "") } }).then((r) => r.json()),
           ]);
           definitions = Object.fromEntries((defs.types || []).map((t) => [t.id, t]));
           const groupes = (cat.categories || []).filter((c) => CATEGORIES_DOCS.includes(c.id));

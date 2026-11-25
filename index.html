@@ -2,6 +2,7 @@
 
 <html lang="fr">
   <head>
+    <script src="/js/garde.js"></script>
     <meta charset="UTF-8" />
     <link rel="canonical" href="https://proinsertion.pages.dev/index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -170,7 +171,6 @@
       </div>
     </section>
 
-    <div id="bandeau-chaine"></div>
 
     <!-- ── APERÇU DU PRODUIT : exemple de CV (fictif) ─────────────── -->
     <section class="section section-gris" id="section-apercu">
@@ -567,9 +567,18 @@
           <a href="/auth/register.html" class="btn btn--lg pi-final__btn">Créer mon compte gratuit</a>
           <a href="/auth/login.html" class="btn btn--lg btn--outline-blanc">Se connecter</a>
         </div>
-        <div id="zone-newsletter" class="pi-newsletter">
+      </div>
+    </section>
+
+    <!-- ── CHAÎNE WHATSAPP (juste au-dessus de l'inscription par e-mail) ── -->
+    <div id="bandeau-chaine"></div>
+
+    <!-- ── INFORMATIONS PAR E-MAIL ────────────────────────────────── -->
+    <section class="pi-final pi-final--info" id="section-newsletter" aria-label="Recevoir les informations par e-mail">
+      <div class="container">
+        <div id="zone-newsletter" class="pi-newsletter" data-garde-ok>
           <form onsubmit="event.preventDefault(); sInscrireNewsletter();">
-            <label for="newsletter-email">Recevoir les nouveaux concours par e-mail</label>
+            <label for="newsletter-email">Recevoir les nouvelles informations par e-mail</label>
             <div>
               <input type="email" id="newsletter-email" placeholder="votre@email.com" required />
               <button type="submit" class="btn btn--sm">S'inscrire</button>
@@ -582,7 +591,7 @@
 
     <!-- ── FOOTER ─────────────────────────────────────────────────── -->
 
-    <div id="site-footer"></div>
+        <div id="site-footer"></div>
 
     <!-- Barre d'onglets (téléphone) : accès rapide aux pages principales -->
     <nav class="ac-onglets" aria-label="Navigation rapide">

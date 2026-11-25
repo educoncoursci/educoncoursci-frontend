@@ -142,9 +142,6 @@ body.ac-accueil .pi-titre { margin-bottom: 20px; }
   #section-confiance .pi-confiance strong { font-size: .88rem; }
   #section-confiance .pi-confiance p { font-size: .76rem; line-height: 1.45; }
   .pi-final { padding-top: 34px; padding-bottom: 34px; }
-  body.ac-accueil .footer__grille { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 14px; }
-  body.ac-accueil .footer__grille > div:first-child { grid-column: 1 / -1; }
-  body.ac-accueil .footer__lien { padding: 4px 0; font-size: .88rem; }
   #plans-container > * { padding: 18px 16px; }
   #plans-container .pi-formule__liste li { padding-top: 2px; padding-bottom: 2px; }
   .ac-onglets {
@@ -272,3 +269,11 @@ body.ac-accueil #section-apercu .pi-apercu__liste { display: none; }
 @media (max-width: 768px) {
   body.ac-accueil #section-plans .pi-titre p, body.ac-accueil #section-apercu .pi-apercu__texte p { display: none; }
 }
+
+/* Section finale + chaîne WhatsApp + e-mail : bloc de fin de page compact */
+body.ac-accueil .pi-final { padding: 36px 0 30px; }
+body.ac-accueil .pi-final p { margin-bottom: 16px; }
+body.ac-accueil .pi-final--info { padding: 20px 0 22px; background: linear-gradient(135deg, #14532d, #1f8a4c); }
+body.ac-accueil .pi-final--info .pi-newsletter { margin: 0 auto; padding-top: 0; border-top: 0; }
+body.ac-accueil #bandeau-chaine { padding: 16px 16px !important; }
+body.ac-accueil #bandeau-chaine p { margin-bottom: 10px !important; font-size: .95rem; }
