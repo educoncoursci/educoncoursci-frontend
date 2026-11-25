@@ -87,6 +87,11 @@ hamburger.setAttribute("aria-expanded", estOuvert);
   }
 });
 
+// Fige la page derrière le menu tant qu'il est ouvert (le menu défile seul)
+new MutationObserver(() => {
+  document.documentElement.classList.toggle("menu-ouvert", menuMobile.classList.contains("ouvert"));
+}).observe(menuMobile, { attributes: true, attributeFilter: ["class"] });
+
 // Ferme le menu au clic sur un lien
 menuMobile.querySelectorAll("a").forEach(lien => {
   lien.addEventListener("click", () => {

@@ -96,38 +96,12 @@ const EDUCONCOURSCI_HEADER_HTML = `<nav class="navbar" id="navbar">
         </button>
       </div>
 
-      <div class="navbar__mobile" id="menu-mobile">
-        <a href="/cv-generator.html" class="navbar__link"><span data-icone="fusee" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>CV & Lettre de motivation</a>
-        <a href="/packs.html" class="navbar__link"><span data-icone="fusee" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Packs</a>
-        <a href="/documents-redaction.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Courriers et documents</a>
-        <a href="/documents-pro.html" class="navbar__link"><span data-icone="portefeuille" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Documents professionnels</a>
-        <a href="/documents-admin.html" class="navbar__link"><span data-icone="document" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Documents administratifs</a>
-        <a href="/emploi.html" class="navbar__link"><span data-icone="loupe" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Offres d'emploi</a>
-        <a href="/emploi.html?opportunite=stage" class="navbar__link"><span data-icone="graphique" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Offres de stage</a>
-        <a href="/analyse-offre.html" class="navbar__link"><span data-icone="loupe" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Analyser une offre</a>
-        <a href="/simulation-entretien.html" class="navbar__link"><span data-icone="aide" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Simulation d'entretien</a>
-        <hr style="border:none;border-top:1px solid var(--gris-bordure);margin:8px 0;" />
-        <a href="/concours.html" class="navbar__link"><span data-icone="institution" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Concours</a>
-        <a href="/assistant-concours.html" class="navbar__link"><span data-icone="etoile" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Assistant Concours</a>
-        <a href="/communaute.html" class="navbar__link"><span data-icone="aide" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Communauté</a>
-        <a href="/marketplace.html" class="navbar__link"><span data-icone="panier" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Marketplace</a>
-        <a href="/boutique.html" class="navbar__link"><span data-icone="etoile" data-taille="18" style="margin-right:8px;vertical-align:-4px;"></span>Premium</a>
-        <hr
-          style="
-            border: none;
-            border-top: 1px solid var(--gris-bordure);
-            margin: 8px 0;
-          "
-        />
+      <div class="navbar__mobile navbar__mobile--visiteur" id="menu-mobile">
+        <p class="navbar__mobile-titre">Bienvenue sur ProInsertion&nbsp;CI</p>
+        <p class="navbar__mobile-texte">Connectez-vous ou créez votre compte gratuit pour accéder à tous les services.</p>
         <div id="navbar-mobile-actions">
-          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm w-full"
-            >Connexion</a
-          >
-          <a
-            href="/auth/register.html"
-            class="btn btn--primaire btn--sm w-full mt-1"
-            >Inscription gratuite</a
-          >
+          <a href="/auth/login.html" class="btn btn--outline-vert btn--sm w-full">Connexion</a>
+          <a href="/auth/register.html" class="btn btn--primaire btn--sm w-full mt-1">Inscription gratuite</a>
         </div>
       </div>
     </nav>`;

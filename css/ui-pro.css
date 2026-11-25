@@ -488,3 +488,10 @@
 @media (max-width: 400px) { .navbar__slogan { font-size: .58rem; } }
 .footer--compact .footer__marque { display: flex; flex-direction: column; gap: 2px; }
 .footer--compact .footer__slogan { font-size: .74rem; font-style: italic; color: rgba(255,255,255,.7); padding-left: 30px; }
+
+/* Menu mobile : défilement interne + page figée derrière */
+html.menu-ouvert, html.menu-ouvert body { overflow: hidden; }
+.navbar__mobile { padding-bottom: calc(var(--gap-md, 16px) + env(safe-area-inset-bottom, 0px)); }
+.navbar__mobile--visiteur { text-align: center; padding-top: 22px; padding-bottom: 22px; }
+.navbar__mobile-titre { margin: 0 0 4px; font-weight: 800; font-size: 1.05rem; color: var(--vert-fonce, #0b5d3b); }
+.navbar__mobile-texte { margin: 0 0 14px; font-size: .9rem; color: #5b6b63; line-height: 1.4; }

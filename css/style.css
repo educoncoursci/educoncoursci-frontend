@@ -383,6 +383,11 @@ p {
   z-index: 999;
   flex-direction: column;
   gap: 4px;
+  max-height: calc(100vh - var(--navbar-h));
+  max-height: calc(100dvh - var(--navbar-h));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 .navbar__mobile.ouvert {
   display: flex;
