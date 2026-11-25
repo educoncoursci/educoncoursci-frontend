@@ -26,6 +26,9 @@
     "/", "/index.html",
     "/connexion-requise.html",
     "/conditions.html", "/confidentialite.html", "/supprimer-compte.html",
+    "/a-propos.html", "/comment-ca-marche.html", "/guide.html",
+    "/conseils.html", "/cv-cote-d-ivoire.html", "/lettre-de-motivation.html", "/entretien-embauche.html",
+    "/preparer-un-concours.html", "/trouver-un-emploi-ou-un-stage.html",
   ];
 
   function chemin() {

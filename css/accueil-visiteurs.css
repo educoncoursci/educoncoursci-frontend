@@ -277,3 +277,34 @@ body.ac-accueil .pi-final--info { padding: 20px 0 22px; background: linear-gradi
 body.ac-accueil .pi-final--info .pi-newsletter { margin: 0 auto; padding-top: 0; border-top: 0; }
 body.ac-accueil #bandeau-chaine { padding: 16px 16px !important; }
 body.ac-accueil #bandeau-chaine p { margin-bottom: 10px !important; font-size: .95rem; }
+
+/* ── Preuves sociales : chiffres en direct + avis ── */
+.ac-preuves{max-width:760px;margin:26px auto;padding:0 16px}
+.ac-direct{background:linear-gradient(160deg,#20301f,#111d10);border-radius:26px;padding:26px 20px;text-align:center;color:#e8efe4;box-shadow:0 18px 40px rgba(20,40,20,.18)}
+.ac-direct__badge{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;font-weight:700;letter-spacing:.2em;font-size:.8rem;color:#a9c9a0}
+.ac-direct__point{width:12px;height:12px;border-radius:50%;background:#7ed56f;box-shadow:0 0 0 5px rgba(126,213,111,.25);animation:acPoint 1.8s ease-in-out infinite}
+@keyframes acPoint{50%{box-shadow:0 0 0 9px rgba(126,213,111,.05)}}
+.ac-direct__stat{display:flex;flex-direction:column;align-items:center;padding:12px 0}
+.ac-direct__stat[hidden]{display:none}
+.ac-direct__stat+.ac-direct__stat{margin-top:6px}
+.ac-direct__ico{font-size:2rem;line-height:1}
+.ac-direct__stat strong{font:700 clamp(2.4rem,11vw,3.4rem)/1.1 Georgia,'Times New Roman',serif;color:#c9a84c;margin:6px 0 2px;font-variant-numeric:lining-nums}
+.ac-direct__lib{font-weight:600;font-size:1.05rem;color:#e8efe4}
+.ac-avis{margin-top:26px}
+.ac-avis__titre{font-size:1.15rem;text-align:center;color:#1f3a24;margin:0 0 16px}
+.ac-avis__liste{display:grid;gap:14px}
+.ac-avis__carte{margin:0;background:#fafaf8;border-radius:20px;padding:12px 22px 18px;box-shadow:0 6px 18px rgba(30,50,30,.08)}
+.ac-avis__guill{display:block;font:700 2.6rem/1 Georgia,serif;color:#e0cd9b;height:30px}
+.ac-avis__carte blockquote{margin:6px 0 12px;font-size:1.02rem;line-height:1.5;color:#1d241d}
+.ac-avis__carte figcaption{font-weight:700;font-size:.88rem;color:#587a50}
+@media(min-width:760px){.ac-direct{display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap}.ac-direct__badge{flex-basis:100%;justify-content:center}.ac-avis__liste{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){.ac-direct__point{animation:none}}
+
+.ac-conseils{max-width:760px;margin:22px auto 0;padding:0 16px;text-align:center}
+.ac-conseils h2{font-size:1.05rem;color:#1f3a24;margin:0 0 10px}
+.ac-conseils__liste{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.ac-conseils__liste a{padding:8px 14px;border:1px solid #cfe0d3;border-radius:999px;background:#fff;color:#0b5d3b;font-weight:600;font-size:.85rem;text-decoration:none}
+.ac-conseils__liste a:hover{background:#f1f8f4;border-color:#1f9d63}
+.ac-direct__badge{gap:16px}.ac-direct__point{margin-left:4px}
+.ac-avis__etoiles{color:#d9a21b;letter-spacing:2px;font-size:1rem;margin:2px 0 6px}.ac-avis__etoiles span{color:#e3e0d4}
+.ac-direct[hidden]{display:none}

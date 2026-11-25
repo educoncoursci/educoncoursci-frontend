@@ -158,6 +158,7 @@ const EDUCONCOURSCI_FOOTER_HTML = `<footer class="footer footer--compact">
         <nav class="footer__liens" aria-label="Liens du site">
           <a href="/concours.html" class="footer__lien">Concours</a>
           <a href="/comment-ca-marche.html" class="footer__lien">Comment ça marche</a>
+          <a href="/conseils.html" class="footer__lien">Conseils</a>
           <a href="/a-propos.html" class="footer__lien">À propos</a>
           <a href="/cv-generator.html" class="footer__lien">Générateur CV/LM</a>
           <a href="/analyse-offre.html" class="footer__lien">Analyser une offre</a>

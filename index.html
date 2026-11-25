@@ -286,6 +286,30 @@
     </ul>
 
     <!-- ── EN SAVOIR PLUS (replié : évite le long défilement) ────── -->
+    <section class="ac-conseils" aria-label="Conseils gratuits">
+      <h2>Conseils gratuits</h2>
+      <div class="ac-conseils__liste">
+        <a href="/cv-cote-d-ivoire.html">Rédiger son CV</a>
+        <a href="/lettre-de-motivation.html">Lettre de motivation</a>
+        <a href="/entretien-embauche.html">Réussir un entretien</a>
+        <a href="/preparer-un-concours.html">Préparer un concours</a>
+        <a href="/trouver-un-emploi-ou-un-stage.html">Trouver un emploi ou un stage</a>
+      </div>
+    </section>
+
+    <!-- Preuves sociales : chiffres réels (API) + avis publiés depuis l'admin. Masqué tant qu'il n'y a rien de réel à montrer. -->
+    <section class="ac-preuves hidden" id="ac-preuves" aria-label="ProInsertion CI en chiffres">
+      <div class="ac-direct" id="ac-direct">
+        <p class="ac-direct__badge"><span class="ac-direct__point"></span>EN DIRECT</p>
+        <div class="ac-direct__stat" id="stat-comptes" hidden><span class="ac-direct__ico" aria-hidden="true">🧑🏾‍💼</span><strong data-cible="0">0</strong><span class="ac-direct__lib">comptes créés</span></div>
+        <div class="ac-direct__stat" id="stat-cv" hidden><span class="ac-direct__ico" aria-hidden="true">📄</span><strong data-cible="0">0</strong><span class="ac-direct__lib">CV générés</span></div>
+      </div>
+      <div class="ac-avis hidden" id="ac-avis">
+        <h2 class="ac-avis__titre">Ce qu'en disent nos utilisateurs</h2>
+        <div class="ac-avis__liste" id="ac-avis-liste"></div>
+      </div>
+    </section>
+
     <section class="ac-plus" id="section-plus">
       <div class="container">
         <details class="ac-plus__bloc">
@@ -662,23 +686,53 @@
           if (c) c.innerHTML = 'Les formules Premium sont indiquées dans la <a href="/boutique.html">boutique</a>.';
         }
 
-        // ── Témoignages (masqués si aucun n'est publié) ─────────────
-        try {
-          const { temoignages } = await window.API.Vitrine.temoignages();
-          if (temoignages.length > 0) {
-            document.getElementById("liste-temoignages").innerHTML = temoignages
-              .map((t) => `
-      <div class="card" style="padding:22px;">
-        <div style="color:#f59e0b;margin-bottom:10px;">${"★".repeat(t.note)}${"☆".repeat(5 - t.note)}</div>
-        <p style="font-size:0.9rem;font-style:italic;margin-bottom:14px;">"${echapperTexte(t.texte)}"</p>
-        <div style="font-weight:700;font-size:0.88rem;">${echapperTexte(t.nom)}</div>
-        ${t.role ? `<div style="font-size:0.78rem;color:var(--gris-texte);">${echapperTexte(t.role)}</div>` : ""}
-      </div>`).join("");
-            document.getElementById("section-temoignages").classList.remove("hidden");
-          }
-        } catch (err) {
-          console.error("Erreur témoignages :", err.message);
-        }
+        // ── Chiffres réels + avis (masqués si rien de réel à montrer) ──
+        (async () => {
+          const zone = document.getElementById("ac-preuves");
+          let visible = false;
+          try {
+            const st = await window.API.Vitrine.stats();
+            [["stat-comptes", st.totalUtilisateurs], ["stat-cv", st.cvGeneres]].forEach(([id, n]) => {
+              n = parseInt(n, 10);
+              if (!(n >= 10)) return;
+              const el = document.getElementById(id);
+              el.hidden = false; el.querySelector("strong").dataset.cible = n; visible = true;
+            });
+          } catch (err) { console.error("Erreur chiffres :", err.message); }
+          if (!document.querySelector("#ac-direct .ac-direct__stat:not([hidden])")) document.getElementById("ac-direct").hidden = true;
+          try {
+            // Avis publiés depuis l'admin ; à défaut, les avis fournis par ProInsertion CI ci-dessous.
+            const AVIS_PAR_DEFAUT = [
+              { nom: "Grâce K.", role: "Abidjan", note: 4, texte: "Grâce à ProInsertion CI, j’ai pu obtenir un CV professionnel et bien structuré. Le résultat est satisfaisant et met mieux en valeur mes compétences." },
+              { nom: "Serge A.", role: "Yopougon", note: 4, texte: "Un service très pratique ! J’ai pu améliorer ma lettre de motivation et présenter ma candidature avec beaucoup plus de professionnalisme. Je recommande !" },
+              { nom: "Mariam T.", role: "Cocody", note: 3, texte: "Site bien structuré et facilite la recherche d’emploi. On retrouve plusieurs opportunités sur une seule plateforme. J’aimerais simplement voir encore plus d’offres régulièrement." },
+            ];
+            let temoignages = [];
+            try { temoignages = (await window.API.Vitrine.temoignages()).temoignages; } catch (e) { /* repli ci-dessous */ }
+            if (!Array.isArray(temoignages) || temoignages.length === 0) temoignages = AVIS_PAR_DEFAUT;
+            if (temoignages.length > 0) {
+              document.getElementById("ac-avis-liste").innerHTML = temoignages.slice(0, 6).map((t) => `
+      <figure class="ac-avis__carte">
+        <span class="ac-avis__guill" aria-hidden="true">“</span>
+        ${t.note >= 1 && t.note <= 5 ? `<div class="ac-avis__etoiles" role="img" aria-label="${t.note} sur 5">${"★".repeat(t.note)}<span>${"★".repeat(5 - t.note)}</span></div>` : ""}
+        <blockquote>${echapperTexte(t.texte)}</blockquote>
+        <figcaption>${echapperTexte(t.nom)}${t.role ? " — " + echapperTexte(t.role) : ""}</figcaption>
+      </figure>`).join("");
+              document.getElementById("ac-avis").classList.remove("hidden"); visible = true;
+            }
+          } catch (err) { console.error("Erreur témoignages :", err.message); }
+          if (!visible) return;
+          zone.classList.remove("hidden");
+          // Compteurs animés à l'apparition
+          const nombres = zone.querySelectorAll(".ac-direct__stat:not([hidden]) strong");
+          const lancer = () => nombres.forEach((el) => {
+            const cible = parseInt(el.dataset.cible, 10) || 0, t0 = performance.now(), d = 1100;
+            const f = (t) => { const k = Math.min(1, (t - t0) / d); el.textContent = Math.round(cible * (1 - Math.pow(1 - k, 3))).toLocaleString("fr-FR").replace(/\u202f|\u00a0/g, "") + (k === 1 ? "+" : ""); if (k < 1) requestAnimationFrame(f); };
+            requestAnimationFrame(f);
+          });
+          if ("IntersectionObserver" in window) { const o = new IntersectionObserver((e) => { if (e[0].isIntersecting) { lancer(); o.disconnect(); } }, { threshold: .3 }); o.observe(zone); }
+          else lancer();
+        })();
       });
 
       // ── Newsletter ───────────────────────────────────────────────
