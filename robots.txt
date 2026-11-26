@@ -4,4 +4,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /dashboard/
 
-Sitemap: https://proinsertion.pages.dev/sitemap.xml
+Sitemap: https://proinsertionci.org/sitemap.xml

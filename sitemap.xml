@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://proinsertion.pages.dev/index.html</loc><priority>1.0</priority></url>
-  <url><loc>https://proinsertion.pages.dev/guide.html</loc><priority>0.7</priority></url>
-  <url><loc>https://proinsertion.pages.dev/comment-ca-marche.html</loc><priority>0.8</priority></url>
-  <url><loc>https://proinsertion.pages.dev/a-propos.html</loc><priority>0.8</priority></url>
-  <url><loc>https://proinsertion.pages.dev/conditions.html</loc></url>
-  <url><loc>https://proinsertion.pages.dev/confidentialite.html</loc></url>
-  <url><loc>https://proinsertion.pages.dev/conseils.html</loc><priority>0.8</priority></url>
-  <url><loc>https://proinsertion.pages.dev/cv-cote-d-ivoire.html</loc><priority>0.7</priority></url>
-  <url><loc>https://proinsertion.pages.dev/lettre-de-motivation.html</loc><priority>0.7</priority></url>
-  <url><loc>https://proinsertion.pages.dev/entretien-embauche.html</loc><priority>0.7</priority></url>
-  <url><loc>https://proinsertion.pages.dev/preparer-un-concours.html</loc><priority>0.7</priority></url>
-  <url><loc>https://proinsertion.pages.dev/trouver-un-emploi-ou-un-stage.html</loc><priority>0.7</priority></url>
+  <url><loc>https://proinsertionci.org/index.html</loc><priority>1.0</priority></url>
+  <url><loc>https://proinsertionci.org/guide.html</loc><priority>0.7</priority></url>
+  <url><loc>https://proinsertionci.org/comment-ca-marche.html</loc><priority>0.8</priority></url>
+  <url><loc>https://proinsertionci.org/a-propos.html</loc><priority>0.8</priority></url>
+  <url><loc>https://proinsertionci.org/conditions.html</loc></url>
+  <url><loc>https://proinsertionci.org/confidentialite.html</loc></url>
+  <url><loc>https://proinsertionci.org/conseils.html</loc><priority>0.8</priority></url>
+  <url><loc>https://proinsertionci.org/cv-cote-d-ivoire.html</loc><priority>0.7</priority></url>
+  <url><loc>https://proinsertionci.org/lettre-de-motivation.html</loc><priority>0.7</priority></url>
+  <url><loc>https://proinsertionci.org/entretien-embauche.html</loc><priority>0.7</priority></url>
+  <url><loc>https://proinsertionci.org/preparer-un-concours.html</loc><priority>0.7</priority></url>
+  <url><loc>https://proinsertionci.org/trouver-un-emploi-ou-un-stage.html</loc><priority>0.7</priority></url>
 </urlset>
