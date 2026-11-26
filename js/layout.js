@@ -308,3 +308,16 @@ const FOOTER_MEMBRE_HTML = `<footer class="footer footer--membre">
     window.gtag("config", a.id);
   }
 })();
+
+
+// Notification de paiement (membre connecté uniquement) : chargée à la demande, jamais pour un visiteur.
+(function () {
+  try {
+    if (!localStorage.getItem("ecc_token") || location.pathname.startsWith("/auth/") || location.pathname.startsWith("/admin/")) return;
+    window.addEventListener("load", () => {
+      const sc = document.createElement("script");
+      sc.src = "/js/paiement-notif.js";
+      document.body.appendChild(sc);
+    });
+  } catch (e) { /* facultatif */ }
+})();

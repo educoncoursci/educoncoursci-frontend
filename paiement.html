@@ -122,6 +122,7 @@
     <meta name="theme-color" content="#1A6B3C" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
       <link rel="stylesheet" href="/css/ui-pro.css" />
+      <link rel="stylesheet" href="/css/paiement-commun.css" />
   </head>
   <body>
     <div id="site-header"></div>
@@ -277,12 +278,7 @@
                   id="card-wave"
                   onclick="choisirMoyen('wave')"
                 >
-                  <div class="moyen-logo" style="background: #009EE2">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2 15c1.5-3 3-3 4.5 0s3 3 4.5 0 3-3 4.5 0 3 3 4.5 0" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M2 9c1.5-3 3-3 4.5 0s3 3 4.5 0 3-3 4.5 0 3 3 4.5 0" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
-                    </svg>
-                  </div>
+                  <div class="moyen-logo"><img src="/assets/paiement/logo-wave.png" alt="Logo Wave" width="52" height="52" loading="lazy" /></div>
                   <div style="flex: 1">
                     <div
                       style="font-weight: 800; font-size: 1rem; color: #009ee2"
@@ -325,11 +321,7 @@
                   id="card-orange"
                   onclick="choisirMoyen('orange')"
                 >
-                  <div class="moyen-logo" style="background: #FF6600">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 16L16 8M16 8H10M16 8V14" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
+                  <div class="moyen-logo"><img src="/assets/paiement/logo-orange-money.png" alt="Logo Orange Money" width="52" height="52" loading="lazy" /></div>
                   <div style="flex: 1">
                     <div
                       style="font-weight: 800; font-size: 1rem; color: #ff6600"
@@ -357,7 +349,7 @@
                   ></div>
                 </div>
 
-                <div class="moyen-card" id="card-mtn" onclick="choisirMoyen('mtn')">
+                <div class="moyen-card" id="card-mtn" hidden style="display:none" onclick="choisirMoyen('mtn')">
                   <div class="moyen-logo" style="background: #FFCC00">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <circle cx="12" cy="12" r="7" stroke="#1a1a1a" stroke-width="2.2"/>
@@ -370,7 +362,7 @@
                   <div id="radio-mtn" style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--gris-bordure);"></div>
                 </div>
 
-                <div class="moyen-card" id="card-moov" onclick="choisirMoyen('moov')">
+                <div class="moyen-card" id="card-moov" hidden style="display:none" onclick="choisirMoyen('moov')">
                   <div class="moyen-logo" style="background: #0066B3">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M4 12h16M4 12l4-4M4 12l4 4" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -486,6 +478,10 @@
                   />
                 </div>
 
+                <div style="margin-bottom: 14px">
+                  <label style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 6px;" for="input-tel">Numéro de téléphone utilisé pour le paiement *</label>
+                  <input type="tel" id="input-tel" inputmode="tel" autocomplete="tel" placeholder="Ex : 07 59 68 05 13" style="width:100%;padding:14px 16px;border:2px solid var(--gris-bordure);border-radius:12px;font-size:1rem;outline:none;" />
+                </div>
                 <div id="erreur-tx" class="alerte alerte--erreur hidden"></div>
 
                 <div
@@ -508,7 +504,7 @@
                   onclick="validerTransaction()"
                   class="btn btn--primaire btn--full btn--lg"
                 >
-                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Vérifier le paiement
+                  <span data-icone="coche" data-taille="18" style="display:inline-flex;vertical-align:-3px;"></span> Soumettre le paiement
                 </button>
               </div>
             </div>
@@ -905,7 +901,7 @@
         Payer ${montant.toLocaleString("fr-CI")} FCFA avec ${cfg.label} →
       </a>
       <p style="text-align:center; font-size:0.78rem; color:var(--gris-texte); margin-top:10px;">
-        Une fois le paiement effectué, récupère l'identifiant de transaction reçu par SMS et saisis-le ci-dessous pour activer votre Premium immédiatement.
+        Une fois le paiement effectué, récupère l'identifiant de transaction reçu par SMS et saisis-le ci-dessous : nous vérifions la réception du paiement puis activons votre Premium.
       </p>
     `;
           return;
@@ -987,6 +983,12 @@
           window.afficherToast("Choisissez un moyen de paiement.", "warn");
           return;
         }
+        const tel = (document.getElementById("input-tel").value || "").replace(/[\s.\-()]/g, "");
+        if (!/^\+?\d{8,15}$/.test(tel)) {
+          errDiv.textContent = "Indiquez le numéro de téléphone utilisé pour le paiement.";
+          errDiv.classList.remove("hidden");
+          return;
+        }
         if (txId.length < 5) {
           errDiv.textContent = "Identifiant trop court.";
           errDiv.classList.remove("hidden");
@@ -1003,6 +1005,7 @@
             txId,
             moyenSelectionne,
             planSelectionne.label,
+            tel,
           );
           afficherSucces(data, txId);
         } catch (err) {
@@ -1010,7 +1013,7 @@
           errDiv.classList.remove("hidden");
           btn.classList.remove("btn--chargement");
           btn.disabled = false;
-          btn.textContent = "✅ Vérifier le paiement";
+          btn.textContent = "✅ Soumettre le paiement";
         }
       }
 

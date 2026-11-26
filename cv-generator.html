@@ -882,30 +882,7 @@
               </div>
 
               <!-- Paiement -->
-              <div id="cmd-paiement" class="cmd-pay hidden">
-                <div style="font-weight:800; font-size:1.05rem; margin-bottom:6px;">
-                  Débloquez votre document complet : <span id="cmd-prix"></span>
-                </div>
-                <ol style="margin:0 0 14px 18px; padding:0; line-height:1.8; font-size:.9rem;">
-                  <li>Envoyez le montant exact par <strong>Wave</strong> ou <strong>Orange Money</strong> :
-                    <div id="cmd-numeros" style="margin-top:4px;"></div></li>
-                  <li>Notez l'identifiant de transaction reçu par SMS.</li>
-                  <li>Saisissez-le ci-dessous. Un même identifiant ne peut servir qu'une seule fois.</li>
-                </ol>
-                <div id="cmd-rejet" class="hidden" style="background:#fef2f2;color:#991b1b;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:.88rem;">
-                  Votre précédent paiement n'a pas pu être confirmé. Vérifiez l'identifiant et réessayez.
-                </div>
-                <div style="display:grid; grid-template-columns: 1fr 2fr; gap:10px;">
-                  <select id="cmd-moyen" class="form-input">
-                    <option value="wave">Wave</option>
-                    <option value="orange">Orange Money</option>
-                  </select>
-                  <input id="cmd-txid" class="form-input" placeholder="Identifiant de transaction" autocomplete="off" />
-                </div>
-                <button id="cmd-btn-payer" onclick="envoyerPaiementCv()" class="btn btn--primaire btn--full" style="margin-top:12px;">
-                  J'ai payé — valider mon identifiant
-                </button>
-              </div>
+              <div id="cmd-paiement" class="hidden"></div>
 
               <!-- Vérification en cours -->
               <div id="cmd-verification" class="cmd-pay hidden">
@@ -1096,6 +1073,7 @@
     <script src="/js/auth.js"></script>
 
     <script src="/js/main.js"></script>
+    <script src="/js/commande.js"></script>
 
     <script>
       let typeActuel = "cv";
@@ -1104,6 +1082,7 @@
       let modeleChoisi = "bandeau_marine";
       let modelesCatalogue = {};
       let commandeActive = null;
+      let paiementCv = null;
       let typeCvChoisi = null;
       let typesCv = [];
       let expCount = 1, forCount = 1;
@@ -1471,38 +1450,15 @@
           flou.classList.remove("hidden");
         }
         montrer("cmd-paiement", c.etat === "a_payer" || c.etat === "rejete");
-        montrer("cmd-rejet", c.etat === "rejete");
         montrer("cmd-verification", c.etat === "en_verification");
         montrer("cmd-valide", c.etat === "valide");
         if (c.etat === "a_payer" || c.etat === "rejete") {
-          document.getElementById("cmd-prix").textContent = Number(c.prix_fcfa).toLocaleString("fr-FR") + " FCFA";
-          const nums = [];
-          if (c.paiement?.wave_numero) nums.push(`Wave : <strong>${echapperHtml(c.paiement.wave_numero)}</strong>`);
-          if (c.paiement?.orange_numero) nums.push(`Orange Money : <strong>${echapperHtml(c.paiement.orange_numero)}</strong>`);
-          document.getElementById("cmd-numeros").innerHTML = nums.length ? nums.join("<br>") : "Le numéro de paiement sera communiqué par le support.";
+          if (!paiementCv) paiementCv = window.Commande.monterPaiement(document.getElementById("cmd-paiement"), { obtenir: () => commandeActive, apres: async () => { await rafraichirCommande(); chargerMesCv(); } });
+          paiementCv.rendre(c);
         }
         document.getElementById("zone-resultat").classList.add("hidden");
         document.getElementById("zone-commande").classList.remove("hidden");
         document.getElementById("zone-commande").scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-
-      async function envoyerPaiementCv() {
-        if (!commandeActive) return;
-        const txId = document.getElementById("cmd-txid").value.trim();
-        if (!txId) { window.afficherToast("Saisissez l'identifiant de transaction.", "warn"); return; }
-        const btn = document.getElementById("cmd-btn-payer");
-        btn.disabled = true;
-        try {
-          const res = await window.API.CVLM.payerCommande(commandeActive.id, document.getElementById("cmd-moyen").value, txId);
-          window.afficherToast(res.message || "Identifiant reçu.", "succes");
-          document.getElementById("cmd-txid").value = "";
-          await rafraichirCommande();
-          chargerMesCv();
-        } catch (err) {
-          window.afficherToast(err.message || "Erreur de paiement.", "erreur");
-        } finally {
-          btn.disabled = false;
-        }
       }
 
       async function rafraichirCommande() {

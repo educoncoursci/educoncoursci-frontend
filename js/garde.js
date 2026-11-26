@@ -18,6 +18,13 @@
 (function () {
   "use strict";
 
+  // Ancienne adresse (Cloudflare Pages) → domaine officiel, en conservant la page demandée.
+  // (La session est liée à l'adresse : un membre devra se reconnecter une fois sur le nouveau domaine.)
+  if (location.hostname === "proinsertion.pages.dev") {
+    location.replace("https://proinsertionci.org" + location.pathname + location.search + location.hash);
+    return;
+  }
+
   var DESTINATION = "/connexion-requise.html";
 
   // Pages visibles sans compte. Tout le reste est réservé aux membres.
@@ -29,6 +36,7 @@
     "/a-propos.html", "/comment-ca-marche.html", "/guide.html",
     "/conseils.html", "/cv-cote-d-ivoire.html", "/lettre-de-motivation.html", "/entretien-embauche.html",
     "/preparer-un-concours.html", "/trouver-un-emploi-ou-un-stage.html",
+    "/candidature-spontanee.html", "/lettre-de-demande-de-stage.html", "/cv-sans-experience.html", "/culture-generale-concours.html", "/entretien-en-ligne.html", "/fausses-offres-emploi.html",
   ];
 
   function chemin() {

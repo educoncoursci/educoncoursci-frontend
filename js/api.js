@@ -500,10 +500,18 @@ const qs = plan ? `?plan=${encodeURIComponent(plan)}` : "";
 return apiCall(`/payment/plans${qs}`);
 },
 
-async verifier(txId, moyen, plan) {
+async mesNotifications() {
+return apiCall("/payment/mes-notifications");
+},
+
+async notificationsVues(ids) {
+return apiCall("/payment/mes-notifications/vues", { method: "POST", body: JSON.stringify({ ids }) });
+},
+
+async verifier(txId, moyen, plan, telephone) {
 return apiCall("/payment/verify", {
 method: "POST",
-body: JSON.stringify({ txId, moyen, plan }),
+body: JSON.stringify({ txId, moyen, plan, telephone }),
 });
 },
 
@@ -955,10 +963,10 @@ return apiCall("/cv/commande");
 async lireCommande(id) {
 return apiCall(`/cv/commande/${encodeURIComponent(id)}`);
 },
-async payerCommande(id, moyen, txId) {
+async payerCommande(id, moyen, txId, telephone) {
 return apiCall(`/cv/commande/${encodeURIComponent(id)}/payer`, {
 method: "POST",
-body: JSON.stringify({ moyen, txId }),
+body: JSON.stringify({ moyen, txId, telephone }),
 });
 },
 async telechargerCommandePDF(id, nomFichier, prefixe = "CV") {
